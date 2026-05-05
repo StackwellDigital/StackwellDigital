@@ -1,0 +1,1309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stackwell Digital — Websites for Local Business</title>
+  <meta name="description" content="Stackwell Digital builds and manages professional websites for local businesses. Flat monthly rate. No tech headaches." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0a0a0a;
+      --surface: #111111;
+      --border: rgba(255,255,255,0.07);
+      --white: #ffffff;
+      --grey: #888888;
+      --grey-light: #bbbbbb;
+      --accent: #ffffff;
+      --mono: 'DM Mono', monospace;
+      --sans: 'DM Sans', sans-serif;
+      --display: 'Bebas Neue', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--white);
+      font-family: var(--sans);
+      font-weight: 300;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 0.75rem 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.3s, background 0.3s;
+    }
+    nav.scrolled {
+      background: rgba(10,10,10,0.92);
+      backdrop-filter: blur(12px);
+      border-color: var(--border);
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+    }
+    .nav-logo svg {
+      width: 32px;
+      height: 32px;
+    }
+    .nav-wordmark {
+      font-family: var(--display);
+      font-size: 1.4rem;
+      letter-spacing: 0.08em;
+      color: var(--white);
+      line-height: 1;
+    }
+    .nav-wordmark span {
+      display: block;
+      font-family: var(--mono);
+      font-size: 0.55rem;
+      letter-spacing: 0.3em;
+      color: var(--grey);
+      font-weight: 400;
+      margin-top: 1px;
+    }
+    .nav-links {
+      display: flex;
+      gap: 3.5rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--grey);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--white); }
+    .nav-cta {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--bg);
+      background: var(--white);
+      border: none;
+      padding: 0.6rem 1.4rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+    .nav-cta:hover { opacity: 0.85; }
+
+    /* ─── LOGO PATTERN BACKGROUND ─── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url('https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/background_white.png');
+      background-size: 420px 420px;
+      background-repeat: repeat;
+      opacity: 0.022;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ─── HERO ─── */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 7rem 2.5rem 5rem;
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(105deg, #0a0a0a 0%, #141414 45%, #1c1c1c 100%);
+    }
+
+    /* hero pattern overlay — same texture, slightly more visible in hero */
+    #hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url('https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/background_white.png');
+      background-size: 420px 420px;
+      background-repeat: repeat;
+      opacity: 0.05;
+      pointer-events: none;
+      z-index: 0;
+      mask-image: linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.2) 60%, transparent 100%);
+    }
+
+    /* make hero content sit above the pattern overlay — exclude absolutely-positioned elements */
+    .hero-tag, .hero-sub, .hero-actions, #hero h1 { position: relative; z-index: 1; }
+
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 80px 80px;
+      mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 30%, transparent 100%);
+    }
+
+    .hero-tag {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--grey);
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.2s forwards;
+    }
+
+    h1 {
+      font-family: var(--display);
+      font-size: clamp(4rem, 12vw, 10rem);
+      line-height: 0.92;
+      letter-spacing: 0.01em;
+      max-width: 900px;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.4s forwards;
+    }
+
+    h1 em {
+      font-style: normal;
+      color: var(--grey);
+    }
+
+    .hero-sub {
+      margin-top: 2.5rem;
+      max-width: 520px;
+      font-size: 1rem;
+      color: var(--grey-light);
+      line-height: 1.7;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.6s forwards;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2.5rem;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.8s forwards;
+    }
+
+    .btn-primary {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      background: var(--white);
+      color: var(--bg);
+      padding: 0.85rem 2rem;
+      text-decoration: none;
+      border: 1px solid var(--white);
+      transition: background 0.2s, color 0.2s;
+    }
+    .btn-primary:hover { background: transparent; color: var(--white); }
+
+    .btn-ghost {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      background: transparent;
+      color: var(--grey);
+      padding: 0.85rem 2rem;
+      text-decoration: none;
+      border: 1px solid var(--border);
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .btn-ghost:hover { border-color: rgba(255,255,255,0.3); color: var(--white); }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 2rem;
+      right: 2.5rem;
+      z-index: 1;
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      color: var(--grey);
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      opacity: 0;
+      animation: fadeIn 1s 1.2s forwards;
+    }
+    .hero-scroll::before {
+      content: '';
+      width: 40px;
+      height: 1px;
+      background: var(--grey);
+    }
+
+    /* ─── SECTIONS ─── */
+    section { padding: 7rem 2.5rem; }
+
+    .section-label {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--grey);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .section-label::before {
+      content: '';
+      width: 24px;
+      height: 1px;
+      background: var(--grey);
+      flex-shrink: 0;
+    }
+
+    h2 {
+      font-family: var(--display);
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      line-height: 0.95;
+      letter-spacing: 0.02em;
+      margin-bottom: 1rem;
+    }
+
+    /* ─── MARQUEE ─── */
+    .marquee-wrap {
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 1.2rem 0;
+      overflow: hidden;
+      background: var(--surface);
+    }
+    .marquee-track {
+      display: flex;
+      gap: 3rem;
+      width: max-content;
+      animation: marquee 28s linear infinite;
+    }
+    .marquee-item {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--grey);
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 3rem;
+    }
+    .marquee-item::after {
+      content: '◆';
+      font-size: 0.4rem;
+      color: var(--grey);
+    }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    /* ─── HOW IT WORKS ─── */
+    #how {
+      border-top: 1px solid var(--border);
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 0;
+      margin-top: 4rem;
+      border: 1px solid var(--border);
+    }
+
+    .step {
+      padding: 2.5rem;
+      border-right: 1px solid var(--border);
+      position: relative;
+    }
+    .step:last-child { border-right: none; }
+
+    .step-num {
+      font-family: var(--display);
+      font-size: 4rem;
+      color: rgba(255,255,255,0.22);
+      line-height: 1;
+      margin-bottom: 1.5rem;
+    }
+
+    .step h3 {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--white);
+      margin-bottom: 0.75rem;
+      font-weight: 500;
+    }
+
+    .step p {
+      font-size: 0.88rem;
+      color: var(--grey);
+      line-height: 1.7;
+    }
+
+    /* ─── PRICING ─── */
+    #pricing {
+      border-top: 1px solid var(--border);
+    }
+
+    .pricing-intro {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      margin-bottom: 4rem;
+      align-items: end;
+    }
+
+    .pricing-intro p {
+      color: var(--grey-light);
+      font-size: 0.95rem;
+      line-height: 1.8;
+    }
+
+    .plans {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      border: 1px solid var(--border);
+    }
+
+    .plan {
+      padding: 2.5rem;
+      border-right: 1px solid var(--border);
+      position: relative;
+      transition: background 0.3s;
+    }
+    .plan:last-child { border-right: none; }
+    .plan:hover { background: rgba(255,255,255,0.025); }
+
+    .plan.featured {
+      background: rgba(255,255,255,0.04);
+    }
+    .plan.featured::before {
+      content: 'MOST POPULAR';
+      font-family: var(--mono);
+      font-size: 0.55rem;
+      letter-spacing: 0.25em;
+      color: var(--white);
+      display: block;
+      margin-bottom: 1.5rem;
+    }
+    .plan:not(.featured)::before {
+      content: '';
+      display: block;
+      margin-bottom: 1.5rem;
+      height: 0.55rem;
+    }
+
+    .plan-name {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--grey);
+      margin-bottom: 1.25rem;
+    }
+
+    .plan-price {
+      font-family: var(--display);
+      font-size: 3.5rem;
+      line-height: 1;
+      margin-bottom: 0.25rem;
+    }
+
+    .plan-cycle {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.15em;
+      color: var(--grey);
+      margin-bottom: 2rem;
+    }
+
+    .plan-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .plan-features li {
+      font-size: 0.85rem;
+      color: var(--grey-light);
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      line-height: 1.5;
+    }
+
+    .plan-features li::before {
+      content: '✦';
+      font-size: 0.45rem;
+      color: var(--grey);
+      margin-top: 0.35rem;
+      flex-shrink: 0;
+    }
+
+    .plan-cta {
+      display: block;
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-align: center;
+      padding: 0.85rem;
+      text-decoration: none;
+      border: 1px solid var(--border);
+      color: var(--grey);
+      transition: all 0.2s;
+    }
+    .plan-cta:hover, .plan.featured .plan-cta {
+      background: var(--white);
+      color: var(--bg);
+      border-color: var(--white);
+    }
+
+    .addons {
+      margin-top: 3rem;
+      border: 1px solid var(--border);
+      padding: 2rem 2.5rem;
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 2rem;
+      align-items: start;
+    }
+
+    .addons h3 {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--grey);
+    }
+
+    .addon-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.5rem 2rem;
+    }
+
+    .addon-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.82rem;
+      color: var(--grey-light);
+      padding: 0.35rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .addon-item span {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--white);
+    }
+
+    /* ─── WHY ─── */
+    #why {
+      border-top: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+    }
+
+    .why-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      margin-top: 3rem;
+    }
+
+    .why-item {
+      padding: 1.5rem 0;
+      border-bottom: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: 2rem 1fr;
+      gap: 1rem;
+      align-items: start;
+    }
+
+    .why-num {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      color: var(--grey);
+      padding-top: 0.15rem;
+    }
+
+    .why-item h4 {
+      font-size: 0.9rem;
+      font-weight: 500;
+      margin-bottom: 0.3rem;
+      color: var(--white);
+    }
+
+    .why-item p {
+      font-size: 0.82rem;
+      color: var(--grey);
+      line-height: 1.6;
+    }
+
+    .why-visual {
+      position: relative;
+      aspect-ratio: 1;
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-start;
+      overflow: hidden;
+      background: #0e0e0e;
+      padding: 2.5rem;
+    }
+
+    /* ghosted large number behind everything — updated by JS */
+    .why-ghost {
+      position: absolute;
+      font-family: var(--display);
+      font-size: clamp(10rem, 20vw, 18rem);
+      color: rgba(255,255,255,0.035);
+      line-height: 1;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      white-space: nowrap;
+      user-select: none;
+      pointer-events: none;
+      letter-spacing: -0.02em;
+      transition: none;
+    }
+
+    .why-visual-inner { display: none; }
+
+    .why-stat {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+    }
+
+    .why-stat-label-top {
+      font-family: var(--mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--grey);
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .why-stat-label-top::before {
+      content: '';
+      width: 20px;
+      height: 1px;
+      background: var(--grey);
+    }
+
+    .why-stat-num {
+      font-family: var(--display);
+      font-size: clamp(5rem, 9vw, 8rem);
+      line-height: 0.9;
+      margin-bottom: 1.25rem;
+      letter-spacing: -0.01em;
+    }
+
+    /* progress bar track */
+    .why-progress-track {
+      width: 100%;
+      height: 2px;
+      background: rgba(255,255,255,0.08);
+      margin-bottom: 1.25rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .why-progress-fill {
+      position: absolute;
+      top: 0; left: 0;
+      height: 100%;
+      width: 0%;
+      background: var(--white);
+      transition: width 2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* tick marks at 25/50/75 */
+    .why-progress-ticks {
+      position: relative;
+      width: 100%;
+      height: 6px;
+      margin-top: -4px;
+      margin-bottom: 1.25rem;
+    }
+    .why-progress-ticks span {
+      position: absolute;
+      top: 0;
+      width: 1px;
+      height: 4px;
+      background: rgba(255,255,255,0.15);
+      transform: translateX(-50%);
+    }
+    .why-progress-ticks span:nth-child(1) { left: 25%; }
+    .why-progress-ticks span:nth-child(2) { left: 50%; }
+    .why-progress-ticks span:nth-child(3) { left: 75%; }
+    .why-progress-ticks span:nth-child(4) { left: 100%; }
+
+    .why-stat p {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--grey);
+      line-height: 1.7;
+      max-width: 240px;
+    }
+
+    /* ─── CONTACT ─── */
+    #contact {
+      border-top: 1px solid var(--border);
+      text-align: center;
+      padding: 8rem 2.5rem;
+    }
+
+    #contact h2 {
+      font-size: clamp(3rem, 8vw, 7rem);
+      margin-bottom: 1.5rem;
+    }
+
+    #contact p {
+      color: var(--grey);
+      font-size: 0.95rem;
+      max-width: 440px;
+      margin: 0 auto 3rem;
+      line-height: 1.8;
+    }
+
+    .contact-email {
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      color: var(--grey);
+      text-decoration: none;
+      display: block;
+      margin-top: 2.5rem;
+      transition: color 0.2s;
+    }
+    .contact-email:hover { color: var(--white); }
+
+    /* ─── FOOTER ─── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem 2.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-left {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      color: var(--grey);
+      text-transform: uppercase;
+    }
+
+    .footer-right {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      color: var(--grey);
+    }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* ─── PORTFOLIO ─── */
+    #portfolio {
+      border-top: 1px solid var(--border);
+    }
+
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 4rem;
+    }
+
+    .portfolio-card {
+      display: flex;
+      flex-direction: column;
+      border: 1px solid var(--border);
+      transition: border-color 0.3s;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .portfolio-card { cursor: default; }
+
+    .pc-chrome { display: none; }
+
+    .pc-img-wrap {
+      position: relative;
+      overflow: hidden;
+      aspect-ratio: 16/10;
+      background: #0d0d0d;
+    }
+
+    .pc-screenshot {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top left;
+      display: block;
+      transition: transform 0.5s ease;
+    }
+
+    .pc-view-btn { display: none; }
+
+    .pc-info {
+      padding: 1.1rem 1.25rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--border);
+    }
+
+    .pc-name {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--white);
+    }
+
+    .pc-type {
+      font-family: var(--mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.1em;
+      color: var(--grey);
+      margin-top: 0.2rem;
+    }
+
+    .pc-tag {
+      font-family: var(--mono);
+      font-size: 0.52rem;
+      letter-spacing: 0.15em;
+      padding: 0.3rem 0.7rem;
+      border: 1px solid var(--border);
+      color: var(--grey);
+      text-transform: uppercase;
+      flex-shrink: 0;
+    }
+
+    /* ─── LIVE IFRAME CARDS ─── */
+    .pc-iframe-wrap {
+      position: relative;
+      overflow: hidden;
+      aspect-ratio: 16/10;
+      background: #0d0d0d;
+    }
+
+    .pc-iframe-wrap iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 1280px;
+      height: 800px;
+      border: none;
+      transform: scale(0.3);
+      transform-origin: top left;
+      pointer-events: none;
+    }
+
+    /* live badge */
+    .pc-live-badge {
+      position: absolute;
+      top: 0.6rem;
+      right: 0.6rem;
+      font-family: var(--mono);
+      font-size: 0.45rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      background: rgba(10,10,10,0.75);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: #aaa;
+      padding: 0.25rem 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      backdrop-filter: blur(4px);
+      z-index: 2;
+    }
+    .pc-live-badge::before {
+      content: '';
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #4caf50;
+      flex-shrink: 0;
+      box-shadow: 0 0 4px #4caf50;
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 900px) {
+      nav { padding: 1.25rem 1.5rem; }
+      .nav-links { display: none; }
+      section { padding: 5rem 1.5rem; }
+      #hero { padding: 0 1.5rem 4rem; }
+      .pricing-intro { grid-template-columns: 1fr; gap: 1.5rem; }
+      .plans { grid-template-columns: 1fr; }
+      .plan { border-right: none; border-bottom: 1px solid var(--border); }
+      .plan:last-child { border-bottom: none; }
+      #why { grid-template-columns: 1fr; gap: 3rem; }
+      .why-visual { display: none; }
+      .steps { grid-template-columns: 1fr; }
+      .step { border-right: none; border-bottom: 1px solid var(--border); }
+      .step:last-child { border-bottom: none; }
+      .addons { grid-template-columns: 1fr; }
+      .addon-list { grid-template-columns: 1fr; }
+      .portfolio-grid { grid-template-columns: 1fr; gap: 1rem; }
+      footer { flex-direction: column; gap: 0.75rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="nav">
+    <a href="#hero" class="nav-logo"><img src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/logo.photo.png" alt="Stackwell Digital" style="height:76px;width:auto;" /></a>
+    <ul class="nav-links">
+      <li><a href="#how">How It Works</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+      <li><a href="#why">Why Us</a></li>
+      <li><a href="#portfolio">Our Work</a></li>
+    </ul>
+    <a href="#contact" class="nav-cta">Get Started</a>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-grid"></div>
+    <p class="hero-tag">Web Presence for Local Business</p>
+    <h1>Your Website.<br /><em>Handled.</em></h1>
+    <p class="hero-sub">
+      Stackwell Digital builds and manages professional websites for local businesses. Flat monthly rate. No contracts. No tech headaches. Just a site that works.
+    </p>
+    <div class="hero-actions">
+      <a href="#pricing" class="btn-primary">See Plans</a>
+      <a href="#how" class="btn-ghost">How It Works</a>
+    </div>
+    <div class="hero-scroll">Scroll to explore</div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-wrap">
+    <div class="marquee-track">
+      <div class="marquee-item">Professional Design</div>
+      <div class="marquee-item">Monthly Updates Included</div>
+      <div class="marquee-item">Domain Management</div>
+      <div class="marquee-item">SEO Optimized</div>
+      <div class="marquee-item">Google Business Profile</div>
+      <div class="marquee-item">Analytics Reporting</div>
+      <div class="marquee-item">No Long Contracts</div>
+      <div class="marquee-item">Same Day Response</div>
+      <div class="marquee-item">Professional Design</div>
+      <div class="marquee-item">Monthly Updates Included</div>
+      <div class="marquee-item">Domain Management</div>
+      <div class="marquee-item">SEO Optimized</div>
+      <div class="marquee-item">Google Business Profile</div>
+      <div class="marquee-item">Analytics Reporting</div>
+      <div class="marquee-item">No Long Contracts</div>
+      <div class="marquee-item">Same Day Response</div>
+    </div>
+  </div>
+
+  <!-- HOW IT WORKS -->
+  <section id="how">
+    <p class="section-label reveal">Process</p>
+    <h2 class="reveal">How It Works</h2>
+    <div class="steps reveal">
+      <div class="step">
+        <div class="step-num">01</div>
+        <h3>We Build It</h3>
+        <p>We design and build your site from scratch — professional, fast, and tailored to your business. Ready in days, not months.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <h3>You Review It</h3>
+        <p>We walk you through the site and make adjustments until it's exactly what you want. Your input, our execution.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <h3>We Launch It</h3>
+        <p>Domain connected, site goes live. We handle the tech — DNS, hosting, SSL, all of it. You don't touch a thing.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <h3>We Manage It</h3>
+        <p>Need new hours posted? A menu update? A new photo? Just send us a message. Updates are included in your monthly plan.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section id="pricing">
+    <p class="section-label reveal">Plans</p>
+    <div class="pricing-intro reveal">
+      <h2>Simple,<br />Flat Pricing</h2>
+      <p>Every plan is month-to-month. No long-term contracts, no hidden fees, no surprise invoices. Pick the level of service that fits your business and change anytime.</p>
+    </div>
+
+    <div class="plans reveal">
+      <!-- STARTER -->
+      <div class="plan">
+        <p class="plan-name">Starter</p>
+        <div class="plan-price">$120</div>
+        <div class="plan-cycle">/ month CAD</div>
+        <ul class="plan-features">
+          <li>Professional website build</li>
+          <li>Domain management included</li>
+          <li>2 content updates per month</li>
+          <li>Hosting included</li>
+          <li>Annual site refresh</li>
+        </ul>
+        <a href="https://square.link/u/5vbs2nRZ" target="_blank" rel="noopener" class="plan-cta">Get Started</a>
+      </div>
+
+      <!-- ACTIVE -->
+      <div class="plan featured">
+        <p class="plan-name">Active Business</p>
+        <div class="plan-price">$175</div>
+        <div class="plan-cycle">/ month CAD</div>
+        <ul class="plan-features">
+          <li>Everything in Starter</li>
+          <li>6 content updates per month</li>
+          <li>Basic SEO optimization</li>
+          <li>Monthly analytics report</li>
+          <li>Semi-annual site refresh</li>
+        </ul>
+        <a href="https://square.link/u/6uF6mGMl" target="_blank" rel="noopener" class="plan-cta">Get Started</a>
+      </div>
+
+      <!-- PREMIUM -->
+      <div class="plan">
+        <p class="plan-name">Premium</p>
+        <div class="plan-price">$250</div>
+        <div class="plan-cycle">/ month CAD</div>
+        <ul class="plan-features">
+          <li>Everything in Active Business</li>
+          <li>Unlimited content updates</li>
+          <li>Same-day response guarantee</li>
+          <li>Google Business Profile management</li>
+          <li>Quarterly strategy check-in</li>
+          <li>Seasonal site refreshes</li>
+        </ul>
+        <a href="https://square.link/u/xSMif3fX" target="_blank" rel="noopener" class="plan-cta">Get Started</a>
+      </div>
+    </div>
+
+    <div class="addons reveal">
+      <h3>Add-Ons</h3>
+      <div class="addon-list">
+        <div class="addon-item">Initial Site Build <span>$299–499</span></div>
+        <div class="addon-item">Google Business Setup <span>$99</span></div>
+        <div class="addon-item">Extra Update (each) <span>$25</span></div>
+        <div class="addon-item">Rush Changes <span>$50 flat</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY -->
+  <section id="why">
+    <div>
+      <p class="section-label reveal">Why Stackwell</p>
+      <h2 class="reveal">Built for<br />Real Business</h2>
+      <div class="why-list reveal">
+        <div class="why-item">
+          <span class="why-num">01</span>
+          <div>
+            <h4>You Don't Have to Touch It</h4>
+            <p>Send us a text, we handle the update. No logging into anything, no learning curves, no wasted afternoons.</p>
+          </div>
+        </div>
+        <div class="why-item">
+          <span class="why-num">02</span>
+          <div>
+            <h4>One Flat Rate, No Surprises</h4>
+            <p>What you see is what you pay. Every month. No overages, no "per change" billing, no nickel-and-diming.</p>
+          </div>
+        </div>
+        <div class="why-item">
+          <span class="why-num">03</span>
+          <div>
+            <h4>Local Business Focus</h4>
+            <p>We work specifically with local and independent businesses. We know what works, and what's a waste of your money.</p>
+          </div>
+        </div>
+        <div class="why-item">
+          <span class="why-num">04</span>
+          <div>
+            <h4>Month to Month</h4>
+            <p>No year-long contracts to sign. Stay because the service is worth it, not because you're locked in.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="why-visual reveal" id="why-visual">
+      <div class="why-ghost" id="why-ghost">0</div>
+      <div class="why-visual-inner"></div>
+      <div class="why-stat">
+        <div class="why-stat-label-top">Canadian Small Business</div>
+        <div class="why-stat-num"><span id="why-counter">0</span>%</div>
+        <div class="why-progress-track">
+          <div class="why-progress-fill" id="why-progress"></div>
+        </div>
+        <div class="why-progress-ticks">
+          <span></span><span></span><span></span><span></span>
+        </div>
+        <p>of local businesses have no website — or one so outdated it's working against them</p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- PORTFOLIO -->
+  <section id="portfolio">
+    <p class="section-label reveal">Our Work</p>
+    <h2 class="reveal">Sites We've<br />Built.</h2>
+    <p class="reveal" style="color:var(--grey);max-width:520px;font-size:0.95rem;line-height:1.8;margin-top:1rem;">A selection of sites we've designed and built for local businesses across BC. Each one managed monthly — updates, hosting, domain, all handled.</p>
+
+    <div class="portfolio-grid reveal">
+
+      <!-- Pitchd — spot 1 -->
+      <div class="portfolio-card">
+        <div class="pc-img-wrap">
+          <img class="pc-screenshot"
+            src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/pitchd.png"
+            alt="Pitchd website">
+        </div>
+        <div class="pc-info">
+          <div>
+            <div class="pc-name">Pitchd</div>
+            <div class="pc-type">Campsite Cancellation Alerts · BC</div>
+          </div>
+          <a href="https://www.pitchd.ca" target="_blank" rel="noopener" class="pc-tag" style="text-decoration:none;cursor:pointer;">↗ Visit</a>
+        </div>
+      </div>
+
+      <!-- Vomad Rentals — spot 2 -->
+      <div class="portfolio-card">
+        <div class="pc-img-wrap">
+          <img class="pc-screenshot"
+            src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/vomadrentals.png"
+            alt="Vomad Rentals website">
+        </div>
+        <div class="pc-info">
+          <div>
+            <div class="pc-name">Vomad Rentals</div>
+            <div class="pc-type">Equipment Rentals · BC</div>
+          </div>
+          <a href="https://www.vomadrentals.ca" target="_blank" rel="noopener" class="pc-tag" style="text-decoration:none;cursor:pointer;">↗ Visit</a>
+        </div>
+      </div>
+
+      <!-- Chipd Golf — spot 3 -->
+      <div class="portfolio-card">
+        <div class="pc-img-wrap">
+          <img class="pc-screenshot"
+            src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/chipd.png"
+            alt="Chipd Golf website">
+        </div>
+        <div class="pc-info">
+          <div>
+            <div class="pc-name">Chipd Golf</div>
+            <div class="pc-type">Tee Time Cancellation Alerts · BC</div>
+          </div>
+          <a href="https://www.chipdgolf.ca" target="_blank" rel="noopener" class="pc-tag" style="text-decoration:none;cursor:pointer;">↗ Visit</a>
+        </div>
+      </div>
+
+      <!-- Little Greens Farm -->
+      <div class="portfolio-card">
+        <div class="pc-img-wrap">
+          <img class="pc-screenshot"
+            src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/little-greens-farm.png"
+            alt="Little Greens Farm website">
+        </div>
+        <div class="pc-info">
+          <div>
+            <div class="pc-name">Little Greens Farm</div>
+            <div class="pc-type">Organic Microgreens · South Surrey</div>
+          </div>
+          <div class="pc-tag">Starter</div>
+        </div>
+      </div>
+
+      <!-- Atwood Furniture -->
+      <div class="portfolio-card">
+        <div class="pc-img-wrap">
+          <img class="pc-screenshot"
+            src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/atwood-furniture.png"
+            alt="Atwood Furniture website">
+        </div>
+        <div class="pc-info">
+          <div>
+            <div class="pc-name">Atwood Furniture Co.</div>
+            <div class="pc-type">Handcrafted Furniture · BC</div>
+          </div>
+          <div class="pc-tag">Active Biz</div>
+        </div>
+      </div>
+
+      <!-- Lark Knives -->
+      <div class="portfolio-card">
+        <div class="pc-img-wrap">
+          <img class="pc-screenshot"
+            src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/lark-knives.png"
+            alt="Lark Knives website">
+        </div>
+        <div class="pc-info">
+          <div>
+            <div class="pc-name">Lark Knives</div>
+            <div class="pc-type">Custom Knife Making · BC</div>
+          </div>
+          <div class="pc-tag">Active Biz</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <p class="section-label reveal" style="justify-content:center;">Contact</p>
+    <h2 class="reveal">Ready to<br />Get Started?</h2>
+    <p class="reveal">Drop us an email and we'll have a quick conversation about your business. No pressure, no sales pitch — just a straight answer on whether we're a good fit.</p>
+    <div class="reveal">
+      <a href="mailto:adam@stackwell.digital" class="btn-primary">Email Us Today</a>
+      <a href="mailto:adam@stackwell.digital" class="contact-email">adam@stackwell.digital</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-left">&copy; 2026 Stackwell Digital &mdash; British Columbia, Canada</div>
+    <div class="footer-right">stackwell.digital</div>
+  </footer>
+
+  <script>
+    // Nav scroll effect
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 40);
+    });
+
+    // Scroll reveal
+    const revealEls = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    revealEls.forEach(el => observer.observe(el));
+
+    // Count-up animation for Why stat
+    const counterEl  = document.getElementById('why-counter');
+    const ghostEl    = document.getElementById('why-ghost');
+    const progressEl = document.getElementById('why-progress');
+    const TARGET     = 46;
+    const DURATION   = 2000; // ms
+    let hasRun       = false;
+
+    function easeOutExpo(t) {
+      return t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
+    }
+
+    function runCountUp() {
+      if (hasRun) return;
+      hasRun = true;
+
+      // kick off the progress bar (CSS transition handles it)
+      requestAnimationFrame(() => {
+        progressEl.style.width = TARGET + '%';
+      });
+
+      const start = performance.now();
+      function tick(now) {
+        const elapsed = now - start;
+        const progress = Math.min(elapsed / DURATION, 1);
+        const eased    = easeOutExpo(progress);
+        const current  = Math.round(eased * TARGET);
+
+        counterEl.textContent = current;
+        ghostEl.textContent   = current;
+
+        if (progress < 1) {
+          requestAnimationFrame(tick);
+        } else {
+          counterEl.textContent = TARGET;
+          ghostEl.textContent   = TARGET;
+        }
+      }
+      requestAnimationFrame(tick);
+    }
+
+    const statObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          // small delay so the reveal fade plays first
+          setTimeout(runCountUp, 300);
+          statObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.4 });
+
+    const whyVisual = document.getElementById('why-visual');
+    if (whyVisual) statObserver.observe(whyVisual);
+  </script>
+</body>
+</html>
