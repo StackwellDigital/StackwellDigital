@@ -8,14 +8,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
-  <!-- Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2B7Q3ZN6Q7"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-2B7Q3ZN6Q7');
-  </script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -494,46 +486,6 @@
       border-color: var(--white);
     }
 
-    .addons {
-      margin-top: 3rem;
-      border: 1px solid var(--border);
-      padding: 2rem 2.5rem;
-      display: grid;
-      grid-template-columns: 1fr 2fr;
-      gap: 2rem;
-      align-items: start;
-    }
-
-    .addons h3 {
-      font-family: var(--mono);
-      font-size: 0.65rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--grey);
-    }
-
-    .addon-list {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 0.5rem 2rem;
-    }
-
-    .addon-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 0.82rem;
-      color: var(--grey-light);
-      padding: 0.35rem 0;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .addon-item span {
-      font-family: var(--mono);
-      font-size: 0.72rem;
-      color: var(--white);
-    }
-
     /* ─── WHY ─── */
     #why {
       border-top: 1px solid var(--border);
@@ -949,164 +901,96 @@
       line-height: 1.7;
     }
 
-    /* ─── MIGRATION / HOSTING ONLY ─── */
-    .migration-wrap {
-      margin-top: 4rem;
-      border: 1px solid var(--border);
+    /* ─── PRICING PROBLEM ─── */
+    #pricing-problem {
+      border-top: 1px solid var(--border);
     }
 
-    .migration-header {
-      padding: 2rem 2.5rem;
-      border-bottom: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 2rem;
-      flex-wrap: wrap;
-      background: rgba(255,255,255,0.02);
-    }
-
-    .migration-header-left {}
-
-    .migration-eyebrow {
-      font-family: var(--mono);
-      font-size: 0.58rem;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: var(--grey);
-      margin-bottom: 0.5rem;
-    }
-
-    .migration-title {
-      font-family: var(--display);
-      font-size: clamp(2.5rem, 6vw, 5rem);
-      line-height: 0.95;
-      letter-spacing: 0.02em;
-    }
-
-    .migration-header-right {
-      font-size: 0.85rem;
-      color: var(--grey-light);
-      line-height: 1.7;
-      max-width: 420px;
-    }
-
-    .migration-body {
+    .pricing-problem-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 4rem;
     }
 
-    .migration-plan {
-      padding: 2.5rem;
-      border-right: 1px solid var(--border);
-      position: relative;
+    .pp-card {
+      border: 1px solid var(--border);
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      transition: border-color 0.3s, background 0.3s;
+      font-size: 0.85rem;
     }
-    .migration-plan:last-child { border-right: none; }
+    .pp-card:hover { border-color: rgba(255,255,255,0.15); background: rgba(255,255,255,0.02); }
 
-    .migration-plan-name {
+    .pp-featured {
+      background: rgba(255,255,255,0.04);
+      border-color: rgba(255,255,255,0.15);
+    }
+
+    .pp-label {
       font-family: var(--mono);
       font-size: 0.62rem;
       letter-spacing: 0.2em;
       text-transform: uppercase;
       color: var(--grey);
       margin-bottom: 1.25rem;
+      font-weight: 500;
     }
 
-    .migration-price-row {
-      display: flex;
-      align-items: baseline;
-      gap: 0.4rem;
-      margin-bottom: 0.25rem;
-    }
-
-    .migration-price {
-      font-family: var(--display);
-      font-size: 3rem;
-      line-height: 1;
-    }
-
-    .migration-price-note {
-      font-family: var(--mono);
-      font-size: 0.58rem;
-      letter-spacing: 0.1em;
-      color: var(--grey);
-    }
-
-    .migration-cycle {
-      font-family: var(--mono);
-      font-size: 0.62rem;
-      letter-spacing: 0.15em;
-      color: var(--grey);
-      margin-bottom: 2rem;
-    }
-
-    .migration-features {
+    .pp-list {
       list-style: none;
       display: flex;
       flex-direction: column;
-      gap: 0.65rem;
-      margin-bottom: 2.5rem;
+      gap: 0.6rem;
+      margin-bottom: 1.5rem;
+      flex-grow: 1;
     }
 
-    .migration-features li {
-      font-size: 0.85rem;
+    .pp-list li {
+      font-size: 0.82rem;
       color: var(--grey-light);
       display: flex;
       align-items: flex-start;
-      gap: 0.6rem;
+      gap: 0.5rem;
       line-height: 1.5;
     }
 
-    .migration-features li::before {
-      content: '✦';
-      font-size: 0.45rem;
-      color: var(--grey);
-      margin-top: 0.35rem;
-      flex-shrink: 0;
-    }
-
-    .migration-cta {
-      display: block;
-      font-family: var(--mono);
-      font-size: 0.68rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      text-align: center;
-      padding: 0.85rem;
-      text-decoration: none;
-      border: 1px solid var(--border);
-      color: var(--grey);
-      transition: all 0.2s;
-    }
-    .migration-cta:hover {
-      background: var(--white);
-      color: var(--bg);
-      border-color: var(--white);
-    }
-
-    .migration-note {
-      padding: 1.25rem 2.5rem;
-      border-top: 1px solid var(--border);
-      font-family: var(--mono);
-      font-size: 0.62rem;
-      letter-spacing: 0.1em;
-      color: var(--grey);
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-    }
-    .migration-note::before {
+    .pp-list li::before {
       content: '◆';
-      font-size: 0.4rem;
+      font-size: 0.3rem;
+      color: var(--grey);
+      margin-top: 0.45rem;
       flex-shrink: 0;
     }
 
-    @media (max-width: 900px) {
-      .migration-body { grid-template-columns: 1fr; }
-      .migration-plan { border-right: none; border-bottom: 1px solid var(--border); }
-      .migration-plan:last-child { border-bottom: none; }
-      .migration-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
+    .pp-result {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--white);
+      padding-top: 1.25rem;
+      border-top: 1px solid var(--border);
+      font-weight: 500;
+    }
+
+    .pp-note {
+      margin-top: 3rem;
+      padding: 2rem;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.02);
+    }
+
+    .pp-note p {
+      font-size: 0.9rem;
+      color: var(--grey-light);
+      line-height: 1.8;
+    }
+
+    .pp-note strong {
+      color: var(--white);
+      font-weight: 500;
     }
 
     /* ─── HAMBURGER + MOBILE MENU ─── */
@@ -1271,6 +1155,12 @@
       .why-visual { display: none; }
       .services-grid { grid-template-columns: 1fr; }
       .service-card { border-right: none; }
+      .pricing-problem-grid { grid-template-columns: 1fr; gap: 1rem; }
+      .pp-card { padding: 1.5rem; }
+      .pp-label { margin-bottom: 1rem; }
+      .pp-list { gap: 0.5rem; margin-bottom: 1rem; }
+      .pp-list li { font-size: 0.78rem; }
+      .pp-result { padding-top: 1rem; font-size: 0.65rem; }
       .steps { grid-template-columns: 1fr; }
       .step { border-right: none; border-bottom: 1px solid var(--border); }
       .step:last-child { border-bottom: none; }
@@ -1288,11 +1178,11 @@
   <nav id="nav">
     <a href="#hero" class="nav-logo"><img src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/logo.photo.png" alt="Stackwell Digital" style="height:76px;width:auto;" /></a>
     <ul class="nav-links">
-      <li><a href="#portfolio">Our Work</a></li>
+      <li><a href="#how">How It Works</a></li>
       <li><a href="#services">Services</a></li>
       <li><a href="#pricing">Pricing</a></li>
-      <li><a href="#how">How It Works</a></li>
       <li><a href="#why">Why Us</a></li>
+      <li><a href="#portfolio">Our Work</a></li>
     </ul>
     <div style="display:flex;align-items:center;gap:1rem;">
       <a href="#contact" class="nav-cta">Get Started</a>
@@ -1304,11 +1194,11 @@
 
   <!-- MOBILE MENU -->
   <div class="mobile-menu" id="mobileMenu">
-    <a href="#portfolio" class="mobile-link">Our Work</a>
+    <a href="#how" class="mobile-link">How It Works</a>
     <a href="#services" class="mobile-link">Services</a>
     <a href="#pricing" class="mobile-link">Pricing</a>
-    <a href="#how" class="mobile-link">How It Works</a>
     <a href="#why" class="mobile-link">Why Us</a>
+    <a href="#portfolio" class="mobile-link">Our Work</a>
     <a href="#contact" class="mobile-link mobile-link-cta">Get Started</a>
   </div>
 
@@ -1348,6 +1238,228 @@
       <div class="marquee-item">Same Day Response</div>
     </div>
   </div>
+
+  <!-- THE PRICING PROBLEM -->
+  <section id="pricing-problem" style="border-top: 1px solid var(--border);">
+    <p class="section-label reveal">The Reality</p>
+    <h2 class="reveal">The Pricing Problem</h2>
+    <p class="reveal" style="color:var(--grey);max-width:520px;font-size:0.95rem;line-height:1.8;margin-top:1rem;">Most hosting companies charge premium prices for standard features and lock you in with contracts. Here's what that actually costs.</p>
+
+    <div class="pricing-problem-grid reveal">
+      <div class="pp-card">
+        <div class="pp-label">GoDaddy / Squarespace / Wix</div>
+        <ul class="pp-list">
+          <li>$25–50/month hosting</li>
+          <li>$300–500 setup or design</li>
+          <li>$50–200/month premium features</li>
+          <li>Limited updates, then $50–100 each</li>
+        </ul>
+        <div class="pp-result">$400–800/month by year two</div>
+      </div>
+
+      <div class="pp-card">
+        <div class="pp-label">Web Design Agencies</div>
+        <ul class="pp-list">
+          <li>$2,500–5,000 upfront</li>
+          <li>$200–400/month ongoing</li>
+          <li>3–6 month minimum contracts</li>
+          <li>You don't own design files</li>
+        </ul>
+        <div class="pp-result">Locked in. Overcharged. Dependent.</div>
+      </div>
+
+      <div class="pp-card pp-featured">
+        <div class="pp-label">Stackwell Digital</div>
+        <ul class="pp-list">
+          <li>$120–250/month. Everything included.</li>
+          <li>Domain. Hosting. Updates. Support.</li>
+          <li>Month-to-month. No contracts.</li>
+          <li>You own your design.</li>
+        </ul>
+        <div class="pp-result">Professional. Transparent. Affordable.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section id="how" style="border-top: 1px solid var(--border);">
+    <p class="section-label reveal">Process</p>
+    <h2 class="reveal">How It Works</h2>
+    <div class="steps reveal">
+      <div class="step">
+        <div class="step-num">01</div>
+        <h3>We Build It</h3>
+        <p>We design and build your site from scratch — professional, fast, and tailored to your business. Ready in days, not months.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <h3>You Review It</h3>
+        <p>We walk you through the site and make adjustments until it's exactly what you want. Your input, our execution.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <h3>We Launch It</h3>
+        <p>Domain connected, site goes live. We handle the tech — DNS, hosting, SSL, all of it. You don't touch a thing.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <h3>We Manage It</h3>
+        <p>Need new hours posted? A menu update? A new photo? Just send us a message. Updates are included in your monthly plan.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services">
+    <p class="section-label reveal">What We Do</p>
+    <h2 class="reveal">Services We Provide</h2>
+    <div class="services-grid reveal">
+      <div class="service-card">
+        <div class="service-icon">◈</div>
+        <h3>Web Design</h3>
+        <p>Custom-built sites designed around your business. Fast, professional, and ready to work on any device.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">⬡</div>
+        <h3>Managed Hosting</h3>
+        <p>Your site lives on our infrastructure. Uptime, SSL, backups — all handled. Nothing for you to manage.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">◎</div>
+        <h3>Domain Management</h3>
+        <p>We register, configure, and maintain your domain. DNS, renewals, redirects — it's all ours to deal with.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">⌖</div>
+        <h3>SEO &amp; Analytics</h3>
+        <p>Built-in SEO fundamentals from day one. Monthly reporting on traffic, rankings, and how your site performs.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">◉</div>
+        <h3>Google Business Profile</h3>
+        <p>We set up and manage your Google Business listing so customers can find you in local search and Maps.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">✦</div>
+        <h3>Content Updates</h3>
+        <p>New hours, a menu change, a fresh photo — just message us. Updates are included in your monthly plan.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section id="pricing">
+    <p class="section-label reveal">Plans</p>
+    <div class="pricing-intro reveal">
+      <h2>Simple,<br />Flat Pricing</h2>
+      <p>Every plan is month-to-month. No long-term contracts, no hidden fees, no surprise invoices. Pick the level of service that fits your business and change anytime.</p>
+    </div>
+
+    <div class="plans reveal">
+      <!-- STARTER -->
+      <div class="plan">
+        <p class="plan-name">Starter</p>
+        <div class="plan-price">$120</div>
+        <div class="plan-cycle">/ month CAD</div>
+        <ul class="plan-features">
+          <li>Professional website build</li>
+          <li>Domain management included</li>
+          <li>2 content updates per month</li>
+          <li>Hosting included</li>
+          <li>Annual site refresh</li>
+        </ul>
+        <a href="https://square.link/u/5vbs2nRZ" target="_blank" rel="noopener" class="plan-cta">Get Started</a>
+      </div>
+
+      <!-- ACTIVE -->
+      <div class="plan featured">
+        <p class="plan-name">Active Business</p>
+        <div class="plan-price">$175</div>
+        <div class="plan-cycle">/ month CAD</div>
+        <ul class="plan-features">
+          <li>Everything in Starter</li>
+          <li>6 content updates per month</li>
+          <li>Basic SEO optimization</li>
+          <li>Monthly analytics report</li>
+          <li>Semi-annual site refresh</li>
+        </ul>
+        <a href="https://square.link/u/6uF6mGMl" target="_blank" rel="noopener" class="plan-cta">Get Started</a>
+      </div>
+
+      <!-- PREMIUM -->
+      <div class="plan">
+        <p class="plan-name">Premium</p>
+        <div class="plan-price">$250</div>
+        <div class="plan-cycle">/ month CAD</div>
+        <ul class="plan-features">
+          <li>Everything in Active Business</li>
+          <li>Unlimited content updates</li>
+          <li>Same-day response guarantee</li>
+          <li>Google Business Profile management</li>
+          <li>Quarterly strategy check-in</li>
+          <li>Seasonal site refreshes</li>
+        </ul>
+        <a href="https://square.link/u/xSMif3fX" target="_blank" rel="noopener" class="plan-cta">Get Started</a>
+      </div>
+    </div>
+
+
+  </section>
+
+  <!-- WHY -->
+  <section id="why">
+    <div>
+      <p class="section-label reveal">Why Stackwell</p>
+      <h2 class="reveal">Built for<br />Real Business</h2>
+      <div class="why-list reveal">
+        <div class="why-item">
+          <span class="why-num">01</span>
+          <div>
+            <h4>You Don't Have to Touch It</h4>
+            <p>Send us a text, we handle the update. No logging into anything, no learning curves, no wasted afternoons.</p>
+          </div>
+        </div>
+        <div class="why-item">
+          <span class="why-num">02</span>
+          <div>
+            <h4>One Flat Rate, No Surprises</h4>
+            <p>What you see is what you pay. Every month. No overages, no "per change" billing, no nickel-and-diming.</p>
+          </div>
+        </div>
+        <div class="why-item">
+          <span class="why-num">03</span>
+          <div>
+            <h4>Local Business Focus</h4>
+            <p>We work specifically with local and independent businesses. We know what works, and what's a waste of your money.</p>
+          </div>
+        </div>
+        <div class="why-item">
+          <span class="why-num">04</span>
+          <div>
+            <h4>Month to Month</h4>
+            <p>No year-long contracts to sign. Stay because the service is worth it, not because you're locked in.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="why-visual reveal" id="why-visual">
+      <div class="why-ghost" id="why-ghost">0</div>
+      <div class="why-visual-inner"></div>
+      <div class="why-stat">
+        <div class="why-stat-label-top">Canadian Small Business</div>
+        <div class="why-stat-num"><span id="why-counter">0</span>%</div>
+        <div class="why-progress-track">
+          <div class="why-progress-fill" id="why-progress"></div>
+        </div>
+        <div class="why-progress-ticks">
+          <span></span><span></span><span></span><span></span>
+        </div>
+        <p>of local businesses have no website — or one so outdated it's working against them</p>
+      </div>
+    </div>
+  </section>
+
 
   <!-- PORTFOLIO -->
   <section id="portfolio">
@@ -1456,245 +1568,6 @@
     </div>
   </section>
 
-  <!-- SERVICES -->
-  <section id="services">
-    <p class="section-label reveal">What We Do</p>
-    <h2 class="reveal">Services We Provide</h2>
-    <div class="services-grid reveal">
-      <div class="service-card">
-        <div class="service-icon">◈</div>
-        <h3>Web Design</h3>
-        <p>Custom-built sites designed around your business. Fast, professional, and ready to work on any device.</p>
-      </div>
-      <div class="service-card">
-        <div class="service-icon">⬡</div>
-        <h3>Managed Hosting</h3>
-        <p>Your site lives on our infrastructure. Uptime, SSL, backups — all handled. Nothing for you to manage.</p>
-      </div>
-      <div class="service-card">
-        <div class="service-icon">◎</div>
-        <h3>Domain Management</h3>
-        <p>We register, configure, and maintain your domain. DNS, renewals, redirects — it's all ours to deal with.</p>
-      </div>
-      <div class="service-card">
-        <div class="service-icon">⌖</div>
-        <h3>SEO &amp; Analytics</h3>
-        <p>Built-in SEO fundamentals from day one. Monthly reporting on traffic, rankings, and how your site performs.</p>
-      </div>
-      <div class="service-card">
-        <div class="service-icon">◉</div>
-        <h3>Google Business Profile</h3>
-        <p>We set up and manage your Google Business listing so customers can find you in local search and Maps.</p>
-      </div>
-      <div class="service-card">
-        <div class="service-icon">✦</div>
-        <h3>Content Updates</h3>
-        <p>New hours, a menu change, a fresh photo — just message us. Updates are included in your monthly plan.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- PRICING -->
-  <section id="pricing">
-    <p class="section-label reveal">Plans</p>
-    <div class="pricing-intro reveal">
-      <h2>Simple,<br />Flat Pricing</h2>
-      <p>Every plan is month-to-month. No long-term contracts, no hidden fees, no surprise invoices. Pick the level of service that fits your business and change anytime.</p>
-    </div>
-
-    <div class="plans reveal">
-      <!-- STARTER -->
-      <div class="plan">
-        <p class="plan-name">Starter</p>
-        <div class="plan-price">$120</div>
-        <div class="plan-cycle">/ month CAD</div>
-        <ul class="plan-features">
-          <li>Professional website build</li>
-          <li>Domain management included</li>
-          <li>2 content updates per month</li>
-          <li>Hosting included</li>
-          <li>Annual site refresh</li>
-        </ul>
-        <a href="https://square.link/u/5vbs2nRZ" target="_blank" rel="noopener" class="plan-cta">Get Started</a>
-      </div>
-
-      <!-- ACTIVE -->
-      <div class="plan featured">
-        <p class="plan-name">Active Business</p>
-        <div class="plan-price">$175</div>
-        <div class="plan-cycle">/ month CAD</div>
-        <ul class="plan-features">
-          <li>Everything in Starter</li>
-          <li>6 content updates per month</li>
-          <li>Basic SEO optimization</li>
-          <li>Monthly analytics report</li>
-          <li>Semi-annual site refresh</li>
-        </ul>
-        <a href="https://square.link/u/6uF6mGMl" target="_blank" rel="noopener" class="plan-cta">Get Started</a>
-      </div>
-
-      <!-- PREMIUM -->
-      <div class="plan">
-        <p class="plan-name">Premium</p>
-        <div class="plan-price">$250</div>
-        <div class="plan-cycle">/ month CAD</div>
-        <ul class="plan-features">
-          <li>Everything in Active Business</li>
-          <li>Unlimited content updates</li>
-          <li>Same-day response guarantee</li>
-          <li>Google Business Profile management</li>
-          <li>Quarterly strategy check-in</li>
-          <li>Seasonal site refreshes</li>
-        </ul>
-        <a href="https://square.link/u/xSMif3fX" target="_blank" rel="noopener" class="plan-cta">Get Started</a>
-      </div>
-    </div>
-
-    <div class="addons reveal">
-      <h3>Add-Ons</h3>
-      <div class="addon-list">
-        <div class="addon-item">Initial Site Build <span>$299–499</span></div>
-        <div class="addon-item">Google Business Setup <span>$99</span></div>
-        <div class="addon-item">Extra Update (each) <span>$25</span></div>
-        <div class="addon-item">Rush Changes <span>$50 flat</span></div>
-      </div>
-    </div>
-
-    <!-- ALREADY HAVE A SITE -->
-    <div class="migration-wrap reveal">
-      <div class="migration-header">
-        <div class="migration-header-left">
-          <div class="migration-eyebrow">Already Have a Website?</div>
-          <div class="migration-title">Hosting + Management<br />Without the Rebuild</div>
-        </div>
-        <div class="migration-header-right">
-          Already on GoDaddy, Squarespace, or Wix and just tired of paying too much for too little? We migrate your existing site and take over — hosting, updates, and support included. One-time migration fee, then a flat monthly rate.</div>
-      </div>
-      <div class="migration-body">
-
-        <!-- BASIC HOST -->
-        <div class="migration-plan">
-          <div class="migration-plan-name">Host Only</div>
-          <div class="migration-price-row">
-            <div class="migration-price">$60</div>
-          </div>
-          <div class="migration-cycle">/ month CAD</div>
-          <ul class="migration-features">
-            <li>Site migrated to our infrastructure</li>
-            <li>Domain management included</li>
-            <li>Fast, reliable hosting</li>
-            <li>SSL included</li>
-            <li>1 content update per month</li>
-          </ul>
-          <a href="https://square.link/u/M7dPjP4o" target="_blank" rel="noopener" class="migration-cta">Get Started</a>
-        </div>
-
-        <!-- HOST + MANAGE -->
-        <div class="migration-plan">
-          <div class="migration-plan-name">Host + Manage</div>
-          <div class="migration-price-row">
-            <div class="migration-price">$99</div>
-          </div>
-          <div class="migration-cycle">/ month CAD</div>
-          <ul class="migration-features">
-            <li>Everything in Host Only</li>
-            <li>3 content updates per month</li>
-            <li>Basic SEO pass on migration</li>
-            <li>Monthly uptime monitoring</li>
-            <li>Priority email support</li>
-          </ul>
-          <a href="https://square.link/u/PFiJBct8" target="_blank" rel="noopener" class="migration-cta">Get Started</a>
-        </div>
-
-      </div>
-      <div class="migration-note">One-time migration fee of $199 applies to all plans. Covers domain transfer, site rebuild, and initial setup. Need a full redesign? Migrate onto our Starter plan from $120/mo.</div>
-    </div>
-
-  </section>
-
-  <!-- HOW IT WORKS -->
-  <section id="how">
-    <p class="section-label reveal">Process</p>
-    <h2 class="reveal">How It Works</h2>
-    <div class="steps reveal">
-      <div class="step">
-        <div class="step-num">01</div>
-        <h3>We Build It</h3>
-        <p>We design and build your site from scratch — professional, fast, and tailored to your business. Ready in days, not months.</p>
-      </div>
-      <div class="step">
-        <div class="step-num">02</div>
-        <h3>You Review It</h3>
-        <p>We walk you through the site and make adjustments until it's exactly what you want. Your input, our execution.</p>
-      </div>
-      <div class="step">
-        <div class="step-num">03</div>
-        <h3>We Launch It</h3>
-        <p>Domain connected, site goes live. We handle the tech — DNS, hosting, SSL, all of it. You don't touch a thing.</p>
-      </div>
-      <div class="step">
-        <div class="step-num">04</div>
-        <h3>We Manage It</h3>
-        <p>Need new hours posted? A menu update? A new photo? Just send us a message. Updates are included in your monthly plan.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- WHY -->
-  <section id="why">
-    <div>
-      <p class="section-label reveal">Why Stackwell</p>
-      <h2 class="reveal">Built for<br />Real Business</h2>
-      <div class="why-list reveal">
-        <div class="why-item">
-          <span class="why-num">01</span>
-          <div>
-            <h4>You Don't Have to Touch It</h4>
-            <p>Send us a text, we handle the update. No logging into anything, no learning curves, no wasted afternoons.</p>
-          </div>
-        </div>
-        <div class="why-item">
-          <span class="why-num">02</span>
-          <div>
-            <h4>One Flat Rate, No Surprises</h4>
-            <p>What you see is what you pay. Every month. No overages, no "per change" billing, no nickel-and-diming.</p>
-          </div>
-        </div>
-        <div class="why-item">
-          <span class="why-num">03</span>
-          <div>
-            <h4>Local Business Focus</h4>
-            <p>We work specifically with local and independent businesses. We know what works, and what's a waste of your money.</p>
-          </div>
-        </div>
-        <div class="why-item">
-          <span class="why-num">04</span>
-          <div>
-            <h4>Month to Month</h4>
-            <p>No year-long contracts to sign. Stay because the service is worth it, not because you're locked in.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="why-visual reveal" id="why-visual">
-      <div class="why-ghost" id="why-ghost">0</div>
-      <div class="why-visual-inner"></div>
-      <div class="why-stat">
-        <div class="why-stat-label-top">Canadian Small Business</div>
-        <div class="why-stat-num"><span id="why-counter">0</span>%</div>
-        <div class="why-progress-track">
-          <div class="why-progress-fill" id="why-progress"></div>
-        </div>
-        <div class="why-progress-ticks">
-          <span></span><span></span><span></span><span></span>
-        </div>
-        <p>of local businesses have no website — or one so outdated it's working against them</p>
-      </div>
-    </div>
-  </section>
-
-
   <!-- TEAM -->
   <section id="team">
     <p class="section-label reveal">The Team</p>
@@ -1750,7 +1623,10 @@
   <!-- FOOTER -->
   <footer>
     <div class="footer-left">&copy; 2026 Stackwell Digital &mdash; British Columbia, Canada</div>
-    <div class="footer-right">stackwell.digital</div>
+    <div class="footer-right">
+      <a href="/privacy" style="color:var(--grey);text-decoration:none;font-size:0.6rem;letter-spacing:0.12em;margin-right:1.5rem;transition:color 0.2s;" onmouseover="this.style.color='white'" onmouseout="this.style.color='var(--grey)'">Privacy</a>
+      <span style="color:var(--grey);font-size:0.6rem;letter-spacing:0.12em;">stackwell.digital</span>
+    </div>
   </footer>
 
   <script>
