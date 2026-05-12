@@ -501,3 +501,406 @@
 
 </body>
 </html>
+      text-transform: uppercase;
+      color: var(--grey);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--white); }
+
+    /* ─── CONTENT ─── */
+    .policy-wrapper {
+      position: relative;
+      z-index: 1;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 8rem 2.5rem 4rem;
+    }
+
+    .policy-header {
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 3rem;
+      margin-bottom: 3rem;
+    }
+
+    .policy-header h1 {
+      font-family: var(--display);
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      line-height: 1;
+      letter-spacing: 0.02em;
+      margin-bottom: 0.5rem;
+    }
+
+    .policy-header p {
+      font-size: 0.95rem;
+      color: var(--grey-light);
+      line-height: 1.8;
+    }
+
+    .policy-content {
+      font-size: 0.9rem;
+      line-height: 1.9;
+      color: var(--grey-light);
+    }
+
+    .policy-content h2 {
+      font-family: var(--display);
+      font-size: 1.8rem;
+      letter-spacing: 0.04em;
+      color: var(--white);
+      margin-top: 3rem;
+      margin-bottom: 1.5rem;
+      line-height: 1.1;
+    }
+
+    .policy-content h2:first-child {
+      margin-top: 0;
+    }
+
+    .policy-content h3 {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--grey);
+      margin-top: 1.5rem;
+      margin-bottom: 0.75rem;
+      font-weight: 500;
+    }
+
+    .policy-content p {
+      margin-bottom: 1rem;
+    }
+
+    .policy-content ul {
+      list-style: none;
+      margin: 1rem 0 1rem 1.5rem;
+    }
+
+    .policy-content li {
+      margin-bottom: 0.6rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+    }
+
+    .policy-content li::before {
+      content: '◆';
+      font-size: 0.35rem;
+      color: var(--grey);
+      margin-top: 0.45rem;
+      flex-shrink: 0;
+    }
+
+    .policy-content strong {
+      color: var(--white);
+      font-weight: 500;
+    }
+
+    .policy-content em {
+      color: var(--grey-light);
+      font-style: italic;
+    }
+
+    .policy-content a {
+      color: var(--white);
+      text-decoration: underline;
+      transition: opacity 0.2s;
+    }
+    .policy-content a:hover { opacity: 0.7; }
+
+    .policy-divider {
+      border-top: 1px solid var(--border);
+      margin: 3rem 0;
+    }
+
+    .policy-footer {
+      margin-top: 4rem;
+      padding-top: 3rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .policy-footer p {
+      font-size: 0.85rem;
+      color: var(--grey);
+      margin-bottom: 0.75rem;
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      position: relative;
+      z-index: 1;
+      border-top: 1px solid var(--border);
+      padding: 2rem 2.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 4rem;
+    }
+
+    .footer-left {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      color: var(--grey);
+      text-transform: uppercase;
+    }
+
+    .footer-right {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      color: var(--grey);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .footer-links a {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
+      color: var(--grey);
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--white); }
+
+    @media (max-width: 900px) {
+      nav { padding: 1.25rem 1.5rem; }
+      .policy-wrapper { padding: 7rem 1.5rem 3rem; }
+      .policy-content { font-size: 0.85rem; }
+      .policy-content h2 { font-size: 1.4rem; margin-top: 2rem; }
+      footer { flex-direction: column; gap: 1rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<nav id="nav">
+  <a href="https://stackwell.digital" class="nav-logo"><img src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/logo.photo.png" alt="Stackwell Digital" style="height:76px;width:auto;" /></a>
+  <div style="display:flex;align-items:center;gap:1rem;margin-left:auto;">
+    <a href="https://stackwell.digital" style="font-family:var(--mono);font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--grey);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='white'" onmouseout="this.style.color='var(--grey)'">← Back to Site</a>
+  </div>
+</nav>
+
+<div class="policy-wrapper">
+
+  <div class="policy-header">
+    <h1>Privacy Policy</h1>
+    <p>We don't sell your data. We don't track you. Here's exactly what we do with your information.</p>
+  </div>
+
+  <div class="policy-content">
+
+    <p><strong>Last Updated: May 2026</strong></p>
+
+    <h2>Overview</h2>
+
+    <p>Stackwell Digital ("we," "us," or "our") is committed to protecting your privacy. This policy explains how we collect, use, and protect information when you use our services.</p>
+
+    <p>We do not sell, trade, or share your personal data with third parties. Period.</p>
+
+    <h2>Information We Collect</h2>
+
+    <h3>When You Subscribe</h3>
+    <p>We collect information necessary to provide our services:</p>
+    <ul>
+      <li>Your name</li>
+      <li>Business name</li>
+      <li>Email address</li>
+      <li>Phone number</li>
+      <li>Billing address</li>
+      <li>Payment information (processed securely by Square)</li>
+    </ul>
+
+    <h3>When You Use Your Site</h3>
+    <p>We collect minimal technical data:</p>
+    <ul>
+      <li>Server logs (IP address, browser type, pages accessed)</li>
+      <li>Site performance metrics (uptime, load time, errors)</li>
+      <li>Backup and recovery metadata</li>
+    </ul>
+
+    <p>We do <strong>not</strong> collect:</p>
+    <ul>
+      <li>Cookies from your site visitors</li>
+      <li>Behavioral tracking data</li>
+      <li>Location data</li>
+      <li>Device fingerprinting</li>
+      <li>Visitor analytics beyond basic server logs</li>
+    </ul>
+
+    <h2>How We Use Your Information</h2>
+
+    <p>Your information is used only for:</p>
+    <ul>
+      <li>Providing and maintaining your website hosting</li>
+      <li>Billing and payment processing</li>
+      <li>Customer support and technical assistance</li>
+      <li>Security and fraud prevention</li>
+      <li>Compliance with legal obligations</li>
+    </ul>
+
+    <p>We will <strong>never</strong> use your information for:</p>
+    <ul>
+      <li>Marketing or advertising to third parties</li>
+      <li>Selling or licensing your data</li>
+      <li>Profiling or behavioral analysis</li>
+      <li>Creating audience segments for resale</li>
+      <li>Training AI models or machine learning systems</li>
+    </ul>
+
+    <h2>Third-Party Services</h2>
+
+    <p>We use only essential third-party services:</p>
+
+    <h3>Payment Processing</h3>
+    <p><strong>Square, Inc.</strong> — Processes your monthly subscription payments. Square's privacy policy is available at <a href="https://squareup.com/legal/privacy" target="_blank">https://squareup.com/legal/privacy</a></p>
+
+    <h3>Email Delivery</h3>
+    <p><strong>Google Workspace</strong> — Hosts your email and ours. Google's privacy policy is available at <a href="https://policies.google.com/privacy" target="_blank">https://policies.google.com/privacy</a></p>
+
+    <h3>DNS & Hosting</h3>
+    <p><strong>Cloudflare</strong> — Manages your domain DNS and site infrastructure. Cloudflare's privacy policy is available at <a href="https://www.cloudflare.com/privacypolicy/" target="_blank">https://www.cloudflare.com/privacypolicy/</a></p>
+
+    <p>We have selected these providers based on their strong privacy practices and commitment to data protection. We do not authorize them to use your data for any purpose beyond providing their services.</p>
+
+    <h2>Data Storage & Security</h2>
+
+    <h3>Where Your Data Is Stored</h3>
+    <p>Your website and backups are stored on Cloudflare's servers in North America. Your account data is encrypted at rest using AES-256 encryption.</p>
+
+    <h3>How We Protect Your Data</h3>
+    <ul>
+      <li>All data in transit is encrypted using TLS 1.2 or higher</li>
+      <li>Passwords are hashed, never stored in plain text</li>
+      <li>Access to your data is restricted to authorized Stackwell Digital personnel only</li>
+      <li>We perform regular security audits and penetration testing</li>
+      <li>We maintain offsite encrypted backups for disaster recovery</li>
+    </ul>
+
+    <h3>Data Breach Notification</h3>
+    <p>If we discover unauthorized access to your personal data, we will notify you within 48 hours via email. We will provide details about what data was accessed and steps we're taking to secure it.</p>
+
+    <h2>Your Rights</h2>
+
+    <h3>Access & Portability</h3>
+    <p>You have the right to:</p>
+    <ul>
+      <li>Request a copy of all personal data we hold about you</li>
+      <li>Receive your data in a portable format</li>
+      <li>Request correction of inaccurate information</li>
+    </ul>
+
+    <h3>Deletion</h3>
+    <p>You have the right to request deletion of your personal data. Upon cancellation of your account:</p>
+    <ul>
+      <li>Your website is taken offline immediately</li>
+      <li>Your personal information is flagged for deletion</li>
+      <li>Your data is permanently deleted within 30 days</li>
+      <li>Backups are retained for 60 days for disaster recovery, then deleted</li>
+    </ul>
+
+    <p><em>Note: We are required by law to retain billing records for 7 years for tax purposes. These records contain only your name, email, billing address, and transaction amounts — not your website content.</em></p>
+
+    <h3>Opt-Out</h3>
+    <p>You can opt out of non-essential communications by replying "UNSUBSCRIBE" to any email from us.</p>
+
+    <h2>Visitor Data & Your Responsibility</h2>
+
+    <p>Your website may collect visitor data (contact forms, email signups, etc.). <strong>You are responsible for:</strong></p>
+    <ul>
+      <li>Clearly disclosing what data you collect</li>
+      <li>Obtaining explicit consent before collecting personal information</li>
+      <li>Providing a privacy policy on your website if you collect visitor data</li>
+      <li>Complying with applicable privacy laws (PIPEDA in Canada, GDPR for EU visitors, etc.)</li>
+    </ul>
+
+    <p>We do not access, use, or have responsibility for visitor data collected through your website. That data belongs to you.</p>
+
+    <h2>Cookies & Tracking</h2>
+
+    <h3>On stackwell.digital</h3>
+    <p>We do not use cookies or tracking pixels. We use no analytics services (Google Analytics, Hotjar, etc.). We don't know how many people visit our site, and we don't care to.</p>
+
+    <h3>On Your Site</h3>
+    <p>Your website does not include any tracking code by default. If you want to add analytics, you can integrate it yourself (Google Analytics, Plausible, Fathom, etc.). You are responsible for disclosing analytics collection to your visitors.</p>
+
+    <h2>Legal Obligations</h2>
+
+    <p>We may disclose your information when required by law:</p>
+    <ul>
+      <li>Court orders or subpoenas</li>
+      <li>Government investigations</li>
+      <li>Law enforcement requests</li>
+      <li>Protection of legal rights or safety</li>
+    </ul>
+
+    <p>We will not voluntarily provide data to government agencies without legal process. We will challenge overly broad requests when possible.</p>
+
+    <h2>International Users</h2>
+
+    <p>If you access our services from outside Canada:</p>
+    <ul>
+      <li>Your data is stored in North America (Cloudflare's servers)</li>
+      <li>Your data is subject to this privacy policy and Canadian privacy law</li>
+      <li>By using our services, you consent to data transfer and storage in North America</li>
+      <li>We comply with GDPR requirements for EU users (data processing agreements available on request)</li>
+    </ul>
+
+    <h2>Children's Privacy</h2>
+
+    <p>Our services are not intended for children under 13. We do not knowingly collect information from children. If we become aware that a child has provided information, we will delete it immediately.</p>
+
+    <h2>Changes to This Policy</h2>
+
+    <p>We may update this privacy policy at any time. Changes take effect immediately. We will notify you of material changes via email or by posting a notice on our website.</p>
+
+    <h2>Contact Us</h2>
+
+    <p>If you have questions about this privacy policy, your data, or your privacy rights:</p>
+
+    <p><strong>Email:</strong> adam@stackwell.digital</p>
+
+    <p><strong>Mailing Address:</strong><br>
+    Stackwell Digital<br>
+    British Columbia, Canada</p>
+
+    <p><strong>Response Time:</strong> We respond to privacy inquiries within 5 business days.</p>
+
+    <h2>Data Protection</h2>
+
+    <p>For GDPR-related inquiries, please contact us at the email above with the subject line "Data Protection Request."</p>
+
+    <div class="policy-divider"></div>
+
+    <p style="margin-top: 2rem; text-align: center; font-size: 0.85rem; color: var(--grey);">By using Stackwell Digital, you agree to this privacy policy in full. We believe privacy is not a feature — it's a right. We've designed our service with that principle in mind.</p>
+
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-left">&copy; 2026 Stackwell Digital</div>
+  <ul class="footer-links">
+    <li><a href="https://stackwell.digital">Home</a></li>
+    <li><a href="/terms">Terms</a></li>
+    <li><a href="/privacy">Privacy</a></li>
+  </ul>
+  <div class="footer-right">stackwell.digital</div>
+</footer>
+
+<script>
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 40);
+  });
+</script>
+
+</body>
+</html>
