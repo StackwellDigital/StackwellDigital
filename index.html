@@ -8,14 +8,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
-  <!-- Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2B7Q3ZN6Q7"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-2B7Q3ZN6Q7');
-  </script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -261,6 +253,16 @@
       width: 40px;
       height: 1px;
       background: var(--grey);
+    }
+
+    .hero-video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 0;
+      opacity: 0.3;
     }
 
     /* ─── SECTIONS ─── */
@@ -1212,6 +1214,9 @@
 
   <!-- HERO -->
   <section id="hero">
+    <video class="hero-video" autoplay muted loop playsinline>
+      <source src="https://pub-a8448320a70c4e9197cce0cfa015b00f.r2.dev/Black%20White%20and%20Blue%20Modern%20Coding%20Education%20Video.mp4" type="video/mp4">
+    </video>
     <div class="hero-grid"></div>
     <p class="hero-tag">Web Presence for Local Business</p>
     <h1>Your Website.<br /><em>Handled.</em></h1>
