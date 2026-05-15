@@ -374,6 +374,8 @@
       line-height: 1.7;
     }
 
+    .step-body { display: contents; }
+
     /* ─── PRICING ─── */
     #pricing {
       border-top: 1px solid var(--border);
@@ -916,91 +918,144 @@
       border-top: 1px solid var(--border);
     }
 
-    .pricing-problem-grid {
+    .pp-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.5rem;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
       margin-top: 4rem;
+      border: 1px solid var(--border);
     }
 
-    .pp-card {
-      border: 1px solid var(--border);
-      padding: 2rem;
+    /* LEFT — competitors */
+    .pp-them {
+      padding: 2.5rem;
+      border-right: 1px solid var(--border);
       display: flex;
       flex-direction: column;
-      transition: border-color 0.3s, background 0.3s;
-      font-size: 0.85rem;
-    }
-    .pp-card:hover { border-color: rgba(255,255,255,0.15); background: rgba(255,255,255,0.02); }
-
-    .pp-featured {
-      background: rgba(255,255,255,0.04);
-      border-color: rgba(255,255,255,0.15);
+      gap: 0;
     }
 
-    .pp-label {
+    .pp-them-label {
       font-family: var(--mono);
-      font-size: 0.62rem;
-      letter-spacing: 0.2em;
+      font-size: 0.58rem;
+      letter-spacing: 0.25em;
       text-transform: uppercase;
       color: var(--grey);
-      margin-bottom: 1.25rem;
-      font-weight: 500;
+      margin-bottom: 2rem;
     }
 
-    .pp-list {
-      list-style: none;
+    .pp-them-row {
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--border);
       display: flex;
       flex-direction: column;
-      gap: 0.6rem;
-      margin-bottom: 1.5rem;
-      flex-grow: 1;
+      gap: 0.3rem;
+    }
+    .pp-them-row:last-child { border-bottom: none; }
+
+    .pp-them-source {
+      font-family: var(--mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.25);
     }
 
-    .pp-list li {
-      font-size: 0.82rem;
-      color: var(--grey-light);
+    .pp-them-pain {
+      font-size: 0.84rem;
+      color: var(--grey);
+      line-height: 1.5;
       display: flex;
       align-items: flex-start;
-      gap: 0.5rem;
-      line-height: 1.5;
+      gap: 0.6rem;
     }
 
-    .pp-list li::before {
-      content: '◆';
-      font-size: 0.3rem;
-      color: var(--grey);
-      margin-top: 0.45rem;
+    .pp-them-pain::before {
+      content: '✕';
+      font-size: 0.6rem;
+      color: rgba(255,80,80,0.6);
+      margin-top: 0.2rem;
       flex-shrink: 0;
     }
 
-    .pp-result {
+    /* RIGHT — Stackwell */
+    .pp-us {
+      background: #161616;
+      padding: 2.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      position: relative;
+      border-left: 1px solid transparent;
+      background-clip: padding-box;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.12);
+    }
+
+    .pp-us::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at top right, rgba(255,255,255,0.05) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .pp-us-label {
       font-family: var(--mono);
-      font-size: 0.7rem;
-      letter-spacing: 0.1em;
+      font-size: 0.58rem;
+      letter-spacing: 0.25em;
       text-transform: uppercase;
       color: var(--white);
-      padding-top: 1.25rem;
-      border-top: 1px solid var(--border);
-      font-weight: 500;
+      margin-bottom: 2rem;
+      position: relative;
     }
 
-    .pp-note {
-      margin-top: 3rem;
-      padding: 2rem;
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,0.02);
+    .pp-us-row {
+      padding: 1rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+      position: relative;
     }
+    .pp-us-row:last-child { border-bottom: none; }
 
-    .pp-note p {
-      font-size: 0.9rem;
+    .pp-us-fix {
+      font-size: 0.84rem;
       color: var(--grey-light);
-      line-height: 1.8;
+      line-height: 1.5;
+      font-weight: 400;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
     }
 
-    .pp-note strong {
+    .pp-us-fix::before {
+      content: '✓';
+      font-size: 0.65rem;
       color: var(--white);
-      font-weight: 500;
+      margin-top: 0.15rem;
+      flex-shrink: 0;
+      font-weight: 600;
+    }
+
+    .pp-us-price {
+      font-family: var(--display);
+      font-size: 3.5rem;
+      color: var(--white);
+      line-height: 1;
+      margin-top: auto;
+      padding-top: 2rem;
+      position: relative;
+    }
+
+    .pp-us-price span {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.1em;
+      color: var(--grey);
+      display: block;
+      margin-top: 0.3rem;
+      font-weight: 400;
     }
 
     /* ─── HAMBURGER + MOBILE MENU ─── */
@@ -1154,26 +1209,109 @@
     @media (max-width: 900px) {
       nav { padding: 1.25rem 1.5rem; }
       .nav-links { display: none; }
+      .nav-cta { display: none; }
+      .nav-logo img { height: 48px !important; }
       .hamburger { display: flex; }
       section { padding: 5rem 1.5rem; }
-      #hero { padding: 0 1.5rem 4rem; }
+      #hero { padding: 6rem 1.5rem 4rem; }
       .pricing-intro { grid-template-columns: 1fr; gap: 1.5rem; }
       .plans { grid-template-columns: 1fr; }
       .plan { border-right: none; border-bottom: 1px solid var(--border); }
       .plan:last-child { border-bottom: none; }
       #why { grid-template-columns: 1fr; gap: 3rem; }
       .why-visual { display: none; }
-      .services-grid { grid-template-columns: 1fr; }
-      .service-card { border-right: none; }
-      .pricing-problem-grid { grid-template-columns: 1fr; gap: 1rem; }
-      .pp-card { padding: 1.5rem; }
-      .pp-label { margin-bottom: 1rem; }
-      .pp-list { gap: 0.5rem; margin-bottom: 1rem; }
-      .pp-list li { font-size: 0.78rem; }
-      .pp-result { padding-top: 1rem; font-size: 0.65rem; }
-      .steps { grid-template-columns: 1fr; }
-      .step { border-right: none; border-bottom: 1px solid var(--border); }
-      .step:last-child { border-bottom: none; }
+
+      /* ─── SERVICES MOBILE ─── */
+      #services { padding: 3.5rem 1.25rem; }
+      .services-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 0.75rem;
+        background: transparent;
+        border: none;
+      }
+      .service-card {
+        border: 1px solid transparent;
+        background:
+          linear-gradient(#141414, #141414) padding-box,
+          linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.03)) border-box;
+        border-radius: 4px;
+        padding: 1.5rem 1.25rem;
+        position: relative;
+        overflow: hidden;
+      }
+      .service-card::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(ellipse at top left, rgba(255,255,255,0.04) 0%, transparent 65%);
+        pointer-events: none;
+        height: auto;
+      }
+      .service-card:active {
+        background:
+          linear-gradient(#1a1a1a, #1a1a1a) padding-box,
+          linear-gradient(135deg, rgba(255,255,255,0.35), rgba(255,255,255,0.06)) border-box;
+      }
+      .service-icon { font-size: 1rem; margin-bottom: 0.75rem; }
+      .service-card h3 { font-size: 1.1rem; margin-bottom: 0.4rem; }
+      .service-card p { font-size: 0.74rem; line-height: 1.6; color: var(--grey); }
+
+      .pp-grid { grid-template-columns: 1fr; border: none; gap: 1rem; margin-top: 2.5rem; }
+      .pp-them { border: 1px solid var(--border); padding: 1.75rem; }
+      .pp-us { padding: 1.75rem; }
+      .pp-us-price { font-size: 2.8rem; }
+      /* ─── HOW IT WORKS MOBILE TIMELINE ─── */
+      #how { padding: 3.5rem 1.25rem; }
+      .steps {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+        margin-top: 2.5rem;
+        border: none;
+        background: transparent;
+        position: relative;
+      }
+      .steps::before {
+        content: '';
+        position: absolute;
+        left: 1.1rem;
+        top: 0.6rem;
+        bottom: 0.6rem;
+        width: 1px;
+        background: linear-gradient(to bottom, rgba(255,255,255,0.2), rgba(255,255,255,0.04));
+      }
+      .step {
+        display: flex;
+        gap: 1.5rem;
+        padding: 0 0 2.5rem 0;
+        border: none;
+        position: relative;
+        align-items: flex-start;
+      }
+      .step:last-child { padding-bottom: 0; }
+      .step-num {
+        font-family: var(--mono);
+        font-size: 0.58rem;
+        letter-spacing: 0.1em;
+        color: var(--bg);
+        background: var(--white);
+        width: 2.2rem;
+        height: 2.2rem;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        margin-bottom: 0;
+        font-weight: 500;
+        line-height: 1;
+        position: relative;
+        z-index: 1;
+      }
+      .step-body { padding-top: 0.35rem; }
+      .step h3 { margin-bottom: 0.4rem; font-size: 0.72rem; }
+      .step p { font-size: 0.8rem; line-height: 1.65; }
+      .step-body { display: block; }
       .addons { grid-template-columns: 1fr; }
       .addon-list { grid-template-columns: 1fr; }
       .portfolio-grid { grid-template-columns: 1fr; gap: 1rem; }
@@ -1256,41 +1394,58 @@
   <section id="pricing-problem" style="border-top: 1px solid var(--border);">
     <p class="section-label reveal">The Reality</p>
     <h2 class="reveal">The Pricing Problem</h2>
-    <p class="reveal" style="color:var(--grey);max-width:520px;font-size:0.95rem;line-height:1.8;margin-top:1rem;">Most hosting companies charge premium prices for standard features and lock you in with contracts. Here's what that actually costs.</p>
+    <p class="reveal" style="color:var(--grey);max-width:520px;font-size:0.95rem;line-height:1.8;margin-top:1rem;">Most businesses are overpaying for hosting they don't control and updates they have to beg for. Here's what it actually looks like.</p>
 
-    <div class="pricing-problem-grid reveal">
-      <div class="pp-card">
-        <div class="pp-label">GoDaddy / Squarespace / Wix</div>
-        <ul class="pp-list">
-          <li>$25–50/month hosting</li>
-          <li>$300–500 setup or design</li>
-          <li>$50–200/month premium features</li>
-          <li>Limited updates, then $50–100 each</li>
-        </ul>
-        <div class="pp-result">$400–800/month by year two</div>
+    <div class="pp-grid reveal">
+
+      <!-- LEFT: Them -->
+      <div class="pp-them">
+        <div class="pp-them-label">Everyone Else</div>
+
+        <div class="pp-them-row">
+          <div class="pp-them-source">GoDaddy / Wix / Squarespace</div>
+          <div class="pp-them-pain">$25–50/mo hosting, then $50–100 per update you forgot was extra</div>
+        </div>
+
+        <div class="pp-them-row">
+          <div class="pp-them-source">Web Design Agencies</div>
+          <div class="pp-them-pain">$2,500–5,000 upfront, 6-month contracts, you don't own the files</div>
+        </div>
+
+        <div class="pp-them-row">
+          <div class="pp-them-source">Freelancers</div>
+          <div class="pp-them-pain">Great until they disappear. No support, no updates, no continuity</div>
+        </div>
+
+        <div class="pp-them-row">
+          <div class="pp-them-source">DIY Builders</div>
+          <div class="pp-them-pain">Hours of your time, a mediocre result, and a bill that keeps growing</div>
+        </div>
       </div>
 
-      <div class="pp-card">
-        <div class="pp-label">Web Design Agencies</div>
-        <ul class="pp-list">
-          <li>$2,500–5,000 upfront</li>
-          <li>$200–400/month ongoing</li>
-          <li>3–6 month minimum contracts</li>
-          <li>You don't own design files</li>
-        </ul>
-        <div class="pp-result">Locked in. Overcharged. Dependent.</div>
+      <!-- RIGHT: Us -->
+      <div class="pp-us">
+        <div class="pp-us-label">Stackwell Digital</div>
+
+        <div class="pp-us-row">
+          <div class="pp-us-fix">One flat monthly rate. Everything included.</div>
+        </div>
+        <div class="pp-us-row">
+          <div class="pp-us-fix">Domain, hosting, updates, support — all in.</div>
+        </div>
+        <div class="pp-us-row">
+          <div class="pp-us-fix">Month-to-month. Cancel anytime, no penalty.</div>
+        </div>
+        <div class="pp-us-row">
+          <div class="pp-us-fix">You own your site and your content.</div>
+        </div>
+
+        <div class="pp-us-price">
+          From $120
+          <span>/ month CAD · no contracts</span>
+        </div>
       </div>
 
-      <div class="pp-card pp-featured">
-        <div class="pp-label">Stackwell Digital</div>
-        <ul class="pp-list">
-          <li>$120–250/month. Everything included.</li>
-          <li>Domain. Hosting. Updates. Support.</li>
-          <li>Month-to-month. No contracts.</li>
-          <li>You own your design.</li>
-        </ul>
-        <div class="pp-result">Professional. Transparent. Affordable.</div>
-      </div>
     </div>
   </section>
 
@@ -1301,23 +1456,31 @@
     <div class="steps reveal">
       <div class="step">
         <div class="step-num">01</div>
-        <h3>We Build It</h3>
-        <p>We design and build your site from scratch — professional, fast, and tailored to your business. Ready in days, not months.</p>
+        <div class="step-body">
+          <h3>We Build It</h3>
+          <p>We design and build your site from scratch — professional, fast, and tailored to your business. Ready in days, not months.</p>
+        </div>
       </div>
       <div class="step">
         <div class="step-num">02</div>
-        <h3>You Review It</h3>
-        <p>We walk you through the site and make adjustments until it's exactly what you want. Your input, our execution.</p>
+        <div class="step-body">
+          <h3>You Review It</h3>
+          <p>We walk you through the site and make adjustments until it's exactly what you want. Your input, our execution.</p>
+        </div>
       </div>
       <div class="step">
         <div class="step-num">03</div>
-        <h3>We Launch It</h3>
-        <p>Domain connected, site goes live. We handle the tech — DNS, hosting, SSL, all of it. You don't touch a thing.</p>
+        <div class="step-body">
+          <h3>We Launch It</h3>
+          <p>Domain connected, site goes live. We handle the tech — DNS, hosting, SSL, all of it. You don't touch a thing.</p>
+        </div>
       </div>
       <div class="step">
         <div class="step-num">04</div>
-        <h3>We Manage It</h3>
-        <p>Need new hours posted? A menu update? A new photo? Just send us a message. Updates are included in your monthly plan.</p>
+        <div class="step-body">
+          <h3>We Manage It</h3>
+          <p>Need new hours posted? A menu update? A new photo? Just send us a message. Updates are included in your monthly plan.</p>
+        </div>
       </div>
     </div>
   </section>
