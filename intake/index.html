@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Brand Intake - Stackwell Digital</title>
+  <meta name="description" content="Share your brand details with Stackwell Digital so we can build you the perfect website." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&family=Playfair+Display:wght@400;700&family=Montserrat:wght@400;500;600&family=Inter:wght@400;500&family=Lora:wght@400;500&family=Bebas+Neue&family=Raleway:wght@400;500&display=swap" rel="stylesheet">
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: #0a0a0a;
+      color: #ffffff;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState } = React;
+
+    function BrandIntakeForm() {
+      const [step, setStep] = useState(1);
+      const [formData, setFormData] = useState({
+        brandName: '',
+        tagline: '',
+        logoFile: null,
+        logoPreview: null,
+        neutrals: {
+          offWhite: '#F5F5F3',
+          softWhite: '#FAFAF8',
+          lightGray: '#E6E6E4',
+          warmGray: '#DAD7D2'
+        },
+        textColors: {
+          matteBlack: '#0B0B0B',
+          charcoal: '#1F1F1F',
+          mediumGray: '#6B6B6B'
+        },
+        accents: {
+          primary: '#0F2747',
+          secondary: '#4A0F1E'
+        },
+        fonts: {
+          display: 'Playfair Display',
+          body: 'Montserrat'
+        },
+        brandStyle: 'modern'
+      });
+      const [showGuide, setShowGuide] = useState(false);
+
+      const fontPairs = [
+        { display: 'Playfair Display', body: 'Montserrat', style: 'Classic & Professional' },
+        { display: 'Bebas Neue', body: 'DM Sans', style: 'Modern & Technical' },
+        { display: 'Montserrat', body: 'Lora', style: 'Elegant & Warm' },
+        { display: 'Raleway', body: 'Inter', style: 'Clean & Minimal' }
+      ];
+
+      const brandStyles = [
+        { id: 'modern', name: 'Modern & Minimal', desc: 'Clean lines, plenty of white space, contemporary feel' },
+        { id: 'bold', name: 'Bold & Vibrant', desc: 'High contrast, strong colors, energetic personality' },
+        { id: 'classic', name: 'Classic & Professional', desc: 'Timeless, trustworthy, refined aesthetic' },
+        { id: 'warm', name: 'Warm & Organic', desc: 'Natural tones, approachable, human-centered' }
+      ];
+
+      const handleLogoUpload = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onloadend = () => {
+            setFormData(prev => ({
+              ...prev,
+              logoFile: file,
+              logoPreview: reader.result
+            }));
+          };
+          reader.readAsDataURL(file);
+        }
+      };
+
+      const updateColor = (category, key, value) => {
+        setFormData(prev => ({
+          ...prev,
+          [category]: {
+            ...prev[category],
+            [key]: value
+          }
+        }));
+      };
+
+      const ColorPicker = ({ label, value, onChange }) => (
+        <div style={{ marginBottom: '1rem' }}>
+          <label style={{ 
+            display: 'block', 
+            fontSize: '0.75rem', 
+            color: '#888', 
+            marginBottom: '0.5rem',
+            fontFamily: 'DM Mono',
+            letterSpacing: '0.1em',
+            textTransform: 'uppercase'
+          }}>
+            {label}
+          </label>
+          <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
+            <input 
+              type="color" 
+              value={value} 
+              onChange={(e) => onChange(e.target.value)}
+              style={{ 
+                width: '60px', 
+                height: '60px', 
+                border: '1px solid rgba(255,255,255,0.1)',
+                background: 'transparent',
+                cursor: 'pointer'
+              }}
+            />
+            <input 
+              type="text" 
+              value={value} 
+              onChange={(e) => onChange(e.target.value)}
+              style={{
+                background: '#111',
+                border: '1px solid rgba(255,255,255,0.1)',
+                color: '#fff',
+                padding: '0.75rem 1rem',
+                fontFamily: 'DM Mono',
+                fontSize: '0.85rem',
+                flex: 1
+              }}
+            />
+          </div>
+        </div>
+      );
+
+      const renderStep1 = () => (
+        <div style={{ maxWidth: '600px' }}>
+          <h2 style={{ 
+            fontFamily: 'Bebas Neue', 
+            fontSize: '3rem', 
+            marginBottom: '1rem',
+            letterSpacing: '0.02em'
+          }}>
+            Brand Basics
+          </h2>
+          <p style={{ color: '#888', marginBottom: '3rem', lineHeight: '1.7' }}>
+            Let's start with the fundamentals of your brand.
+          </p>
+
+          <div style={{ marginBottom: '1.5rem' }}>
+            <label style={{ 
+              display: 'block', 
+              fontSize: '0.75rem', 
+              color: '#888', 
+              marginBottom: '0.5rem',
+              fontFamily: 'DM Mono',
+              letterSpacing: '0.1em',
+              textTransform: 'uppercase'
+            }}>
+              Brand Name
+            </label>
+            <input 
+              type="text"
+              value={formData.brandName}
+              onChange={(e) => setFormData(prev => ({ ...prev, brandName: e.target.value }))}
+              placeholder="Your Business Name"
+              style={{
+                width: '100%',
+                background: '#111',
+                border: '1px solid rgba(255,255,255,0.1)',
+                color: '#fff',
+                padding: '1rem 1.25rem',
+                fontSize: '1rem',
+                fontFamily: 'DM Sans'
+              }}
+            />
+          </div>
+
+          <div style={{ marginBottom: '2rem' }}>
+            <label style={{ 
+              display: 'block', 
+              fontSize: '0.75rem', 
+              color: '#888', 
+              marginBottom: '0.5rem',
+              fontFamily: 'DM Mono',
+              letterSpacing: '0.1em',
+              textTransform: 'uppercase'
+            }}>
+              Tagline (optional)
+            </label>
+            <input 
+              type="text"
+              value={formData.tagline}
+              onChange={(e) => setFormData(prev => ({ ...prev, tagline: e.target.value }))}
+              placeholder="A brief description of what you do"
+              style={{
+                width: '100%',
+                background: '#111',
+                border: '1px solid rgba(255,255,255,0.1)',
+                color: '#fff',
+                padding: '1rem 1.25rem',
+                fontSize: '1rem',
+                fontFamily: 'DM Sans'
+              }}
+            />
+          </div>
+
+          <div style={{ marginBottom: '2rem' }}>
+            <label style={{ 
+              display: 'block', 
+              fontSize: '0.75rem', 
+              color: '#888', 
+              marginBottom: '0.5rem',
+              fontFamily: 'DM Mono',
+              letterSpacing: '0.1em',
+              textTransform: 'uppercase'
+            }}>
+              Logo (if you have one)
+            </label>
+            <div style={{
+              border: '2px dashed rgba(255,255,255,0.2)',
+              padding: '2rem',
+              textAlign: 'center',
+              cursor: 'pointer',
+              background: formData.logoPreview ? '#111' : 'transparent',
+              position: 'relative'
+            }}
+            onClick={() => document.getElementById('logoUpload').click()}
+            >
+              <input 
+                id="logoUpload"
+                type="file"
+                accept="image/*"
+                onChange={handleLogoUpload}
+                style={{ display: 'none' }}
+              />
+              {formData.logoPreview ? (
+                <img 
+                  src={formData.logoPreview} 
+                  alt="Logo preview"
+                  style={{ 
+                    maxWidth: '200px', 
+                    maxHeight: '120px',
+                    display: 'block',
+                    margin: '0 auto'
+                  }}
+                />
+              ) : (
+                <>
+                  <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>📁</div>
+                  <p style={{ color: '#888', fontSize: '0.85rem' }}>
+                    Click to upload or drag & drop
+                  </p>
+                  <p style={{ color: '#666', fontSize: '0.75rem', marginTop: '0.25rem' }}>
+                    PNG, JPG, or SVG
+                  </p>
+                </>
+              )}
+            </div>
+          </div>
+        </div>
+      );
+
+      const renderStep2 = () => (
+        <div style={{ maxWidth: '700px' }}>
+          <h2 style={{ 
+            fontFamily: 'Bebas Neue', 
+            fontSize: '3rem', 
+            marginBottom: '1rem',
+            letterSpacing: '0.02em'
+          }}>
+            Color Palette
+          </h2>
+          <p style={{ color: '#888', marginBottom: '3rem', lineHeight: '1.7' }}>
+            Choose your brand colors. We'll organize them into neutrals, text colors, and accents.
+          </p>
+
+          <h3 style={{ 
+            fontFamily: 'DM Mono', 
+            fontSize: '0.7rem', 
+            letterSpacing: '0.2em',
+            color: '#888',
+            textTransform: 'uppercase',
+            marginBottom: '1.5rem'
+          }}>
+            Neutrals
+          </h3>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '2.5rem' }}>
+            <ColorPicker label="Off White" value={formData.neutrals.offWhite} onChange={(v) => updateColor('neutrals', 'offWhite', v)} />
+            <ColorPicker label="Soft White" value={formData.neutrals.softWhite} onChange={(v) => updateColor('neutrals', 'softWhite', v)} />
+            <ColorPicker label="Light Gray" value={formData.neutrals.lightGray} onChange={(v) => updateColor('neutrals', 'lightGray', v)} />
+            <ColorPicker label="Warm Gray" value={formData.neutrals.warmGray} onChange={(v) => updateColor('neutrals', 'warmGray', v)} />
+          </div>
+
+          <h3 style={{ 
+            fontFamily: 'DM Mono', 
+            fontSize: '0.7rem', 
+            letterSpacing: '0.2em',
+            color: '#888',
+            textTransform: 'uppercase',
+            marginBottom: '1.5rem'
+          }}>
+            Text Colors
+          </h3>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '2.5rem' }}>
+            <ColorPicker label="Matte Black" value={formData.textColors.matteBlack} onChange={(v) => updateColor('textColors', 'matteBlack', v)} />
+            <ColorPicker label="Charcoal" value={formData.textColors.charcoal} onChange={(v) => updateColor('textColors', 'charcoal', v)} />
+            <ColorPicker label="Medium Gray" value={formData.textColors.mediumGray} onChange={(v) => updateColor('textColors', 'mediumGray', v)} />
+          </div>
+
+          <h3 style={{ 
+            fontFamily: 'DM Mono', 
+            fontSize: '0.7rem', 
+            letterSpacing: '0.2em',
+            color: '#888',
+            textTransform: 'uppercase',
+            marginBottom: '1.5rem'
+          }}>
+            Accent Colors
+          </h3>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+            <ColorPicker label="Primary Accent" value={formData.accents.primary} onChange={(v) => updateColor('accents', 'primary', v)} />
+            <ColorPicker label="Secondary Accent" value={formData.accents.secondary} onChange={(v) => updateColor('accents', 'secondary', v)} />
+          </div>
+        </div>
+      );
+
+      const renderStep3 = () => (
+        <div style={{ maxWidth: '700px' }}>
+          <h2 style={{ 
+            fontFamily: 'Bebas Neue', 
+            fontSize: '3rem', 
+            marginBottom: '1rem',
+            letterSpacing: '0.02em'
+          }}>
+            Typography
+          </h2>
+          <p style={{ color: '#888', marginBottom: '3rem', lineHeight: '1.7' }}>
+            Pick a font pairing that matches your brand personality.
+          </p>
+
+          <div style={{ display: 'grid', gap: '1rem' }}>
+            {fontPairs.map((pair, i) => (
+              <div 
+                key={i}
+                onClick={() => setFormData(prev => ({ ...prev, fonts: { display: pair.display, body: pair.body }}))}
+                style={{
+                  border: formData.fonts.display === pair.display ? '2px solid #fff' : '1px solid rgba(255,255,255,0.1)',
+                  padding: '1.5rem',
+                  cursor: 'pointer',
+                  background: formData.fonts.display === pair.display ? 'rgba(255,255,255,0.05)' : '#111',
+                  transition: 'all 0.2s'
+                }}
+              >
+                <div style={{ marginBottom: '1rem' }}>
+                  <span style={{ 
+                    fontFamily: 'DM Mono', 
+                    fontSize: '0.65rem', 
+                    color: '#888',
+                    letterSpacing: '0.1em',
+                    textTransform: 'uppercase'
+                  }}>
+                    {pair.style}
+                  </span>
+                </div>
+                <div style={{ fontFamily: pair.display, fontSize: '2rem', marginBottom: '0.5rem' }}>
+                  Heading Example
+                </div>
+                <div style={{ fontFamily: pair.body, fontSize: '0.95rem', color: '#aaa' }}>
+                  This is body text using {pair.body}. Clean, readable, professional.
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+
+      const renderStep4 = () => (
+        <div style={{ maxWidth: '700px' }}>
+          <h2 style={{ 
+            fontFamily: 'Bebas Neue', 
+            fontSize: '3rem', 
+            marginBottom: '1rem',
+            letterSpacing: '0.02em'
+          }}>
+            Brand Style
+          </h2>
+          <p style={{ color: '#888', marginBottom: '3rem', lineHeight: '1.7' }}>
+            What vibe are you going for?
+          </p>
+
+          <div style={{ display: 'grid', gap: '1rem' }}>
+            {brandStyles.map((style) => (
+              <div 
+                key={style.id}
+                onClick={() => setFormData(prev => ({ ...prev, brandStyle: style.id }))}
+                style={{
+                  border: formData.brandStyle === style.id ? '2px solid #fff' : '1px solid rgba(255,255,255,0.1)',
+                  padding: '1.5rem',
+                  cursor: 'pointer',
+                  background: formData.brandStyle === style.id ? 'rgba(255,255,255,0.05)' : '#111',
+                  transition: 'all 0.2s'
+                }}
+              >
+                <h3 style={{ fontSize: '1.2rem', marginBottom: '0.5rem' }}>{style.name}</h3>
+                <p style={{ color: '#888', fontSize: '0.9rem' }}>{style.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+
+      const renderStyleGuide = () => {
+        const allColors = [
+          ...Object.entries(formData.neutrals),
+          ...Object.entries(formData.textColors),
+          ...Object.entries(formData.accents)
+        ];
+        const totalColors = allColors.length;
+        const neutralsPercent = Math.round((Object.keys(formData.neutrals).length / totalColors) * 100);
+        const textPercent = Math.round((Object.keys(formData.textColors).length / totalColors) * 100);
+        const accentPercent = Math.round((Object.keys(formData.accents).length / totalColors) * 100);
+
+        return (
+          <div style={{ 
+            maxWidth: '1400px', 
+            margin: '0 auto',
+            background: '#fff',
+            color: '#000',
+            minHeight: '100vh'
+          }}>
+            {/* Header */}
+            <div style={{ 
+              padding: '3rem 4rem',
+              borderBottom: '1px solid #e0e0e0',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between'
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '2rem' }}>
+                {formData.logoPreview ? (
+                  <img 
+                    src={formData.logoPreview} 
+                    alt={formData.brandName}
+                    style={{ maxHeight: '80px', maxWidth: '200px' }}
+                  />
+                ) : (
+                  <div style={{ 
+                    width: '80px', 
+                    height: '80px', 
+                    border: '2px solid #000',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontFamily: 'DM Mono',
+                    fontSize: '0.7rem'
+                  }}>
+                    LOGO
+                  </div>
+                )}
+                <div>
+                  <h1 style={{ 
+                    fontFamily: formData.fonts.display, 
+                    fontSize: '2.5rem',
+                    marginBottom: '0.25rem',
+                    letterSpacing: '0.02em'
+                  }}>
+                    {formData.brandName || 'Brand Name'}
+                  </h1>
+                  {formData.tagline && (
+                    <p style={{ 
+                      fontFamily: formData.fonts.body,
+                      fontSize: '0.95rem',
+                      color: '#666'
+                    }}>
+                      {formData.tagline}
+                    </p>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {/* Color Swatches */}
+            <div style={{ padding: '3rem 4rem', borderBottom: '1px solid #e0e0e0' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: '200px 1fr', gap: '3rem', marginBottom: '3rem' }}>
+                <div>
+                  <h3 style={{ 
+                    fontFamily: 'DM Mono',
+                    fontSize: '0.7rem',
+                    letterSpacing: '0.2em',
+                    textTransform: 'uppercase',
+                    color: '#888',
+                    marginBottom: '0.5rem'
+                  }}>
+                    NEUTRALS
+                  </h3>
+                </div>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1rem' }}>
+                  {Object.entries(formData.neutrals).map(([key, color]) => (
+                    <div key={key}>
+                      <div style={{ 
+                        width: '100%', 
+                        aspectRatio: '1',
+                        background: color,
+                        border: '1px solid #e0e0e0',
+                        marginBottom: '0.75rem'
+                      }}></div>
+                      <div style={{ 
+                        fontFamily: 'DM Mono',
+                        fontSize: '0.65rem',
+                        color: '#888',
+                        textTransform: 'uppercase',
+                        marginBottom: '0.25rem'
+                      }}>
+                        {key.replace(/([A-Z])/g, ' $1').trim()}
+                      </div>
+                      <div style={{ 
+                        fontFamily: 'DM Mono',
+                        fontSize: '0.75rem'
+                      }}>
+                        {color.toUpperCase()}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div style={{ display: 'grid', gridTemplateColumns: '200px 1fr', gap: '3rem', marginBottom: '3rem' }}>
+                <div>
+                  <h3 style={{ 
+                    fontFamily: 'DM Mono',
+                    fontSize: '0.7rem',
+                    letterSpacing: '0.2em',
+                    textTransform: 'uppercase',
+                    color: '#888',
+                    marginBottom: '0.5rem'
+                  }}>
+                    TEXT
+                  </h3>
+                </div>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1rem' }}>
+                  {Object.entries(formData.textColors).map(([key, color]) => (
+                    <div key={key}>
+                      <div style={{ 
+                        width: '100%', 
+                        aspectRatio: '1',
+                        background: color,
+                        border: '1px solid #e0e0e0',
+                        marginBottom: '0.75rem'
+                      }}></div>
+                      <div style={{ 
+                        fontFamily: 'DM Mono',
+                        fontSize: '0.65rem',
+                        color: '#888',
+                        textTransform: 'uppercase',
+                        marginBottom: '0.25rem'
+                      }}>
+                        {key.replace(/([A-Z])/g, ' $1').trim()}
+                      </div>
+                      <div style={{ 
+                        fontFamily: 'DM Mono',
+                        fontSize: '0.75rem'
+                      }}>
+                        {color.toUpperCase()}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div style={{ display: 'grid', gridTemplateColumns: '200px 1fr', gap: '3rem' }}>
+                <div>
+                  <h3 style={{ 
+                    fontFamily: 'DM Mono',
+                    fontSize: '0.7rem',
+                    letterSpacing: '0.2em',
+                    textTransform: 'uppercase',
+                    color: '#888',
+                    marginBottom: '0.5rem'
+                  }}>
+                    ACCENTS
+                  </h3>
+                </div>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1rem' }}>
+                  {Object.entries(formData.accents).map(([key, color]) => (
+                    <div key={key}>
+                      <div style={{ 
+                        width: '100%', 
+                        aspectRatio: '1',
+                        background: color,
+                        border: '1px solid #e0e0e0',
+                        marginBottom: '0.75rem'
+                      }}></div>
+                      <div style={{ 
+                        fontFamily: 'DM Mono',
+                        fontSize: '0.65rem',
+                        color: '#888',
+                        textTransform: 'uppercase',
+                        marginBottom: '0.25rem'
+                      }}>
+                        {key.replace(/([A-Z])/g, ' $1').trim()}
+                      </div>
+                      <div style={{ 
+                        fontFamily: 'DM Mono',
+                        fontSize: '0.75rem'
+                      }}>
+                        {color.toUpperCase()}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Typography */}
+            <div style={{ padding: '3rem 4rem', borderBottom: '1px solid #e0e0e0' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: '200px 1fr', gap: '3rem' }}>
+                <div>
+                  <h3 style={{ 
+                    fontFamily: 'DM Mono',
+                    fontSize: '0.7rem',
+                    letterSpacing: '0.2em',
+                    textTransform: 'uppercase',
+                    color: '#888'
+                  }}>
+                    TYPOGRAPHY EXAMPLE
+                  </h3>
+                </div>
+                <div>
+                  <div style={{ 
+                    fontFamily: formData.fonts.display, 
+                    fontSize: '3.5rem',
+                    marginBottom: '1rem',
+                    lineHeight: '1.1'
+                  }}>
+                    Heading Example
+                  </div>
+                  <div style={{ 
+                    fontFamily: formData.fonts.body, 
+                    fontSize: '1.1rem',
+                    color: '#666',
+                    marginBottom: '1.5rem',
+                    lineHeight: '1.7'
+                  }}>
+                    Subheading Example
+                  </div>
+                  <p style={{ 
+                    fontFamily: formData.fonts.body,
+                    fontSize: '0.95rem',
+                    color: '#333',
+                    lineHeight: '1.8',
+                    maxWidth: '600px'
+                  }}>
+                    This is an example of body copy text used for reading and content on the website. 
+                    The font is designed to be clean, readable, and professional while maintaining 
+                    your brand's personality.
+                  </p>
+                  <div style={{ marginTop: '2rem' }}>
+                    <div style={{ 
+                      fontFamily: 'DM Mono',
+                      fontSize: '0.65rem',
+                      color: '#888',
+                      textTransform: 'uppercase',
+                      marginBottom: '0.5rem'
+                    }}>
+                      Font Pairing
+                    </div>
+                    <div style={{ fontFamily: formData.fonts.body, fontSize: '0.9rem' }}>
+                      {formData.fonts.display} (headings) • {formData.fonts.body} (body)
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Usage Guide */}
+            <div style={{ padding: '3rem 4rem', borderBottom: '1px solid #e0e0e0' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: '200px 1fr', gap: '3rem' }}>
+                <div>
+                  <h3 style={{ 
+                    fontFamily: 'DM Mono',
+                    fontSize: '0.7rem',
+                    letterSpacing: '0.2em',
+                    textTransform: 'uppercase',
+                    color: '#888'
+                  }}>
+                    USAGE GUIDE
+                  </h3>
+                </div>
+                <div>
+                  <div style={{ marginBottom: '2rem' }}>
+                    <div style={{ 
+                      display: 'inline-block',
+                      width: '40px',
+                      height: '40px',
+                      borderRadius: '50%',
+                      background: formData.accents.primary,
+                      marginRight: '1rem',
+                      verticalAlign: 'middle'
+                    }}></div>
+                    <div style={{ display: 'inline-block', verticalAlign: 'middle', maxWidth: '500px' }}>
+                      <div style={{ 
+                        fontFamily: 'DM Mono',
+                        fontSize: '0.7rem',
+                        textTransform: 'uppercase',
+                        fontWeight: 'bold',
+                        marginBottom: '0.25rem'
+                      }}>
+                        PRIMARY ACCENT
+                      </div>
+                      <div style={{ fontSize: '0.85rem', color: '#666' }}>
+                        Use for buttons, links, icons and key highlights.
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <div style={{ 
+                      display: 'inline-block',
+                      width: '40px',
+                      height: '40px',
+                      borderRadius: '50%',
+                      background: formData.accents.secondary,
+                      marginRight: '1rem',
+                      verticalAlign: 'middle'
+                    }}></div>
+                    <div style={{ display: 'inline-block', verticalAlign: 'middle', maxWidth: '500px' }}>
+                      <div style={{ 
+                        fontFamily: 'DM Mono',
+                        fontSize: '0.7rem',
+                        textTransform: 'uppercase',
+                        fontWeight: 'bold',
+                        marginBottom: '0.25rem'
+                      }}>
+                        SECONDARY ACCENT
+                      </div>
+                      <div style={{ fontSize: '0.85rem', color: '#666' }}>
+                        Use sparingly for emphasis, hovers, quotes and details.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Color Balance */}
+            <div style={{ padding: '3rem 4rem' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: '200px 1fr', gap: '3rem' }}>
+                <div>
+                  <h3 style={{ 
+                    fontFamily: 'DM Mono',
+                    fontSize: '0.7rem',
+                    letterSpacing: '0.2em',
+                    textTransform: 'uppercase',
+                    color: '#888'
+                  }}>
+                    COLOR USAGE BALANCE
+                  </h3>
+                </div>
+                <div style={{ display: 'flex', gap: '3rem', alignItems: 'center', flexWrap: 'wrap' }}>
+                  <div>
+                    <div style={{ 
+                      width: '60px',
+                      height: '60px',
+                      borderRadius: '50%',
+                      background: '#000',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      color: '#fff',
+                      fontFamily: 'DM Mono',
+                      fontSize: '1.2rem',
+                      fontWeight: 'bold'
+                    }}>
+                      {neutralsPercent}%
+                    </div>
+                    <div style={{ 
+                      fontFamily: 'DM Mono',
+                      fontSize: '0.65rem',
+                      color: '#888',
+                      textAlign: 'center',
+                      marginTop: '0.5rem'
+                    }}>
+                      Neutrals
+                    </div>
+                  </div>
+                  <div>
+                    <div style={{ 
+                      width: '60px',
+                      height: '60px',
+                      borderRadius: '50%',
+                      background: '#666',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      color: '#fff',
+                      fontFamily: 'DM Mono',
+                      fontSize: '1.2rem',
+                      fontWeight: 'bold'
+                    }}>
+                      {textPercent}%
+                    </div>
+                    <div style={{ 
+                      fontFamily: 'DM Mono',
+                      fontSize: '0.65rem',
+                      color: '#888',
+                      textAlign: 'center',
+                      marginTop: '0.5rem'
+                    }}>
+                      Text & Headings
+                    </div>
+                  </div>
+                  <div>
+                    <div style={{ 
+                      width: '60px',
+                      height: '60px',
+                      borderRadius: '50%',
+                      background: formData.accents.primary,
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      color: '#fff',
+                      fontFamily: 'DM Mono',
+                      fontSize: '1.2rem',
+                      fontWeight: 'bold'
+                    }}>
+                      {accentPercent}%
+                    </div>
+                    <div style={{ 
+                      fontFamily: 'DM Mono',
+                      fontSize: '0.65rem',
+                      color: '#888',
+                      textAlign: 'center',
+                      marginTop: '0.5rem'
+                    }}>
+                      Accents
+                    </div>
+                  </div>
+                  <div style={{ 
+                    flex: 1,
+                    fontFamily: formData.fonts.body,
+                    fontSize: '0.85rem',
+                    color: '#666',
+                    lineHeight: '1.7',
+                    paddingLeft: '2rem',
+                    minWidth: '250px'
+                  }}>
+                    A clean, balanced palette that brings focus, depth and sophistication.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      };
+
+      if (showGuide) {
+        return (
+          <div>
+            <div style={{ 
+              position: 'fixed',
+              top: 0,
+              left: 0,
+              right: 0,
+              background: '#0a0a0a',
+              borderBottom: '1px solid rgba(255,255,255,0.1)',
+              padding: '1rem 2rem',
+              zIndex: 100,
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center'
+            }}>
+              <div style={{ 
+                fontFamily: 'DM Mono',
+                fontSize: '0.7rem',
+                letterSpacing: '0.1em',
+                textTransform: 'uppercase'
+              }}>
+                Brand Style Guide
+              </div>
+              <button
+                onClick={() => setShowGuide(false)}
+                style={{
+                  background: '#fff',
+                  color: '#0a0a0a',
+                  border: 'none',
+                  padding: '0.65rem 1.5rem',
+                  fontFamily: 'DM Mono',
+                  fontSize: '0.7rem',
+                  letterSpacing: '0.1em',
+                  textTransform: 'uppercase',
+                  cursor: 'pointer'
+                }}
+              >
+                ← Edit Details
+              </button>
+            </div>
+            <div style={{ marginTop: '60px' }}>
+              {renderStyleGuide()}
+            </div>
+          </div>
+        );
+      }
+
+      return (
+        <div style={{ minHeight: '100vh', padding: '4rem 2rem' }}>
+          <div style={{ maxWidth: '800px', margin: '0 auto' }}>
+            {/* Header */}
+            <div style={{ marginBottom: '4rem', textAlign: 'center' }}>
+              <a href="https://stackwell.digital" style={{ display: 'inline-block', marginBottom: '2rem' }}>
+                <img 
+                  src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/logo.photo.png"
+                  alt="Stackwell Digital"
+                  style={{ height: '60px' }}
+                />
+              </a>
+              <h1 style={{ 
+                fontFamily: 'Bebas Neue',
+                fontSize: '4rem',
+                marginBottom: '1rem',
+                letterSpacing: '0.02em'
+              }}>
+                Brand Intake
+              </h1>
+              <p style={{ color: '#888', fontSize: '1.05rem' }}>
+                Help us understand your brand so we can build something that feels exactly right.
+              </p>
+            </div>
+
+            {/* Progress */}
+            <div style={{ 
+              display: 'flex', 
+              gap: '0.5rem',
+              marginBottom: '4rem',
+              justifyContent: 'center'
+            }}>
+              {[1, 2, 3, 4].map(i => (
+                <div 
+                  key={i}
+                  style={{
+                    width: '60px',
+                    height: '3px',
+                    background: i <= step ? '#fff' : 'rgba(255,255,255,0.2)',
+                    transition: 'background 0.3s'
+                  }}
+                ></div>
+              ))}
+            </div>
+
+            {/* Form */}
+            <div style={{ marginBottom: '3rem' }}>
+              {step === 1 && renderStep1()}
+              {step === 2 && renderStep2()}
+              {step === 3 && renderStep3()}
+              {step === 4 && renderStep4()}
+            </div>
+
+            {/* Navigation */}
+            <div style={{ 
+              display: 'flex', 
+              gap: '1rem',
+              justifyContent: step === 1 ? 'flex-end' : 'space-between'
+            }}>
+              {step > 1 && (
+                <button
+                  onClick={() => setStep(step - 1)}
+                  style={{
+                    background: 'transparent',
+                    border: '1px solid rgba(255,255,255,0.2)',
+                    color: '#fff',
+                    padding: '1rem 2rem',
+                    fontFamily: 'DM Mono',
+                    fontSize: '0.75rem',
+                    letterSpacing: '0.1em',
+                    textTransform: 'uppercase',
+                    cursor: 'pointer'
+                  }}
+                >
+                  ← Back
+                </button>
+              )}
+              {step < 4 ? (
+                <button
+                  onClick={() => setStep(step + 1)}
+                  style={{
+                    background: '#fff',
+                    border: 'none',
+                    color: '#0a0a0a',
+                    padding: '1rem 2rem',
+                    fontFamily: 'DM Mono',
+                    fontSize: '0.75rem',
+                    letterSpacing: '0.1em',
+                    textTransform: 'uppercase',
+                    cursor: 'pointer'
+                  }}
+                >
+                  Next →
+                </button>
+              ) : (
+                <button
+                  onClick={() => setShowGuide(true)}
+                  style={{
+                    background: '#fff',
+                    border: 'none',
+                    color: '#0a0a0a',
+                    padding: '1rem 2rem',
+                    fontFamily: 'DM Mono',
+                    fontSize: '0.75rem',
+                    letterSpacing: '0.1em',
+                    textTransform: 'uppercase',
+                    cursor: 'pointer'
+                  }}
+                >
+                  Generate Style Guide
+                </button>
+              )}
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    ReactDOM.render(<BrandIntakeForm />, document.getElementById('root'));
+  </script>
+</body>
+</html>
