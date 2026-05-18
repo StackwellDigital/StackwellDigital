@@ -1214,11 +1214,13 @@
       color: var(--white);
     }
 
-    .reports-layout {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 5rem;
-      align-items: center;
+    @media (min-width: 901px) {
+      .reports-layout {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 5rem;
+        align-items: center;
+      }
     }
 
     .reports-left {}
