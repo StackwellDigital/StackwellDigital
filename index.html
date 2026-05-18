@@ -506,164 +506,6 @@
       border-color: var(--white);
     }
 
-    /* ─── WHY ─── */
-    #why {
-      border-top: 1px solid var(--border);
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 6rem;
-      align-items: center;
-    }
-
-    .why-list {
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-      margin-top: 3rem;
-    }
-
-    .why-item {
-      padding: 1.5rem 0;
-      border-bottom: 1px solid var(--border);
-      display: grid;
-      grid-template-columns: 2rem 1fr;
-      gap: 1rem;
-      align-items: start;
-    }
-
-    .why-num {
-      font-family: var(--mono);
-      font-size: 0.6rem;
-      color: var(--grey);
-      padding-top: 0.15rem;
-    }
-
-    .why-item h4 {
-      font-size: 0.9rem;
-      font-weight: 500;
-      margin-bottom: 0.3rem;
-      color: var(--white);
-    }
-
-    .why-item p {
-      font-size: 0.82rem;
-      color: var(--grey);
-      line-height: 1.6;
-    }
-
-    .why-visual {
-      position: relative;
-      aspect-ratio: 1;
-      border: 1px solid var(--border);
-      display: flex;
-      align-items: flex-end;
-      justify-content: flex-start;
-      overflow: hidden;
-      background: #0e0e0e;
-      padding: 2.5rem;
-    }
-
-    /* ghosted large number behind everything — updated by JS */
-    .why-ghost {
-      position: absolute;
-      font-family: var(--display);
-      font-size: clamp(10rem, 20vw, 18rem);
-      color: rgba(255,255,255,0.035);
-      line-height: 1;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      white-space: nowrap;
-      user-select: none;
-      pointer-events: none;
-      letter-spacing: -0.02em;
-      transition: none;
-    }
-
-    .why-visual-inner { display: none; }
-
-    .why-stat {
-      position: relative;
-      z-index: 1;
-      width: 100%;
-    }
-
-    .why-stat-label-top {
-      font-family: var(--mono);
-      font-size: 0.58rem;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: var(--grey);
-      margin-bottom: 0.75rem;
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-    }
-    .why-stat-label-top::before {
-      content: '';
-      width: 20px;
-      height: 1px;
-      background: var(--grey);
-    }
-
-    .why-stat-num {
-      font-family: var(--display);
-      font-size: clamp(5rem, 9vw, 8rem);
-      line-height: 0.9;
-      margin-bottom: 1.25rem;
-      letter-spacing: -0.01em;
-    }
-
-    /* progress bar track */
-    .why-progress-track {
-      width: 100%;
-      height: 2px;
-      background: rgba(255,255,255,0.08);
-      margin-bottom: 1.25rem;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .why-progress-fill {
-      position: absolute;
-      top: 0; left: 0;
-      height: 100%;
-      width: 0%;
-      background: var(--white);
-      transition: width 2s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    /* tick marks at 25/50/75 */
-    .why-progress-ticks {
-      position: relative;
-      width: 100%;
-      height: 6px;
-      margin-top: -4px;
-      margin-bottom: 1.25rem;
-    }
-    .why-progress-ticks span {
-      position: absolute;
-      top: 0;
-      width: 1px;
-      height: 4px;
-      background: rgba(255,255,255,0.15);
-      transform: translateX(-50%);
-    }
-    .why-progress-ticks span:nth-child(1) { left: 25%; }
-    .why-progress-ticks span:nth-child(2) { left: 50%; }
-    .why-progress-ticks span:nth-child(3) { left: 75%; }
-    .why-progress-ticks span:nth-child(4) { left: 100%; }
-
-    .why-stat p {
-      font-family: var(--mono);
-      font-size: 0.62rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--grey);
-      line-height: 1.7;
-      max-width: 240px;
-    }
-
     /* ─── CONTACT ─── */
     #contact {
       border-top: 1px solid var(--border);
@@ -1226,8 +1068,6 @@
       .plans { grid-template-columns: 1fr; }
       .plan { border-right: none; border-bottom: 1px solid var(--border); }
       .plan:last-child { border-bottom: none; }
-      #why { grid-template-columns: 1fr; gap: 3rem; }
-      .why-visual { display: none; }
 
       /* ─── SERVICES MOBILE ─── */
       #services { padding: 3.5rem 1.25rem; }
@@ -1325,6 +1165,391 @@
       .portfolio-grid { grid-template-columns: 1fr; gap: 1rem; }
       footer { flex-direction: column; gap: 0.75rem; text-align: center; }
       .team-grid { grid-template-columns: 1fr; max-width: 320px; }
+
+      /* ─── REPORTS MOBILE ─── */
+      .reports-layout { grid-template-columns: 1fr; gap: 3rem; }
+      .report-phone-wrap { display: none; }
+      .report-desktop-wrap { border-radius: 6px; box-shadow: none; }
+    }
+
+    /* ─── REPORTS SECTION ─── */
+    #reports {
+      border-top: 1px solid var(--border);
+    }
+
+    .reports-intro {
+      max-width: 580px;
+      margin-bottom: 4rem;
+    }
+
+    .reports-intro p {
+      font-size: 0.95rem;
+      color: var(--grey-light);
+      line-height: 1.8;
+      margin-top: 1rem;
+    }
+
+    .reports-plan-tags {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .reports-plan-tag {
+      font-family: var(--mono);
+      font-size: 0.52rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.75rem;
+      border: 1px solid var(--border);
+      color: var(--grey);
+    }
+
+    .reports-plan-tag.active {
+      border-color: rgba(255,255,255,0.3);
+      color: var(--white);
+    }
+
+    .reports-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+
+    .reports-left {}
+
+    .reports-left .reports-intro {
+      margin-bottom: 0;
+    }
+
+    .report-desktop-wrap {
+      position: relative;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      background: #0d0d0d;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.4);
+    }
+
+    .report-desktop-wrap img {
+      width: 100%;
+      display: block;
+    }
+
+    .report-desktop-badge {
+      position: absolute;
+      top: 0.75rem;
+      left: 0.75rem;
+      font-family: var(--mono);
+      font-size: 0.45rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      background: rgba(10,10,10,0.8);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: #aaa;
+      padding: 0.25rem 0.6rem;
+      backdrop-filter: blur(4px);
+      z-index: 2;
+    }
+
+    .report-phone-wrap { display: none; }
+    .report-phone-badge { display: none; }
+
+    .reports-bullets-vert {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .reports-bullet-vert {
+      display: flex;
+      align-items: flex-start;
+      gap: 1.25rem;
+      padding: 1.25rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .reports-bullet-icon {
+      font-size: 1rem;
+      color: var(--grey);
+      flex-shrink: 0;
+      margin-top: 0.1rem;
+    }
+
+    .reports-bullet-vert h4 {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--white);
+      margin-bottom: 0.3rem;
+      font-weight: 500;
+    }
+
+    .reports-bullet-vert p {
+      font-size: 0.8rem;
+      color: var(--grey);
+      line-height: 1.6;
+    }
+
+    /* ─── CREDENTIALS STRIP ─── */
+    #credentials {
+      border-top: 1px solid var(--border);
+      padding: 4rem 2.5rem;
+    }
+
+    .creds-label {
+      font-family: var(--mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--grey);
+      text-align: center;
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+    }
+    .creds-label::before, .creds-label::after {
+      content: '';
+      width: 40px;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .creds-sub {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.2);
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .creds-logos {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .cred-pill {
+      background: #ffffff;
+      border-radius: 10px;
+      padding: 0.6rem 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 72px;
+      width: 100px;
+    }
+
+    .cred-pill img {
+      height: 48px;
+      width: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
+    @media (max-width: 900px) {
+      #credentials { padding: 3rem 1.5rem; }
+      .creds-logos { gap: 1rem; }
+      .cred-pill { height: 64px; min-width: 64px; padding: 0.5rem 0.9rem; }
+      .cred-pill img { height: 40px; }
+    }
+
+    /* ─── ADDONS ─── */
+    .addons {
+      margin-top: 3rem;
+      border: 1px solid var(--border);
+      padding: 2rem 2.5rem;
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 2rem;
+      align-items: start;
+    }
+
+    .addons h3 {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--grey);
+    }
+
+    .addon-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.5rem 2rem;
+    }
+
+    .addon-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.82rem;
+      color: var(--grey-light);
+      padding: 0.35rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .addon-item span {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--white);
+    }
+
+    /* ─── MIGRATION ─── */
+    .migration-wrap {
+      margin-top: 4rem;
+      border: 1px solid var(--border);
+    }
+
+    .migration-header {
+      padding: 2rem 2.5rem;
+      border-bottom: 1px solid var(--border);
+      background: rgba(255,255,255,0.02);
+      max-width: 640px;
+    }
+
+    .migration-eyebrow {
+      font-family: var(--mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--grey);
+      margin-bottom: 0.5rem;
+    }
+
+    .migration-title {
+      font-family: var(--display);
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      line-height: 0.95;
+      letter-spacing: 0.02em;
+      margin-bottom: 1.25rem;
+    }
+
+    .migration-header-right {
+      font-size: 0.85rem;
+      color: var(--grey-light);
+      line-height: 1.7;
+    }
+
+    .migration-body {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+    }
+
+    .migration-plan {
+      padding: 2.5rem;
+      border-right: 1px solid var(--border);
+      position: relative;
+    }
+    .migration-plan:last-child { border-right: none; }
+
+    .migration-plan-name {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--grey);
+      margin-bottom: 1.25rem;
+    }
+
+    .migration-price-row {
+      display: flex;
+      align-items: baseline;
+      gap: 0.4rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .migration-price {
+      font-family: var(--display);
+      font-size: 3rem;
+      line-height: 1;
+    }
+
+    .migration-cycle {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.15em;
+      color: var(--grey);
+      margin-bottom: 2rem;
+    }
+
+    .migration-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .migration-features li {
+      font-size: 0.85rem;
+      color: var(--grey-light);
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      line-height: 1.5;
+    }
+
+    .migration-features li::before {
+      content: '✦';
+      font-size: 0.45rem;
+      color: var(--grey);
+      margin-top: 0.35rem;
+      flex-shrink: 0;
+    }
+
+    .migration-cta {
+      display: block;
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-align: center;
+      padding: 0.85rem;
+      text-decoration: none;
+      border: 1px solid var(--border);
+      color: var(--grey);
+      transition: all 0.2s;
+    }
+    .migration-cta:hover {
+      background: var(--white);
+      color: var(--bg);
+      border-color: var(--white);
+    }
+
+    .migration-note {
+      padding: 1.25rem 2.5rem;
+      border-top: 1px solid var(--border);
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.1em;
+      color: var(--grey);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .migration-note::before {
+      content: '◆';
+      font-size: 0.4rem;
+      flex-shrink: 0;
+    }
+
+    @media (max-width: 900px) {
+      .migration-body { grid-template-columns: 1fr; }
+      .migration-plan { border-right: none; border-bottom: 1px solid var(--border); }
+      .migration-plan:last-child { border-bottom: none; }
+      .migration-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
     }
   </style>
 </head>
@@ -1334,10 +1559,10 @@
   <nav id="nav">
     <a href="#hero" class="nav-logo"><img src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/logo.photo.png" alt="Stackwell Digital" style="height:76px;width:auto;" /></a>
     <ul class="nav-links">
+      <li><a href="#pricing-problem">The Reality</a></li>
       <li><a href="#how">How It Works</a></li>
-      <li><a href="#services">Services</a></li>
       <li><a href="#pricing">Pricing</a></li>
-      <li><a href="#why">Why Us</a></li>
+      <li><a href="#reports">Reports</a></li>
       <li><a href="#portfolio">Our Work</a></li>
     </ul>
     <div style="display:flex;align-items:center;gap:1rem;">
@@ -1350,10 +1575,10 @@
 
   <!-- MOBILE MENU -->
   <div class="mobile-menu" id="mobileMenu">
+    <a href="#pricing-problem" class="mobile-link">The Reality</a>
     <a href="#how" class="mobile-link">How It Works</a>
-    <a href="#services" class="mobile-link">Services</a>
     <a href="#pricing" class="mobile-link">Pricing</a>
-    <a href="#why" class="mobile-link">Why Us</a>
+    <a href="#reports" class="mobile-link">Reports</a>
     <a href="#portfolio" class="mobile-link">Our Work</a>
     <a href="#contact" class="mobile-link mobile-link-cta">Get Started</a>
   </div>
@@ -1531,6 +1756,20 @@
     </div>
   </section>
 
+  <!-- CREDENTIALS -->
+  <section id="credentials">
+    <div class="creds-label reveal">Certifications &amp; Credentials</div>
+    <p class="creds-sub reveal">Certified across cloud, security, and digital marketing</p>
+    <div class="creds-logos reveal">
+      <img src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/AWS-Certified-Advanced-Networking-Specialty_badge.e09a4e04210dd4dd57ace21344af66986d4b4dc7.webp" alt="AWS Certified Advanced Networking Specialty">
+      <img src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/5bfb7dae1c678.webp" alt="AWS Certified Solutions Architect Professional">
+      <img src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/comptia%20badge.webp" alt="CompTIA">
+      <img src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/google_analyitics_4_badge_certification.webp" alt="Google Analytics 4 Certified">
+      <img src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/hubspot-academy-hubspot-certification-badge-1-300x120.png" alt="HubSpot Academy Certified">
+    </div>
+  </section>
+
+
   <!-- PRICING -->
   <section id="pricing">
     <p class="section-label reveal">Plans</p>
@@ -1588,62 +1827,101 @@
     </div>
 
 
+    <!-- ALREADY HAVE A SITE -->
+    <div class="migration-wrap reveal">
+      <div class="migration-header">
+        <div class="migration-header-left">
+          <div class="migration-eyebrow">Already Have a Website?</div>
+          <div class="migration-title">Hosting + Management<br />Without the Rebuild</div>
+          <div class="migration-header-right">Already on GoDaddy, Squarespace, or Wix and just tired of paying too much for too little? We migrate your existing site and take over — hosting, updates, and support included. One-time migration fee, then a flat monthly rate.</div>
+        </div>
+      </div>
+      <div class="migration-body">
+        <div class="migration-plan">
+          <div class="migration-plan-name">Host Only</div>
+          <div class="migration-price-row">
+            <div class="migration-price">$60</div>
+          </div>
+          <div class="migration-cycle">/ month CAD</div>
+          <ul class="migration-features">
+            <li>Site migrated to our infrastructure</li>
+            <li>Domain management included</li>
+            <li>Fast, reliable hosting</li>
+            <li>SSL included</li>
+            <li>1 content update per month</li>
+          </ul>
+          <a href="https://square.link/u/M7dPjP4o" target="_blank" rel="noopener" class="migration-cta">Get Started</a>
+        </div>
+        <div class="migration-plan">
+          <div class="migration-plan-name">Host + Manage</div>
+          <div class="migration-price-row">
+            <div class="migration-price">$99</div>
+          </div>
+          <div class="migration-cycle">/ month CAD</div>
+          <ul class="migration-features">
+            <li>Everything in Host Only</li>
+            <li>3 content updates per month</li>
+            <li>Basic SEO pass on migration</li>
+            <li>Monthly uptime monitoring</li>
+            <li>Priority email support</li>
+          </ul>
+          <a href="https://square.link/u/PFiJBct8" target="_blank" rel="noopener" class="migration-cta">Get Started</a>
+        </div>
+      </div>
+      <div class="migration-note">One-time migration fee of $199 applies to all plans. Covers domain transfer, site rebuild, and initial setup. Need a full redesign? Migrate onto our Starter plan from $120/mo.</div>
+    </div>
+
   </section>
 
-  <!-- WHY -->
-  <section id="why">
-    <div>
-      <p class="section-label reveal">Why Stackwell</p>
-      <h2 class="reveal">Built for<br />Real Business</h2>
-      <div class="why-list reveal">
-        <div class="why-item">
-          <span class="why-num">01</span>
-          <div>
-            <h4>You Don't Have to Touch It</h4>
-            <p>Send us a text, we handle the update. No logging into anything, no learning curves, no wasted afternoons.</p>
-          </div>
+  <!-- REPORTS -->
+  <section id="reports">
+    <div class="reports-layout reveal">
+
+      <!-- LEFT: intro + bullets -->
+      <div class="reports-left">
+        <p class="section-label">Reports &amp; Analytics</p>
+        <h2>Know Exactly<br />How You're Doing.</h2>
+        <p style="color:var(--grey-light);font-size:0.95rem;line-height:1.8;margin-top:1rem;margin-bottom:2rem;">Active Business and Premium clients get a monthly report delivered straight to their inbox. Traffic, search rankings, top pages — the stuff that actually tells you if your site is working.</p>
+
+        <div class="reports-plan-tags" style="margin-bottom:2.5rem;">
+          <span class="reports-plan-tag">Starter</span>
+          <span class="reports-plan-tag active">Active Business ✦</span>
+          <span class="reports-plan-tag active">Premium ✦</span>
         </div>
-        <div class="why-item">
-          <span class="why-num">02</span>
-          <div>
-            <h4>One Flat Rate, No Surprises</h4>
-            <p>What you see is what you pay. Every month. No overages, no "per change" billing, no nickel-and-diming.</p>
+
+        <div class="reports-bullets-vert">
+          <div class="reports-bullet-vert">
+            <span class="reports-bullet-icon">◎</span>
+            <div>
+              <h4>Traffic &amp; Visitors</h4>
+              <p>See how many people visited your site, where they came from, and which pages they landed on.</p>
+            </div>
           </div>
-        </div>
-        <div class="why-item">
-          <span class="why-num">03</span>
-          <div>
-            <h4>Local Business Focus</h4>
-            <p>We work specifically with local and independent businesses. We know what works, and what's a waste of your money.</p>
+          <div class="reports-bullet-vert">
+            <span class="reports-bullet-icon">⌖</span>
+            <div>
+              <h4>Search Rankings</h4>
+              <p>Track how you're showing up in Google search for the terms that matter to your business.</p>
+            </div>
           </div>
-        </div>
-        <div class="why-item">
-          <span class="why-num">04</span>
-          <div>
-            <h4>Month to Month</h4>
-            <p>No year-long contracts to sign. Stay because the service is worth it, not because you're locked in.</p>
+          <div class="reports-bullet-vert">
+            <span class="reports-bullet-icon">✦</span>
+            <div>
+              <h4>Month-over-Month</h4>
+              <p>Every report compares to the prior month so you can see if things are trending the right direction.</p>
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <div class="why-visual reveal" id="why-visual">
-      <div class="why-ghost" id="why-ghost">0</div>
-      <div class="why-visual-inner"></div>
-      <div class="why-stat">
-        <div class="why-stat-label-top">Canadian Small Business</div>
-        <div class="why-stat-num"><span id="why-counter">0</span>%</div>
-        <div class="why-progress-track">
-          <div class="why-progress-fill" id="why-progress"></div>
-        </div>
-        <div class="why-progress-ticks">
-          <span></span><span></span><span></span><span></span>
-        </div>
-        <p>of local businesses have no website — or one so outdated it's working against them</p>
+      <!-- RIGHT: image -->
+      <div class="report-desktop-wrap">
+        <div class="report-desktop-badge">Monthly Report</div>
+        <img src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/monthly%20report.png" alt="Monthly analytics report">
       </div>
+
     </div>
   </section>
-
 
   <!-- PORTFOLIO -->
   <section id="portfolio">
@@ -1848,59 +2126,4 @@
     }, { threshold: 0.12 });
     revealEls.forEach(el => observer.observe(el));
 
-    // Count-up animation for Why stat
-    const counterEl  = document.getElementById('why-counter');
-    const ghostEl    = document.getElementById('why-ghost');
-    const progressEl = document.getElementById('why-progress');
-    const TARGET     = 46;
-    const DURATION   = 2000; // ms
-    let hasRun       = false;
-
-    function easeOutExpo(t) {
-      return t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
-    }
-
-    function runCountUp() {
-      if (hasRun) return;
-      hasRun = true;
-
-      // kick off the progress bar (CSS transition handles it)
-      requestAnimationFrame(() => {
-        progressEl.style.width = TARGET + '%';
-      });
-
-      const start = performance.now();
-      function tick(now) {
-        const elapsed = now - start;
-        const progress = Math.min(elapsed / DURATION, 1);
-        const eased    = easeOutExpo(progress);
-        const current  = Math.round(eased * TARGET);
-
-        counterEl.textContent = current;
-        ghostEl.textContent   = current;
-
-        if (progress < 1) {
-          requestAnimationFrame(tick);
-        } else {
-          counterEl.textContent = TARGET;
-          ghostEl.textContent   = TARGET;
-        }
-      }
-      requestAnimationFrame(tick);
-    }
-
-    const statObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          // small delay so the reveal fade plays first
-          setTimeout(runCountUp, 300);
-          statObserver.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.4 });
-
-    const whyVisual = document.getElementById('why-visual');
-    if (whyVisual) statObserver.observe(whyVisual);
   </script>
-</body>
-</html>
