@@ -1369,6 +1369,64 @@
       .cred-pill img { height: 40px; }
     }
 
+    /* ─── CLIENT LOGO MARQUEE ─── */
+    #clients {
+      border-top: 1px solid var(--border);
+      padding: 3rem 0;
+      overflow: hidden;
+    }
+
+    .clients-label {
+      font-family: var(--mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--grey);
+      text-align: center;
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+    }
+    .clients-label::before, .clients-label::after {
+      content: '';
+      width: 40px;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .clients-track-wrap {
+      overflow: hidden;
+      width: 100%;
+    }
+
+    .clients-track {
+      display: flex;
+      gap: 4rem;
+      width: max-content;
+      animation: marquee 36s linear infinite;
+      align-items: center;
+      padding: 0.5rem 0;
+    }
+
+    .client-logo {
+      height: 54px;
+      width: auto;
+      max-width: 200px;
+      object-fit: contain;
+      display: block;
+      flex-shrink: 0;
+      opacity: 0.5;
+      filter: grayscale(100%);
+      transition: opacity 0.3s, filter 0.3s;
+    }
+
+    .client-logo:hover {
+      opacity: 0.9;
+      filter: grayscale(0%);
+    }
+
     /* ─── ADDONS ─── */
     .addons {
       margin-top: 3rem;
@@ -1629,6 +1687,32 @@
       <div class="marquee-item">Same Day Response</div>
     </div>
   </div>
+
+  <!-- CLIENT LOGOS -->
+  <section id="clients">
+    <div class="clients-label">Trusted By Local Businesses</div>
+    <div class="clients-track-wrap">
+      <div class="clients-track">
+        <img class="client-logo" src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/atwood.png" alt="Atwood Furniture">
+        <img class="client-logo" src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/baselines.png" alt="Baselines Pub">
+        <img class="client-logo" src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/chipd-logo.png" alt="Chipd">
+        <img class="client-logo" src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/cortex.png" alt="Cortex">
+        <img class="client-logo" src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/fineline%20plotworks.png" alt="Fine Line Plotworks">
+        <img class="client-logo" src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/littlegreens.png" alt="Lit Greens">
+        <img class="client-logo" src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/pitchd-logo.png" alt="Pitchd">
+        <img class="client-logo" src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/vomad-logo.png" alt="Vomad Rentals">
+        <!-- duplicate for seamless loop -->
+        <img class="client-logo" src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/atwood.png" alt="Atwood Furniture">
+        <img class="client-logo" src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/baselines.png" alt="Baselines Pub">
+        <img class="client-logo" src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/chipd-logo.png" alt="Chipd">
+        <img class="client-logo" src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/cortex.png" alt="Cortex">
+        <img class="client-logo" src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/fineline%20plotworks.png" alt="Fine Line Plotworks">
+        <img class="client-logo" src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/littlegreens.png" alt="Lit Greens">
+        <img class="client-logo" src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/pitchd-logo.png" alt="Pitchd">
+        <img class="client-logo" src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/vomad-logo.png" alt="Vomad Rentals">
+      </div>
+    </div>
+  </section>
 
   <!-- THE PRICING PROBLEM -->
   <section id="pricing-problem" style="border-top: 1px solid var(--border);">
