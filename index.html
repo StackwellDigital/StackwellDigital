@@ -3,8 +3,21 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Stackwell Digital — Websites for Local Business</title>
-  <meta name="description" content="Stackwell Digital builds and manages professional websites for local businesses. Flat monthly rate. No tech headaches." />
+  <title>Web Design &amp; Managed Hosting for BC Local Businesses | Stackwell Digital</title>
+  <meta name="description" content="Professional websites built and managed for BC local businesses. Flat monthly rate, no contracts, no surprises. Get your site live in days — from $120/mo." />
+  <link rel="canonical" href="https://stackwell.digital/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://stackwell.digital/" />
+  <meta property="og:title" content="Web Design &amp; Managed Hosting for BC Local Businesses | Stackwell Digital" />
+  <meta property="og:description" content="Professional websites built and managed for BC local businesses. Flat monthly rate, no contracts. From $120/mo." />
+  <meta property="og:image" content="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/logo.photo.png" />
+  <meta property="og:site_name" content="Stackwell Digital" />
+  <meta property="og:locale" content="en_CA" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Web Design &amp; Managed Hosting for BC Local Businesses | Stackwell Digital" />
+  <meta name="twitter:description" content="Professional websites built and managed for BC local businesses. Flat monthly rate, no contracts. From $120/mo." />
+  <meta name="twitter:image" content="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/logo.photo.png" />
+  <meta name="theme-color" content="#0a0a0a" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
@@ -24,7 +37,7 @@
       --surface: #111111;
       --border: rgba(255,255,255,0.07);
       --white: #ffffff;
-      --grey: #888888;
+      --grey: #aaaaaa;
       --grey-light: #bbbbbb;
       --accent: #ffffff;
       --mono: 'DM Mono', monospace;
@@ -580,6 +593,28 @@
     .reveal.visible {
       opacity: 1;
       transform: none;
+    }
+
+    /* ─── ACCESSIBILITY ─── */
+    .skip-link {
+      position: absolute;
+      top: -100%;
+      left: 1rem;
+      z-index: 9999;
+      background: #fff;
+      color: #0a0a0a;
+      padding: 0.5rem 1.25rem;
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-decoration: none;
+      transition: top 0.2s;
+    }
+    .skip-link:focus { top: 1rem; }
+
+    :focus-visible {
+      outline: 2px solid #ffffff;
+      outline-offset: 3px;
     }
 
     /* ─── PORTFOLIO ─── */
@@ -1618,6 +1653,9 @@
 </head>
 <body>
 
+  <!-- SKIP LINK (a11y) -->
+  <a href="#hero" class="skip-link">Skip to main content</a>
+
   <!-- NAV -->
   <nav id="nav">
     <a href="#hero" class="nav-logo"><img src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/logo.photo.png" alt="Stackwell Digital" style="height:76px;width:auto;" /></a>
@@ -1631,14 +1669,14 @@
     </ul>
     <div style="display:flex;align-items:center;gap:1rem;">
       <a href="#contact" class="nav-cta">Get Started</a>
-      <button class="hamburger" id="hamburger" aria-label="Open menu">
+      <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
     </div>
   </nav>
 
   <!-- MOBILE MENU -->
-  <div class="mobile-menu" id="mobileMenu">
+  <div class="mobile-menu" id="mobileMenu" role="dialog" aria-modal="true" aria-label="Navigation menu">
     <a href="#pricing-problem" class="mobile-link">The Reality</a>
     <a href="#how" class="mobile-link">How It Works</a>
     <a href="#pricing" class="mobile-link">Pricing</a>
@@ -1650,14 +1688,14 @@
 
   <!-- HERO -->
   <section id="hero">
-    <video class="hero-video" autoplay muted loop playsinline>
+    <video class="hero-video" autoplay muted loop playsinline preload="none">
       <source src="https://pub-a8448320a70c4e9197cce0cfa015b00f.r2.dev/Black%20White%20and%20Blue%20Modern%20Coding%20Education%20Video.mp4" type="video/mp4">
     </video>
     <div class="hero-grid"></div>
     <p class="hero-tag">Web Presence for Local Business</p>
     <h1>Your Website.<br /><em>Handled.</em></h1>
     <p class="hero-sub">
-      Stackwell Digital builds and manages professional websites for local businesses. Flat monthly rate. No contracts. No tech headaches. Just a site that works.
+      Stackwell Digital builds and manages professional websites for local businesses across BC — Surrey, Langley, White Rock, and the Lower Mainland. Flat monthly rate. No contracts. No tech headaches. Just a site that works.
     </p>
     <div class="hero-actions">
       <a href="#pricing" class="btn-primary">See Plans</a>
@@ -1693,23 +1731,23 @@
     <div class="clients-label">Trusted By Local Businesses</div>
     <div class="clients-track-wrap">
       <div class="clients-track">
-        <img class="client-logo" src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/atwood.png" alt="Atwood Furniture">
-        <img class="client-logo" src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/baselines.png" alt="Baselines Pub">
-        <img class="client-logo" src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/chipd-logo.png" alt="Chipd">
-        <img class="client-logo" src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/cortex.png" alt="Cortex">
-        <img class="client-logo" src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/fineline%20plotworks.png" alt="Fine Line Plotworks">
-        <img class="client-logo" src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/littlegreens.png" alt="Lit Greens">
-        <img class="client-logo" src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/pitchd-logo.png" alt="Pitchd">
-        <img class="client-logo" src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/vomad-logo.png" alt="Vomad Rentals">
+        <img class="client-logo" loading="lazy" src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/atwood.png" alt="Atwood Furniture">
+        <img class="client-logo" loading="lazy" src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/baselines.png" alt="Baselines Pub">
+        <img class="client-logo" loading="lazy" src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/chipd-logo.png" alt="Chipd">
+        <img class="client-logo" loading="lazy" src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/cortex.png" alt="Cortex">
+        <img class="client-logo" loading="lazy" src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/fineline%20plotworks.png" alt="Fine Line Plotworks">
+        <img class="client-logo" loading="lazy" src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/littlegreens.png" alt="Lit Greens">
+        <img class="client-logo" loading="lazy" src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/pitchd-logo.png" alt="Pitchd">
+        <img class="client-logo" loading="lazy" src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/vomad-logo.png" alt="Vomad Rentals">
         <!-- duplicate for seamless loop -->
-        <img class="client-logo" src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/atwood.png" alt="Atwood Furniture">
-        <img class="client-logo" src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/baselines.png" alt="Baselines Pub">
-        <img class="client-logo" src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/chipd-logo.png" alt="Chipd">
-        <img class="client-logo" src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/cortex.png" alt="Cortex">
-        <img class="client-logo" src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/fineline%20plotworks.png" alt="Fine Line Plotworks">
-        <img class="client-logo" src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/littlegreens.png" alt="Lit Greens">
-        <img class="client-logo" src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/pitchd-logo.png" alt="Pitchd">
-        <img class="client-logo" src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/vomad-logo.png" alt="Vomad Rentals">
+        <img class="client-logo" loading="lazy" src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/atwood.png" alt="Atwood Furniture">
+        <img class="client-logo" loading="lazy" src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/baselines.png" alt="Baselines Pub">
+        <img class="client-logo" loading="lazy" src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/chipd-logo.png" alt="Chipd">
+        <img class="client-logo" loading="lazy" src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/cortex.png" alt="Cortex">
+        <img class="client-logo" loading="lazy" src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/fineline%20plotworks.png" alt="Fine Line Plotworks">
+        <img class="client-logo" loading="lazy" src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/littlegreens.png" alt="Lit Greens">
+        <img class="client-logo" loading="lazy" src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/pitchd-logo.png" alt="Pitchd">
+        <img class="client-logo" loading="lazy" src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/vomad-logo.png" alt="Vomad Rentals">
       </div>
     </div>
   </section>
@@ -1847,11 +1885,11 @@
     <div class="creds-label reveal">Certifications &amp; Credentials</div>
     <p class="creds-sub reveal">Certified across cloud, security, and digital marketing</p>
     <div class="creds-logos reveal">
-      <img src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/AWS-Certified-Advanced-Networking-Specialty_badge.e09a4e04210dd4dd57ace21344af66986d4b4dc7.webp" alt="AWS Certified Advanced Networking Specialty">
-      <img src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/5bfb7dae1c678.webp" alt="AWS Certified Solutions Architect Professional">
-      <img src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/comptia%20badge.webp" alt="CompTIA">
-      <img src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/google_analyitics_4_badge_certification.webp" alt="Google Analytics 4 Certified">
-      <img src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/hubspot-academy-hubspot-certification-badge-1-300x120.png" alt="HubSpot Academy Certified">
+      <img src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/AWS-Certified-Advanced-Networking-Specialty_badge.e09a4e04210dd4dd57ace21344af66986d4b4dc7.webp" loading="lazy" alt="AWS Certified Advanced Networking Specialty">
+      <img src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/5bfb7dae1c678.webp" loading="lazy" alt="AWS Certified Solutions Architect Professional">
+      <img src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/comptia%20badge.webp" loading="lazy" alt="CompTIA">
+      <img src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/google_analyitics_4_badge_certification.webp" loading="lazy" alt="Google Analytics 4 Certified">
+      <img src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/hubspot-academy-hubspot-certification-badge-1-300x120.png" loading="lazy" alt="HubSpot Academy Certified">
     </div>
   </section>
 
@@ -2003,7 +2041,7 @@
       <!-- RIGHT: image -->
       <div class="report-desktop-wrap">
         <div class="report-desktop-badge">Monthly Report</div>
-        <img src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/monthly%20report.png" alt="Monthly analytics report">
+        <img src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/monthly%20report.png" loading="lazy" alt="Monthly analytics report">
       </div>
 
     </div>
@@ -2020,57 +2058,57 @@
       <!-- Pitchd — spot 1 -->
       <div class="portfolio-card">
         <div class="pc-img-wrap">
-          <img class="pc-screenshot"
+          <img class="pc-screenshot" loading="lazy"
             src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/pitchd.png"
-            alt="Pitchd website">
+            alt="Pitchd campsite cancellation alert service — website screenshot, BC">
         </div>
         <div class="pc-info">
           <div>
             <div class="pc-name">Pitchd</div>
             <div class="pc-type">Campsite Cancellation Alerts · BC</div>
           </div>
-          <a href="https://www.pitchd.ca" target="_blank" rel="noopener" class="pc-tag" style="text-decoration:none;cursor:pointer;">↗ Visit</a>
+          <a href="https://www.pitchd.ca" target="_blank" rel="noopener" class="pc-tag" style="text-decoration:none;cursor:pointer;" aria-label="Visit Pitchd website">↗ Visit</a>
         </div>
       </div>
 
       <!-- Vomad Rentals — spot 2 -->
       <div class="portfolio-card">
         <div class="pc-img-wrap">
-          <img class="pc-screenshot"
+          <img class="pc-screenshot" loading="lazy"
             src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/vomadrentals.png"
-            alt="Vomad Rentals website">
+            alt="Vomad Rentals equipment rental company — website screenshot, BC">
         </div>
         <div class="pc-info">
           <div>
             <div class="pc-name">Vomad Rentals</div>
             <div class="pc-type">Equipment Rentals · BC</div>
           </div>
-          <a href="https://www.vomadrentals.ca" target="_blank" rel="noopener" class="pc-tag" style="text-decoration:none;cursor:pointer;">↗ Visit</a>
+          <a href="https://www.vomadrentals.ca" target="_blank" rel="noopener" class="pc-tag" style="text-decoration:none;cursor:pointer;" aria-label="Visit Vomad Rentals website">↗ Visit</a>
         </div>
       </div>
 
       <!-- Chipd Golf — spot 3 -->
       <div class="portfolio-card">
         <div class="pc-img-wrap">
-          <img class="pc-screenshot"
+          <img class="pc-screenshot" loading="lazy"
             src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/chipd.png"
-            alt="Chipd Golf website">
+            alt="Chipd Golf tee time cancellation alerts — website screenshot, BC">
         </div>
         <div class="pc-info">
           <div>
             <div class="pc-name">Chipd Golf</div>
             <div class="pc-type">Tee Time Cancellation Alerts · BC</div>
           </div>
-          <a href="https://www.chipdgolf.ca" target="_blank" rel="noopener" class="pc-tag" style="text-decoration:none;cursor:pointer;">↗ Visit</a>
+          <a href="https://www.chipdgolf.ca" target="_blank" rel="noopener" class="pc-tag" style="text-decoration:none;cursor:pointer;" aria-label="Visit Chipd Golf website">↗ Visit</a>
         </div>
       </div>
 
       <!-- Little Greens Farm -->
       <div class="portfolio-card">
         <div class="pc-img-wrap">
-          <img class="pc-screenshot"
+          <img class="pc-screenshot" loading="lazy"
             src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/little-greens-farm.png"
-            alt="Little Greens Farm website">
+            alt="Little Greens Farm organic microgreens — website screenshot, South Surrey BC">
         </div>
         <div class="pc-info">
           <div>
@@ -2084,9 +2122,9 @@
       <!-- Atwood Furniture -->
       <div class="portfolio-card">
         <div class="pc-img-wrap">
-          <img class="pc-screenshot"
+          <img class="pc-screenshot" loading="lazy"
             src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/atwood-furniture.png"
-            alt="Atwood Furniture website">
+            alt="Atwood Furniture Co. handcrafted furniture — website screenshot, BC">
         </div>
         <div class="pc-info">
           <div>
@@ -2100,9 +2138,9 @@
       <!-- Lark Knives -->
       <div class="portfolio-card">
         <div class="pc-img-wrap">
-          <img class="pc-screenshot"
+          <img class="pc-screenshot" loading="lazy"
             src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/lark-knives.png"
-            alt="Lark Knives website">
+            alt="Lark Knives custom knife making — website screenshot, BC">
         </div>
         <div class="pc-info">
           <div>
@@ -2127,7 +2165,7 @@
       <!-- Adam -->
       <div class="team-card">
         <div class="team-photo-wrap">
-          <img class="team-photo"
+          <img class="team-photo" loading="lazy"
             src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/1_20260506_204743_0000.png"
             alt="Adam Vollet, Founder">
         </div>
@@ -2142,7 +2180,7 @@
       <!-- Hank -->
       <div class="team-card team-card-hank">
         <div class="team-photo-wrap">
-          <img class="team-photo"
+          <img class="team-photo" loading="lazy"
             src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/2_20260506_204743_0001.png"
             alt="Hank, Chief Morale Officer">
         </div>
@@ -2184,7 +2222,9 @@
     hamburger.addEventListener('click', () => {
       hamburger.classList.toggle('open');
       mobileMenu.classList.toggle('open');
-      document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+      const isOpen = mobileMenu.classList.contains('open');
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+      hamburger.setAttribute('aria-expanded', isOpen);
     });
     document.querySelectorAll('.mobile-link').forEach(link => {
       link.addEventListener('click', () => {
@@ -2213,3 +2253,63 @@
     revealEls.forEach(el => observer.observe(el));
 
   </script>
+
+  <!-- LOCAL BUSINESS SCHEMA -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": "Stackwell Digital",
+    "url": "https://stackwell.digital",
+    "logo": "https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/logo.photo.png",
+    "description": "Web design and managed hosting for local businesses in British Columbia. Flat monthly subscription, no contracts.",
+    "address": {
+      "@type": "PostalAddress",
+      "addressRegion": "BC",
+      "addressCountry": "CA"
+    },
+    "areaServed": [
+      { "@type": "City", "name": "Surrey" },
+      { "@type": "City", "name": "Langley" },
+      { "@type": "City", "name": "White Rock" },
+      { "@type": "City", "name": "Abbotsford" },
+      { "@type": "State", "name": "British Columbia" }
+    ],
+    "priceRange": "$$",
+    "email": "adam@stackwell.digital",
+    "foundingDate": "2025",
+    "founder": {
+      "@type": "Person",
+      "name": "Adam Vollet"
+    },
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Website Plans",
+      "itemListElement": [
+        {
+          "@type": "Offer",
+          "name": "Starter Plan",
+          "description": "Professional website, domain management, hosting, 2 updates/mo, annual refresh",
+          "price": "120",
+          "priceCurrency": "CAD"
+        },
+        {
+          "@type": "Offer",
+          "name": "Active Business Plan",
+          "description": "Everything in Starter plus 6 updates/mo, SEO setup, monthly analytics report",
+          "price": "175",
+          "priceCurrency": "CAD"
+        },
+        {
+          "@type": "Offer",
+          "name": "Premium Plan",
+          "description": "Unlimited updates, same-day response, Google Business Profile management, quarterly strategy",
+          "price": "250",
+          "priceCurrency": "CAD"
+        }
+      ]
+    }
+  }
+  </script>
+
+</body>
