@@ -39,7 +39,9 @@
       --white: #ffffff;
       --grey: #aaaaaa;
       --grey-light: #bbbbbb;
-      --accent: #ffffff;
+      --accent: #F97316;
+      --accent-dim: rgba(249,115,22,0.12);
+      --accent-border: rgba(249,115,22,0.25);
       --mono: 'DM Mono', monospace;
       --sans: 'DM Sans', sans-serif;
       --display: 'Bebas Neue', sans-serif;
@@ -119,13 +121,14 @@
       font-size: 0.7rem;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: var(--bg);
-      background: var(--white);
+      color: #ffffff;
+      background: var(--accent);
       border: none;
       padding: 0.6rem 1.4rem;
       cursor: pointer;
       text-decoration: none;
       transition: opacity 0.2s;
+      font-weight: 500;
     }
     .nav-cta:hover { opacity: 0.85; }
 
@@ -151,7 +154,7 @@
       padding: 7rem 2.5rem 5rem;
       position: relative;
       overflow: hidden;
-      background: linear-gradient(105deg, #0a0a0a 0%, #141414 45%, #1c1c1c 100%);
+      background: linear-gradient(105deg, #0a0a0a 0%, #0d0d08 45%, #101008 100%);
     }
 
     /* hero pattern overlay same texture, slightly more visible in hero */
@@ -162,7 +165,7 @@
       background-image: url('https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/background_white.png');
       background-size: 420px 420px;
       background-repeat: repeat;
-      opacity: 0.05;
+      opacity: 0.04;
       pointer-events: none;
       z-index: 0;
       mask-image: linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.2) 60%, transparent 100%);
@@ -175,10 +178,24 @@
       position: absolute;
       inset: 0;
       background-image:
-        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+        linear-gradient(rgba(249,115,22,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(249,115,22,0.03) 1px, transparent 1px);
       background-size: 80px 80px;
       mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 30%, transparent 100%);
+    }
+
+    /* subtle green glow top right */
+    #hero::before {
+      content: '';
+      position: absolute;
+      top: -100px;
+      right: -100px;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(249,115,22,0.07) 0%, transparent 65%);
+      pointer-events: none;
+      z-index: 0;
+      border-radius: 50%;
     }
 
     .hero-tag {
@@ -186,10 +203,20 @@
       font-size: 0.65rem;
       letter-spacing: 0.3em;
       text-transform: uppercase;
-      color: var(--grey);
+      color: var(--accent);
       margin-bottom: 1.5rem;
       opacity: 0;
       animation: fadeUp 0.8s 0.2s forwards;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .hero-tag::before {
+      content: '';
+      width: 24px;
+      height: 1px;
+      background: var(--accent);
+      opacity: 0.6;
     }
 
     h1 {
@@ -204,7 +231,7 @@
 
     h1 em {
       font-style: normal;
-      color: var(--grey);
+      color: var(--accent);
     }
 
     .hero-sub {
@@ -230,14 +257,15 @@
       font-size: 0.72rem;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      background: var(--white);
-      color: var(--bg);
+      background: var(--accent);
+      color: #ffffff;
       padding: 0.85rem 2rem;
       text-decoration: none;
-      border: 1px solid var(--white);
+      border: 1px solid var(--accent);
       transition: background 0.2s, color 0.2s;
+      font-weight: 500;
     }
-    .btn-primary:hover { background: transparent; color: var(--white); }
+    .btn-primary:hover { background: transparent; color: var(--accent); border-color: var(--accent); }
 
     .btn-ghost {
       font-family: var(--mono);
@@ -318,11 +346,11 @@
 
     /* ─── MARQUEE ─── */
     .marquee-wrap {
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      padding: 1.2rem 0;
+      border-top: none;
+      border-bottom: none;
+      padding: 0.9rem 0;
       overflow: hidden;
-      background: var(--surface);
+      background: var(--accent);
     }
     .marquee-track {
       display: flex;
@@ -335,16 +363,17 @@
       font-size: 0.65rem;
       letter-spacing: 0.25em;
       text-transform: uppercase;
-      color: var(--grey);
+      color: var(--bg);
       white-space: nowrap;
       display: flex;
       align-items: center;
       gap: 3rem;
+      font-weight: 500;
     }
     .marquee-item::after {
       content: '◆';
       font-size: 0.4rem;
-      color: var(--grey);
+      color: rgba(10,10,10,0.35);
     }
     @keyframes marquee {
       from { transform: translateX(0); }
@@ -374,7 +403,7 @@
     .step-num {
       font-family: var(--display);
       font-size: 4rem;
-      color: rgba(255,255,255,0.22);
+      color: rgba(249,115,22,0.55);
       line-height: 1;
       margin-bottom: 1.5rem;
     }
@@ -433,14 +462,14 @@
     .plan:hover { background: rgba(255,255,255,0.025); }
 
     .plan.featured {
-      background: rgba(255,255,255,0.04);
+      background: rgba(249,115,22,0.04);
     }
     .plan.featured::before {
       content: 'MOST POPULAR';
       font-family: var(--mono);
       font-size: 0.55rem;
       letter-spacing: 0.25em;
-      color: var(--white);
+      color: var(--accent);
       display: block;
       margin-bottom: 1.5rem;
     }
@@ -495,7 +524,7 @@
     .plan-features li::before {
       content: '✦';
       font-size: 0.45rem;
-      color: var(--grey);
+      color: var(--accent);
       margin-top: 0.35rem;
       flex-shrink: 0;
     }
@@ -514,9 +543,9 @@
       transition: all 0.2s;
     }
     .plan-cta:hover, .plan.featured .plan-cta {
-      background: var(--white);
-      color: var(--bg);
-      border-color: var(--white);
+      background: var(--accent);
+      color: #ffffff;
+      border-color: var(--accent);
     }
 
     /* ─── CONTACT ─── */
@@ -572,8 +601,8 @@
       top: -100%;
       left: 1rem;
       z-index: 9999;
-      background: #fff;
-      color: #0a0a0a;
+      background: var(--accent);
+      color: #ffffff;
       padding: 0.5rem 1.25rem;
       font-family: var(--mono);
       font-size: 0.75rem;
@@ -584,7 +613,7 @@
     .skip-link:focus { top: 1rem; }
 
     :focus-visible {
-      outline: 2px solid #ffffff;
+      outline: 2px solid var(--accent);
       outline-offset: 3px;
     }
 
@@ -741,7 +770,7 @@
       position: absolute;
       top: 0; left: 0; right: 0;
       height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+      background: linear-gradient(90deg, transparent, rgba(249,115,22,0.2), transparent);
     }
 
     .service-card:hover { background: #1a1a1a; }
@@ -836,7 +865,7 @@
 
     /* RIGHT Stackwell */
     .pp-us {
-      background: #161616;
+      background: #0d0d08;
       padding: 2.5rem;
       display: flex;
       flex-direction: column;
@@ -844,14 +873,14 @@
       position: relative;
       border-left: 1px solid transparent;
       background-clip: padding-box;
-      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.12);
+      box-shadow: inset 0 0 0 1px rgba(249,115,22,0.15);
     }
 
     .pp-us::before {
       content: '';
       position: absolute;
       inset: 0;
-      background: radial-gradient(ellipse at top right, rgba(255,255,255,0.05) 0%, transparent 60%);
+      background: radial-gradient(ellipse at top right, rgba(249,115,22,0.07) 0%, transparent 60%);
       pointer-events: none;
     }
 
@@ -867,7 +896,7 @@
 
     .pp-us-row {
       padding: 1rem 0;
-      border-bottom: 1px solid rgba(255,255,255,0.07);
+      border-bottom: 1px solid rgba(249,115,22,0.08);
       display: flex;
       flex-direction: column;
       gap: 0.3rem;
@@ -888,7 +917,7 @@
     .pp-us-fix::before {
       content: '✓';
       font-size: 0.65rem;
-      color: var(--white);
+      color: var(--accent);
       margin-top: 0.15rem;
       flex-shrink: 0;
       font-weight: 600;
@@ -897,7 +926,7 @@
     .pp-us-price {
       font-family: var(--display);
       font-size: 3.5rem;
-      color: var(--white);
+      color: var(--accent);
       line-height: 1;
       margin-top: auto;
       padding-top: 2rem;
@@ -968,12 +997,13 @@
       font-size: 0.72rem;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: var(--bg);
-      background: var(--white);
+      color: #ffffff;
+      background: var(--accent);
       padding: 0.85rem 2.5rem;
       margin-top: 1.5rem;
+      font-weight: 500;
     }
-    .mobile-link-cta:hover { color: var(--bg); opacity: 0.85; }
+    .mobile-link-cta:hover { color: #ffffff; opacity: 0.85; }
 
     /* ─── TEAM ─── */
     #team {
@@ -1147,7 +1177,7 @@
         font-size: 0.58rem;
         letter-spacing: 0.1em;
         color: var(--bg);
-        background: var(--white);
+        background: var(--accent);
         width: 2.2rem;
         height: 2.2rem;
         border-radius: 50%;
@@ -1215,8 +1245,8 @@
     }
 
     .reports-plan-tag.active {
-      border-color: rgba(255,255,255,0.3);
-      color: var(--white);
+      border-color: rgba(249,115,22,0.4);
+      color: var(--accent);
     }
 
     @media (min-width: 901px) {
@@ -1284,7 +1314,7 @@
 
     .reports-bullet-icon {
       font-size: 1rem;
-      color: var(--grey);
+      color: var(--accent);
       flex-shrink: 0;
       margin-top: 0.1rem;
     }
@@ -1584,7 +1614,7 @@
     .migration-features li::before {
       content: '✦';
       font-size: 0.45rem;
-      color: var(--grey);
+      color: var(--accent);
       margin-top: 0.35rem;
       flex-shrink: 0;
     }
@@ -1603,9 +1633,9 @@
       transition: all 0.2s;
     }
     .migration-cta:hover {
-      background: var(--white);
-      color: var(--bg);
-      border-color: var(--white);
+      background: var(--accent);
+      color: #ffffff;
+      border-color: var(--accent);
     }
 
     .migration-note {
@@ -1680,7 +1710,7 @@
     }
     .faq-item.open .faq-icon {
       transform: rotate(45deg);
-      color: var(--white);
+      color: var(--accent);
     }
 
     .faq-a {
@@ -1812,8 +1842,8 @@
     .cf-field input:focus,
     .cf-field textarea:focus,
     .cf-field select:focus {
-      border-color: rgba(255,255,255,0.3);
-      background: rgba(255,255,255,0.06);
+      border-color: rgba(249,115,22,0.35);
+      background: rgba(249,115,22,0.03);
     }
 
     .cf-field input::placeholder,
@@ -1835,16 +1865,17 @@
       font-size: 0.72rem;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      background: var(--white);
-      color: var(--bg);
-      border: 1px solid var(--white);
+      background: var(--accent);
+      color: #ffffff;
+      border: 1px solid var(--accent);
       padding: 0.9rem 2rem;
       cursor: pointer;
       transition: background 0.2s, color 0.2s;
       margin-top: 0.5rem;
       align-self: flex-start;
+      font-weight: 500;
     }
-    .cf-submit:hover { background: transparent; color: var(--white); }
+    .cf-submit:hover { background: transparent; color: var(--accent); }
     .cf-submit:disabled { opacity: 0.5; cursor: not-allowed; }
 
     .cf-status {
