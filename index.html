@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Web Design &amp; Managed Hosting for BC Local Businesses | Stackwell Digital</title>
-  <meta name="description" content="Professional websites built and managed for BC local businesses. Flat monthly rate, no contracts, no surprises. Get your site live in days — from $120/mo." />
+  <meta name="description" content="Professional websites built and managed for BC local businesses. Flat monthly rate, no contracts, no surprises. Get your site live in days. From $120/mo." />
   <link rel="canonical" href="https://stackwell.digital/" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://stackwell.digital/" />
@@ -154,7 +154,7 @@
       background: linear-gradient(105deg, #0a0a0a 0%, #141414 45%, #1c1c1c 100%);
     }
 
-    /* hero pattern overlay — same texture, slightly more visible in hero */
+    /* hero pattern overlay same texture, slightly more visible in hero */
     #hero::after {
       content: '';
       position: absolute;
@@ -168,7 +168,7 @@
       mask-image: linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.2) 60%, transparent 100%);
     }
 
-    /* make hero content sit above the pattern overlay — exclude absolutely-positioned elements */
+    /* make hero content sit above the pattern overlay exclude absolutely-positioned elements */
     .hero-tag, .hero-sub, .hero-actions, #hero h1 { position: relative; z-index: 1; }
 
     .hero-grid {
@@ -403,11 +403,11 @@
     }
 
     .pricing-intro {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 4rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
       margin-bottom: 4rem;
-      align-items: end;
+      max-width: 600px;
     }
 
     .pricing-intro p {
@@ -520,36 +520,7 @@
     }
 
     /* ─── CONTACT ─── */
-    #contact {
-      border-top: 1px solid var(--border);
-      text-align: center;
-      padding: 8rem 2.5rem;
-    }
 
-    #contact h2 {
-      font-size: clamp(3rem, 8vw, 7rem);
-      margin-bottom: 1.5rem;
-    }
-
-    #contact p {
-      color: var(--grey);
-      font-size: 0.95rem;
-      max-width: 440px;
-      margin: 0 auto 3rem;
-      line-height: 1.8;
-    }
-
-    .contact-email {
-      font-family: var(--mono);
-      font-size: 0.8rem;
-      letter-spacing: 0.1em;
-      color: var(--grey);
-      text-decoration: none;
-      display: block;
-      margin-top: 2.5rem;
-      transition: color 0.2s;
-    }
-    .contact-email:hover { color: var(--white); }
 
     /* ─── FOOTER ─── */
     footer {
@@ -811,7 +782,7 @@
       border: 1px solid var(--border);
     }
 
-    /* LEFT — competitors */
+    /* LEFT competitors */
     .pp-them {
       padding: 2.5rem;
       border-right: 1px solid var(--border);
@@ -863,7 +834,7 @@
       flex-shrink: 0;
     }
 
-    /* RIGHT — Stackwell */
+    /* RIGHT Stackwell */
     .pp-us {
       background: #161616;
       padding: 2.5rem;
@@ -1099,7 +1070,6 @@
       .hamburger { display: flex; }
       section { padding: 5rem 1.5rem; }
       #hero { padding: 6rem 1.5rem 4rem; }
-      .pricing-intro { grid-template-columns: 1fr; gap: 1.5rem; }
       .plans { grid-template-columns: 1fr; }
       .plan { border-right: none; border-bottom: 1px solid var(--border); }
       .plan:last-child { border-bottom: none; }
@@ -1533,6 +1503,18 @@
       margin-bottom: 1.25rem;
     }
 
+    .migration-title-sub {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--grey);
+      display: block;
+      margin-top: 0.75rem;
+      font-weight: 400;
+      line-height: 1.4;
+    }
+
     .migration-header-right {
       font-size: 0.85rem;
       color: var(--grey-light);
@@ -1649,6 +1631,238 @@
       .migration-plan:last-child { border-bottom: none; }
       .migration-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
     }
+
+    /* ─── FAQ ─── */
+    #faq {
+      border-top: 1px solid var(--border);
+    }
+
+    .faq-grid {
+      margin-top: 4rem;
+      border: 1px solid var(--border);
+    }
+
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+    }
+    .faq-item:last-child { border-bottom: none; }
+
+    .faq-q {
+      width: 100%;
+      background: none;
+      border: none;
+      padding: 1.75rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      text-align: left;
+      gap: 2rem;
+      transition: background 0.2s;
+    }
+    .faq-q:hover { background: rgba(255,255,255,0.025); }
+
+    .faq-q-text {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      color: var(--white);
+      font-weight: 500;
+      line-height: 1.5;
+    }
+
+    .faq-icon {
+      font-size: 1rem;
+      color: var(--grey);
+      flex-shrink: 0;
+      transition: transform 0.3s ease, color 0.2s;
+      line-height: 1;
+    }
+    .faq-item.open .faq-icon {
+      transform: rotate(45deg);
+      color: var(--white);
+    }
+
+    .faq-a {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s ease, padding 0.3s ease;
+      padding: 0 2rem;
+    }
+    .faq-item.open .faq-a {
+      max-height: 400px;
+      padding: 0 2rem 1.75rem;
+    }
+
+    .faq-a p {
+      font-size: 0.88rem;
+      color: var(--grey-light);
+      line-height: 1.8;
+    }
+
+    .faq-a a {
+      color: var(--white);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    @media (max-width: 900px) {
+      #faq { padding: 3.5rem 1.25rem; }
+      .faq-q { padding: 1.25rem 1.25rem; }
+      .faq-item.open .faq-a { padding: 0 1.25rem 1.5rem; }
+      .faq-q-text { font-size: 0.7rem; }
+    }
+
+    /* ─── CONTACT FORM ─── */
+    #contact {
+      border-top: 1px solid var(--border);
+      padding: 7rem 2.5rem;
+    }
+
+    .contact-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: start;
+      margin-top: 4rem;
+    }
+
+    .contact-left h2 {
+      font-size: clamp(3rem, 7vw, 6rem);
+      margin-bottom: 1.5rem;
+    }
+
+    .contact-left p {
+      color: var(--grey-light);
+      font-size: 0.92rem;
+      line-height: 1.8;
+      margin-bottom: 2rem;
+    }
+
+    .contact-detail {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-top: 2.5rem;
+      padding-top: 2.5rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .contact-detail-label {
+      font-family: var(--mono);
+      font-size: 0.55rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--grey);
+    }
+
+    .contact-detail a {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      color: var(--grey-light);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .contact-detail a:hover { color: var(--white); }
+
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .cf-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .cf-field {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .cf-field label {
+      font-family: var(--mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--grey);
+    }
+
+    .cf-field input,
+    .cf-field textarea,
+    .cf-field select {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      color: var(--white);
+      font-family: var(--sans);
+      font-size: 0.88rem;
+      padding: 0.75rem 1rem;
+      outline: none;
+      transition: border-color 0.2s, background 0.2s;
+      -webkit-appearance: none;
+      appearance: none;
+      border-radius: 0;
+      width: 100%;
+    }
+
+    .cf-field input:focus,
+    .cf-field textarea:focus,
+    .cf-field select:focus {
+      border-color: rgba(255,255,255,0.3);
+      background: rgba(255,255,255,0.06);
+    }
+
+    .cf-field input::placeholder,
+    .cf-field textarea::placeholder { color: rgba(255,255,255,0.2); }
+
+    .cf-field textarea { resize: vertical; min-height: 110px; }
+
+    .cf-field select {
+      cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23888' stroke-width='1.5' fill='none' stroke-linecap='square'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 1rem center;
+      padding-right: 2.5rem;
+    }
+    .cf-field select option { background: #1a1a1a; color: var(--white); }
+
+    .cf-submit {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      background: var(--white);
+      color: var(--bg);
+      border: 1px solid var(--white);
+      padding: 0.9rem 2rem;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+      margin-top: 0.5rem;
+      align-self: flex-start;
+    }
+    .cf-submit:hover { background: transparent; color: var(--white); }
+    .cf-submit:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    .cf-status {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      padding: 0.75rem 1rem;
+      border: 1px solid var(--border);
+      display: none;
+    }
+    .cf-status.success { border-color: rgba(100,200,100,0.3); color: #8ecb8e; display: block; }
+    .cf-status.error { border-color: rgba(200,80,80,0.3); color: #e08080; display: block; }
+
+    @media (max-width: 900px) {
+      #contact { padding: 3.5rem 1.25rem; }
+      .contact-layout { grid-template-columns: 1fr; gap: 3rem; }
+      .cf-row { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
@@ -1666,6 +1880,7 @@
       <li><a href="#reports">Reports</a></li>
       <li><a href="#portfolio">Our Work</a></li>
       <li><a href="#team">Who We Are</a></li>
+      <li><a href="#faq">FAQ</a></li>
     </ul>
     <div style="display:flex;align-items:center;gap:1rem;">
       <a href="#contact" class="nav-cta">Get Started</a>
@@ -1683,6 +1898,7 @@
     <a href="#reports" class="mobile-link">Reports</a>
     <a href="#portfolio" class="mobile-link">Our Work</a>
     <a href="#team" class="mobile-link">Who We Are</a>
+    <a href="#faq" class="mobile-link">FAQ</a>
     <a href="#contact" class="mobile-link mobile-link-cta">Get Started</a>
   </div>
 
@@ -1695,7 +1911,7 @@
     <p class="hero-tag">Web Presence for Local Business</p>
     <h1>Your Website.<br /><em>Handled.</em></h1>
     <p class="hero-sub">
-      Stackwell Digital builds and manages professional websites for local businesses across BC — Surrey, Langley, White Rock, and the Lower Mainland. Flat monthly rate. No contracts. No tech headaches. Just a site that works.
+      Stackwell Digital builds and manages professional websites for local businesses across BC. Surrey, Langley, White Rock, and the Lower Mainland. Flat monthly rate. No contracts. No tech headaches. Just a site that works.
     </p>
     <div class="hero-actions">
       <a href="#pricing" class="btn-primary">See Plans</a>
@@ -1793,7 +2009,7 @@
           <div class="pp-us-fix">One flat monthly rate. Everything included.</div>
         </div>
         <div class="pp-us-row">
-          <div class="pp-us-fix">Domain, hosting, updates, support — all in.</div>
+          <div class="pp-us-fix">Domain, hosting, updates, support. All in.</div>
         </div>
         <div class="pp-us-row">
           <div class="pp-us-fix">Month-to-month. Cancel anytime, no penalty.</div>
@@ -1815,7 +2031,7 @@
         <div class="step-num">01</div>
         <div class="step-body">
           <h3>We Build It</h3>
-          <p>We design and build your site from scratch — professional, fast, and tailored to your business. Ready in days, not months.</p>
+          <p>We design and build your site from scratch. Professional, fast, and tailored to your business. Ready in days, not months.</p>
         </div>
       </div>
       <div class="step">
@@ -1829,7 +2045,7 @@
         <div class="step-num">03</div>
         <div class="step-body">
           <h3>We Launch It</h3>
-          <p>Domain connected, site goes live. We handle the tech — DNS, hosting, SSL, all of it. You don't touch a thing.</p>
+          <p>Domain connected, site goes live. We handle the tech: DNS, hosting, SSL, all of it. You don't touch a thing.</p>
         </div>
       </div>
       <div class="step">
@@ -1855,12 +2071,12 @@
       <div class="service-card">
         <div class="service-icon">⬡</div>
         <h3>Managed Hosting</h3>
-        <p>Your site lives on our infrastructure. Uptime, SSL, backups — all handled. Nothing for you to manage.</p>
+        <p>Your site lives on our infrastructure. Uptime, SSL, backups. All handled. Nothing for you to manage.</p>
       </div>
       <div class="service-card">
         <div class="service-icon">◎</div>
         <h3>Domain Management</h3>
-        <p>We register, configure, and maintain your domain. DNS, renewals, redirects — it's all ours to deal with.</p>
+        <p>We register, configure, and maintain your domain. DNS, renewals, redirects. All ours to deal with.</p>
       </div>
       <div class="service-card">
         <div class="service-icon">⌖</div>
@@ -1875,21 +2091,8 @@
       <div class="service-card">
         <div class="service-icon">✦</div>
         <h3>Content Updates</h3>
-        <p>New hours, a menu change, a fresh photo — just message us. Updates are included in your monthly plan.</p>
+        <p>New hours, a menu change, a fresh photo. Just message us. Updates are included in your monthly plan.</p>
       </div>
-    </div>
-  </section>
-
-  <!-- CREDENTIALS -->
-  <section id="credentials">
-    <div class="creds-label reveal">Certifications &amp; Credentials</div>
-    <p class="creds-sub reveal">Certified across cloud, security, and digital marketing</p>
-    <div class="creds-logos reveal">
-      <img src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/AWS-Certified-Advanced-Networking-Specialty_badge.e09a4e04210dd4dd57ace21344af66986d4b4dc7.webp" loading="lazy" alt="AWS Certified Advanced Networking Specialty">
-      <img src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/5bfb7dae1c678.webp" loading="lazy" alt="AWS Certified Solutions Architect Professional">
-      <img src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/comptia%20badge.webp" loading="lazy" alt="CompTIA">
-      <img src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/google_analyitics_4_badge_certification.webp" loading="lazy" alt="Google Analytics 4 Certified">
-      <img src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/hubspot-academy-hubspot-certification-badge-1-300x120.png" loading="lazy" alt="HubSpot Academy Certified">
     </div>
   </section>
 
@@ -1956,8 +2159,8 @@
       <div class="migration-header">
         <div class="migration-header-left">
           <div class="migration-eyebrow">Already Have a Website?</div>
-          <div class="migration-title">Hosting + Management<br />Without the Rebuild</div>
-          <div class="migration-header-right">Already on GoDaddy, Squarespace, or Wix and just tired of paying too much for too little? We migrate your existing site and take over — hosting, updates, and support included. One-time migration fee, then a flat monthly rate.</div>
+          <div class="migration-title">Hosting + Management<br /><span class="migration-title-sub">Without the Rebuild</span></div>
+          <div class="migration-header-right">Already on GoDaddy, Squarespace, or Wix and just tired of paying too much for too little? We migrate your existing site and take over. Hosting, updates, and support included. One-time migration fee, then a flat monthly rate.</div>
         </div>
       </div>
       <div class="migration-body">
@@ -1992,7 +2195,7 @@
           <a href="https://square.link/u/PFiJBct8" target="_blank" rel="noopener" class="migration-cta">Get Started</a>
         </div>
       </div>
-      <div class="migration-note">One-time migration fee of $199 applies to all plans. Covers domain transfer, site rebuild, and initial setup. Need a full redesign? Migrate onto our Starter plan from $120/mo.</div>
+
     </div>
 
   </section>
@@ -2005,7 +2208,7 @@
       <div class="reports-left">
         <p class="section-label">Reports &amp; Analytics</p>
         <h2>Know Exactly<br />How You're Doing.</h2>
-        <p style="color:var(--grey-light);font-size:0.95rem;line-height:1.8;margin-top:1rem;margin-bottom:2rem;">Active Business and Premium clients get a monthly report delivered straight to their inbox. Traffic, search rankings, top pages — the stuff that actually tells you if your site is working.</p>
+        <p style="color:var(--grey-light);font-size:0.95rem;line-height:1.8;margin-top:1rem;margin-bottom:2rem;">Active Business and Premium clients get a monthly report delivered straight to their inbox. Traffic, search rankings, top pages. The stuff that actually tells you if your site is working.</p>
 
         <div class="reports-plan-tags" style="margin-bottom:2.5rem;">
           <span class="reports-plan-tag">Starter</span>
@@ -2051,16 +2254,16 @@
   <section id="portfolio">
     <p class="section-label reveal">Our Work</p>
     <h2 class="reveal">Sites We've<br />Built.</h2>
-    <p class="reveal" style="color:var(--grey);max-width:520px;font-size:0.95rem;line-height:1.8;margin-top:1rem;">A selection of sites we've designed and built for local businesses across BC. Each one managed monthly — updates, hosting, domain, all handled.</p>
+    <p class="reveal" style="color:var(--grey);max-width:520px;font-size:0.95rem;line-height:1.8;margin-top:1rem;">A selection of sites we've designed and built for local businesses across BC. Each one managed monthly. Updates, hosting, domain, all handled.</p>
 
     <div class="portfolio-grid reveal">
 
-      <!-- Pitchd — spot 1 -->
+      <!-- Pitchd spot 1 -->
       <div class="portfolio-card">
         <div class="pc-img-wrap">
           <img class="pc-screenshot" loading="lazy"
             src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/pitchd.png"
-            alt="Pitchd campsite cancellation alert service — website screenshot, BC">
+            alt="Pitchd campsite cancellation alert service website screenshot, BC">
         </div>
         <div class="pc-info">
           <div>
@@ -2071,12 +2274,12 @@
         </div>
       </div>
 
-      <!-- Vomad Rentals — spot 2 -->
+      <!-- Vomad Rentals spot 2 -->
       <div class="portfolio-card">
         <div class="pc-img-wrap">
           <img class="pc-screenshot" loading="lazy"
             src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/vomadrentals.png"
-            alt="Vomad Rentals equipment rental company — website screenshot, BC">
+            alt="Vomad Rentals equipment rental company website screenshot, BC">
         </div>
         <div class="pc-info">
           <div>
@@ -2087,12 +2290,12 @@
         </div>
       </div>
 
-      <!-- Chipd Golf — spot 3 -->
+      <!-- Chipd Golf spot 3 -->
       <div class="portfolio-card">
         <div class="pc-img-wrap">
           <img class="pc-screenshot" loading="lazy"
             src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/chipd.png"
-            alt="Chipd Golf tee time cancellation alerts — website screenshot, BC">
+            alt="Chipd Golf tee time cancellation alerts website screenshot, BC">
         </div>
         <div class="pc-info">
           <div>
@@ -2108,7 +2311,7 @@
         <div class="pc-img-wrap">
           <img class="pc-screenshot" loading="lazy"
             src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/little-greens-farm.png"
-            alt="Little Greens Farm organic microgreens — website screenshot, South Surrey BC">
+            alt="Little Greens Farm organic microgreens website screenshot, South Surrey BC">
         </div>
         <div class="pc-info">
           <div>
@@ -2124,7 +2327,7 @@
         <div class="pc-img-wrap">
           <img class="pc-screenshot" loading="lazy"
             src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/atwood-furniture.png"
-            alt="Atwood Furniture Co. handcrafted furniture — website screenshot, BC">
+            alt="Atwood Furniture Co. handcrafted furniture website screenshot, BC">
         </div>
         <div class="pc-info">
           <div>
@@ -2140,7 +2343,7 @@
         <div class="pc-img-wrap">
           <img class="pc-screenshot" loading="lazy"
             src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/lark-knives.png"
-            alt="Lark Knives custom knife making — website screenshot, BC">
+            alt="Lark Knives custom knife making website screenshot, BC">
         </div>
         <div class="pc-info">
           <div>
@@ -2195,20 +2398,188 @@
     </div>
   </section>
 
+  <!-- FAQ -->
+  <section id="faq">
+    <p class="section-label reveal">Common Questions</p>
+    <h2 class="reveal">Straight<br />Answers.</h2>
+    <p class="reveal" style="color:var(--grey);max-width:520px;font-size:0.95rem;line-height:1.8;margin-top:1rem;">No tech jargon. No runaround. Here's what people actually ask before they sign up.</p>
+
+    <div class="faq-grid reveal">
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          <span class="faq-q-text">What's actually included in the monthly fee?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a" role="region">
+          <p>Everything your site needs to exist and stay current. Hosting, SSL, domain management, and content updates are all bundled in. No separate invoices for renewals, no surprise charges when you need a change made. What you pay on day one is what you pay every month.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          <span class="faq-q-text">How long does it take to get my site live?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a" role="region">
+          <p>Most sites are ready for your review within 3 to 5 business days. Once you've approved it, we connect your domain and go live. The whole process, start to finish, is typically under two weeks. Even faster if you have your content ready to go.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          <span class="faq-q-text">Do I own my website?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a" role="region">
+          <p>Yes, fully. Your content, your domain, your site. All yours. If you ever decide to take hosting elsewhere, we hand everything over. No lock-in, no held files, no funny business. We think that's just how it should work.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          <span class="faq-q-text">What if I want to cancel?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a" role="region">
+          <p>Cancel anytime, no penalty. There are no long-term contracts and no cancellation fees. Just let us know before your next billing date and you're done. We'll give you your site files and point you in the right direction if you want to move hosting somewhere else.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          <span class="faq-q-text">I already have a website. Can you just take over managing it?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a" role="region">
+          <p>Yes. If you're on GoDaddy, Wix, Squarespace, or similar, and just tired of paying too much for too little. We can migrate your site and take over. Hosting, updates, domain, all handled. Check out the "Already Have a Website?" section under Pricing for details.</p>
+          <p style="margin-top:1rem;">Already working with a marketing agency or web firm? We can take over the hosting and day-to-day management side while they stay focused on the marketing. We'd just need a bit more info about your current setup to make sure the transition is smooth. Reach out and we'll figure it out.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          <span class="faq-q-text">How do content updates work?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a" role="region">
+          <p>Simple: send us an email or message with what you need changed. New hours, a photo swap, updated menu prices, a seasonal promo. Whatever it is. We handle it, usually the same day. Each plan includes a set number of updates per month (2 on Starter, 6 on Active Business, unlimited on Premium). Need something outside that? Extra updates are $25 each.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          <span class="faq-q-text">Do I need to provide my own photos and content?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a" role="region">
+          <p>It helps, but it's not required. If you have photos and written content ready, we'll use them. If you don't, we can work with stock photography and help shape the copy based on a quick conversation about your business. Your site will still look sharp either way.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          <span class="faq-q-text">Is there a setup or build fee on top of the monthly price?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a" role="region">
+          <p>There can be, depending on the complexity of your site. Simple single-page sites for most service businesses are often included. More involved builds. Multiple pages, booking integrations, custom features. One-time build fee of $250. We'll be upfront about that before anything starts. No surprises.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          <span class="faq-q-text">What if I need something outside the plan, like a booking system or online store?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a" role="region">
+          <p>We handle this regularly, and we have two purpose-built tools for it. <strong>Stackwell-Book</strong> is our own booking platform that plugs directly into your site. Online scheduling, client management, confirmation emails. No third-party login required, no monthly Acuity bill. <strong>Stackwell-Shop</strong> is our lightweight e-commerce add-on, built for local businesses that want to sell products or services online without the Shopify overhead.</p>
+          <p style="margin-top:1rem;">Both are available as add-ons to any plan. If you need something more custom, we'll talk through it and give you a straight answer on what's realistic.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          <span class="faq-q-text">Who am I actually dealing with? Is this a big agency?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a" role="region">
+          <p>No. Stackwell is a small BC-based operation run by Adam, a senior technical architect who built enterprise systems for years and got tired of watching good local businesses get gouged by platforms that don't care about them. When you email, you're talking to the person who built your site. No ticket queues, no overseas handoffs.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
   <!-- CONTACT -->
   <section id="contact">
     <p class="section-label reveal" style="justify-content:center;">Contact</p>
-    <h2 class="reveal">Ready to<br />Get Started?</h2>
-    <p class="reveal">Drop us an email and we'll have a quick conversation about your business. No pressure, no sales pitch — just a straight answer on whether we're a good fit.</p>
-    <div class="reveal">
-      <a href="mailto:adam@stackwell.digital" class="btn-primary">Email Us Today</a>
-      <a href="mailto:adam@stackwell.digital" class="contact-email">adam@stackwell.digital</a>
+    <div class="contact-layout reveal">
+
+      <!-- LEFT -->
+      <div class="contact-left">
+        <h2>Let's Talk<br />About Your<br />Business.</h2>
+        <p>Fill out the form and we'll get back to you within one business day. No sales pressure, no commitment. Just a straight conversation about whether we're a good fit.</p>
+        <div class="contact-detail">
+          <span class="contact-detail-label">Email</span>
+          <a href="mailto:adam@stackwell.digital">adam@stackwell.digital</a>
+        </div>
+        <div class="contact-detail" style="border-top:none;margin-top:1rem;padding-top:0;">
+          <span class="contact-detail-label">Based In</span>
+          <span style="font-family:var(--mono);font-size:0.75rem;letter-spacing:0.08em;color:var(--grey-light);">British Columbia, Canada</span>
+        </div>
+      </div>
+
+      <!-- RIGHT: FORM -->
+      <div>
+        <div class="cf-status" id="cfStatus"></div>
+        <div class="contact-form" id="contactForm">
+          <div class="cf-row">
+            <div class="cf-field">
+              <label for="cf-name">Your Name</label>
+              <input type="text" id="cf-name" name="name" placeholder="Jane Smith" autocomplete="name" />
+            </div>
+            <div class="cf-field">
+              <label for="cf-biz">Business Name</label>
+              <input type="text" id="cf-biz" name="business" placeholder="Smith Plumbing Co." />
+            </div>
+          </div>
+          <div class="cf-row">
+            <div class="cf-field">
+              <label for="cf-email">Email Address</label>
+              <input type="email" id="cf-email" name="email" placeholder="you@yourbusiness.com" autocomplete="email" />
+            </div>
+            <div class="cf-field">
+              <label for="cf-phone">Phone (optional)</label>
+              <input type="tel" id="cf-phone" name="phone" placeholder="604-555-0100" autocomplete="tel" />
+            </div>
+          </div>
+          <div class="cf-field">
+            <label for="cf-plan">Plan You're Interested In</label>
+            <select id="cf-plan" name="plan">
+              <option value="">Not sure yet</option>
+              <option value="Starter">Starter · $120/mo</option>
+              <option value="Active Business">Active Business · $175/mo</option>
+              <option value="Premium">Premium · $250/mo</option>
+              <option value="Host Only">Host Only (existing site) · $60/mo</option>
+              <option value="Host + Manage">Host + Manage (existing site) · $99/mo</option>
+              <option value="Just exploring">Just exploring</option>
+            </select>
+          </div>
+          <div class="cf-field">
+            <label for="cf-msg">Tell Us a Bit About Your Business</label>
+            <textarea id="cf-msg" name="message" placeholder="What kind of business do you run? Do you currently have a website? What are you looking for help with?"></textarea>
+          </div>
+          <button type="button" class="cf-submit" id="cfSubmit">Send Message</button>
+        </div>
+      </div>
+
     </div>
   </section>
 
   <!-- FOOTER -->
   <footer>
-    <div class="footer-left">&copy; 2026 Stackwell Digital &mdash; British Columbia, Canada</div>
+    <div class="footer-left">&copy; 2026 Stackwell Digital · British Columbia, Canada</div>
     <div class="footer-right">
       <a href="/privacy" style="color:var(--grey);text-decoration:none;font-size:0.6rem;letter-spacing:0.12em;margin-right:1.5rem;transition:color 0.2s;" onmouseover="this.style.color='white'" onmouseout="this.style.color='var(--grey)'">Privacy</a>
       <span style="color:var(--grey);font-size:0.6rem;letter-spacing:0.12em;">stackwell.digital</span>
@@ -2240,6 +2611,66 @@
       nav.classList.toggle('scrolled', window.scrollY > 40);
     });
 
+    // FAQ accordion
+    document.querySelectorAll('.faq-item').forEach(item => {
+      const btn = item.querySelector('.faq-q');
+      btn.addEventListener('click', () => {
+        const isOpen = item.classList.contains('open');
+        // close all
+        document.querySelectorAll('.faq-item.open').forEach(o => {
+          o.classList.remove('open');
+          o.querySelector('.faq-q').setAttribute('aria-expanded', 'false');
+        });
+        if (!isOpen) {
+          item.classList.add('open');
+          btn.setAttribute('aria-expanded', 'true');
+        }
+      });
+    });
+
+    // Contact form
+    document.getElementById('cfSubmit').addEventListener('click', async () => {
+      const name    = document.getElementById('cf-name').value.trim();
+      const email   = document.getElementById('cf-email').value.trim();
+      const biz     = document.getElementById('cf-biz').value.trim();
+      const phone   = document.getElementById('cf-phone').value.trim();
+      const plan    = document.getElementById('cf-plan').value;
+      const message = document.getElementById('cf-msg').value.trim();
+      const status  = document.getElementById('cfStatus');
+      const btn     = document.getElementById('cfSubmit');
+
+      if (!name || !email || !message) {
+        status.textContent = 'Please fill in your name, email, and message.';
+        status.className = 'cf-status error';
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = 'Sending...';
+      status.className = 'cf-status';
+
+      try {
+        const res = await fetch('https://submit.stackwell.digital', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, email, business: biz, phone, plan, message, source: 'contact-form' })
+        });
+
+        if (res.ok) {
+          status.textContent = 'Message sent. We\'ll be in touch within one business day.';
+          status.className = 'cf-status success';
+          document.getElementById('contactForm').querySelectorAll('input, textarea, select').forEach(el => el.value = '');
+        } else {
+          throw new Error('Server error');
+        }
+      } catch (e) {
+        status.textContent = 'Something went wrong. Email us directly at adam@stackwell.digital';
+        status.className = 'cf-status error';
+      }
+
+      btn.disabled = false;
+      btn.textContent = 'Send Message';
+    });
     // Scroll reveal
     const revealEls = document.querySelectorAll('.reveal');
     const observer = new IntersectionObserver((entries) => {
