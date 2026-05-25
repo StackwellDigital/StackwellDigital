@@ -47,7 +47,7 @@
       --display: 'Bebas Neue', sans-serif;
     }
 
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; overflow-x: hidden; }
 
     body {
       background: var(--bg);
@@ -81,9 +81,14 @@
       gap: 0.75rem;
       text-decoration: none;
     }
-    .nav-logo svg {
+    .nav-logo img {
       width: 32px;
       height: 32px;
+    }
+    .nav-logo-img {
+      height: 76px;
+      width: auto;
+      display: block;
     }
     .nav-wordmark {
       font-family: var(--display);
@@ -154,6 +159,7 @@
       display: flex;
       flex-direction: column;
       padding-top: 96px;
+      max-width: 100vw;
     }
 
     #hero::before {
@@ -332,13 +338,34 @@
     /* ─── HERO RESPONSIVE ─── */
     @media (max-width: 900px) {
       .hero-inner {
-        grid-template-columns: 1fr;
+        display: flex;
+        flex-direction: column;
         padding: 2rem 1.5rem 2.5rem;
-        gap: 2rem;
+        gap: 0;
+        width: 100%;
+        max-width: 100%;
       }
-      .hero-right { order: -1; }
-      .hero-bottom { grid-template-columns: 1fr; }
-      h1 { font-size: 3rem; }
+      .hero-left {
+        display: contents;
+      }
+      .hero-headline { order: 1; margin-bottom: 1.5rem; }
+      .hero-right    { order: 2; margin-bottom: 1.5rem; }
+      .hero-body     { order: 3; display: flex; flex-direction: column; gap: 1.5rem; }
+      .hero-right { order: 1; }
+      .hero-right img {
+        max-height: 280px;
+        max-width: 100%;
+        width: auto;
+        margin: 0 auto;
+      }
+      .hero-bottom { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; margin-top: 1.25rem; }
+      .comp-card { padding: 0.75rem 0.7rem; }
+      .comp-card-title { font-size: 0.58rem; letter-spacing: 0.08em; margin-bottom: 0.75rem; }
+      .comp-row { font-size: 0.72rem; margin-bottom: 0.4rem; gap: 0.35rem; }
+      .comp-row .icon { font-size: 0.72rem; width: 10px; }
+      .card-price { font-size: 1.4rem; margin-top: 0.75rem; }
+      h1 { font-size: 3rem; max-width: 100%; }
+      .hero-subtext { max-width: 100%; }
     }
 
     @media (max-width: 480px) {
@@ -384,6 +411,7 @@
       padding: 0.9rem 0;
       overflow: hidden;
       background: var(--accent);
+      max-width: 100vw;
     }
     .marquee-track {
       display: flex;
@@ -1130,15 +1158,51 @@
       nav { padding: 1.25rem 1.5rem; }
       .nav-links { display: none; }
       .nav-cta { display: none; }
-      .nav-logo img { height: 48px !important; }
+      .nav-logo-img { height: 48px !important; }
       .hamburger { display: flex; }
-      section { padding: 5rem 1.5rem; }
-      #hero { padding: 6rem 1.5rem 4rem; }
-      .plans { grid-template-columns: 1fr; }
-      .plan { border-right: none; border-bottom: 1px solid var(--border); }
-      .plan:last-child { border-bottom: none; }
 
-      /* ─── SERVICES MOBILE ─── */
+      /* ─── GLOBAL SECTION PADDING ─── */
+      section { padding: 3.5rem 1.25rem; }
+      #hero { padding-top: 72px; padding-left: 0; padding-right: 0; padding-bottom: 0; }
+
+      /* ─── H2 HEADINGS ─── */
+      h2 { font-size: 2.2rem; }
+
+      /* ─── PRICING MOBILE ─── */
+      .plans { grid-template-columns: repeat(3, 1fr); border: 1px solid var(--border); }
+      .plan { border-right: 1px solid var(--border); border-bottom: none; padding: 1rem 0.75rem; }
+      .plan:last-child { border-right: none; }
+      .plan-price { font-size: 2rem; }
+      .plan-cycle { font-size: 0.52rem; margin-bottom: 1.25rem; }
+      .plan-name { font-size: 0.52rem; letter-spacing: 0.12em; margin-bottom: 0.75rem; }
+      .plan-features { gap: 0.45rem; margin-bottom: 1.25rem; }
+      .plan-features li { font-size: 0.7rem; gap: 0.4rem; line-height: 1.35; }
+      .plan-cta { font-size: 0.55rem; padding: 0.65rem 0.25rem; letter-spacing: 0.08em; }
+      .plan::before { margin-bottom: 0.75rem; }
+      .plan:not(.featured)::before { margin-bottom: 0.75rem; }
+
+      .pricing-intro { margin-bottom: 2rem; }
+      .addons { grid-template-columns: 1fr; padding: 1.25rem 1.5rem; margin-top: 1.5rem; }
+      .addon-list { grid-template-columns: 1fr; }
+
+      /* ─── ADDON CARDS ─── */
+      .addons-wrap { margin-top: 2.5rem !important; padding-top: 2.5rem !important; }
+      .addons-grid { grid-template-columns: repeat(3, 1fr) !important; gap: 0.5rem !important; margin-bottom: 1.5rem !important; }
+      .addon-card { padding: 1rem 0.65rem !important; border-radius: 4px !important; }
+      .addon-card ul { margin-bottom: 1rem !important; }
+      .addon-card li { font-size: 0.68rem !important; margin-bottom: 0.35rem !important; line-height: 1.3 !important; }
+      .addon-card a { font-size: 0.52rem !important; padding: 0.55rem 0.25rem !important; letter-spacing: 0.06em !important; }
+      .addon-card div[style*="font-family: var(--display)"] { font-size: 1.4rem !important; }
+      .addon-card p[style*="font-family: var(--display)"] { font-size: 0.85rem !important; margin-bottom: 0.35rem !important; }
+      .migration-wrap { margin-top: 2rem; }
+      .migration-header { padding: 1.25rem 1.25rem; max-width: 100%; }
+      .migration-body { grid-template-columns: 1fr; }
+      .migration-plan { padding: 1.5rem 1.25rem; border-right: none; border-bottom: 1px solid var(--border); }
+      .migration-plan:last-child { border-bottom: none; }
+      .migration-price { font-size: 2.4rem; }
+      .migration-note { padding: 1rem 1.25rem; }
+
+      /* ─── SERVICES ─── */
       #services { padding: 3.5rem 1.25rem; }
       .services-grid {
         grid-template-columns: 1fr 1fr;
@@ -1152,7 +1216,7 @@
           linear-gradient(#141414, #141414) padding-box,
           linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.03)) border-box;
         border-radius: 4px;
-        padding: 1.5rem 1.25rem;
+        padding: 1.25rem 1rem;
         position: relative;
         overflow: hidden;
       }
@@ -1173,17 +1237,21 @@
       .service-card h3 { font-size: 1.1rem; margin-bottom: 0.4rem; }
       .service-card p { font-size: 0.74rem; line-height: 1.6; color: var(--grey); }
 
-      .pp-grid { grid-template-columns: 1fr; border: none; gap: 1rem; margin-top: 2.5rem; }
-      .pp-them { border: 1px solid var(--border); padding: 1.75rem; }
-      .pp-us { padding: 1.75rem; }
-      .pp-us-price { font-size: 2.8rem; }
-      /* ─── HOW IT WORKS MOBILE TIMELINE ─── */
+      /* ─── PRICING PROBLEM ─── */
+      .pp-grid { grid-template-columns: 1fr; border: none; gap: 0.75rem; margin-top: 2rem; }
+      .pp-them { border: 1px solid var(--border); padding: 1.25rem; }
+      .pp-them-row { padding: 0.75rem 0; }
+      .pp-us { padding: 1.25rem; }
+      .pp-us-label { font-size: 1.5rem; margin-bottom: 1.25rem; }
+      .pp-us-price { font-size: 2.4rem; padding-top: 1.25rem; }
+
+      /* ─── HOW IT WORKS ─── */
       #how { padding: 3.5rem 1.25rem; }
       .steps {
         display: flex;
         flex-direction: column;
         gap: 0;
-        margin-top: 2.5rem;
+        margin-top: 2rem;
         border: none;
         background: transparent;
         position: relative;
@@ -1199,8 +1267,8 @@
       }
       .step {
         display: flex;
-        gap: 1.5rem;
-        padding: 0 0 2.5rem 0;
+        gap: 1.25rem;
+        padding: 0 0 2rem 0;
         border: none;
         position: relative;
         align-items: flex-start;
@@ -1225,23 +1293,43 @@
         position: relative;
         z-index: 1;
       }
-      .step-body { padding-top: 0.35rem; }
+      .step-body { display: block; padding-top: 0.35rem; }
       .step h3 { margin-bottom: 0.4rem; font-size: 0.72rem; }
       .step p { font-size: 0.8rem; line-height: 1.65; }
-      .step-body { display: block; }
-      .addons { grid-template-columns: 1fr; }
-      .addon-list { grid-template-columns: 1fr; }
-      .portfolio-grid { grid-template-columns: 1fr; gap: 1rem; }
-      footer { flex-direction: column; gap: 0.75rem; text-align: center; }
-      .team-grid { grid-template-columns: 1fr; max-width: 320px; }
 
-      /* ─── REPORTS MOBILE ─── */
+      /* ─── REPORTS ─── */
       #reports { padding: 3.5rem 1.25rem; }
-      .reports-layout { display: flex; flex-direction: column; gap: 2.5rem; }
+      .reports-layout { display: flex; flex-direction: column; gap: 2rem; }
       .reports-left { order: 1; }
+      .reports-intro { margin-bottom: 1.5rem; max-width: 100%; }
       .report-phone-wrap { display: none; }
       .report-desktop-wrap { width: 100%; border-radius: 6px; box-shadow: none; order: 2; }
       .report-desktop-wrap img { width: 100%; height: auto; display: block; }
+
+      /* ─── PORTFOLIO ─── */
+      .portfolio-grid { grid-template-columns: 1fr; gap: 0.75rem; margin-top: 2rem; }
+
+      /* ─── TEAM ─── */
+      .team-grid { grid-template-columns: 1fr; max-width: 100%; margin-top: 2rem; }
+      .team-photo-wrap { height: 280px; }
+
+      /* ─── FAQ ─── */
+      #faq { padding: 3.5rem 1.25rem; }
+      .faq-grid { margin-top: 2rem; }
+      .faq-q { padding: 1.25rem 1rem; }
+      .faq-item.open .faq-a { padding: 0 1rem 1.25rem; }
+      .faq-q-text { font-size: 0.7rem; }
+
+      /* ─── CONTACT ─── */
+      #contact { padding: 3.5rem 1.25rem; }
+      .contact-layout { grid-template-columns: 1fr; gap: 2rem; margin-top: 2rem; }
+      .contact-left h2 { font-size: 2.2rem; }
+      .cf-row { grid-template-columns: 1fr; }
+      .cf-submit { width: 100%; }
+
+      /* ─── FOOTER ─── */
+      footer { flex-direction: column; gap: 0.75rem; text-align: center; padding: 1.5rem 1.25rem; }
+
     }
 
     /* ─── REPORTS SECTION ─── */
@@ -1443,6 +1531,7 @@
       border-top: 1px solid var(--border);
       padding: 3rem 0;
       overflow: hidden;
+      max-width: 100vw;
     }
 
     .clients-label {
@@ -1937,7 +2026,7 @@
 
   <!-- NAV -->
   <nav id="nav">
-    <a href="#hero" class="nav-logo"><img src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/logo.photo.png" alt="Stackwell Digital" style="height:76px;width:auto;" /></a>
+    <a href="#hero" class="nav-logo"><img src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/logo.photo.png" alt="Stackwell Digital" class="nav-logo-img" /></a>
     <ul class="nav-links">
       <li><a href="#pricing-problem">The Reality</a></li>
       <li><a href="#how">How It Works</a></li>
@@ -1973,11 +2062,15 @@
 
       <!-- LEFT: headline + sub + CTA -->
       <div class="hero-left">
-        <h1>Everyone else makes you pick two. We give you all three.</h1>
-        <p class="hero-subtext">Your website goes live in days. We handle all the updates and support. You don't pay agency prices. Month-to-month, cancel anytime.</p>
-        <div class="hero-cta">
-          <a href="#how" class="btn-primary">See How It Works</a>
-          <a href="#pricing" class="btn-secondary">View Pricing</a>
+        <div class="hero-headline">
+          <h1>Everyone else makes you pick two. We give you all three.</h1>
+        </div>
+        <div class="hero-body">
+          <p class="hero-subtext">Your website goes live in days. We handle all the updates and support. You don't pay agency prices. Month-to-month, cancel anytime.</p>
+          <div class="hero-cta">
+            <a href="#how" class="btn-primary">See How It Works</a>
+            <a href="#pricing" class="btn-secondary">View Pricing</a>
+          </div>
         </div>
       </div>
 
