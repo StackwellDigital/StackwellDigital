@@ -4,18 +4,18 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Web Design &amp; Managed Hosting for BC Local Businesses | Stackwell Digital</title>
-  <meta name="description" content="Professional websites built and managed for BC local businesses. Flat monthly rate, no contracts, no surprises. Get your site live in days. From $120/mo." />
+  <meta name="description" content="Professional websites built and managed for BC local businesses. Flat monthly rate, no contracts, no surprises. Get your site live in days. From $60/mo." />
   <link rel="canonical" href="https://stackwell.digital/" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://stackwell.digital/" />
   <meta property="og:title" content="Web Design &amp; Managed Hosting for BC Local Businesses | Stackwell Digital" />
-  <meta property="og:description" content="Professional websites built and managed for BC local businesses. Flat monthly rate, no contracts. From $120/mo." />
+  <meta property="og:description" content="Professional websites built and managed for BC local businesses. Flat monthly rate, no contracts. From $60/mo." />
   <meta property="og:image" content="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/logo.photo.png" />
   <meta property="og:site_name" content="Stackwell Digital" />
   <meta property="og:locale" content="en_CA" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Web Design &amp; Managed Hosting for BC Local Businesses | Stackwell Digital" />
-  <meta name="twitter:description" content="Professional websites built and managed for BC local businesses. Flat monthly rate, no contracts. From $120/mo." />
+  <meta name="twitter:description" content="Professional websites built and managed for BC local businesses. Flat monthly rate, no contracts. From $60/mo." />
   <meta name="twitter:image" content="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/logo.photo.png" />
   <meta name="theme-color" content="#0a0a0a" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -147,18 +147,16 @@
 
     /* ─── HERO ─── */
     #hero {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      padding: 7rem 2.5rem 5rem;
       position: relative;
       overflow: hidden;
       background: linear-gradient(105deg, #0a0a0a 0%, #0d0d08 45%, #101008 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding-top: 96px;
     }
 
-    /* hero pattern overlay same texture, slightly more visible in hero */
-    #hero::after {
+    #hero::before {
       content: '';
       position: absolute;
       inset: 0;
@@ -168,150 +166,185 @@
       opacity: 0.04;
       pointer-events: none;
       z-index: 0;
-      mask-image: linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.2) 60%, transparent 100%);
     }
 
-    /* make hero content sit above the pattern overlay exclude absolutely-positioned elements */
-    .hero-tag, .hero-sub, .hero-actions, #hero h1 { position: relative; z-index: 1; }
-
-    .hero-grid {
-      position: absolute;
-      inset: 0;
-      background-image:
-        linear-gradient(rgba(249,115,22,0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(249,115,22,0.03) 1px, transparent 1px);
-      background-size: 80px 80px;
-      mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 30%, transparent 100%);
+    /* ─── HERO INNER LAYOUT ─── */
+    .hero-inner {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      padding: 2rem 3rem 3rem;
+      align-items: start;
+      flex: 1;
     }
 
-    /* subtle green glow top right */
-    #hero::before {
-      content: '';
-      position: absolute;
-      top: -100px;
-      right: -100px;
-      width: 600px;
-      height: 600px;
-      background: radial-gradient(circle, rgba(249,115,22,0.07) 0%, transparent 65%);
-      pointer-events: none;
-      z-index: 0;
-      border-radius: 50%;
-    }
-
-    .hero-tag {
-      font-family: var(--mono);
-      font-size: 0.65rem;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 1.5rem;
-      opacity: 0;
-      animation: fadeUp 0.8s 0.2s forwards;
+    /* LEFT COL */
+    .hero-left {
       display: flex;
-      align-items: center;
-      gap: 1rem;
-    }
-    .hero-tag::before {
-      content: '';
-      width: 24px;
-      height: 1px;
-      background: var(--accent);
-      opacity: 0.6;
+      flex-direction: column;
+      gap: 1.8rem;
+      padding-top: 1rem;
     }
 
     h1 {
       font-family: var(--display);
-      font-size: clamp(4rem, 12vw, 10rem);
-      line-height: 0.92;
+      font-size: clamp(3.2rem, 7vw, 6rem);
       letter-spacing: 0.01em;
-      max-width: 900px;
+      line-height: 1.0;
+      font-weight: 400;
       opacity: 0;
-      animation: fadeUp 0.8s 0.4s forwards;
+      animation: fadeUp 0.7s 0.15s forwards;
     }
 
-    h1 em {
-      font-style: normal;
-      color: var(--accent);
-    }
-
-    .hero-sub {
-      margin-top: 2.5rem;
-      max-width: 520px;
-      font-size: 1rem;
+    .hero-subtext {
+      font-size: 0.92rem;
       color: var(--grey-light);
-      line-height: 1.7;
+      line-height: 1.75;
+      max-width: 480px;
       opacity: 0;
-      animation: fadeUp 0.8s 0.6s forwards;
+      animation: fadeUp 0.7s 0.25s forwards;
     }
 
-    .hero-actions {
+    .hero-cta {
       display: flex;
       gap: 1rem;
-      margin-top: 2.5rem;
+      flex-wrap: wrap;
       opacity: 0;
-      animation: fadeUp 0.8s 0.8s forwards;
+      animation: fadeUp 0.7s 0.35s forwards;
     }
 
     .btn-primary {
       font-family: var(--mono);
-      font-size: 0.72rem;
+      font-size: 0.68rem;
       letter-spacing: 0.12em;
       text-transform: uppercase;
+      padding: 0.9rem 2rem;
       background: var(--accent);
-      color: #ffffff;
-      padding: 0.85rem 2rem;
-      text-decoration: none;
-      border: 1px solid var(--accent);
-      transition: background 0.2s, color 0.2s;
-      font-weight: 500;
+      color: #fff;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.2s;
     }
-    .btn-primary:hover { background: transparent; color: var(--accent); border-color: var(--accent); }
 
-    .btn-ghost {
+    .btn-primary:hover { opacity: 0.85; transform: scale(1.02); }
+
+    .btn-secondary {
       font-family: var(--mono);
-      font-size: 0.72rem;
+      font-size: 0.68rem;
       letter-spacing: 0.12em;
       text-transform: uppercase;
+      padding: 0.9rem 2rem;
       background: transparent;
-      color: var(--grey);
-      padding: 0.85rem 2rem;
-      text-decoration: none;
-      border: 1px solid var(--border);
-      transition: border-color 0.2s, color 0.2s;
+      border: 1px solid rgba(249,115,22,0.5);
+      color: var(--accent);
+      border-radius: 3px;
+      cursor: pointer;
+      transition: background 0.2s;
     }
-    .btn-ghost:hover { border-color: rgba(255,255,255,0.3); color: var(--white); }
 
-    .hero-scroll {
-      position: absolute;
-      bottom: 2rem;
-      right: 2.5rem;
-      z-index: 1;
-      font-family: var(--mono);
-      font-size: 0.6rem;
-      letter-spacing: 0.2em;
-      color: var(--grey);
-      text-transform: uppercase;
+    .btn-secondary:hover { background: rgba(249,115,22,0.1); }
+
+    /* RIGHT COL: triangle image + cards stacked */
+    .hero-right {
       display: flex;
-      align-items: center;
+      flex-direction: column;
       gap: 0.75rem;
       opacity: 0;
-      animation: fadeIn 1s 1.2s forwards;
-    }
-    .hero-scroll::before {
-      content: '';
-      width: 40px;
-      height: 1px;
-      background: var(--grey);
+      animation: fadeUp 0.7s 0.3s forwards;
     }
 
-    .hero-video {
-      position: absolute;
-      inset: 0;
+    .hero-right img {
       width: 100%;
-      height: 100%;
-      object-fit: cover;
-      z-index: 0;
-      opacity: 0.3;
+      height: auto;
+      display: block;
+    }
+
+    /* ─── COMPETITOR CARDS ─── */
+    .hero-bottom {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.8rem;
+    }
+
+    .comp-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 6px;
+      padding: 1rem 1.1rem;
+    }
+
+    .stackwell-card {
+      background: rgba(249,115,22,0.08);
+      border: 2px solid var(--accent);
+    }
+
+    .comp-card-title {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--grey);
+      margin-bottom: 1.2rem;
+      font-weight: 500;
+    }
+
+    .stackwell-card .comp-card-title {
+      color: var(--accent);
+    }
+
+    .comp-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      margin-bottom: 0.65rem;
+      font-size: 0.88rem;
+      line-height: 1.4;
+    }
+
+    .comp-row .icon {
+      font-size: 0.85rem;
+      margin-top: 0.05rem;
+      flex-shrink: 0;
+      width: 14px;
+    }
+
+    .check { color: var(--accent); }
+    .cross { color: #555; }
+
+    .comp-row .label-cross {
+      color: #666;
+      text-decoration: line-through;
+    }
+
+    .comp-row .label { color: var(--grey-light); }
+
+    .card-price {
+      font-family: var(--display);
+      font-size: 2rem;
+      color: var(--accent);
+      margin-top: 1.2rem;
+      letter-spacing: 0.03em;
+    }
+
+    /* ─── HERO RESPONSIVE ─── */
+    @media (max-width: 900px) {
+      .hero-inner {
+        grid-template-columns: 1fr;
+        padding: 2rem 1.5rem 2.5rem;
+        gap: 2rem;
+      }
+      .hero-right { order: -1; }
+      .hero-bottom { grid-template-columns: 1fr; }
+      h1 { font-size: 3rem; }
+    }
+
+    @media (max-width: 480px) {
+      h1 { font-size: 2.4rem; }
+      .hero-cta { flex-direction: column; }
+      .btn-primary, .btn-secondary { width: 100%; text-align: center; }
     }
 
     /* ─── SECTIONS ─── */
@@ -589,6 +622,7 @@
       opacity: 0;
       transform: translateY(16px);
       transition: opacity 0.7s ease, transform 0.7s ease;
+      transition-delay: 0s;
     }
     .reveal.visible {
       opacity: 1;
@@ -1935,20 +1969,54 @@
 
   <!-- HERO -->
   <section id="hero">
-    <video class="hero-video" autoplay muted loop playsinline preload="none">
-      <source src="https://pub-a8448320a70c4e9197cce0cfa015b00f.r2.dev/Black%20White%20and%20Blue%20Modern%20Coding%20Education%20Video.mp4" type="video/mp4">
-    </video>
-    <div class="hero-grid"></div>
-    <p class="hero-tag">Web Presence for Local Business</p>
-    <h1>Your Website.<br /><em>Handled.</em></h1>
-    <p class="hero-sub">
-      Stackwell Digital builds and manages professional websites for local businesses across BC. Surrey, Langley, White Rock, and the Lower Mainland. Flat monthly rate. No contracts. No tech headaches. Just a site that works.
-    </p>
-    <div class="hero-actions">
-      <a href="#pricing" class="btn-primary">See Plans</a>
-      <a href="#how" class="btn-ghost">How It Works</a>
+    <div class="hero-inner">
+
+      <!-- LEFT: headline + sub + CTA -->
+      <div class="hero-left">
+        <h1>Everyone else makes you pick two. We give you all three.</h1>
+        <p class="hero-subtext">Your website goes live in days. We handle all the updates and support. You don't pay agency prices. Month-to-month, cancel anytime.</p>
+        <div class="hero-cta">
+          <a href="#how" class="btn-primary">See How It Works</a>
+          <a href="#pricing" class="btn-secondary">View Pricing</a>
+        </div>
+      </div>
+
+      <!-- RIGHT: triangle image + cards below it -->
+      <div class="hero-right">
+        <img
+          src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/hero%20image.png?v=2"
+          alt="Fast, Managed, Affordable"
+        />
+
+        <!-- Competitor cards sit directly under the triangle, right col only -->
+        <div class="hero-bottom">
+
+          <div class="comp-card">
+            <div class="comp-card-title">Wix / GoDaddy</div>
+            <div class="comp-row"><span class="icon check">&#10003;</span><span class="label">Fast to build</span></div>
+            <div class="comp-row"><span class="icon check">&#10003;</span><span class="label">Affordable ($29&ndash;50/mo)</span></div>
+            <div class="comp-row"><span class="icon cross">&#10007;</span><span class="label-cross">You manage everything</span></div>
+          </div>
+
+          <div class="comp-card">
+            <div class="comp-card-title">Web Agencies</div>
+            <div class="comp-row"><span class="icon check">&#10003;</span><span class="label">Fully managed</span></div>
+            <div class="comp-row"><span class="icon check">&#10003;</span><span class="label">Hands-off &amp; current</span></div>
+            <div class="comp-row"><span class="icon cross">&#10007;</span><span class="label-cross">$500&ndash;3,000/mo</span></div>
+          </div>
+
+          <div class="comp-card stackwell-card">
+            <div class="comp-card-title">Stackwell.Digital</div>
+            <div class="comp-row"><span class="icon check">&#10003;</span><span class="label">Fast</span></div>
+            <div class="comp-row"><span class="icon check">&#10003;</span><span class="label">Managed</span></div>
+            <div class="comp-row"><span class="icon check">&#10003;</span><span class="label">Affordable</span></div>
+            <div class="card-price">$60&ndash;150/mo</div>
+          </div>
+
+        </div>
+      </div>
+
     </div>
-    <div class="hero-scroll">Scroll to explore</div>
   </section>
 
   <!-- MARQUEE -->
@@ -2140,47 +2208,119 @@
       <!-- STARTER -->
       <div class="plan">
         <p class="plan-name">Starter</p>
-        <div class="plan-price">$120</div>
+        <div class="plan-price">$60</div>
         <div class="plan-cycle">/ month CAD</div>
         <ul class="plan-features">
           <li>Professional website build</li>
           <li>Domain management included</li>
           <li>2 content updates per month</li>
           <li>Hosting included</li>
-          <li>Annual site refresh</li>
+          <li>Email support</li>
         </ul>
         <a href="https://square.link/u/5vbs2nRZ" target="_blank" rel="noopener" class="plan-cta">Get Started</a>
       </div>
 
-      <!-- ACTIVE -->
+      <!-- GROWTH -->
       <div class="plan featured">
-        <p class="plan-name">Active Business</p>
-        <div class="plan-price">$175</div>
+        <p class="plan-name">Growth</p>
+        <div class="plan-price">$100</div>
         <div class="plan-cycle">/ month CAD</div>
         <ul class="plan-features">
-          <li>Everything in Starter</li>
+          <li>Professional website build</li>
+          <li>Domain management included</li>
+          <li>Hosting included</li>
           <li>6 content updates per month</li>
           <li>Basic SEO optimization</li>
-          <li>Monthly analytics report</li>
+          <li>Monthly analytics reports</li>
+          <li>Priority email support</li>
           <li>Semi-annual site refresh</li>
         </ul>
         <a href="https://square.link/u/6uF6mGMl" target="_blank" rel="noopener" class="plan-cta">Get Started</a>
       </div>
 
-      <!-- PREMIUM -->
+      <!-- PRO -->
       <div class="plan">
-        <p class="plan-name">Premium</p>
-        <div class="plan-price">$250</div>
+        <p class="plan-name">Pro</p>
+        <div class="plan-price">$150</div>
         <div class="plan-cycle">/ month CAD</div>
         <ul class="plan-features">
-          <li>Everything in Active Business</li>
+          <li>Professional website build</li>
+          <li>Domain management included</li>
+          <li>Hosting included</li>
           <li>Unlimited content updates</li>
+          <li>Advanced SEO optimization</li>
+          <li>Monthly analytics reports</li>
           <li>Same-day response guarantee</li>
-          <li>Google Business Profile management</li>
+          <li>Google Business Profile build</li>
+          <li>Workspace email setup</li>
           <li>Quarterly strategy check-in</li>
           <li>Seasonal site refreshes</li>
         </ul>
         <a href="https://square.link/u/xSMif3fX" target="_blank" rel="noopener" class="plan-cta">Get Started</a>
+      </div>
+    </div>
+
+    <!-- ADD-ONS -->
+    <div class="addons-wrap reveal" style="margin-top: 5rem; border-top: 1px solid var(--border); padding-top: 5rem;">
+      <div style="margin-bottom: 3rem;">
+        <p class="section-label">Add Booking or Retail</p>
+        <h3 style="font-family: var(--display); font-size: clamp(1.5rem, 4vw, 2rem); letter-spacing: -0.02em; margin: 1rem 0 1.5rem;">Integrate What You Need</h3>
+        <p style="color: var(--grey-light); max-width: 620px; line-height: 1.8;">Add Stackwell-Book for appointment scheduling, or Stackwell-Shop to sell products. Both integrate seamlessly into your site. Or stack them together for full-service + retail in one platform.</p>
+      </div>
+
+      <div class="addons-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-bottom: 3rem;">
+        
+        <!-- STACKWELL-BOOK -->
+        <div class="addon-card" style="border: 1px solid var(--border); border-radius: 8px; padding: 2rem; background: rgba(255,255,255,0.015); transition: all 0.2s;">
+          <p style="font-family: var(--display); font-size: 1.2rem; letter-spacing: 0.05em; margin-bottom: 0.5rem;">Stackwell-Book</p>
+          <div style="display: flex; align-items: baseline; gap: 0.5rem; margin-bottom: 1.5rem;">
+            <div style="font-family: var(--display); font-size: clamp(1.5rem, 5vw, 2rem); letter-spacing: -0.02em;">+$15</div>
+            <div style="font-family: var(--mono); font-size: 0.75rem; color: var(--grey);">/ month</div>
+          </div>
+          <ul style="list-style: none; margin-bottom: 2rem;">
+            <li style="margin-bottom: 0.75rem; color: var(--grey-light); font-size: 0.9rem;"><span style="color: var(--accent); margin-right: 0.5rem;">·</span>Multi-service booking</li>
+            <li style="margin-bottom: 0.75rem; color: var(--grey-light); font-size: 0.9rem;"><span style="color: var(--accent); margin-right: 0.5rem;">·</span>Multi-staff support</li>
+            <li style="margin-bottom: 0.75rem; color: var(--grey-light); font-size: 0.9rem;"><span style="color: var(--accent); margin-right: 0.5rem;">·</span>Client notifications</li>
+            <li style="margin-bottom: 0.75rem; color: var(--grey-light); font-size: 0.9rem;"><span style="color: var(--accent); margin-right: 0.5rem;">·</span>Fully integrated</li>
+            <li style="color: var(--accent); font-size: 0.85rem;"><span style="margin-right: 0.5rem;">✦</span>Replaces Acuity & Calendly</li>
+          </ul>
+          <a href="#contact" style="display: block; text-align: center; padding: 0.75rem 1.5rem; border: 1px solid var(--accent-border); color: var(--white); font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; transition: all 0.2s; border-radius: 4px; width: 100%;">Learn More</a>
+        </div>
+
+        <!-- STACKWELL-SHOP -->
+        <div class="addon-card" style="border: 1px solid var(--accent-border); border-radius: 8px; padding: 2rem; background: rgba(249,115,22,0.08); transition: all 0.2s;">
+          <p style="font-family: var(--display); font-size: 1.2rem; letter-spacing: 0.05em; margin-bottom: 0.5rem;">Stackwell-Shop</p>
+          <div style="display: flex; align-items: baseline; gap: 0.5rem; margin-bottom: 1.5rem;">
+            <div style="font-family: var(--display); font-size: clamp(1.5rem, 5vw, 2rem); letter-spacing: -0.02em;">+$15</div>
+            <div style="font-family: var(--mono); font-size: 0.75rem; color: var(--grey);">/ month</div>
+          </div>
+          <ul style="list-style: none; margin-bottom: 2rem;">
+            <li style="margin-bottom: 0.75rem; color: var(--grey-light); font-size: 0.9rem;"><span style="color: var(--accent); margin-right: 0.5rem;">·</span>Product catalog + checkout</li>
+            <li style="margin-bottom: 0.75rem; color: var(--grey-light); font-size: 0.9rem;"><span style="color: var(--accent); margin-right: 0.5rem;">·</span>Square inventory sync</li>
+            <li style="margin-bottom: 0.75rem; color: var(--grey-light); font-size: 0.9rem;"><span style="color: var(--accent); margin-right: 0.5rem;">·</span>Brand-matched design</li>
+            <li style="margin-bottom: 0.75rem; color: var(--grey-light); font-size: 0.9rem;"><span style="color: var(--accent); margin-right: 0.5rem;">·</span>Printful ready</li>
+            <li style="color: var(--accent); font-size: 0.85rem;"><span style="margin-right: 0.5rem;">✦</span>Replaces Shopify</li>
+          </ul>
+          <a href="#contact" style="display: block; text-align: center; padding: 0.75rem 1.5rem; background: var(--accent); color: #000; font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; transition: all 0.2s; border-radius: 4px; border: none; width: 100%;">Learn More</a>
+        </div>
+
+        <!-- BOTH BUNDLE -->
+        <div class="addon-card" style="border: 1px solid var(--border); border-radius: 8px; padding: 2rem; background: rgba(255,255,255,0.015); transition: all 0.2s;">
+          <p style="font-family: var(--display); font-size: 1.2rem; letter-spacing: 0.05em; margin-bottom: 0.5rem;">Both</p>
+          <div style="display: flex; align-items: baseline; gap: 0.5rem; margin-bottom: 1.5rem;">
+            <div style="font-family: var(--display); font-size: clamp(1.5rem, 5vw, 2rem); letter-spacing: -0.02em;">+$25</div>
+            <div style="font-family: var(--mono); font-size: 0.75rem; color: var(--grey);">/ month</div>
+          </div>
+          <ul style="list-style: none; margin-bottom: 2rem;">
+            <li style="margin-bottom: 0.75rem; color: var(--grey-light); font-size: 0.9rem;"><span style="color: var(--accent); margin-right: 0.5rem;">·</span>Stackwell-Book</li>
+            <li style="margin-bottom: 0.75rem; color: var(--grey-light); font-size: 0.9rem;"><span style="color: var(--accent); margin-right: 0.5rem;">·</span>Stackwell-Shop</li>
+            <li style="margin-bottom: 0.75rem; color: var(--grey-light); font-size: 0.9rem;"><span style="color: var(--accent); margin-right: 0.5rem;">·</span>Unified dashboard</li>
+            <li style="margin-bottom: 0.75rem; color: var(--grey-light); font-size: 0.9rem;"><span style="color: var(--accent); margin-right: 0.5rem;">·</span>Full integration</li>
+            <li style="color: var(--accent); font-size: 0.85rem;"><span style="margin-right: 0.5rem;">✦</span>Best value bundle</li>
+          </ul>
+          <a href="#contact" style="display: block; text-align: center; padding: 0.75rem 1.5rem; border: 1px solid var(--accent-border); color: var(--white); font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; transition: all 0.2s; border-radius: 4px; width: 100%;">Learn More</a>
+        </div>
+
       </div>
     </div>
 
@@ -2191,39 +2331,25 @@
         <div class="migration-header-left">
           <div class="migration-eyebrow">Already Have a Website?</div>
           <div class="migration-title">Hosting + Management<br /><span class="migration-title-sub">Without the Rebuild</span></div>
-          <div class="migration-header-right">Already on GoDaddy, Squarespace, or Wix and just tired of paying too much for too little? We migrate your existing site and take over. Hosting, updates, and support included. One-time migration fee, then a flat monthly rate.</div>
+          <div class="migration-header-right">Already on GoDaddy, Squarespace, or Wix? We migrate your existing site to our infrastructure and handle day-to-day management. No rebuild needed. Hosting, updates, and support included.</div>
         </div>
       </div>
       <div class="migration-body">
-        <div class="migration-plan">
-          <div class="migration-plan-name">Host Only</div>
+        <div class="migration-plan" style="max-width: 400px;">
+          <div class="migration-plan-name">Hosting + Management</div>
           <div class="migration-price-row">
-            <div class="migration-price">$60</div>
+            <div class="migration-price">$40</div>
           </div>
           <div class="migration-cycle">/ month CAD</div>
           <ul class="migration-features">
             <li>Site migrated to our infrastructure</li>
             <li>Domain management included</li>
             <li>Fast, reliable hosting</li>
-            <li>SSL included</li>
-            <li>1 content update per month</li>
+            <li>SSL certificate included</li>
+            <li>Day-to-day site management</li>
+            <li>Email support</li>
           </ul>
           <a href="https://square.link/u/M7dPjP4o" target="_blank" rel="noopener" class="migration-cta">Get Started</a>
-        </div>
-        <div class="migration-plan">
-          <div class="migration-plan-name">Host + Manage</div>
-          <div class="migration-price-row">
-            <div class="migration-price">$99</div>
-          </div>
-          <div class="migration-cycle">/ month CAD</div>
-          <ul class="migration-features">
-            <li>Everything in Host Only</li>
-            <li>3 content updates per month</li>
-            <li>Basic SEO pass on migration</li>
-            <li>Monthly uptime monitoring</li>
-            <li>Priority email support</li>
-          </ul>
-          <a href="https://square.link/u/PFiJBct8" target="_blank" rel="noopener" class="migration-cta">Get Started</a>
         </div>
       </div>
 
@@ -2243,8 +2369,8 @@
 
         <div class="reports-plan-tags" style="margin-bottom:2.5rem;">
           <span class="reports-plan-tag">Starter</span>
-          <span class="reports-plan-tag active">Active Business ✦</span>
-          <span class="reports-plan-tag active">Premium ✦</span>
+          <span class="reports-plan-tag active">Growth ✦</span>
+          <span class="reports-plan-tag active">Pro ✦</span>
         </div>
 
         <div class="reports-bullets-vert">
@@ -2589,11 +2715,10 @@
             <label for="cf-plan">Plan You're Interested In</label>
             <select id="cf-plan" name="plan">
               <option value="">Not sure yet</option>
-              <option value="Starter">Starter · $120/mo</option>
-              <option value="Active Business">Active Business · $175/mo</option>
-              <option value="Premium">Premium · $250/mo</option>
-              <option value="Host Only">Host Only (existing site) · $60/mo</option>
-              <option value="Host + Manage">Host + Manage (existing site) · $99/mo</option>
+              <option value="Starter">Starter (new site) · $60/mo</option>
+              <option value="Growth">Growth (new site) · $100/mo</option>
+              <option value="Pro">Pro (new site) · $150/mo</option>
+              <option value="Hosting + Management">Hosting + Management (existing site) · $40/mo</option>
               <option value="Just exploring">Just exploring</option>
             </select>
           </div>
@@ -2702,11 +2827,19 @@
       btn.disabled = false;
       btn.textContent = 'Send Message';
     });
-    // Scroll reveal
+    // Scroll reveal with staggered timing
     const revealEls = document.querySelectorAll('.reveal');
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
+          // Get parent section or use document as fallback
+          const parent = entry.target.closest('section') || document;
+          const revealsInParent = parent.querySelectorAll('.reveal');
+          const index = Array.from(revealsInParent).indexOf(entry.target);
+          
+          // Stagger delay: 0s for first, 0.1s for second, 0.2s for third, etc.
+          const delay = Math.min(index * 0.1, 0.3);
+          entry.target.style.transitionDelay = `${delay}s`;
           entry.target.classList.add('visible');
           observer.unobserve(entry.target);
         }
