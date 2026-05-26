@@ -2899,7 +2899,7 @@
       status.className = 'cf-status';
 
       try {
-        const res = await fetch('https://submit.stackwell.digital', {
+        const res = await fetch('https://submit-stackwell.adam-8d6.workers.dev', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ name, email, business: biz, phone, plan, message, source: 'contact-form' })
