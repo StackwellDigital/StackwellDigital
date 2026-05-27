@@ -353,6 +353,15 @@
       margin-top: 0.25rem;
     }
 
+    .metrics-tested {
+      grid-column: 1 / -1;
+      padding: 2rem;
+      border: 1px solid var(--accent-border);
+      border-radius: 6px;
+      background: rgba(249,115,22,0.06);
+      margin-top: 1rem;
+    }
+
     .results-issues {
       padding: 2.5rem;
       border-top: 1px solid var(--border);
@@ -676,7 +685,7 @@
       const gradeEl = document.getElementById('scoreGrade');
       gradeEl.textContent = gradeLetter;
       gradeEl.className = `score-grade ${gradeLetter.toLowerCase()}`;
-      document.getElementById('scoreSummary').innerHTML = `${gradeDescription}<br /><span style="font-family: var(--mono); font-size: 0.65rem; color: var(--grey); margin-top: 0.5rem; display: block; letter-spacing: 0.1em;">+ 10 other metrics tested</span>`;
+      document.getElementById('scoreSummary').textContent = gradeDescription;
 
       // Render simplified checks (business-focused, not technical)
       const body = document.getElementById('resultsBody');
@@ -719,6 +728,12 @@
             <span class="check-icon ${checks.favicon && checks.openGraph ? 'pass' : 'fail'}">${checks.favicon && checks.openGraph ? '✓' : '✕'}</span>
             <span>${checks.favicon && checks.openGraph ? 'Looks polished' : 'Looks unfinished'}</span>
           </div>
+        </div>
+
+        <div class="metrics-tested">
+          <div style="font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--grey); margin-bottom: 1rem;">Deep Scan</div>
+          <div style="font-family: var(--display); font-size: 1.6rem; letter-spacing: 0.04em; color: var(--white); margin-bottom: 0.75rem;">15+ Metrics Tested</div>
+          <p style="font-size: 0.85rem; color: var(--grey-light); line-height: 1.6;">Beyond the 5 visible checks above, we analyze security, performance, accessibility, social sharing, SEO structure, and more. This is a comprehensive look at your site's health.</p>
         </div>
       `;
 
