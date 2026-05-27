@@ -1803,14 +1803,14 @@
     <ul class="nav-links">
       <li><a href="#card-audit">Free Website Audit</a></li>
       <li class="nav-dropdown">
-        <a href="#card-pricing">Pricing</a>
+        <a href="#card-services">Services</a>
         <div class="nav-dropdown-menu">
           <a href="#card-how">How It Works</a>
-          <a href="#card-pricing">Plans & Pricing</a>
-          <a href="#card-addons">Add-Ons</a>
+          <a href="#card-services">Services</a>
+          <a href="#card-pricing">Pricing</a>
+          <a href="#card-reports">Analytics Reports</a>
         </div>
       </li>
-      <li><a href="#card-reports">Reports</a></li>
       <li><a href="#card-portfolio">Our Work</a></li>
       <li><a href="#card-team">Who We Are</a></li>
       <li><a href="#card-faq">FAQ</a></li>
@@ -1827,14 +1827,14 @@
   <!-- MOBILE MENU -->
   <div class="mobile-menu" id="mobileMenu" role="dialog" aria-modal="true" aria-label="Navigation menu">
     <a href="#card-audit"     class="mobile-link">Free Website Audit</a>
-    <a href="#card-how"      class="mobile-link">How It Works</a>
-    <a href="#card-pricing"  class="mobile-link">Pricing</a>
-    <a href="#card-addons"   class="mobile-link">Add-Ons</a>
-    <a href="#card-reports"  class="mobile-link">Reports</a>
+    <a href="#card-how"       class="mobile-link">How It Works</a>
+    <a href="#card-services"  class="mobile-link">Services</a>
+    <a href="#card-pricing"   class="mobile-link">Pricing</a>
+    <a href="#card-reports"   class="mobile-link">Analytics Reports</a>
     <a href="#card-portfolio" class="mobile-link">Our Work</a>
-    <a href="#card-team"     class="mobile-link">Who We Are</a>
-    <a href="#card-faq"      class="mobile-link">FAQ</a>
-    <a href="#card-contact"  class="mobile-link mobile-link-cta">Get Started</a>
+    <a href="#card-team"      class="mobile-link">Who We Are</a>
+    <a href="#card-faq"       class="mobile-link">FAQ</a>
+    <a href="#card-contact"   class="mobile-link mobile-link-cta">Get Started</a>
   </div>
 
   <!-- FLOW ROOT -->
@@ -2595,44 +2595,75 @@
     if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
-      // Intercept all #card-* anchor clicks and use GSAP scrollTo
-      // so pinned sections don't break native anchor scroll
-      document.querySelectorAll('a[href^="#card-"]').forEach(link => {
-        link.addEventListener('click', e => {
-          e.preventDefault();
-          const target = document.querySelector(link.getAttribute('href'));
-          if (!target) return;
-          // close mobile menu if open
-          document.getElementById('hamburger').classList.remove('open');
-          document.getElementById('mobileMenu').classList.remove('open');
-          document.body.style.overflow = '';
-          const isMobileClick = window.innerWidth <= 768;
-          if (isMobileClick) {
-            setTimeout(() => {
-              const navH = document.getElementById('nav').offsetHeight;
-              const top = target.getBoundingClientRect().top + window.scrollY - navH;
-              window.scrollTo({ top: top, behavior: 'smooth' });
-            }, 50);
-          } else {
-            const navH = document.getElementById('nav').offsetHeight;
-            gsap.to(window, {
-              duration: 0.8,
-              scrollTo: { y: target, offsetY: navH },
-              ease: 'power2.inOut'
+      const isMobile = window.innerWidth <= 768;
+
+      // ── GSAP INIT FUNCTION (desktop only, called on load + after nav jumps) ──
+      function initGSAP() {
+        ScrollTrigger.getAll().forEach(st => st.kill());
+        gsap.killTweensOf('.flow-inner');
+
+        const rotationStart = 30;
+        const rotationOrigin = 'bottom left';
+        const sections = document.querySelectorAll('.flow-section');
+        const navEl = document.getElementById('nav');
+        const navHeight = navEl ? navEl.offsetHeight : 96;
+
+        function enforceMinHeight() {
+          const vh = window.innerHeight;
+          sections.forEach(section => {
+            const inner = section.querySelector('.flow-inner');
+            if (!inner) return;
+            inner.style.minHeight = '100vh';
+            const natural = inner.scrollHeight;
+            inner.style.minHeight = Math.max(natural, vh) + 'px';
+          });
+        }
+        enforceMinHeight();
+
+        sections.forEach((section, i) => {
+          gsap.set(section, { zIndex: i + 1 });
+          const inner = section.querySelector('.flow-inner');
+          if (!inner) return;
+
+          if (i > 0) {
+            // Cards above current scroll position are already "in" — set to 0
+            // Cards below get the rotation start
+            const sectionTop = section.getBoundingClientRect().top;
+            const alreadyPast = sectionTop <= navHeight;
+            gsap.set(inner, {
+              rotation: alreadyPast ? 0 : rotationStart,
+              transformOrigin: rotationOrigin
+            });
+            gsap.to(inner, {
+              rotation: 0,
+              ease: 'none',
+              scrollTrigger: {
+                trigger: section,
+                start: 'top bottom',
+                end: `top ${navHeight}px`,
+                scrub: true,
+              }
+            });
+          }
+
+          if (i < sections.length - 1) {
+            ScrollTrigger.create({
+              trigger: section,
+              start: 'bottom bottom',
+              end: 'bottom top',
+              pin: true,
+              pinSpacing: false,
             });
           }
         });
-      });
 
-      const isMobile = window.innerWidth <= 768;
+        ScrollTrigger.refresh();
+        window._enforceMinHeight = enforceMinHeight;
+      }
 
-      // On mobile: skip all GSAP pinning and rotation — it fights the keyboard and scroll
+      // On mobile: skip all GSAP — fights keyboard and scroll
       if (isMobile) {
-        // just set z-index so stacking looks right, no pins no rotation
         document.querySelectorAll('.flow-section').forEach((s, i) => gsap.set(s, { zIndex: i + 1 }));
-        // don't enforceMinHeight on mobile — cards should be content height only
-
-        // Handle direct hash links on mobile
         if (window.location.hash) {
           const target = document.querySelector(window.location.hash);
           if (target) {
@@ -2644,83 +2675,55 @@
           }
         }
       } else {
+        initGSAP();
 
-      const rotationStart = 30;
-      const rotationOrigin = 'bottom left';
-      const sections = document.querySelectorAll('.flow-section');
-
-      // Force every card to be at least 100vh tall so pin duration
-      // always covers the full rotate-in travel of the next card
-      function enforceMinHeight() {
-        const vh = window.innerHeight;
-        sections.forEach(section => {
-          const inner = section.querySelector('.flow-inner');
-          if (!inner) return;
-          inner.style.minHeight = '100vh';
-          const natural = inner.scrollHeight;
-          inner.style.minHeight = Math.max(natural, vh) + 'px';
-        });
+        if (window.location.hash) {
+          const target = document.querySelector(window.location.hash);
+          if (target) {
+            setTimeout(() => {
+              const navH = document.getElementById('nav').offsetHeight;
+              const top = target.getBoundingClientRect().top + window.scrollY - navH;
+              window.scrollTo({ top: top, behavior: 'smooth' });
+            }, 300);
+          }
+        }
       }
 
-      enforceMinHeight();
-
-      const navEl = document.getElementById('nav');
-      const navHeight = navEl ? navEl.offsetHeight : 96;
-
-      sections.forEach((section, i) => {
-        gsap.set(section, { zIndex: i + 1 });
-
-        const inner = section.querySelector('.flow-inner');
-        if (!inner) return;
-
-        // All cards except first rotate in
-        if (i > 0) {
-          gsap.set(inner, { rotation: rotationStart, transformOrigin: rotationOrigin });
-          gsap.to(inner, {
-            rotation: 0,
-            ease: 'none',
-            scrollTrigger: {
-              trigger: section,
-              start: 'top bottom',
-              end: `top ${navHeight}px`,
-              scrub: true,
-            }
-          });
-        }
-
-        // All cards except last get pinned
-        if (i < sections.length - 1) {
-          ScrollTrigger.create({
-            trigger: section,
-            start: 'bottom bottom',
-            end: 'bottom top',
-            pin: true,
-            pinSpacing: false,
-          });
-        }
-      });
-
-      ScrollTrigger.refresh();
-
-      // Handle direct hash links on page load (e.g. stackwell.digital/#card-audit)
-      if (window.location.hash) {
-        const target = document.querySelector(window.location.hash);
-        if (target) {
-          setTimeout(() => {
-            const navH = document.getElementById('nav').offsetHeight;
+      // Intercept all #card-* anchor clicks
+      document.querySelectorAll('a[href^="#card-"]').forEach(link => {
+        link.addEventListener('click', e => {
+          e.preventDefault();
+          const target = document.querySelector(link.getAttribute('href'));
+          if (!target) return;
+          document.getElementById('hamburger').classList.remove('open');
+          document.getElementById('mobileMenu').classList.remove('open');
+          document.body.style.overflow = '';
+          const navH = document.getElementById('nav').offsetHeight;
+          if (window.innerWidth <= 768) {
+            setTimeout(() => {
+              const top = target.getBoundingClientRect().top + window.scrollY - navH;
+              window.scrollTo({ top: top, behavior: 'smooth' });
+            }, 50);
+          } else {
+            // Kill all ST + tweens, reset all rotations, jump instantly, rebuild
+            ScrollTrigger.getAll().forEach(st => st.kill());
+            gsap.killTweensOf('.flow-inner');
+            document.querySelectorAll('.flow-section .flow-inner').forEach(inner => {
+              gsap.set(inner, { rotation: 0 });
+            });
             const top = target.getBoundingClientRect().top + window.scrollY - navH;
-            window.scrollTo({ top: top, behavior: 'smooth' });
-          }, 300);
-        }
-      }
-
-      } // end desktop-only block
+            window.scrollTo({ top: top, behavior: 'instant' });
+            // Rebuild GSAP after paint so ST positions are fresh
+            requestAnimationFrame(() => requestAnimationFrame(() => initGSAP()));
+          }
+        });
+      });
 
       let resizeTimer;
       window.addEventListener('resize', () => {
         clearTimeout(resizeTimer);
         resizeTimer = setTimeout(() => {
-          enforceMinHeight();
+          if (window._enforceMinHeight) window._enforceMinHeight();
           ScrollTrigger.refresh();
         }, 200);
       });
