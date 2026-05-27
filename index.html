@@ -2716,10 +2716,12 @@
 
       // Reset states
       error.classList.remove('visible');
+      error.textContent = '';
       results.classList.remove('visible');
       cta.style.display = 'none';
       btn.disabled = true;
       loading.style.display = 'flex';
+      console.log('runAudit called, url:', document.getElementById('auditUrl').value);
 
       try {
         // Normalize URL — prepend https:// if no protocol present
