@@ -353,13 +353,18 @@
       margin-top: 0.25rem;
     }
 
-    .metrics-tested {
-      grid-column: 1 / -1;
-      padding: 2rem;
+    .metrics-badge {
+      font-family: var(--mono);
+      font-size: 0.55rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-top: 0.6rem;
+      padding: 0.35rem 0.6rem;
       border: 1px solid var(--accent-border);
-      border-radius: 6px;
-      background: rgba(249,115,22,0.06);
-      margin-top: 1rem;
+      display: inline-block;
+      border-radius: 3px;
+      background: rgba(249,115,22,0.08);
     }
 
     .results-issues {
@@ -720,6 +725,7 @@
             <span class="check-icon ${checks.title && checks.metaDescription && checks.h1 ? 'pass' : 'fail'}">${checks.title && checks.metaDescription && checks.h1 ? '✓' : '✕'}</span>
             <span>${checks.title && checks.metaDescription && checks.h1 ? 'Google can find you' : 'Google has trouble finding you'}</span>
           </div>
+          <div class="metrics-badge">15+ metrics tested</div>
         </div>
 
         <div class="check-item">
@@ -728,12 +734,6 @@
             <span class="check-icon ${checks.favicon && checks.openGraph ? 'pass' : 'fail'}">${checks.favicon && checks.openGraph ? '✓' : '✕'}</span>
             <span>${checks.favicon && checks.openGraph ? 'Looks polished' : 'Looks unfinished'}</span>
           </div>
-        </div>
-
-        <div class="metrics-tested">
-          <div style="font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--grey); margin-bottom: 1rem;">Deep Scan</div>
-          <div style="font-family: var(--display); font-size: 1.6rem; letter-spacing: 0.04em; color: var(--white); margin-bottom: 0.75rem;">15+ Metrics Tested</div>
-          <p style="font-size: 0.85rem; color: var(--grey-light); line-height: 1.6;">Beyond the 5 visible checks above, we analyze security, performance, accessibility, social sharing, SEO structure, and more. This is a comprehensive look at your site's health.</p>
         </div>
       `;
 
