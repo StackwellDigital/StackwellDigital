@@ -1930,12 +1930,12 @@
           <p style="color:var(--grey);max-width:580px;font-size:0.95rem;line-height:1.8;margin-top:1rem;">Enter your URL and we'll run a quick audit. See how you're doing on speed, mobile, SEO, and the basics that matter. Takes about 10 seconds.</p>
 
           <!-- AUDIT FORM -->
-          <form class="audit-form" id="auditForm" onsubmit="runAudit(event)">
+          <form class="audit-form" id="auditForm">
             <input 
-              type="url" 
+              type="text" 
               class="audit-input" 
               id="auditUrl" 
-              placeholder="https://yourwebsite.com" 
+              placeholder="yourwebsite.com" 
               required 
             />
             <button type="submit" class="audit-btn" id="auditBtn">Check Site</button>
@@ -2707,7 +2707,7 @@
   <!-- AUDIT TOOL SCRIPT -->
   <script>
     async function runAudit(e) {
-      e.preventDefault();
+      if (e) e.preventDefault();
 
       const url = document.getElementById('auditUrl').value.trim();
       const loading = document.getElementById('auditLoading');
@@ -2724,8 +2724,12 @@
       loading.style.display = 'flex';
 
       try {
-        // Validate URL format
-        const urlObj = new URL(url);
+        // Normalize URL — prepend https:// if no protocol present
+        let normalizedInput = url;
+        if (!/^https?:\/\//i.test(normalizedInput)) {
+          normalizedInput = 'https://' + normalizedInput;
+        }
+        const urlObj = new URL(normalizedInput);
         const normalizedUrl = urlObj.toString();
 
         // Call Worker to run audit
@@ -2762,6 +2766,12 @@
         btn.disabled = false;
       }
     }
+
+    document.getElementById('auditForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      runAudit(e);
+      return false;
+    });
 
     function renderResults(url, checks) {
       // Calculate score - count passing checks
