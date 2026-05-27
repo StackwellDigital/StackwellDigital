@@ -2750,6 +2750,15 @@
         results.classList.add('visible');
         cta.style.display = 'flex';
 
+        // Scroll to results after render
+        setTimeout(() => {
+          gsap.to(window, {
+            duration: 0.8,
+            scrollTo: { y: results, offsetY: 80 },
+            ease: 'power2.inOut'
+          });
+        }, 100);
+
         // Store in session for contact form
         sessionStorage.setItem('auditData', JSON.stringify({
           url: normalizedUrl,
