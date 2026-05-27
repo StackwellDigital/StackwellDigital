@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Website Health Check | Stackwell Digital</title>
+  <meta name="description" content="Free website audit. See how your site stacks up on speed, mobile, SEO, and more. Get actionable insights in seconds." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0a0a0a;
+      --surface: #111111;
+      --border: rgba(255,255,255,0.07);
+      --white: #ffffff;
+      --grey: #aaaaaa;
+      --grey-light: #bbbbbb;
+      --accent: #F97316;
+      --accent-dim: rgba(249,115,22,0.12);
+      --accent-border: rgba(249,115,22,0.25);
+      --mono: 'DM Mono', monospace;
+      --sans: 'DM Sans', sans-serif;
+      --display: 'Bebas Neue', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; overflow-x: hidden; }
+
+    body {
+      background: var(--bg);
+      color: var(--white);
+      font-family: var(--sans);
+      font-weight: 300;
+      line-height: 1.6;
+      overflow-x: hidden;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ─── LOGO PATTERN BACKGROUND ─── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url('https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/background_white.png');
+      background-size: 420px 420px;
+      background-repeat: repeat;
+      opacity: 0.022;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: relative;
+      z-index: 100;
+      padding: 1rem 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+    }
+
+    .nav-logo-img {
+      height: 48px;
+      width: auto;
+      display: block;
+    }
+
+    .nav-wordmark {
+      font-family: var(--display);
+      font-size: 1.2rem;
+      letter-spacing: 0.08em;
+      color: var(--white);
+      line-height: 1;
+    }
+
+    .nav-wordmark span {
+      display: block;
+      font-family: var(--mono);
+      font-size: 0.5rem;
+      letter-spacing: 0.3em;
+      color: var(--grey);
+      font-weight: 400;
+      margin-top: 2px;
+    }
+
+    .nav-back {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--grey);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-back:hover { color: var(--white); }
+
+    /* ─── MAIN CONTAINER ─── */
+    main {
+      position: relative;
+      z-index: 1;
+      flex: 1;
+      width: 100%;
+      max-width: 100%;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 4rem 2.5rem;
+    }
+
+    /* ─── SECTION LABEL ─── */
+    .section-label {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--grey);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .section-label::before {
+      content: '';
+      width: 24px;
+      height: 1px;
+      background: var(--grey);
+      flex-shrink: 0;
+    }
+
+    h1 {
+      font-family: var(--display);
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      line-height: 0.95;
+      letter-spacing: 0.02em;
+      margin-bottom: 1.5rem;
+    }
+
+    .intro {
+      color: var(--grey-light);
+      font-size: 0.95rem;
+      line-height: 1.8;
+      max-width: 600px;
+      margin-bottom: 3rem;
+    }
+
+    /* ─── AUDIT FORM ─── */
+    .audit-form {
+      display: flex;
+      gap: 0.75rem;
+      margin-bottom: 3rem;
+      flex-wrap: wrap;
+    }
+
+    .audit-input {
+      flex: 1;
+      min-width: 280px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      color: var(--white);
+      font-family: var(--sans);
+      font-size: 0.95rem;
+      padding: 0.9rem 1.25rem;
+      outline: none;
+      transition: border-color 0.2s, background 0.2s;
+      border-radius: 3px;
+    }
+
+    .audit-input:focus {
+      border-color: rgba(249,115,22,0.35);
+      background: rgba(249,115,22,0.03);
+    }
+
+    .audit-input::placeholder { color: rgba(255,255,255,0.2); }
+
+    .audit-btn {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.9rem 2rem;
+      background: var(--accent);
+      color: #000;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.2s;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    .audit-btn:hover { opacity: 0.85; transform: scale(1.02); }
+    .audit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    /* ─── LOADING STATE ─── */
+    .audit-loading {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin: 2rem 0;
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      color: var(--grey);
+    }
+
+    .spinner {
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(249,115,22,0.2);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* ─── RESULTS CARD ─── */
+    .audit-results {
+      display: none;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      background: rgba(255,255,255,0.02);
+      margin: 3rem 0;
+    }
+
+    .audit-results.visible {
+      display: block;
+      animation: slideUp 0.5s ease-out;
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .results-header {
+      padding: 2.5rem;
+      border-bottom: 1px solid var(--border);
+      background: linear-gradient(135deg, rgba(249,115,22,0.08) 0%, rgba(255,255,255,0.01) 100%);
+    }
+
+    .results-url {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      color: var(--grey);
+      margin-bottom: 1.5rem;
+      word-break: break-all;
+    }
+
+    .score-display {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .score-grade {
+      font-family: var(--display);
+      font-size: 5rem;
+      line-height: 1;
+      letter-spacing: -0.02em;
+    }
+
+    .score-grade.a { color: #4caf50; }
+    .score-grade.b { color: #8bc34a; }
+    .score-grade.c { color: #ffc107; }
+    .score-grade.d { color: #ff9800; }
+    .score-grade.f { color: #f44336; }
+
+    .score-label {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .score-label-text {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--grey);
+    }
+
+    .score-summary {
+      font-family: var(--display);
+      font-size: 1.4rem;
+      letter-spacing: 0.04em;
+      color: var(--white);
+    }
+
+    .results-body {
+      padding: 2.5rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 2rem;
+    }
+
+    .check-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .check-label {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--grey);
+      font-weight: 500;
+    }
+
+    .check-value {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.95rem;
+      color: var(--white);
+    }
+
+    .check-icon {
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+
+    .check-icon.pass { color: #4caf50; }
+    .check-icon.fail { color: #f44336; }
+    .check-icon.warning { color: #ffc107; }
+
+    .check-detail {
+      font-size: 0.8rem;
+      color: var(--grey);
+      margin-top: 0.25rem;
+    }
+
+    .results-issues {
+      padding: 2.5rem;
+      border-top: 1px solid var(--border);
+      background: rgba(244,67,54,0.04);
+    }
+
+    .issues-title {
+      font-family: var(--display);
+      font-size: 1.2rem;
+      letter-spacing: 0.04em;
+      margin-bottom: 1.5rem;
+      color: var(--white);
+    }
+
+    .issues-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .issue-item {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+
+    .issue-icon {
+      font-size: 1.2rem;
+      color: #f44336;
+      flex-shrink: 0;
+      margin-top: 0.1rem;
+    }
+
+    .issue-text {
+      font-size: 0.9rem;
+      color: var(--grey-light);
+      line-height: 1.6;
+    }
+
+    .issue-text strong {
+      color: var(--white);
+      font-weight: 500;
+    }
+
+    /* ─── CTA SECTION ─── */
+    .cta-section {
+      margin-top: 3rem;
+      padding: 2rem;
+      border: 1px solid var(--accent-border);
+      border-radius: 8px;
+      background: rgba(249,115,22,0.04);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    .cta-text h3 {
+      font-family: var(--display);
+      font-size: 1.3rem;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.5rem;
+      color: var(--white);
+    }
+
+    .cta-text p {
+      font-size: 0.9rem;
+      color: var(--grey-light);
+      line-height: 1.6;
+    }
+
+    .cta-btn {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.9rem 2rem;
+      background: var(--accent);
+      color: #000;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+      transition: opacity 0.2s;
+      font-weight: 500;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .cta-btn:hover { opacity: 0.85; }
+
+    /* ─── ERROR STATE ─── */
+    .audit-error {
+      display: none;
+      padding: 1.5rem;
+      border: 1px solid rgba(244,67,54,0.3);
+      border-radius: 6px;
+      background: rgba(244,67,54,0.08);
+      color: #ff9999;
+      font-size: 0.9rem;
+      margin: 2rem 0;
+      line-height: 1.6;
+    }
+
+    .audit-error.visible {
+      display: block;
+      animation: slideUp 0.5s ease-out;
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 900px) {
+      nav { padding: 1rem 1.5rem; }
+      .container { padding: 2.5rem 1.25rem; }
+
+      .audit-form {
+        flex-direction: column;
+      }
+
+      .audit-input { min-width: auto; }
+      .audit-btn { width: 100%; }
+
+      .results-header { padding: 1.5rem; }
+      .results-body { padding: 1.5rem; gap: 1.5rem; grid-template-columns: 1fr; }
+      .results-issues { padding: 1.5rem; }
+
+      .score-display {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+      }
+
+      .score-grade { font-size: 3.5rem; }
+
+      .cta-section {
+        flex-direction: column;
+        align-items: stretch;
+        text-align: center;
+      }
+
+      .cta-btn { width: 100%; }
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      position: relative;
+      z-index: 1;
+      border-top: 1px solid var(--border);
+      padding: 2rem 2.5rem;
+      text-align: center;
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      color: var(--grey);
+    }
+
+    /* ─── ACCESSIBILITY ─── */
+    :focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="https://stackwell.digital" class="nav-logo">
+      <img src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/logo.photo.png" alt="Stackwell Digital" class="nav-logo-img" />
+      <div class="nav-wordmark">STACKWELL.<span>DIGITAL</span></div>
+    </a>
+    <a href="https://stackwell.digital" class="nav-back">← Back to Site</a>
+  </nav>
+
+  <!-- MAIN -->
+  <main>
+    <div class="container">
+      <p class="section-label">Free Tool</p>
+      <h1>Website Health Check</h1>
+      <p class="intro">Enter your URL and we'll run a quick audit. See how you're doing on speed, mobile, SEO, and the basics that matter. Takes about 10 seconds.</p>
+
+      <!-- AUDIT FORM -->
+      <form class="audit-form" id="auditForm" onsubmit="runAudit(event)">
+        <input 
+          type="url" 
+          class="audit-input" 
+          id="auditUrl" 
+          placeholder="https://yourwebsite.com" 
+          required 
+        />
+        <button type="submit" class="audit-btn" id="auditBtn">Check Site</button>
+      </form>
+
+      <!-- LOADING -->
+      <div class="audit-loading" id="auditLoading" style="display: none;">
+        <div class="spinner"></div>
+        <span>Auditing your site...</span>
+      </div>
+
+      <!-- ERROR -->
+      <div class="audit-error" id="auditError"></div>
+
+      <!-- RESULTS -->
+      <div class="audit-results" id="auditResults">
+        <div class="results-header">
+          <div class="results-url" id="resultsUrl"></div>
+          <div class="score-display">
+            <div class="score-grade" id="scoreGrade"></div>
+            <div class="score-label">
+              <div class="score-label-text">Overall Score</div>
+              <div class="score-summary" id="scoreSummary"></div>
+            </div>
+          </div>
+        </div>
+        <div class="results-body" id="resultsBody"></div>
+        <div class="results-issues" id="resultsIssues" style="display: none;">
+          <div class="issues-title">What We'd Fix</div>
+          <ul class="issues-list" id="issuesList"></ul>
+        </div>
+      </div>
+
+      <!-- CTA -->
+      <div class="cta-section" id="ctaSection" style="display: none;">
+        <div class="cta-text">
+          <h3>Ready to Improve?</h3>
+          <p>We handle the fixes. Professional design, hosting, updates. One flat monthly rate.</p>
+        </div>
+        <button class="cta-btn" onclick="document.getElementById('contactForm')?.scrollIntoView({behavior: 'smooth'})">Get Started</button>
+      </div>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div>&copy; 2026 Stackwell Digital · British Columbia</div>
+  </footer>
+
+  <script>
+    async function runAudit(e) {
+      e.preventDefault();
+
+      const url = document.getElementById('auditUrl').value.trim();
+      const loading = document.getElementById('auditLoading');
+      const error = document.getElementById('auditError');
+      const results = document.getElementById('auditResults');
+      const cta = document.getElementById('ctaSection');
+      const btn = document.getElementById('auditBtn');
+
+      // Reset states
+      error.classList.remove('visible');
+      results.classList.remove('visible');
+      cta.style.display = 'none';
+      btn.disabled = true;
+      loading.style.display = 'flex';
+
+      try {
+        // Validate URL format
+        const urlObj = new URL(url);
+        const normalizedUrl = urlObj.toString();
+
+        // Call Worker to run audit
+        const response = await fetch('https://audit-stackwell.adam-8d6.workers.dev', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ url: normalizedUrl })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok || !data.success) {
+          throw new Error(data.error || 'Audit failed');
+        }
+
+        // Render results
+        renderResults(normalizedUrl, data.checks);
+        results.classList.add('visible');
+        cta.style.display = 'flex';
+
+        // Store in session for contact form
+        sessionStorage.setItem('auditData', JSON.stringify({
+          url: normalizedUrl,
+          checks: data.checks,
+          timestamp: new Date().toISOString()
+        }));
+
+      } catch (err) {
+        console.error('Audit error:', err);
+        error.textContent = err.message || 'Could not audit this site. Make sure the URL is correct and the site is publicly accessible.';
+        error.classList.add('visible');
+      } finally {
+        loading.style.display = 'none';
+        btn.disabled = false;
+      }
+    }
+
+    function renderResults(url, checks) {
+      // Calculate score - count passing checks
+      const passingChecks = [
+        checks.https,
+        checks.title,
+        checks.metaDescription,
+        checks.h1,
+        checks.viewport,
+        checks.favicon,
+        checks.canonical,
+        checks.lang
+      ].filter(Boolean).length;
+
+      const totalChecks = 8;
+      const score = Math.round((passingChecks / totalChecks) * 100);
+
+      // Grade
+      let gradeLetter = 'F';
+      if (score >= 90) gradeLetter = 'A';
+      else if (score >= 80) gradeLetter = 'B';
+      else if (score >= 70) gradeLetter = 'C';
+      else if (score >= 60) gradeLetter = 'D';
+
+      // Render header
+      document.getElementById('resultsUrl').textContent = url;
+      const gradeEl = document.getElementById('scoreGrade');
+      gradeEl.textContent = gradeLetter;
+      gradeEl.className = `score-grade ${gradeLetter.toLowerCase()}`;
+      document.getElementById('scoreSummary').textContent = `${score}% Optimized`;
+
+      // Render checks
+      const body = document.getElementById('resultsBody');
+      body.innerHTML = `
+        <div class="check-item">
+          <div class="check-label">HTTPS / SSL</div>
+          <div class="check-value">
+            <span class="check-icon ${checks.https ? 'pass' : 'fail'}">${checks.https ? '✓' : '✕'}</span>
+            <span>${checks.https ? 'Secure' : 'Not Secure'}</span>
+          </div>
+        </div>
+
+        <div class="check-item">
+          <div class="check-label">Page Title</div>
+          <div class="check-value">
+            <span class="check-icon ${checks.title ? 'pass' : 'fail'}">${checks.title ? '✓' : '✕'}</span>
+            <span>${checks.title ? 'Present' : 'Missing'}</span>
+          </div>
+          ${checks.titleText ? `<div class="check-detail">"${checks.titleText.substring(0, 40)}${checks.titleText.length > 40 ? '...' : ''}"</div>` : ''}
+        </div>
+
+        <div class="check-item">
+          <div class="check-label">Meta Description</div>
+          <div class="check-value">
+            <span class="check-icon ${checks.metaDescription ? 'pass' : 'fail'}">${checks.metaDescription ? '✓' : '✕'}</span>
+            <span>${checks.metaDescription ? 'Present' : 'Missing'}</span>
+          </div>
+        </div>
+
+        <div class="check-item">
+          <div class="check-label">H1 Heading</div>
+          <div class="check-value">
+            <span class="check-icon ${checks.h1 ? 'pass' : 'fail'}">${checks.h1 ? '✓' : '✕'}</span>
+            <span>${checks.h1 ? 'Present' : 'Missing'}</span>
+          </div>
+          ${checks.h1Text ? `<div class="check-detail">"${checks.h1Text.substring(0, 40)}${checks.h1Text.length > 40 ? '...' : ''}"</div>` : ''}
+        </div>
+
+        <div class="check-item">
+          <div class="check-label">Mobile Responsive</div>
+          <div class="check-value">
+            <span class="check-icon ${checks.viewport ? 'pass' : 'fail'}">${checks.viewport ? '✓' : '✕'}</span>
+            <span>${checks.viewport ? 'Ready' : 'Not Ready'}</span>
+          </div>
+        </div>
+
+        <div class="check-item">
+          <div class="check-label">Load Time</div>
+          <div class="check-value">
+            <span class="check-icon ${checks.loadTime < 3000 ? 'pass' : checks.loadTime < 5000 ? 'warning' : 'fail'}">${checks.loadTime < 3000 ? '✓' : checks.loadTime < 5000 ? '⚠' : '✕'}</span>
+            <span>${(checks.loadTime / 1000).toFixed(2)}s</span>
+          </div>
+          ${checks.loadTime > 3000 ? '<div class="check-detail">Aim for under 3s</div>' : ''}
+        </div>
+
+        <div class="check-item">
+          <div class="check-label">Favicon</div>
+          <div class="check-value">
+            <span class="check-icon ${checks.favicon ? 'pass' : 'fail'}">${checks.favicon ? '✓' : '✕'}</span>
+            <span>${checks.favicon ? 'Found' : 'Missing'}</span>
+          </div>
+        </div>
+
+        <div class="check-item">
+          <div class="check-label">Social Tags</div>
+          <div class="check-value">
+            <span class="check-icon ${checks.openGraph ? 'pass' : 'fail'}">${checks.openGraph ? '✓' : '✕'}</span>
+            <span>${checks.openGraph ? 'Configured' : 'Missing'}</span>
+          </div>
+        </div>
+      `;
+
+      // Render issues
+      const issues = [];
+      if (!checks.https) issues.push('<strong>Not HTTPS:</strong> Your site isn\'t encrypted. This hurts SEO and visitor trust.');
+      if (!checks.title) issues.push('<strong>Missing page title:</strong> Every page needs one. It shows in search results and browser tabs.');
+      if (!checks.metaDescription) issues.push('<strong>No meta description:</strong> Search engines use this for your snippet. Write a clear, 155-character summary.');
+      if (!checks.h1) issues.push('<strong>Missing H1 heading:</strong> Your main heading helps search engines understand your page.');
+      if (!checks.viewport) issues.push('<strong>Not mobile responsive:</strong> Over 60% of traffic is mobile. Your site needs to work on phones.');
+      if (checks.loadTime > 3000) issues.push(`<strong>Slow load time (${(checks.loadTime / 1000).toFixed(1)}s):</strong> People leave if pages take too long. We optimize for speed.`);
+      if (!checks.favicon) issues.push('<strong>Missing favicon:</strong> A small branding detail that adds polish and helps with brand recognition.');
+      if (!checks.openGraph) issues.push('<strong>No social sharing tags:</strong> Your site won\'t preview nicely when shared on Facebook, Twitter, LinkedIn, etc.');
+
+      if (issues.length > 0) {
+        const issuesSection = document.getElementById('resultsIssues');
+        const issuesList = document.getElementById('issuesList');
+        issuesList.innerHTML = issues.map(issue => `
+          <li class="issue-item">
+            <span class="issue-icon">✕</span>
+            <span class="issue-text">${issue}</span>
+          </li>
+        `).join('');
+        issuesSection.style.display = 'block';
+      }
+    }
+  </script>
+
+</body>
+</html>

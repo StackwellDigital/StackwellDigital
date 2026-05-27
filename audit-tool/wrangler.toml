@@ -1,0 +1,7 @@
+name = "audit-stackwell"
+main = "audit-worker.js"
+compatibility_date = "2024-01-01"
+
+[env.production]
+name = "audit-stackwell"
+route = "audit-stackwell.adam-8d6.workers.dev"
