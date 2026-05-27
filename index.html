@@ -2767,12 +2767,6 @@
       }
     }
 
-    document.getElementById('auditForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      runAudit(e);
-      return false;
-    });
-
     function renderResults(url, checks) {
       // Calculate score - count passing checks
       const passingChecks = [
@@ -2870,6 +2864,13 @@
         issuesSection.style.display = 'block';
       }
     }
+
+    // Attach form listener here so runAudit is already defined
+    document.getElementById('auditForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      runAudit(e);
+      return false;
+    });
   </script>
 
 </body>
