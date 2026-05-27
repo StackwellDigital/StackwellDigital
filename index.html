@@ -1930,16 +1930,15 @@
           <p style="color:var(--grey);max-width:580px;font-size:0.95rem;line-height:1.8;margin-top:1rem;">Enter your URL and we'll run a quick audit. See how you're doing on speed, mobile, SEO, and the basics that matter. Takes about 10 seconds.</p>
 
           <!-- AUDIT FORM -->
-          <form class="audit-form" id="auditForm">
+          <div class="audit-form" id="auditForm">
             <input 
               type="text" 
               class="audit-input" 
               id="auditUrl" 
-              placeholder="yourwebsite.com" 
-              required 
+              placeholder="yourwebsite.com"
             />
-            <button type="submit" class="audit-btn" id="auditBtn">Check Site</button>
-          </form>
+            <button type="button" class="audit-btn" id="auditBtn" onclick="runAudit()">Check Site</button>
+          </div>
 
           <!-- LOADING -->
           <div class="audit-loading" id="auditLoading" style="display: none;">
@@ -2706,8 +2705,7 @@
 
   <!-- AUDIT TOOL SCRIPT -->
   <script>
-    async function runAudit(e) {
-      if (e) e.preventDefault();
+    async function runAudit() {
 
       const url = document.getElementById('auditUrl').value.trim();
       const loading = document.getElementById('auditLoading');
@@ -2865,11 +2863,9 @@
       }
     }
 
-    // Attach form listener here so runAudit is already defined
-    document.getElementById('auditForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      runAudit(e);
-      return false;
+    // Enter key in input triggers audit
+    document.getElementById('auditUrl').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') { e.preventDefault(); runAudit(); }
     });
   </script>
 
