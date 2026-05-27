@@ -665,99 +665,71 @@
 
       // Grade
       let gradeLetter = 'F';
-      if (score >= 90) gradeLetter = 'A';
-      else if (score >= 80) gradeLetter = 'B';
-      else if (score >= 70) gradeLetter = 'C';
-      else if (score >= 60) gradeLetter = 'D';
+      let gradeDescription = 'Needs serious work';
+      if (score >= 90) { gradeLetter = 'A'; gradeDescription = 'Really solid'; }
+      else if (score >= 80) { gradeLetter = 'B'; gradeDescription = 'Pretty good'; }
+      else if (score >= 70) { gradeLetter = 'C'; gradeDescription = 'Okay, but missing basics'; }
+      else if (score >= 60) { gradeLetter = 'D'; gradeDescription = 'Missing key stuff'; }
 
       // Render header
       document.getElementById('resultsUrl').textContent = url;
       const gradeEl = document.getElementById('scoreGrade');
       gradeEl.textContent = gradeLetter;
       gradeEl.className = `score-grade ${gradeLetter.toLowerCase()}`;
-      document.getElementById('scoreSummary').textContent = `${score}% Optimized`;
+      document.getElementById('scoreSummary').textContent = gradeDescription;
 
-      // Render checks
+      // Render simplified checks (business-focused, not technical)
       const body = document.getElementById('resultsBody');
       body.innerHTML = `
         <div class="check-item">
-          <div class="check-label">HTTPS / SSL</div>
+          <div class="check-label">Security</div>
           <div class="check-value">
             <span class="check-icon ${checks.https ? 'pass' : 'fail'}">${checks.https ? '✓' : '✕'}</span>
-            <span>${checks.https ? 'Secure' : 'Not Secure'}</span>
+            <span>${checks.https ? 'Your site is secure' : 'Not secure'}</span>
           </div>
         </div>
 
         <div class="check-item">
-          <div class="check-label">Page Title</div>
-          <div class="check-value">
-            <span class="check-icon ${checks.title ? 'pass' : 'fail'}">${checks.title ? '✓' : '✕'}</span>
-            <span>${checks.title ? 'Present' : 'Missing'}</span>
-          </div>
-          ${checks.titleText ? `<div class="check-detail">"${checks.titleText.substring(0, 40)}${checks.titleText.length > 40 ? '...' : ''}"</div>` : ''}
-        </div>
-
-        <div class="check-item">
-          <div class="check-label">Meta Description</div>
-          <div class="check-value">
-            <span class="check-icon ${checks.metaDescription ? 'pass' : 'fail'}">${checks.metaDescription ? '✓' : '✕'}</span>
-            <span>${checks.metaDescription ? 'Present' : 'Missing'}</span>
-          </div>
-        </div>
-
-        <div class="check-item">
-          <div class="check-label">H1 Heading</div>
-          <div class="check-value">
-            <span class="check-icon ${checks.h1 ? 'pass' : 'fail'}">${checks.h1 ? '✓' : '✕'}</span>
-            <span>${checks.h1 ? 'Present' : 'Missing'}</span>
-          </div>
-          ${checks.h1Text ? `<div class="check-detail">"${checks.h1Text.substring(0, 40)}${checks.h1Text.length > 40 ? '...' : ''}"</div>` : ''}
-        </div>
-
-        <div class="check-item">
-          <div class="check-label">Mobile Responsive</div>
+          <div class="check-label">Mobile Friendly</div>
           <div class="check-value">
             <span class="check-icon ${checks.viewport ? 'pass' : 'fail'}">${checks.viewport ? '✓' : '✕'}</span>
-            <span>${checks.viewport ? 'Ready' : 'Not Ready'}</span>
+            <span>${checks.viewport ? 'Works on phones' : 'Doesn\'t work on phones'}</span>
           </div>
         </div>
 
         <div class="check-item">
-          <div class="check-label">Load Time</div>
+          <div class="check-label">Speed</div>
           <div class="check-value">
             <span class="check-icon ${checks.loadTime < 3000 ? 'pass' : checks.loadTime < 5000 ? 'warning' : 'fail'}">${checks.loadTime < 3000 ? '✓' : checks.loadTime < 5000 ? '⚠' : '✕'}</span>
-            <span>${(checks.loadTime / 1000).toFixed(2)}s</span>
-          </div>
-          ${checks.loadTime > 3000 ? '<div class="check-detail">Aim for under 3s</div>' : ''}
-        </div>
-
-        <div class="check-item">
-          <div class="check-label">Favicon</div>
-          <div class="check-value">
-            <span class="check-icon ${checks.favicon ? 'pass' : 'fail'}">${checks.favicon ? '✓' : '✕'}</span>
-            <span>${checks.favicon ? 'Found' : 'Missing'}</span>
+            <span>${checks.loadTime < 3000 ? 'Loads fast' : checks.loadTime < 5000 ? 'A bit slow' : 'Too slow'}</span>
           </div>
         </div>
 
         <div class="check-item">
-          <div class="check-label">Social Tags</div>
+          <div class="check-label">Search Visibility</div>
           <div class="check-value">
-            <span class="check-icon ${checks.openGraph ? 'pass' : 'fail'}">${checks.openGraph ? '✓' : '✕'}</span>
-            <span>${checks.openGraph ? 'Configured' : 'Missing'}</span>
+            <span class="check-icon ${checks.title && checks.metaDescription && checks.h1 ? 'pass' : 'fail'}">${checks.title && checks.metaDescription && checks.h1 ? '✓' : '✕'}</span>
+            <span>${checks.title && checks.metaDescription && checks.h1 ? 'Google can find you' : 'Google has trouble finding you'}</span>
+          </div>
+        </div>
+
+        <div class="check-item">
+          <div class="check-label">Branding</div>
+          <div class="check-value">
+            <span class="check-icon ${checks.favicon && checks.openGraph ? 'pass' : 'fail'}">${checks.favicon && checks.openGraph ? '✓' : '✕'}</span>
+            <span>${checks.favicon && checks.openGraph ? 'Looks polished' : 'Looks unfinished'}</span>
           </div>
         </div>
       `;
 
-      // Render issues
+      // Render issues in plain English
       const issues = [];
-      if (!checks.https) issues.push('<strong>Not HTTPS:</strong> Your site isn\'t encrypted. This hurts SEO and visitor trust.');
-      if (!checks.title) issues.push('<strong>Missing page title:</strong> Every page needs one. It shows in search results and browser tabs.');
-      if (!checks.metaDescription) issues.push('<strong>No meta description:</strong> Search engines use this for your snippet. Write a clear, 155-character summary.');
-      if (!checks.h1) issues.push('<strong>Missing H1 heading:</strong> Your main heading helps search engines understand your page.');
-      if (!checks.viewport) issues.push('<strong>Not mobile responsive:</strong> Over 60% of traffic is mobile. Your site needs to work on phones.');
-      if (checks.loadTime > 3000) issues.push(`<strong>Slow load time (${(checks.loadTime / 1000).toFixed(1)}s):</strong> People leave if pages take too long. We optimize for speed.`);
-      if (!checks.favicon) issues.push('<strong>Missing favicon:</strong> A small branding detail that adds polish and helps with brand recognition.');
-      if (!checks.openGraph) issues.push('<strong>No social sharing tags:</strong> Your site won\'t preview nicely when shared on Facebook, Twitter, LinkedIn, etc.');
+      if (!checks.https) issues.push('Your site isn\'t encrypted. Visitors won\'t trust it, and Google ranks it lower.');
+      if (!checks.viewport) issues.push('Your site doesn\'t work properly on phones. Most of your traffic is mobile.');
+      if (checks.loadTime > 3000) issues.push(`Your site is slow (${(checks.loadTime / 1000).toFixed(1)}s). People leave if it takes too long to load.`);
+      if (!checks.title || !checks.metaDescription || !checks.h1) issues.push('Google can\'t properly understand your site. You\'re missing basic info that helps search rankings.');
+      if (!checks.favicon) issues.push('No icon in the browser tab. Small detail, but it looks unprofessional.');
+      if (!checks.openGraph) issues.push('Your site won\'t preview nicely when shared on social media (Facebook, LinkedIn, etc.).');
 
       if (issues.length > 0) {
         const issuesSection = document.getElementById('resultsIssues');
