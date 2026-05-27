@@ -666,17 +666,17 @@
       // Grade
       let gradeLetter = 'F';
       let gradeDescription = 'Needs serious work';
-      if (score >= 90) { gradeLetter = 'A'; gradeDescription = 'Really solid'; }
-      else if (score >= 80) { gradeLetter = 'B'; gradeDescription = 'Pretty good'; }
-      else if (score >= 70) { gradeLetter = 'C'; gradeDescription = 'Okay, but missing basics'; }
-      else if (score >= 60) { gradeLetter = 'D'; gradeDescription = 'Missing key stuff'; }
+      if (score >= 88) { gradeLetter = 'A'; gradeDescription = 'Really solid'; }
+      else if (score >= 75) { gradeLetter = 'B'; gradeDescription = 'Pretty good'; }
+      else if (score >= 63) { gradeLetter = 'C'; gradeDescription = 'Okay, but missing basics'; }
+      else if (score >= 50) { gradeLetter = 'D'; gradeDescription = 'Missing key stuff'; }
 
       // Render header
       document.getElementById('resultsUrl').textContent = url;
       const gradeEl = document.getElementById('scoreGrade');
       gradeEl.textContent = gradeLetter;
       gradeEl.className = `score-grade ${gradeLetter.toLowerCase()}`;
-      document.getElementById('scoreSummary').textContent = gradeDescription;
+      document.getElementById('scoreSummary').innerHTML = `${gradeDescription}<br /><span style="font-family: var(--mono); font-size: 0.65rem; color: var(--grey); margin-top: 0.5rem; display: block; letter-spacing: 0.1em;">+ 10 other metrics tested</span>`;
 
       // Render simplified checks (business-focused, not technical)
       const body = document.getElementById('resultsBody');
