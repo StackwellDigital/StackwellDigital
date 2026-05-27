@@ -1389,9 +1389,9 @@
       .plan::before { margin-bottom: 0.75rem; }
       .plan:not(.featured)::before { margin-bottom: 0.75rem; }
 
-      .addons-grid { grid-template-columns: repeat(3, 1fr); gap: 0.5rem; }
-      .addon-card { padding: 1rem 0.6rem; border-radius: 4px; }
-      .addon-card ul li { font-size: 0.72rem; margin-bottom: 0.5rem; }
+      .addons-grid { grid-template-columns: 1fr; gap: 0.75rem; }
+      .addon-card { padding: 1.5rem 1.25rem; border-radius: 4px; }
+      .addon-card ul li { font-size: 0.85rem; margin-bottom: 0.65rem; }
       .addons-wrap { margin-top: 3rem; padding-top: 3rem; }
       .migration-body { grid-template-columns: 1fr; }
       .migration-plan { border-right: none; border-bottom: 1px solid var(--border); }
@@ -1783,7 +1783,7 @@
     <!-- CARD 1: HERO -->
     <div class="flow-section" id="card-hero">
       <div class="flow-inner">
-        <span class="card-index">01 / 11</span>
+        <span class="card-index">01 / 12</span>
 
         <!-- hero content -->
         <div class="hero-orange-glow"></div>
@@ -1881,7 +1881,7 @@
     <!-- CARD 2: THE REALITY -->
     <div class="flow-section" id="card-reality">
       <div class="flow-inner">
-        <span class="card-index">02 / 11</span>
+        <span class="card-index">02 / 12</span>
         <div class="section-pad">
           <span class="card-big-title">THE REALITY</span>
           <h2>The Pricing Problem</h2>
@@ -1973,7 +1973,7 @@
               <h3>Ready to Improve?</h3>
               <p>We handle the fixes. Professional design, hosting, updates. One flat monthly rate.</p>
             </div>
-            <button class="cta-btn" onclick="document.getElementById('card-contact').scrollIntoView({behavior: 'smooth'})">Get Started</button>
+            <button class="cta-btn" onclick="gsap.to(window, {duration: 0.8, scrollTo: {y: document.getElementById('card-contact'), offsetY: 0}, ease: 'power2.inOut'})">Get Started</button>
           </div>
         </div>
       </div>
@@ -2497,7 +2497,7 @@
   <footer>
     <div class="footer-left">&copy; 2026 Stackwell Digital · British Columbia, Canada</div>
     <div class="footer-right">
-      <a href="/privacy" style="color:var(--grey);text-decoration:none;font-size:0.6rem;letter-spacing:0.12em;margin-right:1.5rem;transition:color 0.2s;" onmouseover="this.style.color='white'" onmouseout="this.style.color='var(--grey)'">Privacy</a>
+      <a href="mailto:adam@stackwell.digital" style="color:var(--grey);text-decoration:none;font-size:0.6rem;letter-spacing:0.12em;margin-right:1.5rem;transition:color 0.2s;" onmouseover="this.style.color='white'" onmouseout="this.style.color='var(--grey)'">Privacy</a>
       <span style="color:var(--grey);font-size:0.6rem;letter-spacing:0.12em;">stackwell.digital</span>
     </div>
   </footer>
