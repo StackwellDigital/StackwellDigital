@@ -1737,13 +1737,14 @@
 
   <!-- NAV -->
   <nav id="nav">
-    <a href="#card-hero" class="nav-logo">
+    <a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;" class="nav-logo">
       <img src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/logo.photo.png" alt="Stackwell Digital" class="nav-logo-img" />
     </a>
     <ul class="nav-links">
       <li class="nav-dropdown">
         <a href="#card-pricing">Pricing</a>
         <div class="nav-dropdown-menu">
+          <a href="#card-audit">Free Audit</a>
           <a href="#card-how">How It Works</a>
           <a href="#card-pricing">Plans & Pricing</a>
           <a href="#card-addons">Add-Ons</a>
@@ -1765,6 +1766,7 @@
 
   <!-- MOBILE MENU -->
   <div class="mobile-menu" id="mobileMenu" role="dialog" aria-modal="true" aria-label="Navigation menu">
+    <a href="#card-audit"     class="mobile-link">Free Audit</a>
     <a href="#card-how"      class="mobile-link">How It Works</a>
     <a href="#card-pricing"  class="mobile-link">Pricing</a>
     <a href="#card-addons"   class="mobile-link">Add-Ons</a>
