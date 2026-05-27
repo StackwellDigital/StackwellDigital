@@ -18,14 +18,9 @@
   <meta name="twitter:description" content="Professional websites built and managed for BC local businesses. Flat monthly rate, no contracts. From $60/mo." />
   <meta name="twitter:image" content="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/logo.photo.png" />
   <meta name="theme-color" content="#0a0a0a" />
-  <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/favicon-96x96.png" sizes="96x96" />
-  <link rel="icon" type="image/svg+xml" href="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/favicon.svg" />
-  <link rel="shortcut icon" href="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/favicon.ico" />
-  <link rel="apple-touch-icon" sizes="180x180" href="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/apple-touch-icon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
-  <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-2B7Q3ZN6Q7"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -33,14 +28,6 @@
     gtag('js', new Date());
     gtag('config', 'G-2B7Q3ZN6Q7');
   </script>
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-2B7Q3ZN6Q7');
-</script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -59,8 +46,7 @@
       --display: 'Bebas Neue', sans-serif;
     }
 
-    html { scroll-behavior: smooth; overflow-x: hidden; }
-
+    html { overflow-x: hidden; }
     body {
       background: var(--bg);
       color: var(--white);
@@ -70,11 +56,80 @@
       overflow-x: hidden;
     }
 
-    /* ─── NAV ─── */
+    /* ── FLOW WRAPPER ── */
+    #flow-root {
+      position: relative;
+      width: 100%;
+    }
+
+    /* ── FLOW SECTION (each card) ── */
+    .flow-section {
+      position: relative;
+      min-height: 100vh;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    /* inner card: scrollable, rotates in */
+    .flow-inner {
+      position: relative;
+      min-height: 100vh;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      background: var(--bg);
+      will-change: transform;
+      transform-origin: bottom left;
+      overflow-y: auto;
+      overflow-x: hidden;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    /* pattern background on every card */
+    .flow-inner::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url('https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/background_white.png');
+      background-size: 420px 420px;
+      background-repeat: repeat;
+      opacity: 0.022;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* first card no border */
+    .flow-section:first-child .flow-inner {
+      border-top: none;
+    }
+
+    /* card shadow to show depth when stacked */
+    .flow-inner::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      box-shadow: -8px 0 40px rgba(0,0,0,0.6);
+      z-index: 0;
+    }
+
+    /* ── LOGO PATTERN BODY BG ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url('https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/background_white.png');
+      background-size: 420px 420px;
+      background-repeat: repeat;
+      opacity: 0.022;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── NAV ── */
     nav {
       position: fixed;
       top: 0; left: 0; right: 0;
-      z-index: 100;
+      z-index: 1000;
       padding: 0.75rem 3rem;
       display: flex;
       align-items: center;
@@ -93,30 +148,10 @@
       gap: 0.75rem;
       text-decoration: none;
     }
-    .nav-logo img {
-      width: 32px;
-      height: 32px;
-    }
     .nav-logo-img {
       height: 76px;
       width: auto;
       display: block;
-    }
-    .nav-wordmark {
-      font-family: var(--display);
-      font-size: 1.4rem;
-      letter-spacing: 0.08em;
-      color: var(--white);
-      line-height: 1;
-    }
-    .nav-wordmark span {
-      display: block;
-      font-family: var(--mono);
-      font-size: 0.55rem;
-      letter-spacing: 0.3em;
-      color: var(--grey);
-      font-weight: 400;
-      margin-top: 1px;
     }
     .nav-links {
       display: flex;
@@ -133,6 +168,45 @@
       transition: color 0.2s;
     }
     .nav-links a:hover { color: var(--white); }
+
+    .nav-dropdown {
+      position: relative;
+    }
+
+    .nav-dropdown-menu {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      display: none;
+      flex-direction: column;
+      gap: 0;
+      background: rgba(10,10,10,0.95);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 4px;
+      margin-top: 0.5rem;
+      padding: 0.75rem 0;
+      backdrop-filter: blur(8px);
+      white-space: nowrap;
+      min-width: 180px;
+    }
+
+    .nav-dropdown:hover .nav-dropdown-menu {
+      display: flex;
+    }
+
+    .nav-dropdown-menu a {
+      padding: 0.6rem 1rem;
+      font-size: 0.65rem;
+      color: var(--grey);
+      text-decoration: none;
+      transition: color 0.2s, background 0.2s;
+    }
+
+    .nav-dropdown-menu a:hover {
+      color: var(--white);
+      background: rgba(255,255,255,0.05);
+    }
+
     .nav-cta {
       font-family: var(--mono);
       font-size: 0.7rem;
@@ -149,246 +223,98 @@
     }
     .nav-cta:hover { opacity: 0.85; }
 
-    /* ─── LOGO PATTERN BACKGROUND ─── */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image: url('https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/background_white.png');
-      background-size: 420px 420px;
-      background-repeat: repeat;
-      opacity: 0.022;
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    /* ─── HERO ─── */
-    #hero {
-      position: relative;
-      overflow: hidden;
-      background: linear-gradient(105deg, #0a0a0a 0%, #0d0d08 45%, #101008 100%);
-      min-height: 100vh;
-      display: flex;
+    /* ── HAMBURGER ── */
+    .hamburger {
+      display: none;
       flex-direction: column;
-      padding-top: 96px;
-      max-width: 100vw;
-    }
-
-    #hero::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background-image: url('https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/background_white.png');
-      background-size: 420px 420px;
-      background-repeat: repeat;
-      opacity: 0.04;
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    /* ─── HERO INNER LAYOUT ─── */
-    .hero-inner {
-      position: relative;
-      z-index: 2;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 3rem;
-      padding: 2rem 3rem 3rem;
-      align-items: start;
-      flex: 1;
-    }
-
-    /* LEFT COL */
-    .hero-left {
-      display: flex;
-      flex-direction: column;
-      gap: 1.8rem;
-      padding-top: 1rem;
-    }
-
-    h1 {
-      font-family: var(--display);
-      font-size: clamp(3.2rem, 7vw, 6rem);
-      letter-spacing: 0.01em;
-      line-height: 1.0;
-      font-weight: 400;
-      opacity: 0;
-      animation: fadeUp 0.7s 0.15s forwards;
-    }
-
-    .hero-subtext {
-      font-size: 0.92rem;
-      color: var(--grey-light);
-      line-height: 1.75;
-      max-width: 480px;
-      opacity: 0;
-      animation: fadeUp 0.7s 0.25s forwards;
-    }
-
-    .hero-cta {
-      display: flex;
-      gap: 1rem;
-      flex-wrap: wrap;
-      opacity: 0;
-      animation: fadeUp 0.7s 0.35s forwards;
-    }
-
-    .btn-primary {
-      font-family: var(--mono);
-      font-size: 0.68rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      padding: 0.9rem 2rem;
-      background: var(--accent);
-      color: #fff;
+      justify-content: center;
+      gap: 5px;
+      background: none;
       border: none;
-      border-radius: 3px;
       cursor: pointer;
-      transition: opacity 0.2s, transform 0.2s;
+      padding: 4px;
+      z-index: 200;
     }
+    .hamburger span {
+      display: block;
+      width: 22px;
+      height: 1px;
+      background: var(--white);
+      transition: transform 0.3s, opacity 0.3s;
+      transform-origin: center;
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
 
-    .btn-primary:hover { opacity: 0.85; transform: scale(1.02); }
-
-    .btn-secondary {
+    /* ── MOBILE MENU ── */
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(10,10,10,0.97);
+      backdrop-filter: blur(16px);
+      z-index: 900;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-link {
+      font-family: var(--display);
+      font-size: 2.5rem;
+      letter-spacing: 0.04em;
+      color: var(--grey);
+      text-decoration: none;
+      padding: 0.85rem 2rem;
+      transition: color 0.2s;
+      text-align: center;
+    }
+    .mobile-link:hover { color: var(--white); }
+    .mobile-link-cta {
       font-family: var(--mono);
-      font-size: 0.68rem;
+      font-size: 0.72rem;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      padding: 0.9rem 2rem;
-      background: transparent;
-      border: 1px solid rgba(249,115,22,0.5);
+      color: #ffffff;
+      background: var(--accent);
+      padding: 0.85rem 2.5rem;
+      margin-top: 1.5rem;
+      font-weight: 500;
+    }
+    .mobile-link-cta:hover { color: #ffffff; opacity: 0.85; }
+
+    /* ── BIG CARD TITLE ── */
+    .card-big-title {
+      font-family: var(--display);
+      font-size: clamp(3rem, 8vw, 6.5rem);
+      line-height: 0.9;
+      letter-spacing: 0.02em;
       color: var(--accent);
-      border-radius: 3px;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-
-    .btn-secondary:hover { background: rgba(249,115,22,0.1); }
-
-    /* RIGHT COL: triangle image + cards stacked */
-    .hero-right {
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-      opacity: 0;
-      animation: fadeUp 0.7s 0.3s forwards;
-    }
-
-    .hero-right img {
-      width: 100%;
-      height: auto;
+      margin-bottom: 1.5rem;
       display: block;
     }
 
-    /* ─── COMPETITOR CARDS ─── */
-    .hero-bottom {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 0.8rem;
+    /* ── SECTION CONTENT PADDING ── */
+    .section-pad {
+      padding: 6rem 4vw 4rem;
+      position: relative;
+      z-index: 1;
+      flex: 1;
     }
 
-    .comp-card {
-      background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 6px;
-      padding: 1rem 1.1rem;
+    /* hero gets extra top for nav */
+    #card-hero .section-pad {
+      padding-top: 96px;
     }
 
-    .stackwell-card {
-      background: rgba(249,115,22,0.08);
-      border: 2px solid var(--accent);
+    /* reality title is very tall — needs extra clearance */
+    #card-reality .section-pad {
+      padding-top: 8rem;
     }
 
-    .comp-card-title {
-      font-family: var(--mono);
-      font-size: 0.68rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--grey);
-      margin-bottom: 1.2rem;
-      font-weight: 500;
-    }
-
-    .stackwell-card .comp-card-title {
-      color: var(--accent);
-    }
-
-    .comp-row {
-      display: flex;
-      align-items: flex-start;
-      gap: 0.6rem;
-      margin-bottom: 0.65rem;
-      font-size: 0.88rem;
-      line-height: 1.4;
-    }
-
-    .comp-row .icon {
-      font-size: 0.85rem;
-      margin-top: 0.05rem;
-      flex-shrink: 0;
-      width: 14px;
-    }
-
-    .check { color: var(--accent); }
-    .cross { color: #555; }
-
-    .comp-row .label-cross {
-      color: #666;
-      text-decoration: line-through;
-    }
-
-    .comp-row .label { color: var(--grey-light); }
-
-    .card-price {
-      font-family: var(--display);
-      font-size: 2rem;
-      color: var(--accent);
-      margin-top: 1.2rem;
-      letter-spacing: 0.03em;
-    }
-
-    /* ─── HERO RESPONSIVE ─── */
-    @media (max-width: 900px) {
-      .hero-inner {
-        display: flex;
-        flex-direction: column;
-        padding: 2rem 1.5rem 2.5rem;
-        gap: 0;
-        width: 100%;
-        max-width: 100%;
-      }
-      .hero-left {
-        display: contents;
-      }
-      .hero-headline { order: 1; margin-bottom: 1.5rem; }
-      .hero-right    { order: 2; margin-bottom: 1.5rem; }
-      .hero-body     { order: 3; display: flex; flex-direction: column; gap: 1.5rem; }
-      .hero-right { order: 1; }
-      .hero-right img {
-        max-height: 280px;
-        max-width: 100%;
-        width: auto;
-        margin: 0 auto;
-      }
-      .hero-bottom { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; margin-top: 1.25rem; }
-      .comp-card { padding: 0.75rem 0.7rem; }
-      .comp-card-title { font-size: 0.58rem; letter-spacing: 0.08em; margin-bottom: 0.75rem; }
-      .comp-row { font-size: 0.72rem; margin-bottom: 0.4rem; gap: 0.35rem; }
-      .comp-row .icon { font-size: 0.72rem; width: 10px; }
-      .card-price { font-size: 1.4rem; margin-top: 0.75rem; }
-      h1 { font-size: 3rem; max-width: 100%; }
-      .hero-subtext { max-width: 100%; }
-    }
-
-    @media (max-width: 480px) {
-      h1 { font-size: 2.4rem; }
-      .hero-cta { flex-direction: column; }
-      .btn-primary, .btn-secondary { width: 100%; text-align: center; }
-    }
-
-    /* ─── SECTIONS ─── */
-    section { padding: 7rem 2.5rem; }
-
+    /* ── SECTION LABEL ── */
     .section-label {
       font-family: var(--mono);
       font-size: 0.62rem;
@@ -416,14 +342,12 @@
       margin-bottom: 1rem;
     }
 
-    /* ─── MARQUEE ─── */
+    /* ── MARQUEE ── */
     .marquee-wrap {
-      border-top: none;
-      border-bottom: none;
       padding: 0.9rem 0;
       overflow: hidden;
       background: var(--accent);
-      max-width: 100vw;
+      max-width: 100%;
     }
     .marquee-track {
       display: flex;
@@ -453,1099 +377,162 @@
       to { transform: translateX(-50%); }
     }
 
-    /* ─── HOW IT WORKS ─── */
-    #how {
-      border-top: 1px solid var(--border);
+    /* ── HERO ── */
+    #card-hero .flow-inner {
+      background: linear-gradient(105deg, #0a0a0a 0%, #0d0d08 45%, #101008 100%);
     }
-
-    .steps {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 0;
-      margin-top: 4rem;
-      border: 1px solid var(--border);
-    }
-
-    .step {
-      padding: 2.5rem;
-      border-right: 1px solid var(--border);
-      position: relative;
-    }
-    .step:last-child { border-right: none; }
-
-    .step-num {
-      font-family: var(--display);
-      font-size: 4rem;
-      color: rgba(249,115,22,0.55);
-      line-height: 1;
-      margin-bottom: 1.5rem;
-    }
-
-    .step h3 {
-      font-family: var(--mono);
-      font-size: 0.72rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--white);
-      margin-bottom: 0.75rem;
-      font-weight: 500;
-    }
-
-    .step p {
-      font-size: 0.88rem;
-      color: var(--grey);
-      line-height: 1.7;
-    }
-
-    .step-body { display: contents; }
-
-    /* ─── PRICING ─── */
-    #pricing {
-      border-top: 1px solid var(--border);
-    }
-
-    .pricing-intro {
-      display: flex;
-      flex-direction: column;
-      gap: 1.25rem;
-      margin-bottom: 4rem;
-      max-width: 600px;
-    }
-
-    .pricing-intro p {
-      color: var(--grey-light);
-      font-size: 0.95rem;
-      line-height: 1.8;
-    }
-
-    .plans {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 0;
-      border: 1px solid var(--border);
-    }
-
-    .plan {
-      padding: 2.5rem;
-      border-right: 1px solid var(--border);
-      position: relative;
-      transition: background 0.3s;
-    }
-    .plan:last-child { border-right: none; }
-    .plan:hover { background: rgba(255,255,255,0.025); }
-
-    .plan.featured {
-      background: rgba(249,115,22,0.04);
-    }
-    .plan.featured::before {
-      content: 'MOST POPULAR';
-      font-family: var(--mono);
-      font-size: 0.55rem;
-      letter-spacing: 0.25em;
-      color: var(--accent);
-      display: block;
-      margin-bottom: 1.5rem;
-    }
-    .plan:not(.featured)::before {
+    #card-hero .flow-inner::after {
       content: '';
-      display: block;
-      margin-bottom: 1.5rem;
-      height: 0.55rem;
+      position: absolute;
+      inset: 0;
+      background-image: url('https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/background_white.png');
+      background-size: 420px 420px;
+      background-repeat: repeat;
+      opacity: 0.04;
+      pointer-events: none;
+      z-index: 0;
     }
-
-    .plan-name {
-      font-family: var(--mono);
-      font-size: 0.65rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--grey);
-      margin-bottom: 1.25rem;
+    .hero-orange-glow {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 70% 80% at 75% 50%, rgba(249,115,22,0.22) 0%, rgba(249,115,22,0.06) 45%, transparent 70%),
+        radial-gradient(ellipse 40% 60% at 60% 20%, rgba(255,140,50,0.10) 0%, transparent 60%);
+      pointer-events: none;
+      z-index: 1;
     }
-
-    .plan-price {
-      font-family: var(--display);
-      font-size: 3.5rem;
-      line-height: 1;
-      margin-bottom: 0.25rem;
+    .hero-inner {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      padding: 2rem 4vw 3rem;
+      align-items: start;
+      flex: 1;
     }
-
-    .plan-cycle {
-      font-family: var(--mono);
-      font-size: 0.62rem;
-      letter-spacing: 0.15em;
-      color: var(--grey);
-      margin-bottom: 2rem;
-    }
-
-    .plan-features {
-      list-style: none;
+    .hero-left {
       display: flex;
       flex-direction: column;
-      gap: 0.65rem;
-      margin-bottom: 2.5rem;
+      gap: 1.8rem;
+      padding-top: 1rem;
     }
-
-    .plan-features li {
-      font-size: 0.85rem;
+    h1 {
+      font-family: var(--display);
+      font-size: clamp(3.2rem, 7vw, 6rem);
+      letter-spacing: 0.01em;
+      line-height: 1.0;
+      font-weight: 400;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.15s forwards;
+    }
+    .hero-subtext {
+      font-size: 0.92rem;
       color: var(--grey-light);
+      line-height: 1.75;
+      max-width: 480px;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.25s forwards;
+    }
+    .hero-cta {
       display: flex;
-      align-items: flex-start;
-      gap: 0.6rem;
-      line-height: 1.5;
+      gap: 1rem;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.35s forwards;
     }
-
-    .plan-features li::before {
-      content: '✦';
-      font-size: 0.45rem;
-      color: var(--accent);
-      margin-top: 0.35rem;
-      flex-shrink: 0;
-    }
-
-    .plan-cta {
-      display: block;
+    .btn-primary {
       font-family: var(--mono);
       font-size: 0.68rem;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      text-align: center;
-      padding: 0.85rem;
-      text-decoration: none;
-      border: 1px solid var(--border);
-      color: var(--grey);
-      transition: all 0.2s;
-    }
-    .plan-cta:hover, .plan.featured .plan-cta {
+      padding: 0.9rem 2rem;
       background: var(--accent);
-      color: #ffffff;
-      border-color: var(--accent);
-    }
-
-    /* ─── CONTACT ─── */
-
-
-    /* ─── FOOTER ─── */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 2rem 2.5rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .footer-left {
-      font-family: var(--mono);
-      font-size: 0.6rem;
-      letter-spacing: 0.15em;
-      color: var(--grey);
-      text-transform: uppercase;
-    }
-
-    .footer-right {
-      font-family: var(--mono);
-      font-size: 0.6rem;
-      letter-spacing: 0.12em;
-      color: var(--grey);
-    }
-
-    /* ─── ANIMATIONS ─── */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(24px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    .reveal {
-      opacity: 0;
-      transform: translateY(16px);
-      transition: opacity 0.7s ease, transform 0.7s ease;
-      transition-delay: 0s;
-    }
-    .reveal.visible {
-      opacity: 1;
-      transform: none;
-    }
-
-    /* ─── ACCESSIBILITY ─── */
-    .skip-link {
-      position: absolute;
-      top: -100%;
-      left: 1rem;
-      z-index: 9999;
-      background: var(--accent);
-      color: #ffffff;
-      padding: 0.5rem 1.25rem;
-      font-family: var(--mono);
-      font-size: 0.75rem;
-      letter-spacing: 0.1em;
-      text-decoration: none;
-      transition: top 0.2s;
-    }
-    .skip-link:focus { top: 1rem; }
-
-    :focus-visible {
-      outline: 2px solid var(--accent);
-      outline-offset: 3px;
-    }
-
-    /* ─── PORTFOLIO ─── */
-    #portfolio {
-      border-top: 1px solid var(--border);
-    }
-
-    .portfolio-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.5rem;
-      margin-top: 4rem;
-    }
-
-    .portfolio-card {
-      display: flex;
-      flex-direction: column;
-      border: 1px solid var(--border);
-      transition: border-color 0.3s;
-      text-decoration: none;
-      color: inherit;
-    }
-
-    .portfolio-card { cursor: default; }
-
-    .pc-chrome { display: none; }
-
-    .pc-img-wrap {
-      position: relative;
-      overflow: hidden;
-      aspect-ratio: 16/10;
-      background: #0d0d0d;
-    }
-
-    .pc-screenshot {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: top left;
-      display: block;
-      transition: transform 0.5s ease;
-    }
-
-    .pc-view-btn { display: none; }
-
-    .pc-info {
-      padding: 1.1rem 1.25rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-top: 1px solid var(--border);
-    }
-
-    .pc-name {
-      font-size: 0.85rem;
-      font-weight: 500;
-      color: var(--white);
-    }
-
-    .pc-type {
-      font-family: var(--mono);
-      font-size: 0.58rem;
-      letter-spacing: 0.1em;
-      color: var(--grey);
-      margin-top: 0.2rem;
-    }
-
-    .pc-tag {
-      font-family: var(--mono);
-      font-size: 0.52rem;
-      letter-spacing: 0.15em;
-      padding: 0.3rem 0.7rem;
-      border: 1px solid var(--border);
-      color: var(--grey);
-      text-transform: uppercase;
-      flex-shrink: 0;
-    }
-
-    /* ─── LIVE IFRAME CARDS ─── */
-    .pc-iframe-wrap {
-      position: relative;
-      overflow: hidden;
-      aspect-ratio: 16/10;
-      background: #0d0d0d;
-    }
-
-    .pc-iframe-wrap iframe {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 1280px;
-      height: 800px;
+      color: #fff;
       border: none;
-      transform: scale(0.3);
-      transform-origin: top left;
-      pointer-events: none;
+      border-radius: 3px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: opacity 0.2s, transform 0.2s;
     }
-
-    /* live badge */
-    .pc-live-badge {
-      position: absolute;
-      top: 0.6rem;
-      right: 0.6rem;
+    .btn-primary:hover { opacity: 0.85; transform: scale(1.02); }
+    .btn-secondary {
       font-family: var(--mono);
-      font-size: 0.45rem;
-      letter-spacing: 0.2em;
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
-      background: rgba(10,10,10,0.75);
-      border: 1px solid rgba(255,255,255,0.12);
-      color: #aaa;
-      padding: 0.25rem 0.5rem;
+      padding: 0.9rem 2rem;
+      background: transparent;
+      border: 1px solid rgba(249,115,22,0.5);
+      color: var(--accent);
+      border-radius: 3px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: background 0.2s;
+    }
+    .btn-secondary:hover { background: rgba(249,115,22,0.1); }
+    .hero-right {
       display: flex;
-      align-items: center;
-      gap: 0.35rem;
-      backdrop-filter: blur(4px);
-      z-index: 2;
+      flex-direction: column;
+      gap: 0.75rem;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.3s forwards;
     }
-    .pc-live-badge::before {
-      content: '';
-      width: 5px;
-      height: 5px;
-      border-radius: 50%;
-      background: #4caf50;
-      flex-shrink: 0;
-      box-shadow: 0 0 4px #4caf50;
-    }
-
-    /* ─── SERVICES GRID ─── */
-    #services {
-      border-top: 1px solid var(--border);
-    }
-
-    .services-grid {
+    .hero-right img { width: 100%; height: auto; display: block; }
+    .hero-bottom {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 1px;
-      background: rgba(255,255,255,0.1);
+      gap: 0.8rem;
+    }
+    .comp-card {
+      background: rgba(255,255,255,0.03);
       border: 1px solid rgba(255,255,255,0.1);
-      margin-top: 3rem;
-      margin-bottom: 0;
+      border-radius: 6px;
+      padding: 1rem 1.1rem;
     }
-
-    .service-card {
-      padding: 2.5rem;
-      background: #141414;
-      position: relative;
-      transition: background 0.3s;
-      overflow: hidden;
+    .stackwell-card {
+      background: rgba(249,115,22,0.08);
+      border: 2px solid var(--accent);
     }
-
-    .service-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(249,115,22,0.2), transparent);
-    }
-
-    .service-card:hover { background: #1a1a1a; }
-
-    .service-icon {
-      font-size: 1.25rem;
-      margin-bottom: 1.5rem;
-      color: var(--white);
-      line-height: 1;
-      opacity: 0.9;
-    }
-
-    .service-card h3 {
-      font-family: var(--display);
-      font-size: 1.6rem;
-      letter-spacing: 0.04em;
-      color: var(--white);
-      margin-bottom: 0.75rem;
-      line-height: 1;
-    }
-
-    .service-card p {
-      font-size: 0.83rem;
-      color: var(--grey);
-      line-height: 1.7;
-    }
-
-    /* ─── PRICING PROBLEM ─── */
-    #pricing-problem {
-      border-top: 1px solid var(--border);
-    }
-
-    .pp-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0;
-      margin-top: 4rem;
-      border: 1px solid var(--border);
-    }
-
-    /* LEFT competitors */
-    .pp-them {
-      padding: 2.5rem;
-      border-right: 1px solid var(--border);
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-    }
-
-    .pp-them-label {
+    .comp-card-title {
       font-family: var(--mono);
-      font-size: 0.58rem;
-      letter-spacing: 0.25em;
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
       color: var(--grey);
-      margin-bottom: 2rem;
+      margin-bottom: 1.2rem;
+      font-weight: 500;
     }
-
-    .pp-them-row {
-      padding: 1rem 0;
-      border-bottom: 1px solid var(--border);
-      display: flex;
-      flex-direction: column;
-      gap: 0.3rem;
-    }
-    .pp-them-row:last-child { border-bottom: none; }
-
-    .pp-them-source {
-      font-family: var(--mono);
-      font-size: 0.58rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.25);
-    }
-
-    .pp-them-pain {
-      font-size: 0.84rem;
-      color: var(--grey);
-      line-height: 1.5;
+    .stackwell-card .comp-card-title { color: var(--accent); }
+    .comp-row {
       display: flex;
       align-items: flex-start;
       gap: 0.6rem;
+      margin-bottom: 0.65rem;
+      font-size: 0.88rem;
+      line-height: 1.4;
     }
-
-    .pp-them-pain::before {
-      content: '✕';
-      font-size: 0.6rem;
-      color: rgba(255,80,80,0.6);
-      margin-top: 0.2rem;
-      flex-shrink: 0;
-    }
-
-    /* RIGHT Stackwell */
-    .pp-us {
-      background: #0d0d08;
-      padding: 2.5rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-      position: relative;
-      border-left: 1px solid transparent;
-      background-clip: padding-box;
-      box-shadow: inset 0 0 0 1px rgba(249,115,22,0.15);
-    }
-
-    .pp-us::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(ellipse at top right, rgba(249,115,22,0.07) 0%, transparent 60%);
-      pointer-events: none;
-    }
-
-    .pp-us-label {
+    .comp-row .icon { font-size: 0.85rem; margin-top: 0.05rem; flex-shrink: 0; width: 14px; }
+    .check { color: var(--accent); }
+    .cross { color: #555; }
+    .comp-row .label-cross { color: #666; text-decoration: line-through; }
+    .comp-row .label { color: var(--grey-light); }
+    .card-price {
       font-family: var(--display);
       font-size: 2rem;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: var(--white);
-      margin-bottom: 2rem;
-      position: relative;
-    }
-
-    .pp-us-row {
-      padding: 1rem 0;
-      border-bottom: 1px solid rgba(249,115,22,0.08);
-      display: flex;
-      flex-direction: column;
-      gap: 0.3rem;
-      position: relative;
-    }
-    .pp-us-row:last-child { border-bottom: none; }
-
-    .pp-us-fix {
-      font-size: 0.84rem;
-      color: var(--grey-light);
-      line-height: 1.5;
-      font-weight: 400;
-      display: flex;
-      align-items: flex-start;
-      gap: 0.6rem;
-    }
-
-    .pp-us-fix::before {
-      content: '✓';
-      font-size: 0.65rem;
       color: var(--accent);
-      margin-top: 0.15rem;
-      flex-shrink: 0;
-      font-weight: 600;
-    }
-
-    .pp-us-price {
-      font-family: var(--display);
-      font-size: 3.5rem;
-      color: var(--accent);
-      line-height: 1;
-      margin-top: auto;
-      padding-top: 2rem;
-      position: relative;
-    }
-
-    .pp-us-price span {
-      font-family: var(--mono);
-      font-size: 0.62rem;
-      letter-spacing: 0.1em;
-      color: var(--grey);
-      display: block;
-      margin-top: 0.3rem;
-      font-weight: 400;
-    }
-
-    /* ─── HAMBURGER + MOBILE MENU ─── */
-    .hamburger {
-      display: none;
-      flex-direction: column;
-      justify-content: center;
-      gap: 5px;
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 4px;
-      z-index: 200;
-    }
-    .hamburger span {
-      display: block;
-      width: 22px;
-      height: 1px;
-      background: var(--white);
-      transition: transform 0.3s, opacity 0.3s;
-      transform-origin: center;
-    }
-    .hamburger.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
-    .hamburger.open span:nth-child(2) { opacity: 0; }
-    .hamburger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
-
-    .mobile-menu {
-      display: none;
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(10,10,10,0.97);
-      backdrop-filter: blur(16px);
-      z-index: 150;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 0;
-    }
-    .mobile-menu.open { display: flex; }
-
-    .mobile-link {
-      font-family: var(--display);
-      font-size: 2.5rem;
-      letter-spacing: 0.04em;
-      color: var(--grey);
-      text-decoration: none;
-      padding: 0.85rem 2rem;
-      transition: color 0.2s;
-      text-align: center;
-    }
-    .mobile-link:hover { color: var(--white); }
-    .mobile-link-cta {
-      font-family: var(--mono);
-      font-size: 0.72rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: #ffffff;
-      background: var(--accent);
-      padding: 0.85rem 2.5rem;
-      margin-top: 1.5rem;
-      font-weight: 500;
-    }
-    .mobile-link-cta:hover { color: #ffffff; opacity: 0.85; }
-
-    /* ─── TEAM ─── */
-    #team {
-      border-top: 1px solid var(--border);
-    }
-
-    .team-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 320px));
-      gap: 1.5rem;
-      margin-top: 4rem;
-      justify-content: center;
-    }
-
-    .team-card {
-      border: 1px solid var(--border);
-      overflow: hidden;
-      transition: border-color 0.3s;
-    }
-    .team-card:hover { border-color: rgba(255,255,255,0.18); }
-
-    .team-photo-wrap {
-      position: relative;
-      height: 360px;
-      overflow: hidden;
-      background: #0d0d0d;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .team-photo {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      object-position: center center;
-      display: block;
-      transition: transform 0.6s ease;
-      filter: grayscale(20%);
-    }
-    .team-card:hover .team-photo { transform: scale(1.03); }
-
-    .team-card-hank .team-photo {
-      filter: grayscale(0%);
-    }
-
-    .team-info {
-      padding: 1.5rem 1.75rem;
-      border-top: 1px solid var(--border);
-    }
-
-    .team-title {
-      font-family: var(--mono);
-      font-size: 0.58rem;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      color: var(--grey);
-      margin-bottom: 0.5rem;
-    }
-
-    .team-name {
-      font-family: var(--display);
-      font-size: 2.2rem;
-      line-height: 1;
+      margin-top: 1.2rem;
       letter-spacing: 0.03em;
-      color: var(--white);
-      margin-bottom: 1rem;
     }
 
-    .team-bio {
-      font-size: 0.84rem;
-      color: var(--grey-light);
-      line-height: 1.75;
-    }
-
-    .team-tag {
-      display: inline-block;
-      margin-top: 1.25rem;
-      font-family: var(--mono);
-      font-size: 0.52rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      padding: 0.3rem 0.75rem;
-      border: 1px solid var(--border);
-      color: var(--grey);
-    }
-
-    /* ─── RESPONSIVE ─── */
-    @media (max-width: 900px) {
-      nav { padding: 1.25rem 1.5rem; }
-      .nav-links { display: none; }
-      .nav-cta { display: none; }
-      .nav-logo-img { height: 48px !important; }
-      .hamburger { display: flex; }
-
-      /* ─── GLOBAL SECTION PADDING ─── */
-      section { padding: 3.5rem 1.25rem; }
-      #hero { padding-top: 72px; padding-left: 0; padding-right: 0; padding-bottom: 0; }
-
-      /* ─── H2 HEADINGS ─── */
-      h2 { font-size: 2.2rem; }
-
-      /* ─── PRICING MOBILE ─── */
-      .plans { grid-template-columns: repeat(3, 1fr); border: 1px solid var(--border); }
-      .plan { border-right: 1px solid var(--border); border-bottom: none; padding: 1rem 0.75rem; }
-      .plan:last-child { border-right: none; }
-      .plan-price { font-size: 2rem; }
-      .plan-cycle { font-size: 0.52rem; margin-bottom: 1.25rem; }
-      .plan-name { font-size: 0.52rem; letter-spacing: 0.12em; margin-bottom: 0.75rem; }
-      .plan-features { gap: 0.45rem; margin-bottom: 1.25rem; }
-      .plan-features li { font-size: 0.7rem; gap: 0.4rem; line-height: 1.35; }
-      .plan-cta { font-size: 0.55rem; padding: 0.65rem 0.25rem; letter-spacing: 0.08em; }
-      .plan::before { margin-bottom: 0.75rem; }
-      .plan:not(.featured)::before { margin-bottom: 0.75rem; }
-
-      .pricing-intro { margin-bottom: 2rem; }
-      .addons { grid-template-columns: 1fr; padding: 1.25rem 1.5rem; margin-top: 1.5rem; }
-      .addon-list { grid-template-columns: 1fr; }
-
-      /* ─── ADDON CARDS ─── */
-      .addons-wrap { margin-top: 2.5rem !important; padding-top: 2.5rem !important; }
-      .addons-grid { grid-template-columns: repeat(3, 1fr) !important; gap: 0.5rem !important; margin-bottom: 1.5rem !important; }
-      .addon-card { padding: 1rem 0.65rem !important; border-radius: 4px !important; }
-      .addon-card ul { margin-bottom: 1rem !important; }
-      .addon-card li { font-size: 0.68rem !important; margin-bottom: 0.35rem !important; line-height: 1.3 !important; }
-      .addon-card a { font-size: 0.52rem !important; padding: 0.55rem 0.25rem !important; letter-spacing: 0.06em !important; }
-      .addon-card div[style*="font-family: var(--display)"] { font-size: 1.4rem !important; }
-      .addon-card p[style*="font-family: var(--display)"] { font-size: 0.85rem !important; margin-bottom: 0.35rem !important; }
-      .migration-wrap { margin-top: 2rem; }
-      .migration-header { padding: 1.25rem 1.25rem; max-width: 100%; }
-      .migration-body { grid-template-columns: 1fr; }
-      .migration-plan { padding: 1.5rem 1.25rem; border-right: none; border-bottom: 1px solid var(--border); }
-      .migration-plan:last-child { border-bottom: none; }
-      .migration-price { font-size: 2.4rem; }
-      .migration-note { padding: 1rem 1.25rem; }
-
-      /* ─── SERVICES ─── */
-      #services { padding: 3.5rem 1.25rem; }
-      .services-grid {
-        grid-template-columns: 1fr 1fr;
-        gap: 0.75rem;
-        background: transparent;
-        border: none;
-      }
-      .service-card {
-        border: 1px solid transparent;
-        background:
-          linear-gradient(#141414, #141414) padding-box,
-          linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.03)) border-box;
-        border-radius: 4px;
-        padding: 1.25rem 1rem;
-        position: relative;
-        overflow: hidden;
-      }
-      .service-card::before {
-        content: '';
-        position: absolute;
-        inset: 0;
-        background: radial-gradient(ellipse at top left, rgba(255,255,255,0.04) 0%, transparent 65%);
-        pointer-events: none;
-        height: auto;
-      }
-      .service-card:active {
-        background:
-          linear-gradient(#1a1a1a, #1a1a1a) padding-box,
-          linear-gradient(135deg, rgba(255,255,255,0.35), rgba(255,255,255,0.06)) border-box;
-      }
-      .service-icon { font-size: 1rem; margin-bottom: 0.75rem; }
-      .service-card h3 { font-size: 1.1rem; margin-bottom: 0.4rem; }
-      .service-card p { font-size: 0.74rem; line-height: 1.6; color: var(--grey); }
-
-      /* ─── PRICING PROBLEM ─── */
-      .pp-grid { grid-template-columns: 1fr; border: none; gap: 0.75rem; margin-top: 2rem; }
-      .pp-them { border: 1px solid var(--border); padding: 1.25rem; }
-      .pp-them-row { padding: 0.75rem 0; }
-      .pp-us { padding: 1.25rem; }
-      .pp-us-label { font-size: 1.5rem; margin-bottom: 1.25rem; }
-      .pp-us-price { font-size: 2.4rem; padding-top: 1.25rem; }
-
-      /* ─── HOW IT WORKS ─── */
-      #how { padding: 3.5rem 1.25rem; }
-      .steps {
-        display: flex;
-        flex-direction: column;
-        gap: 0;
-        margin-top: 2rem;
-        border: none;
-        background: transparent;
-        position: relative;
-      }
-      .steps::before {
-        content: '';
-        position: absolute;
-        left: 1.1rem;
-        top: 0.6rem;
-        bottom: 0.6rem;
-        width: 1px;
-        background: linear-gradient(to bottom, rgba(255,255,255,0.2), rgba(255,255,255,0.04));
-      }
-      .step {
-        display: flex;
-        gap: 1.25rem;
-        padding: 0 0 2rem 0;
-        border: none;
-        position: relative;
-        align-items: flex-start;
-      }
-      .step:last-child { padding-bottom: 0; }
-      .step-num {
-        font-family: var(--mono);
-        font-size: 0.58rem;
-        letter-spacing: 0.1em;
-        color: var(--bg);
-        background: var(--accent);
-        width: 2.2rem;
-        height: 2.2rem;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-shrink: 0;
-        margin-bottom: 0;
-        font-weight: 500;
-        line-height: 1;
-        position: relative;
-        z-index: 1;
-      }
-      .step-body { display: block; padding-top: 0.35rem; }
-      .step h3 { margin-bottom: 0.4rem; font-size: 0.72rem; }
-      .step p { font-size: 0.8rem; line-height: 1.65; }
-
-      /* ─── REPORTS ─── */
-      #reports { padding: 3.5rem 1.25rem; }
-      .reports-layout { display: flex; flex-direction: column; gap: 2rem; }
-      .reports-left { order: 1; }
-      .reports-intro { margin-bottom: 1.5rem; max-width: 100%; }
-      .report-phone-wrap { display: none; }
-      .report-desktop-wrap { width: 100%; border-radius: 6px; box-shadow: none; order: 2; }
-      .report-desktop-wrap img { width: 100%; height: auto; display: block; }
-
-      /* ─── PORTFOLIO ─── */
-      .portfolio-grid { grid-template-columns: 1fr; gap: 0.75rem; margin-top: 2rem; }
-
-      /* ─── TEAM ─── */
-      .team-grid { grid-template-columns: 1fr; max-width: 100%; margin-top: 2rem; }
-      .team-photo-wrap { height: 280px; }
-
-      /* ─── FAQ ─── */
-      #faq { padding: 3.5rem 1.25rem; }
-      .faq-grid { margin-top: 2rem; }
-      .faq-q { padding: 1.25rem 1rem; }
-      .faq-item.open .faq-a { padding: 0 1rem 1.25rem; }
-      .faq-q-text { font-size: 0.7rem; }
-
-      /* ─── CONTACT ─── */
-      #contact { padding: 3.5rem 1.25rem; }
-      .contact-layout { grid-template-columns: 1fr; gap: 2rem; margin-top: 2rem; }
-      .contact-left h2 { font-size: 2.2rem; }
-      .cf-row { grid-template-columns: 1fr; }
-      .cf-submit { width: 100%; }
-
-      /* ─── FOOTER ─── */
-      footer { flex-direction: column; gap: 0.75rem; text-align: center; padding: 1.5rem 1.25rem; }
-
-    }
-
-    /* ─── REPORTS SECTION ─── */
-    #reports {
-      border-top: 1px solid var(--border);
-    }
-
-    .reports-intro {
-      max-width: 580px;
-      margin-bottom: 4rem;
-    }
-
-    .reports-intro p {
-      font-size: 0.95rem;
-      color: var(--grey-light);
-      line-height: 1.8;
-      margin-top: 1rem;
-    }
-
-    .reports-plan-tags {
-      display: flex;
-      gap: 0.5rem;
-      margin-top: 1.5rem;
-      flex-wrap: wrap;
-    }
-
-    .reports-plan-tag {
-      font-family: var(--mono);
-      font-size: 0.52rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      padding: 0.3rem 0.75rem;
-      border: 1px solid var(--border);
-      color: var(--grey);
-    }
-
-    .reports-plan-tag.active {
-      border-color: rgba(249,115,22,0.4);
-      color: var(--accent);
-    }
-
-    @media (min-width: 901px) {
-      .reports-layout {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 5rem;
-        align-items: center;
-      }
-    }
-
-    .reports-left {}
-
-    .reports-left .reports-intro {
-      margin-bottom: 0;
-    }
-
-    .report-desktop-wrap {
-      position: relative;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      overflow: hidden;
-      background: #0d0d0d;
-      box-shadow: 0 24px 60px rgba(0,0,0,0.4);
-    }
-
-    .report-desktop-wrap img {
-      width: 100%;
-      display: block;
-    }
-
-    .report-desktop-badge {
-      position: absolute;
-      top: 0.75rem;
-      left: 0.75rem;
-      font-family: var(--mono);
-      font-size: 0.45rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      background: rgba(10,10,10,0.8);
-      border: 1px solid rgba(255,255,255,0.12);
-      color: #aaa;
-      padding: 0.25rem 0.6rem;
-      backdrop-filter: blur(4px);
-      z-index: 2;
-    }
-
-    .report-phone-wrap { display: none; }
-    .report-phone-badge { display: none; }
-
-    .reports-bullets-vert {
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-      border-top: 1px solid var(--border);
-    }
-
-    .reports-bullet-vert {
-      display: flex;
-      align-items: flex-start;
-      gap: 1.25rem;
-      padding: 1.25rem 0;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .reports-bullet-icon {
-      font-size: 1rem;
-      color: var(--accent);
-      flex-shrink: 0;
-      margin-top: 0.1rem;
-    }
-
-    .reports-bullet-vert h4 {
-      font-family: var(--mono);
-      font-size: 0.62rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--white);
-      margin-bottom: 0.3rem;
-      font-weight: 500;
-    }
-
-    .reports-bullet-vert p {
-      font-size: 0.8rem;
-      color: var(--grey);
-      line-height: 1.6;
-    }
-
-    /* ─── CREDENTIALS STRIP ─── */
-    #credentials {
-      border-top: 1px solid var(--border);
-      padding: 4rem 2.5rem;
-    }
-
-    .creds-label {
-      font-family: var(--mono);
-      font-size: 0.58rem;
-      letter-spacing: 0.35em;
-      text-transform: uppercase;
-      color: var(--grey);
-      text-align: center;
-      margin-bottom: 0.75rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 1rem;
-    }
-    .creds-label::before, .creds-label::after {
-      content: '';
-      width: 40px;
-      height: 1px;
-      background: var(--border);
-    }
-
-    .creds-sub {
-      font-family: var(--mono);
-      font-size: 0.6rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.2);
-      text-align: center;
-      margin-bottom: 3rem;
-    }
-
-    .creds-logos {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 2rem;
-      flex-wrap: wrap;
-    }
-
-    .cred-pill {
-      background: #ffffff;
-      border-radius: 10px;
-      padding: 0.6rem 1rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 72px;
-      width: 100px;
-    }
-
-    .cred-pill img {
-      height: 48px;
-      width: 100%;
-      object-fit: contain;
-      display: block;
-    }
-
-    @media (max-width: 900px) {
-      #credentials { padding: 3rem 1.5rem; }
-      .creds-logos { gap: 1rem; }
-      .cred-pill { height: 64px; min-width: 64px; padding: 0.5rem 0.9rem; }
-      .cred-pill img { height: 40px; }
-    }
-
-    /* ─── CLIENT LOGO MARQUEE ─── */
-    #clients {
+    /* ── CLIENT LOGOS ── */
+    .clients-section {
       border-top: 1px solid var(--border);
       padding: 3rem 0;
       overflow: hidden;
-      max-width: 100vw;
     }
-
     .clients-label {
       font-family: var(--mono);
       font-size: 0.58rem;
@@ -1565,12 +552,7 @@
       height: 1px;
       background: var(--border);
     }
-
-    .clients-track-wrap {
-      overflow: hidden;
-      width: 100%;
-    }
-
+    .clients-track-wrap { overflow: hidden; width: 100%; }
     .clients-track {
       display: flex;
       gap: 4rem;
@@ -1579,7 +561,6 @@
       align-items: center;
       padding: 0.5rem 0;
     }
-
     .client-logo {
       height: 54px;
       width: auto;
@@ -1591,66 +572,291 @@
       filter: grayscale(100%);
       transition: opacity 0.3s, filter 0.3s;
     }
+    .client-logo:hover { opacity: 0.9; filter: grayscale(0%); }
 
-    .client-logo:hover {
-      opacity: 0.9;
-      filter: grayscale(0%);
-    }
-
-    /* ─── ADDONS ─── */
-    .addons {
+    /* ── THE REALITY ── */
+    .pp-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
       margin-top: 3rem;
       border: 1px solid var(--border);
-      padding: 2rem 2.5rem;
-      display: grid;
-      grid-template-columns: 1fr 2fr;
-      gap: 2rem;
-      align-items: start;
+    }
+    .pp-them {
+      padding: 2.5rem;
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+    }
+    .pp-them-label {
+      font-family: var(--mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--grey);
+      margin-bottom: 2rem;
+    }
+    .pp-them-row {
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+    .pp-them-row:last-child { border-bottom: none; }
+    .pp-them-source {
+      font-family: var(--mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.25);
+    }
+    .pp-them-pain {
+      font-size: 0.84rem;
+      color: var(--grey);
+      line-height: 1.5;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+    }
+    .pp-them-pain::before {
+      content: '✕';
+      font-size: 0.6rem;
+      color: rgba(255,80,80,0.6);
+      margin-top: 0.2rem;
+      flex-shrink: 0;
+    }
+    .pp-us {
+      background: #0d0d08;
+      padding: 2.5rem;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      box-shadow: inset 0 0 0 1px rgba(249,115,22,0.15);
+    }
+    .pp-us::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at top right, rgba(249,115,22,0.07) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .pp-us-label {
+      font-family: var(--display);
+      font-size: 2rem;
+      letter-spacing: 0.06em;
+      color: var(--white);
+      margin-bottom: 2rem;
+      position: relative;
+    }
+    .pp-us-row {
+      padding: 1rem 0;
+      border-bottom: 1px solid rgba(249,115,22,0.08);
+      position: relative;
+    }
+    .pp-us-row:last-child { border-bottom: none; }
+    .pp-us-fix {
+      font-size: 0.84rem;
+      color: var(--grey-light);
+      line-height: 1.5;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+    }
+    .pp-us-fix::before {
+      content: '✓';
+      font-size: 0.65rem;
+      color: var(--accent);
+      margin-top: 0.15rem;
+      flex-shrink: 0;
+      font-weight: 600;
     }
 
-    .addons h3 {
+    /* ── HOW IT WORKS ── */
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 0;
+      margin-top: 4rem;
+      border: 1px solid var(--border);
+    }
+    .step {
+      padding: 2.5rem;
+      border-right: 1px solid var(--border);
+      position: relative;
+    }
+    .step:last-child { border-right: none; }
+    .step-num {
+      font-family: var(--display);
+      font-size: 4rem;
+      color: rgba(249,115,22,0.55);
+      line-height: 1;
+      margin-bottom: 1.5rem;
+    }
+    .step h3 {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--white);
+      margin-bottom: 0.75rem;
+      font-weight: 500;
+    }
+    .step p { font-size: 0.88rem; color: var(--grey); line-height: 1.7; }
+
+    /* ── SERVICES ── */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.1);
+      margin-top: 3rem;
+    }
+    .service-card {
+      padding: 2.5rem;
+      background: #141414;
+      position: relative;
+      transition: background 0.3s;
+      overflow: hidden;
+    }
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(249,115,22,0.2), transparent);
+    }
+    .service-card:hover { background: #1a1a1a; }
+    .service-icon { font-size: 1.25rem; margin-bottom: 1.5rem; color: var(--white); line-height: 1; opacity: 0.9; }
+    .service-card h3 {
+      font-family: var(--display);
+      font-size: 1.6rem;
+      letter-spacing: 0.04em;
+      color: var(--white);
+      margin-bottom: 0.75rem;
+      line-height: 1;
+    }
+    .service-card p { font-size: 0.83rem; color: var(--grey); line-height: 1.7; }
+
+    /* ── PRICING ── */
+    .pricing-intro {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      margin-bottom: 4rem;
+      max-width: 600px;
+    }
+    .pricing-intro p { color: var(--grey-light); font-size: 0.95rem; line-height: 1.8; }
+    .plans {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      border: 1px solid var(--border);
+    }
+    .plan {
+      padding: 2.5rem;
+      border-right: 1px solid var(--border);
+      position: relative;
+      transition: background 0.3s;
+    }
+    .plan:last-child { border-right: none; }
+    .plan:hover { background: rgba(255,255,255,0.025); }
+    .plan.featured { background: rgba(249,115,22,0.04); }
+    .plan.featured::before {
+      content: 'MOST POPULAR';
+      font-family: var(--mono);
+      font-size: 0.55rem;
+      letter-spacing: 0.25em;
+      color: var(--accent);
+      display: block;
+      margin-bottom: 1.5rem;
+    }
+    .plan:not(.featured)::before {
+      content: '';
+      display: block;
+      margin-bottom: 1.5rem;
+      height: 0.55rem;
+    }
+    .plan-name {
       font-family: var(--mono);
       font-size: 0.65rem;
       letter-spacing: 0.2em;
       text-transform: uppercase;
       color: var(--grey);
+      margin-bottom: 1.25rem;
     }
-
-    .addon-list {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 0.5rem 2rem;
-    }
-
-    .addon-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 0.82rem;
-      color: var(--grey-light);
-      padding: 0.35rem 0;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .addon-item span {
+    .plan-price { font-family: var(--display); font-size: 3.5rem; line-height: 1; margin-bottom: 0.25rem; }
+    .plan-cycle {
       font-family: var(--mono);
-      font-size: 0.72rem;
-      color: var(--white);
+      font-size: 0.62rem;
+      letter-spacing: 0.15em;
+      color: var(--grey);
+      margin-bottom: 2rem;
     }
-
-    /* ─── MIGRATION ─── */
-    .migration-wrap {
-      margin-top: 4rem;
+    .plan-features { list-style: none; display: flex; flex-direction: column; gap: 0.65rem; margin-bottom: 2.5rem; }
+    .plan-features li {
+      font-size: 0.85rem;
+      color: var(--grey-light);
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      line-height: 1.5;
+    }
+    .plan-features li::before {
+      content: '✦';
+      font-size: 0.45rem;
+      color: var(--accent);
+      margin-top: 0.35rem;
+      flex-shrink: 0;
+    }
+    .plan-cta {
+      display: block;
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-align: center;
+      padding: 0.85rem;
+      text-decoration: none;
       border: 1px solid var(--border);
+      color: var(--grey);
+      transition: all 0.2s;
+    }
+    .plan-cta:hover, .plan.featured .plan-cta {
+      background: var(--accent);
+      color: #ffffff;
+      border-color: var(--accent);
     }
 
+    /* addons */
+    .addons-wrap { margin-top: 5rem; border-top: 1px solid var(--border); padding-top: 5rem; }
+    .addons-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+    .addon-card {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 2rem;
+      background: rgba(255,255,255,0.015);
+      transition: all 0.2s;
+    }
+    .addon-card.featured-addon {
+      border-color: var(--accent-border);
+      background: rgba(249,115,22,0.08);
+    }
+
+    /* migration */
+    .migration-wrap { margin-top: 4rem; border: 1px solid var(--border); }
     .migration-header {
       padding: 2rem 2.5rem;
       border-bottom: 1px solid var(--border);
       background: rgba(255,255,255,0.02);
       max-width: 640px;
     }
-
     .migration-eyebrow {
       font-family: var(--mono);
       font-size: 0.58rem;
@@ -1659,15 +865,13 @@
       color: var(--grey);
       margin-bottom: 0.5rem;
     }
-
     .migration-title {
       font-family: var(--display);
-      font-size: clamp(2.5rem, 6vw, 5rem);
+      font-size: clamp(2rem, 4vw, 3.5rem);
       line-height: 0.95;
       letter-spacing: 0.02em;
       margin-bottom: 1.25rem;
     }
-
     .migration-title-sub {
       font-family: var(--mono);
       font-size: 0.75rem;
@@ -1679,26 +883,14 @@
       font-weight: 400;
       line-height: 1.4;
     }
-
-    .migration-header-right {
-      font-size: 0.85rem;
-      color: var(--grey-light);
-      line-height: 1.7;
-    }
-
-    .migration-body {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0;
-    }
-
+    .migration-header-right { font-size: 0.85rem; color: var(--grey-light); line-height: 1.7; }
+    .migration-body { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
     .migration-plan {
       padding: 2.5rem;
       border-right: 1px solid var(--border);
       position: relative;
     }
     .migration-plan:last-child { border-right: none; }
-
     .migration-plan-name {
       font-family: var(--mono);
       font-size: 0.62rem;
@@ -1707,20 +899,7 @@
       color: var(--grey);
       margin-bottom: 1.25rem;
     }
-
-    .migration-price-row {
-      display: flex;
-      align-items: baseline;
-      gap: 0.4rem;
-      margin-bottom: 0.25rem;
-    }
-
-    .migration-price {
-      font-family: var(--display);
-      font-size: 3rem;
-      line-height: 1;
-    }
-
+    .migration-price { font-family: var(--display); font-size: 3rem; line-height: 1; }
     .migration-cycle {
       font-family: var(--mono);
       font-size: 0.62rem;
@@ -1728,15 +907,7 @@
       color: var(--grey);
       margin-bottom: 2rem;
     }
-
-    .migration-features {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 0.65rem;
-      margin-bottom: 2.5rem;
-    }
-
+    .migration-features { list-style: none; display: flex; flex-direction: column; gap: 0.65rem; margin-bottom: 2.5rem; }
     .migration-features li {
       font-size: 0.85rem;
       color: var(--grey-light);
@@ -1745,7 +916,6 @@
       gap: 0.6rem;
       line-height: 1.5;
     }
-
     .migration-features li::before {
       content: '✦';
       font-size: 0.45rem;
@@ -1753,7 +923,6 @@
       margin-top: 0.35rem;
       flex-shrink: 0;
     }
-
     .migration-cta {
       display: block;
       font-family: var(--mono);
@@ -1767,12 +936,7 @@
       color: var(--grey);
       transition: all 0.2s;
     }
-    .migration-cta:hover {
-      background: var(--accent);
-      color: #ffffff;
-      border-color: var(--accent);
-    }
-
+    .migration-cta:hover { background: var(--accent); color: #ffffff; border-color: var(--accent); }
     .migration-note {
       padding: 1.25rem 2.5rem;
       border-top: 1px solid var(--border);
@@ -1784,126 +948,190 @@
       align-items: center;
       gap: 0.75rem;
     }
-    .migration-note::before {
-      content: '◆';
-      font-size: 0.4rem;
-      flex-shrink: 0;
-    }
+    .migration-note::before { content: '◆'; font-size: 0.4rem; flex-shrink: 0; }
 
-    @media (max-width: 900px) {
-      .migration-body { grid-template-columns: 1fr; }
-      .migration-plan { border-right: none; border-bottom: 1px solid var(--border); }
-      .migration-plan:last-child { border-bottom: none; }
-      .migration-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
+    /* ── REPORTS ── */
+    .reports-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+      margin-top: 3rem;
     }
-
-    /* ─── FAQ ─── */
-    #faq {
-      border-top: 1px solid var(--border);
-    }
-
-    .faq-grid {
-      margin-top: 4rem;
+    .reports-plan-tags { display: flex; gap: 0.5rem; margin-top: 1.5rem; flex-wrap: wrap; }
+    .reports-plan-tag {
+      font-family: var(--mono);
+      font-size: 0.52rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.75rem;
       border: 1px solid var(--border);
+      color: var(--grey);
     }
-
-    .faq-item {
+    .reports-plan-tag.active { border-color: rgba(249,115,22,0.4); color: var(--accent); }
+    .report-desktop-wrap {
+      position: relative;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      background: #0d0d0d;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.4);
+    }
+    .report-desktop-wrap img { width: 100%; display: block; }
+    .report-desktop-badge {
+      position: absolute;
+      top: 0.75rem;
+      left: 0.75rem;
+      font-family: var(--mono);
+      font-size: 0.45rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      background: rgba(10,10,10,0.8);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: #aaa;
+      padding: 0.25rem 0.6rem;
+      backdrop-filter: blur(4px);
+      z-index: 2;
+    }
+    .reports-bullets-vert {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      border-top: 1px solid var(--border);
+      margin-top: 2rem;
+    }
+    .reports-bullet-vert {
+      display: flex;
+      align-items: flex-start;
+      gap: 1.25rem;
+      padding: 1.25rem 0;
       border-bottom: 1px solid var(--border);
     }
-    .faq-item:last-child { border-bottom: none; }
+    .reports-bullet-icon { font-size: 1rem; color: var(--accent); flex-shrink: 0; margin-top: 0.1rem; }
+    .reports-bullet-vert h4 {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--white);
+      margin-bottom: 0.3rem;
+      font-weight: 500;
+    }
+    .reports-bullet-vert p { font-size: 0.8rem; color: var(--grey); line-height: 1.6; }
 
-    .faq-q {
+    /* ── PORTFOLIO ── */
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 4rem;
+    }
+    .portfolio-card {
+      display: flex;
+      flex-direction: column;
+      border: 1px solid var(--border);
+      transition: border-color 0.3s;
+      text-decoration: none;
+      color: inherit;
+      cursor: default;
+    }
+    .pc-img-wrap {
+      position: relative;
+      overflow: hidden;
+      aspect-ratio: 16/10;
+      background: #0d0d0d;
+    }
+    .pc-screenshot {
       width: 100%;
-      background: none;
-      border: none;
-      padding: 1.75rem 2rem;
+      height: 100%;
+      object-fit: cover;
+      object-position: top left;
+      display: block;
+      transition: transform 0.5s ease;
+    }
+    .pc-info {
+      padding: 1.1rem 1.25rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      cursor: pointer;
-      text-align: left;
-      gap: 2rem;
-      transition: background 0.2s;
-    }
-    .faq-q:hover { background: rgba(255,255,255,0.025); }
-
-    .faq-q-text {
-      font-family: var(--mono);
-      font-size: 0.75rem;
-      letter-spacing: 0.08em;
-      color: var(--white);
-      font-weight: 500;
-      line-height: 1.5;
-    }
-
-    .faq-icon {
-      font-size: 1rem;
-      color: var(--grey);
-      flex-shrink: 0;
-      transition: transform 0.3s ease, color 0.2s;
-      line-height: 1;
-    }
-    .faq-item.open .faq-icon {
-      transform: rotate(45deg);
-      color: var(--accent);
-    }
-
-    .faq-a {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.35s ease, padding 0.3s ease;
-      padding: 0 2rem;
-    }
-    .faq-item.open .faq-a {
-      max-height: 400px;
-      padding: 0 2rem 1.75rem;
-    }
-
-    .faq-a p {
-      font-size: 0.88rem;
-      color: var(--grey-light);
-      line-height: 1.8;
-    }
-
-    .faq-a a {
-      color: var(--white);
-      text-decoration: underline;
-      text-underline-offset: 3px;
-    }
-
-    @media (max-width: 900px) {
-      #faq { padding: 3.5rem 1.25rem; }
-      .faq-q { padding: 1.25rem 1.25rem; }
-      .faq-item.open .faq-a { padding: 0 1.25rem 1.5rem; }
-      .faq-q-text { font-size: 0.7rem; }
-    }
-
-    /* ─── CONTACT FORM ─── */
-    #contact {
       border-top: 1px solid var(--border);
-      padding: 7rem 2.5rem;
+    }
+    .pc-name { font-size: 0.85rem; font-weight: 500; color: var(--white); }
+    .pc-type { font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.1em; color: var(--grey); margin-top: 0.2rem; }
+    .pc-tag {
+      font-family: var(--mono);
+      font-size: 0.52rem;
+      letter-spacing: 0.15em;
+      padding: 0.3rem 0.7rem;
+      border: 1px solid var(--border);
+      color: var(--grey);
+      text-transform: uppercase;
+      flex-shrink: 0;
     }
 
+    /* ── TEAM ── */
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 320px));
+      gap: 1.5rem;
+      margin-top: 3rem;
+      justify-content: center;
+    }
+    .team-card { border: 1px solid var(--border); overflow: hidden; transition: border-color 0.3s; }
+    .team-card:hover { border-color: rgba(255,255,255,0.18); }
+    .team-photo-wrap {
+      position: relative;
+      height: 300px;
+      overflow: hidden;
+      background: #0d0d0d;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .team-photo {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: center;
+      display: block;
+      transition: transform 0.6s ease;
+      filter: grayscale(20%);
+    }
+    .team-card-hank .team-photo { filter: grayscale(0%); }
+    .team-card:hover .team-photo { transform: scale(1.03); }
+    .team-info { padding: 1.5rem 1.75rem; border-top: 1px solid var(--border); }
+    .team-title {
+      font-family: var(--mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--grey);
+      margin-bottom: 0.5rem;
+    }
+    .team-name { font-family: var(--display); font-size: 2.2rem; line-height: 1; letter-spacing: 0.03em; color: var(--white); margin-bottom: 1rem; }
+    .team-bio { font-size: 0.84rem; color: var(--grey-light); line-height: 1.75; }
+    .team-tag {
+      display: inline-block;
+      margin-top: 1.25rem;
+      font-family: var(--mono);
+      font-size: 0.52rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.75rem;
+      border: 1px solid var(--border);
+      color: var(--grey);
+    }
+
+    /* ── CONTACT ── */
     .contact-layout {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 6rem;
       align-items: start;
-      margin-top: 4rem;
+      margin-top: 3rem;
     }
-
-    .contact-left h2 {
-      font-size: clamp(3rem, 7vw, 6rem);
-      margin-bottom: 1.5rem;
-    }
-
-    .contact-left p {
-      color: var(--grey-light);
-      font-size: 0.92rem;
-      line-height: 1.8;
-      margin-bottom: 2rem;
-    }
-
+    .contact-left h2 { font-size: clamp(3rem, 7vw, 6rem); margin-bottom: 1.5rem; }
+    .contact-left p { color: var(--grey-light); font-size: 0.92rem; line-height: 1.8; margin-bottom: 2rem; }
     .contact-detail {
       display: flex;
       flex-direction: column;
@@ -1912,54 +1140,14 @@
       padding-top: 2.5rem;
       border-top: 1px solid var(--border);
     }
-
-    .contact-detail-label {
-      font-family: var(--mono);
-      font-size: 0.55rem;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: var(--grey);
-    }
-
-    .contact-detail a {
-      font-family: var(--mono);
-      font-size: 0.75rem;
-      letter-spacing: 0.08em;
-      color: var(--grey-light);
-      text-decoration: none;
-      transition: color 0.2s;
-    }
+    .contact-detail-label { font-family: var(--mono); font-size: 0.55rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--grey); }
+    .contact-detail a { font-family: var(--mono); font-size: 0.75rem; letter-spacing: 0.08em; color: var(--grey-light); text-decoration: none; transition: color 0.2s; }
     .contact-detail a:hover { color: var(--white); }
-
-    .contact-form {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-
-    .cf-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-    }
-
-    .cf-field {
-      display: flex;
-      flex-direction: column;
-      gap: 0.4rem;
-    }
-
-    .cf-field label {
-      font-family: var(--mono);
-      font-size: 0.58rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--grey);
-    }
-
-    .cf-field input,
-    .cf-field textarea,
-    .cf-field select {
+    .contact-form { display: flex; flex-direction: column; gap: 1rem; }
+    .cf-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .cf-field { display: flex; flex-direction: column; gap: 0.4rem; }
+    .cf-field label { font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--grey); }
+    .cf-field input, .cf-field textarea, .cf-field select {
       background: rgba(255,255,255,0.04);
       border: 1px solid var(--border);
       color: var(--white);
@@ -1973,19 +1161,12 @@
       border-radius: 0;
       width: 100%;
     }
-
-    .cf-field input:focus,
-    .cf-field textarea:focus,
-    .cf-field select:focus {
+    .cf-field input:focus, .cf-field textarea:focus, .cf-field select:focus {
       border-color: rgba(249,115,22,0.35);
       background: rgba(249,115,22,0.03);
     }
-
-    .cf-field input::placeholder,
-    .cf-field textarea::placeholder { color: rgba(255,255,255,0.2); }
-
+    .cf-field input::placeholder, .cf-field textarea::placeholder { color: rgba(255,255,255,0.2); }
     .cf-field textarea { resize: vertical; min-height: 110px; }
-
     .cf-field select {
       cursor: pointer;
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23888' stroke-width='1.5' fill='none' stroke-linecap='square'/%3E%3C/svg%3E");
@@ -1994,7 +1175,6 @@
       padding-right: 2.5rem;
     }
     .cf-field select option { background: #1a1a1a; color: var(--white); }
-
     .cf-submit {
       font-family: var(--mono);
       font-size: 0.72rem;
@@ -2012,7 +1192,6 @@
     }
     .cf-submit:hover { background: transparent; color: var(--accent); }
     .cf-submit:disabled { opacity: 0.5; cursor: not-allowed; }
-
     .cf-status {
       font-family: var(--mono);
       font-size: 0.65rem;
@@ -2024,32 +1203,560 @@
     .cf-status.success { border-color: rgba(100,200,100,0.3); color: #8ecb8e; display: block; }
     .cf-status.error { border-color: rgba(200,80,80,0.3); color: #e08080; display: block; }
 
-    @media (max-width: 900px) {
-      #contact { padding: 3.5rem 1.25rem; }
-      .contact-layout { grid-template-columns: 1fr; gap: 3rem; }
+    /* ── FAQ ── */
+    .faq-grid { margin-top: 3rem; border: 1px solid var(--border); }
+    .faq-item { border-bottom: 1px solid var(--border); }
+    .faq-item:last-child { border-bottom: none; }
+    .faq-q {
+      width: 100%;
+      background: none;
+      border: none;
+      padding: 1.75rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      text-align: left;
+      gap: 2rem;
+      transition: background 0.2s;
+    }
+    .faq-q:hover { background: rgba(255,255,255,0.025); }
+    .faq-q-text { font-family: var(--mono); font-size: 0.75rem; letter-spacing: 0.08em; color: var(--white); font-weight: 500; line-height: 1.5; }
+    .faq-icon { font-size: 1rem; color: var(--grey); flex-shrink: 0; transition: transform 0.3s ease, color 0.2s; line-height: 1; }
+    .faq-item.open .faq-icon { transform: rotate(45deg); color: var(--accent); }
+    .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.35s ease, padding 0.3s ease; padding: 0 2rem; }
+    .faq-item.open .faq-a { max-height: 400px; padding: 0 2rem 1.75rem; }
+    .faq-a p { font-size: 0.88rem; color: var(--grey-light); line-height: 1.8; }
+    .faq-a a { color: var(--white); text-decoration: underline; text-underline-offset: 3px; }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem 4vw;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+    .footer-left { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.15em; color: var(--grey); text-transform: uppercase; }
+    .footer-right { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.12em; color: var(--grey); }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── ACCESSIBILITY ── */
+    .skip-link {
+      position: absolute;
+      top: -100%;
+      left: 1rem;
+      z-index: 9999;
+      background: var(--accent);
+      color: #ffffff;
+      padding: 0.5rem 1.25rem;
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-decoration: none;
+      transition: top 0.2s;
+    }
+    .skip-link:focus { top: 1rem; }
+    :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+    /* ── CARD EDGE LABEL ── */
+    .card-index {
+      position: absolute;
+      top: 1.5rem;
+      right: 2rem;
+      font-family: var(--mono);
+      font-size: 0.5rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.12);
+      z-index: 2;
+    }
+
+    /* ── MOBILE: disable flow, normal scroll ── */
+    @media (max-width: 768px) {
+      nav { padding: 1.25rem 1.5rem; }
+      .nav-links { display: none; }
+      .nav-cta { display: none; }
+      .nav-logo-img { height: 48px !important; }
+      .hamburger { display: flex; }
+
+      #flow-root { display: block; }
+      .flow-section { min-height: unset; }
+      .flow-inner { overflow-y: auto; }
+      .section-pad { padding: 5rem 1.25rem 3rem; }
+      #card-hero .section-pad { padding-top: 72px; }
+
+      /* hero mobile: flex column with order-based resequencing
+         desired order: headline(1) > hero-right/triangle+cards(2) > subtext(3) > CTAs(4) */
+      #card-hero .hero-inner {
+        display: flex;
+        flex-direction: column;
+        padding: 1rem 1.25rem 1.5rem;
+        gap: 0;
+      }
+      /* use display:contents so .hero-headline and .hero-body
+         become direct flex children of .hero-inner for ordering */
+      .hero-left { display: contents; }
+
+      .hero-headline { order: 1; margin-bottom: 1rem; }
+      .hero-right    { order: 2; margin-bottom: 1rem; opacity: 1; animation: none; }
+      .hero-body     { order: 3; display: flex; flex-direction: column; gap: 1rem; }
+
+      .hero-right img {
+        max-height: 210px;
+        width: auto;
+        margin: 0 auto;
+        display: block;
+      }
+      .hero-bottom {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.4rem;
+        margin-top: 0.75rem;
+      }
+      .comp-card { padding: 0.65rem 0.5rem; }
+      .comp-card-title { font-size: 0.48rem; letter-spacing: 0.04em; margin-bottom: 0.5rem; }
+      .comp-row { font-size: 0.62rem; margin-bottom: 0.28rem; gap: 0.22rem; line-height: 1.3; }
+      .comp-row .icon { font-size: 0.62rem; width: 8px; }
+      .card-price { font-size: 1.05rem; margin-top: 0.45rem; }
+      h1 { font-size: 2.2rem; animation: none; opacity: 1; line-height: 1.05; }
+      h2 { font-size: 2rem; }
+      .card-big-title { font-size: clamp(2rem, 8vw, 3.5rem); margin-bottom: 1rem; }
+      .hero-subtext { max-width: 100%; animation: none; opacity: 1; font-size: 0.88rem; }
+      .hero-cta { flex-direction: column; animation: none; opacity: 1; gap: 0.6rem; margin-top: 0.25rem; }
+      .btn-primary, .btn-secondary { width: 100%; text-align: center; padding: 0.85rem 1rem; }
+
+      .pp-grid { grid-template-columns: 1fr; border: none; gap: 0.75rem; margin-top: 1.5rem; }
+      .pp-them { border: 1px solid var(--border); padding: 1.25rem; }
+      .pp-us { padding: 1.25rem; }
+
+      .steps { display: flex; flex-direction: column; border: none; margin-top: 2rem; }
+      .step { border: none; border-bottom: 1px solid var(--border); padding: 1.5rem 0; display: flex; gap: 1.25rem; align-items: flex-start; }
+      .step:last-child { border-bottom: none; }
+      .step-num {
+        font-family: var(--mono);
+        font-size: 0.58rem;
+        color: var(--bg);
+        background: var(--accent);
+        width: 2rem; height: 2rem;
+        border-radius: 50%;
+        display: flex; align-items: center; justify-content: center;
+        flex-shrink: 0;
+        margin-bottom: 0;
+        font-weight: 500;
+      }
+
+      .services-grid { grid-template-columns: 1fr 1fr; gap: 0.75rem; background: transparent; border: none; }
+      .service-card { border: 1px solid var(--border); border-radius: 4px; padding: 1.25rem 1rem; }
+
+      /* pricing: full-width stacked cards on mobile */
+      .plans {
+        display: flex !important;
+        flex-direction: column !important;
+        border: none !important;
+        gap: 1rem !important;
+      }
+      .plan {
+        border: 1px solid var(--border) !important;
+        border-right: 1px solid var(--border) !important;
+        padding: 1.75rem 1.5rem !important;
+        width: 100% !important;
+      }
+      .plan:last-child { border-right: 1px solid var(--border) !important; }
+      .plan.featured {
+        border-color: var(--accent) !important;
+        border-width: 2px !important;
+      }
+      .plan-price { font-size: 3.5rem !important; }
+      .plan-cycle { font-size: 0.65rem !important; margin-bottom: 1.5rem !important; }
+      .plan-name { font-size: 0.62rem !important; margin-bottom: 1rem !important; }
+      .plan-features { gap: 0.6rem !important; margin-bottom: 1.75rem !important; }
+      .plan-features li { font-size: 0.88rem !important; }
+      .plan-cta { font-size: 0.65rem !important; padding: 0.85rem !important; }
+      .plan.featured .plan-cta {
+        background: var(--accent) !important;
+        color: #ffffff !important;
+        border-color: var(--accent) !important;
+        font-size: 0.72rem !important;
+        padding: 1rem !important;
+      }
+      .plan::before { margin-bottom: 0.75rem; }
+      .plan:not(.featured)::before { margin-bottom: 0.75rem; }
+
+      .addons-grid { grid-template-columns: repeat(3, 1fr); gap: 0.5rem; }
+      .addon-card { padding: 1rem 0.6rem; border-radius: 4px; }
+      .addon-card ul li { font-size: 0.72rem; margin-bottom: 0.5rem; }
+      .addons-wrap { margin-top: 3rem; padding-top: 3rem; }
+      .migration-body { grid-template-columns: 1fr; }
+      .migration-plan { border-right: none; border-bottom: 1px solid var(--border); }
+      .migration-plan:last-child { border-bottom: none; }
+
+      .reports-layout { grid-template-columns: 1fr; gap: 2rem; }
+      .portfolio-grid { grid-template-columns: 1fr; gap: 0.75rem; margin-top: 2rem; }
+      .team-grid { grid-template-columns: 1fr; max-width: 100%; margin-top: 2rem; }
+      .team-photo-wrap { height: 260px; }
+      .contact-layout { grid-template-columns: 1fr; gap: 2rem; }
       .cf-row { grid-template-columns: 1fr; }
+      .cf-submit { width: 100%; }
+      .faq-q { padding: 1.25rem 1rem; }
+      .faq-q-text { font-size: 0.68rem; }
+      .faq-item.open .faq-a { padding: 0 1rem 1.25rem; }
+      footer { flex-direction: column; gap: 0.75rem; text-align: center; padding: 1.5rem 1.25rem; }
+    }
+
+    /* ─── AUDIT TOOL STYLES ─── */
+    .audit-form {
+      display: flex;
+      gap: 0.75rem;
+      margin-bottom: 3rem;
+      flex-wrap: wrap;
+    }
+
+    .audit-input {
+      flex: 1;
+      min-width: 280px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      color: var(--white);
+      font-family: var(--sans);
+      font-size: 0.95rem;
+      padding: 0.9rem 1.25rem;
+      outline: none;
+      transition: border-color 0.2s, background 0.2s;
+      border-radius: 3px;
+    }
+
+    .audit-input:focus {
+      border-color: rgba(249,115,22,0.35);
+      background: rgba(249,115,22,0.03);
+    }
+
+    .audit-input::placeholder { color: rgba(255,255,255,0.2); }
+
+    .audit-btn {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.9rem 2rem;
+      background: var(--accent);
+      color: #000;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.2s;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    .audit-btn:hover { opacity: 0.85; transform: scale(1.02); }
+    .audit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    .audit-loading {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin: 2rem 0;
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      color: var(--grey);
+    }
+
+    .spinner {
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(249,115,22,0.2);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .audit-results {
+      display: none;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      background: rgba(255,255,255,0.02);
+      margin: 3rem 0;
+    }
+
+    .audit-results.visible {
+      display: block;
+      animation: slideUp 0.5s ease-out;
+    }
+
+    .results-header {
+      padding: 2.5rem;
+      border-bottom: 1px solid var(--border);
+      background: linear-gradient(135deg, rgba(249,115,22,0.08) 0%, rgba(255,255,255,0.01) 100%);
+    }
+
+    .results-url {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      color: var(--grey);
+      margin-bottom: 1.5rem;
+      word-break: break-all;
+    }
+
+    .score-display {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .score-grade {
+      font-family: var(--display);
+      font-size: 5rem;
+      line-height: 1;
+      letter-spacing: -0.02em;
+    }
+
+    .score-grade.a { color: #4caf50; }
+    .score-grade.b { color: #8bc34a; }
+    .score-grade.c { color: #ffc107; }
+    .score-grade.d { color: #ff9800; }
+    .score-grade.f { color: #f44336; }
+
+    .score-label {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .score-label-text {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--grey);
+    }
+
+    .score-summary {
+      font-family: var(--display);
+      font-size: 1.4rem;
+      letter-spacing: 0.04em;
+      color: var(--white);
+    }
+
+    .results-body {
+      padding: 2.5rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 2rem;
+    }
+
+    .check-item {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .check-label {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--grey);
+      font-weight: 500;
+    }
+
+    .check-value {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.95rem;
+      color: var(--white);
+    }
+
+    .check-icon {
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+
+    .check-icon.pass { color: #4caf50; }
+    .check-icon.fail { color: #f44336; }
+
+    .check-detail {
+      font-size: 0.8rem;
+      color: var(--grey);
+      margin-top: 0.25rem;
+    }
+
+    .metrics-badge {
+      font-family: var(--mono);
+      font-size: 0.55rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-top: 0.6rem;
+      padding: 0.35rem 0.6rem;
+      border: 1px solid var(--accent-border);
+      display: block;
+      width: fit-content;
+      border-radius: 3px;
+      background: rgba(249,115,22,0.08);
+    }
+
+    .results-issues {
+      padding: 2.5rem;
+      border-top: 1px solid var(--border);
+      background: rgba(244,67,54,0.04);
+    }
+
+    .issues-title {
+      font-family: var(--display);
+      font-size: 1.2rem;
+      letter-spacing: 0.04em;
+      margin-bottom: 1.5rem;
+      color: var(--white);
+    }
+
+    .issues-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .issue-item {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+
+    .issue-icon {
+      font-size: 1.2rem;
+      color: #f44336;
+      flex-shrink: 0;
+      margin-top: 0.1rem;
+    }
+
+    .issue-text {
+      font-size: 0.9rem;
+      color: var(--grey-light);
+      line-height: 1.6;
+    }
+
+    .issue-text strong {
+      color: var(--white);
+      font-weight: 500;
+    }
+
+    .cta-section {
+      margin-top: 3rem;
+      padding: 2rem;
+      border: 1px solid var(--accent-border);
+      border-radius: 8px;
+      background: rgba(249,115,22,0.04);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    .cta-text h3 {
+      font-family: var(--display);
+      font-size: 1.3rem;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.5rem;
+      color: var(--white);
+    }
+
+    .cta-text p {
+      font-size: 0.9rem;
+      color: var(--grey-light);
+      line-height: 1.6;
+    }
+
+    .cta-btn {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.9rem 2rem;
+      background: var(--accent);
+      color: #000;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+      transition: opacity 0.2s;
+      font-weight: 500;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .cta-btn:hover { opacity: 0.85; }
+
+    .audit-error {
+      display: none;
+      padding: 1.5rem;
+      border: 1px solid rgba(244,67,54,0.3);
+      border-radius: 6px;
+      background: rgba(244,67,54,0.08);
+      color: #ff9999;
+      font-size: 0.9rem;
+      margin: 2rem 0;
+      line-height: 1.6;
+    }
+
+    .audit-error.visible {
+      display: block;
+      animation: slideUp 0.5s ease-out;
+    }
+
+    @media (max-width: 900px) {
+      .audit-form { flex-direction: column; }
+      .audit-input { min-width: auto; }
+      .audit-btn { width: 100%; }
+      .results-header { padding: 1.5rem; }
+      .results-body { padding: 1.5rem; gap: 1.5rem; grid-template-columns: 1fr; }
+      .results-issues { padding: 1.5rem; }
+      .score-display { flex-direction: column; align-items: flex-start; gap: 1rem; }
+      .score-grade { font-size: 3.5rem; }
+      .cta-section { flex-direction: column; align-items: stretch; text-align: center; }
+      .cta-btn { width: 100%; }
     }
   </style>
 </head>
 <body>
 
-  <!-- SKIP LINK (a11y) -->
-  <a href="#hero" class="skip-link">Skip to main content</a>
+  <a href="#card-hero" class="skip-link">Skip to main content</a>
 
   <!-- NAV -->
   <nav id="nav">
-    <a href="#hero" class="nav-logo"><img src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/logo.photo.png" alt="Stackwell Digital" class="nav-logo-img" /></a>
+    <a href="#card-hero" class="nav-logo">
+      <img src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/logo.photo.png" alt="Stackwell Digital" class="nav-logo-img" />
+    </a>
     <ul class="nav-links">
-      <li><a href="#pricing-problem">The Reality</a></li>
-      <li><a href="#how">How It Works</a></li>
-      <li><a href="#pricing">Pricing</a></li>
-      <li><a href="#reports">Reports</a></li>
-      <li><a href="#portfolio">Our Work</a></li>
-      <li><a href="#team">Who We Are</a></li>
-      <li><a href="#faq">FAQ</a></li>
+      <li class="nav-dropdown">
+        <a href="#card-pricing">Pricing</a>
+        <div class="nav-dropdown-menu">
+          <a href="#card-how">How It Works</a>
+          <a href="#card-pricing">Plans & Pricing</a>
+          <a href="#card-addons">Add-Ons</a>
+        </div>
+      </li>
+      <li><a href="#card-reports">Reports</a></li>
+      <li><a href="#card-portfolio">Our Work</a></li>
+      <li><a href="#card-team">Who We Are</a></li>
+      <li><a href="#card-faq">FAQ</a></li>
+      <li><a href="#card-contact">Contact</a></li>
     </ul>
     <div style="display:flex;align-items:center;gap:1rem;">
-      <a href="#contact" class="nav-cta">Get Started</a>
+      <a href="#card-contact" class="nav-cta">Get Started</a>
       <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
@@ -2058,787 +1765,733 @@
 
   <!-- MOBILE MENU -->
   <div class="mobile-menu" id="mobileMenu" role="dialog" aria-modal="true" aria-label="Navigation menu">
-    <a href="#pricing-problem" class="mobile-link">The Reality</a>
-    <a href="#how" class="mobile-link">How It Works</a>
-    <a href="#pricing" class="mobile-link">Pricing</a>
-    <a href="#reports" class="mobile-link">Reports</a>
-    <a href="#portfolio" class="mobile-link">Our Work</a>
-    <a href="#team" class="mobile-link">Who We Are</a>
-    <a href="#faq" class="mobile-link">FAQ</a>
-    <a href="#contact" class="mobile-link mobile-link-cta">Get Started</a>
+    <a href="#card-how"      class="mobile-link">How It Works</a>
+    <a href="#card-pricing"  class="mobile-link">Pricing</a>
+    <a href="#card-addons"   class="mobile-link">Add-Ons</a>
+    <a href="#card-reports"  class="mobile-link">Reports</a>
+    <a href="#card-portfolio" class="mobile-link">Our Work</a>
+    <a href="#card-team"     class="mobile-link">Who We Are</a>
+    <a href="#card-faq"      class="mobile-link">FAQ</a>
+    <a href="#card-contact"  class="mobile-link mobile-link-cta">Get Started</a>
   </div>
 
-  <!-- HERO -->
-  <section id="hero">
-    <div class="hero-inner">
+  <!-- FLOW ROOT -->
+  <main id="flow-root">
 
-      <!-- LEFT: headline + sub + CTA -->
-      <div class="hero-left">
-        <div class="hero-headline">
-          <h1>Everyone else makes you pick two. We give you all three.</h1>
+    <!-- CARD 1: HERO -->
+    <div class="flow-section" id="card-hero">
+      <div class="flow-inner">
+        <span class="card-index">01 / 11</span>
+
+        <!-- hero content -->
+        <div class="hero-orange-glow"></div>
+        <div style="padding-top:96px; position:relative; z-index:2; flex:1; display:flex; flex-direction:column;">
+          <div class="hero-inner">
+            <div class="hero-left">
+              <div class="hero-headline">
+                <h1>Everyone else makes you pick two. We give you all three.</h1>
+              </div>
+              <div class="hero-body">
+                <p class="hero-subtext">Your website goes live in days. We handle all the updates and support. You don't pay agency prices. Month-to-month, cancel anytime.</p>
+                <div class="hero-cta">
+                  <a href="#card-how" class="btn-primary">See How It Works</a>
+                  <a href="#card-pricing" class="btn-secondary">View Pricing</a>
+                </div>
+              </div>
+            </div>
+            <div class="hero-right">
+              <img src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/hero%20image.png?v=2" alt="Fast, Managed, Affordable" />
+              <div class="hero-bottom">
+                <div class="comp-card">
+                  <div class="comp-card-title">Wix / GoDaddy</div>
+                  <div class="comp-row"><span class="icon check">&#10003;</span><span class="label">Fast to build</span></div>
+                  <div class="comp-row"><span class="icon check">&#10003;</span><span class="label">Affordable ($29&ndash;50/mo)</span></div>
+                  <div class="comp-row"><span class="icon cross">&#10007;</span><span class="label-cross">You manage everything</span></div>
+                </div>
+                <div class="comp-card">
+                  <div class="comp-card-title">Web Agencies</div>
+                  <div class="comp-row"><span class="icon check">&#10003;</span><span class="label">Fully managed</span></div>
+                  <div class="comp-row"><span class="icon check">&#10003;</span><span class="label">Hands-off &amp; current</span></div>
+                  <div class="comp-row"><span class="icon cross">&#10007;</span><span class="label-cross">$500&ndash;3,000/mo</span></div>
+                </div>
+                <div class="comp-card stackwell-card">
+                  <div class="comp-card-title">Stackwell.Digital</div>
+                  <div class="comp-row"><span class="icon check">&#10003;</span><span class="label">Fast</span></div>
+                  <div class="comp-row"><span class="icon check">&#10003;</span><span class="label">Managed</span></div>
+                  <div class="comp-row"><span class="icon check">&#10003;</span><span class="label">Affordable</span></div>
+                  <div class="card-price">$60&ndash;150/mo</div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="hero-body">
-          <p class="hero-subtext">Your website goes live in days. We handle all the updates and support. You don't pay agency prices. Month-to-month, cancel anytime.</p>
-          <div class="hero-cta">
-            <a href="#how" class="btn-primary">See How It Works</a>
-            <a href="#pricing" class="btn-secondary">View Pricing</a>
+
+        <!-- marquee pinned to bottom of hero card -->
+        <div class="marquee-wrap">
+          <div class="marquee-track">
+            <div class="marquee-item">Professional Design</div>
+            <div class="marquee-item">Monthly Updates Included</div>
+            <div class="marquee-item">Domain Management</div>
+            <div class="marquee-item">SEO Optimized</div>
+            <div class="marquee-item">Google Business Profile</div>
+            <div class="marquee-item">Analytics Reporting</div>
+            <div class="marquee-item">No Long Contracts</div>
+            <div class="marquee-item">Same Day Response</div>
+            <div class="marquee-item">Professional Design</div>
+            <div class="marquee-item">Monthly Updates Included</div>
+            <div class="marquee-item">Domain Management</div>
+            <div class="marquee-item">SEO Optimized</div>
+            <div class="marquee-item">Google Business Profile</div>
+            <div class="marquee-item">Analytics Reporting</div>
+            <div class="marquee-item">No Long Contracts</div>
+            <div class="marquee-item">Same Day Response</div>
+          </div>
+        </div>
+
+        <!-- client logos -->
+        <div class="clients-section">
+          <div class="clients-label">Trusted By Local Businesses</div>
+          <div class="clients-track-wrap">
+            <div class="clients-track">
+              <img class="client-logo" loading="lazy" src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/atwood.png" alt="Atwood Furniture">
+              <img class="client-logo" loading="lazy" src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/baselines.png" alt="Baselines Pub">
+              <img class="client-logo" loading="lazy" src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/chipd-logo.png" alt="Chipd">
+              <img class="client-logo" loading="lazy" src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/cortex.png" alt="Cortex">
+              <img class="client-logo" loading="lazy" src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/fineline%20plotworks.png" alt="Fine Line Plotworks">
+              <img class="client-logo" loading="lazy" src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/littlegreens.png" alt="Little Greens">
+              <img class="client-logo" loading="lazy" src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/pitchd-logo.png" alt="Pitchd">
+              <img class="client-logo" loading="lazy" src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/vomad-logo.png" alt="Vomad Rentals">
+              <img class="client-logo" loading="lazy" src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/atwood.png" alt="Atwood Furniture">
+              <img class="client-logo" loading="lazy" src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/baselines.png" alt="Baselines Pub">
+              <img class="client-logo" loading="lazy" src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/chipd-logo.png" alt="Chipd">
+              <img class="client-logo" loading="lazy" src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/cortex.png" alt="Cortex">
+              <img class="client-logo" loading="lazy" src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/fineline%20plotworks.png" alt="Fine Line Plotworks">
+              <img class="client-logo" loading="lazy" src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/littlegreens.png" alt="Little Greens">
+              <img class="client-logo" loading="lazy" src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/pitchd-logo.png" alt="Pitchd">
+              <img class="client-logo" loading="lazy" src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/vomad-logo.png" alt="Vomad Rentals">
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- CARD 2: THE REALITY -->
+    <div class="flow-section" id="card-reality">
+      <div class="flow-inner">
+        <span class="card-index">02 / 11</span>
+        <div class="section-pad">
+          <span class="card-big-title">THE REALITY</span>
+          <h2>The Pricing Problem</h2>
+          <p style="color:var(--grey);max-width:520px;font-size:0.95rem;line-height:1.8;margin-top:1rem;">Most businesses are overpaying for hosting they don't control and updates they have to beg for. Here's what it actually looks like.</p>
+          <div class="pp-grid">
+            <div class="pp-them">
+              <div class="pp-them-label">Everyone Else</div>
+              <div class="pp-them-row">
+                <div class="pp-them-source">GoDaddy / Wix / Squarespace</div>
+                <div class="pp-them-pain">$25&ndash;50/mo hosting, then $50&ndash;100 per update you forgot was extra</div>
+              </div>
+              <div class="pp-them-row">
+                <div class="pp-them-source">Web Design Agencies</div>
+                <div class="pp-them-pain">$2,500&ndash;5,000 upfront, 6-month contracts, you don't own the files</div>
+              </div>
+              <div class="pp-them-row">
+                <div class="pp-them-source">Freelancers</div>
+                <div class="pp-them-pain">Great until they disappear. No support, no updates, no continuity</div>
+              </div>
+              <div class="pp-them-row">
+                <div class="pp-them-source">DIY Builders</div>
+                <div class="pp-them-pain">Hours of your time, a mediocre result, and a bill that keeps growing</div>
+              </div>
+            </div>
+            <div class="pp-us">
+              <div class="pp-us-label">Stackwell Digital</div>
+              <div class="pp-us-row"><div class="pp-us-fix">One flat monthly rate. Everything included.</div></div>
+              <div class="pp-us-row"><div class="pp-us-fix">Domain, hosting, updates, support. All in.</div></div>
+              <div class="pp-us-row"><div class="pp-us-fix">Month-to-month. Cancel anytime, no penalty.</div></div>
+              <div class="pp-us-row"><div class="pp-us-fix">You own your site and your content.</div></div>
+            </div>
           </div>
         </div>
       </div>
+    </div>
 
-      <!-- RIGHT: triangle image + cards below it -->
-      <div class="hero-right">
-        <img
-          src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/hero%20image.png?v=2"
-          alt="Fast, Managed, Affordable"
-        />
+    <!-- CARD 3: AUDIT TOOL -->
+    <div class="flow-section" id="card-audit">
+      <div class="flow-inner">
+        <span class="card-index">03 / 12</span>
+        <div class="section-pad">
+          <span class="card-big-title">FREE TOOL</span>
+          <h2>Website Health Check</h2>
+          <p style="color:var(--grey);max-width:580px;font-size:0.95rem;line-height:1.8;margin-top:1rem;">Enter your URL and we'll run a quick audit. See how you're doing on speed, mobile, SEO, and the basics that matter. Takes about 10 seconds.</p>
 
-        <!-- Competitor cards sit directly under the triangle, right col only -->
-        <div class="hero-bottom">
+          <!-- AUDIT FORM -->
+          <form class="audit-form" id="auditForm" onsubmit="runAudit(event)">
+            <input 
+              type="url" 
+              class="audit-input" 
+              id="auditUrl" 
+              placeholder="https://yourwebsite.com" 
+              required 
+            />
+            <button type="submit" class="audit-btn" id="auditBtn">Check Site</button>
+          </form>
 
-          <div class="comp-card">
-            <div class="comp-card-title">Wix / GoDaddy</div>
-            <div class="comp-row"><span class="icon check">&#10003;</span><span class="label">Fast to build</span></div>
-            <div class="comp-row"><span class="icon check">&#10003;</span><span class="label">Affordable ($29&ndash;50/mo)</span></div>
-            <div class="comp-row"><span class="icon cross">&#10007;</span><span class="label-cross">You manage everything</span></div>
+          <!-- LOADING -->
+          <div class="audit-loading" id="auditLoading" style="display: none;">
+            <div class="spinner"></div>
+            <span>Auditing your site...</span>
           </div>
 
-          <div class="comp-card">
-            <div class="comp-card-title">Web Agencies</div>
-            <div class="comp-row"><span class="icon check">&#10003;</span><span class="label">Fully managed</span></div>
-            <div class="comp-row"><span class="icon check">&#10003;</span><span class="label">Hands-off &amp; current</span></div>
-            <div class="comp-row"><span class="icon cross">&#10007;</span><span class="label-cross">$500&ndash;3,000/mo</span></div>
+          <!-- ERROR -->
+          <div class="audit-error" id="auditError"></div>
+
+          <!-- RESULTS -->
+          <div class="audit-results" id="auditResults">
+            <div class="results-header">
+              <div class="results-url" id="resultsUrl"></div>
+              <div class="score-display">
+                <div class="score-grade" id="scoreGrade"></div>
+                <div class="score-label">
+                  <div class="score-label-text">Overall Score</div>
+                  <div class="score-summary" id="scoreSummary"></div>
+                </div>
+              </div>
+            </div>
+            <div class="results-body" id="resultsBody"></div>
+            <div class="results-issues" id="resultsIssues" style="display: none;">
+              <div class="issues-title">What We'd Fix</div>
+              <ul class="issues-list" id="issuesList"></ul>
+            </div>
           </div>
 
-          <div class="comp-card stackwell-card">
-            <div class="comp-card-title">Stackwell.Digital</div>
-            <div class="comp-row"><span class="icon check">&#10003;</span><span class="label">Fast</span></div>
-            <div class="comp-row"><span class="icon check">&#10003;</span><span class="label">Managed</span></div>
-            <div class="comp-row"><span class="icon check">&#10003;</span><span class="label">Affordable</span></div>
-            <div class="card-price">$60&ndash;150/mo</div>
+          <!-- CTA -->
+          <div class="cta-section" id="ctaSection" style="display: none;">
+            <div class="cta-text">
+              <h3>Ready to Improve?</h3>
+              <p>We handle the fixes. Professional design, hosting, updates. One flat monthly rate.</p>
+            </div>
+            <button class="cta-btn" onclick="document.getElementById('card-contact').scrollIntoView({behavior: 'smooth'})">Get Started</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARD 4: HOW IT WORKS -->
+    <div class="flow-section" id="card-how">
+      <div class="flow-inner">
+        <span class="card-index">04 / 12</span>
+        <div class="section-pad">
+          <span class="card-big-title">HOW IT WORKS</span>
+          <h2>How It Works</h2>
+          <div class="steps">
+            <div class="step">
+              <div class="step-num">01</div>
+              <div>
+                <h3>We Build It</h3>
+                <p>We design and build your site from scratch. Professional, fast, and tailored to your business. Ready in days, not months.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">02</div>
+              <div>
+                <h3>You Review It</h3>
+                <p>We walk you through the site and make adjustments until it's exactly what you want. Your input, our execution.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">03</div>
+              <div>
+                <h3>We Launch It</h3>
+                <p>Domain connected, site goes live. We handle the tech: DNS, hosting, SSL, all of it. You don't touch a thing.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">04</div>
+              <div>
+                <h3>We Manage It</h3>
+                <p>Need new hours posted? A menu update? A new photo? Just send us a message. Updates are included in your monthly plan.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARD 4: SERVICES -->
+    <div class="flow-section" id="card-services">
+      <div class="flow-inner">
+        <span class="card-index">05 / 12</span>
+        <div class="section-pad">
+          <span class="card-big-title">SERVICES</span>
+          <h2>Services We Provide</h2>
+          <div class="services-grid">
+            <div class="service-card">
+              <div class="service-icon">◈</div>
+              <h3>Web Design</h3>
+              <p>Custom-built sites designed around your business. Fast, professional, and ready to work on any device.</p>
+            </div>
+            <div class="service-card">
+              <div class="service-icon">⬡</div>
+              <h3>Managed Hosting</h3>
+              <p>Your site lives on our infrastructure. Uptime, SSL, backups. All handled. Nothing for you to manage.</p>
+            </div>
+            <div class="service-card">
+              <div class="service-icon">◎</div>
+              <h3>Domain Management</h3>
+              <p>We register, configure, and maintain your domain. DNS, renewals, redirects. All ours to deal with.</p>
+            </div>
+            <div class="service-card">
+              <div class="service-icon">⌖</div>
+              <h3>SEO &amp; Analytics</h3>
+              <p>Built-in SEO fundamentals from day one. Monthly reporting on traffic, rankings, and how your site performs.</p>
+            </div>
+            <div class="service-card">
+              <div class="service-icon">◉</div>
+              <h3>Google Business Profile</h3>
+              <p>We set up and manage your Google Business listing so customers can find you in local search and Maps.</p>
+            </div>
+            <div class="service-card">
+              <div class="service-icon">✦</div>
+              <h3>Content Updates</h3>
+              <p>New hours, a menu change, a fresh photo. Just message us. Updates are included in your monthly plan.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARD 5: PRICING -->
+    <div class="flow-section" id="card-pricing">
+      <div class="flow-inner">
+        <span class="card-index">06 / 12</span>
+        <div class="section-pad">
+          <span class="card-big-title">PRICING</span>
+          <div class="pricing-intro">
+            <h2>Simple,<br />Flat Pricing</h2>
+            <p>Every plan is month-to-month. No long-term contracts, no hidden fees, no surprise invoices. Pick the level of service that fits your business and change anytime.</p>
+          </div>
+          <div class="plans">
+            <div class="plan">
+              <p class="plan-name">Starter</p>
+              <div class="plan-price">$60</div>
+              <div class="plan-cycle">/ month CAD</div>
+              <ul class="plan-features">
+                <li>Professional website build</li>
+                <li>Domain management included</li>
+                <li>2 content updates per month</li>
+                <li>Hosting included</li>
+                <li>Email support</li>
+              </ul>
+              <a href="https://square.link/u/5vbs2nRZ" target="_blank" rel="noopener" class="plan-cta">Get Started</a>
+            </div>
+            <div class="plan featured">
+              <p class="plan-name">Growth</p>
+              <div class="plan-price">$100</div>
+              <div class="plan-cycle">/ month CAD</div>
+              <ul class="plan-features">
+                <li>Professional website build</li>
+                <li>Domain management included</li>
+                <li>Hosting included</li>
+                <li>6 content updates per month</li>
+                <li>Basic SEO optimization</li>
+                <li>Monthly analytics reports</li>
+                <li>Priority email support</li>
+                <li>Semi-annual site refresh</li>
+              </ul>
+              <a href="https://square.link/u/6uF6mGMl" target="_blank" rel="noopener" class="plan-cta">Get Started</a>
+            </div>
+            <div class="plan">
+              <p class="plan-name">Pro</p>
+              <div class="plan-price">$150</div>
+              <div class="plan-cycle">/ month CAD</div>
+              <ul class="plan-features">
+                <li>Professional website build</li>
+                <li>Domain management included</li>
+                <li>Hosting included</li>
+                <li>Unlimited content updates</li>
+                <li>Advanced SEO optimization</li>
+                <li>Monthly analytics reports</li>
+                <li>Same-day response guarantee</li>
+                <li>Google Business Profile build</li>
+                <li>Workspace email setup</li>
+                <li>Quarterly strategy check-in</li>
+                <li>Seasonal site refreshes</li>
+              </ul>
+              <a href="https://square.link/u/xSMif3fX" target="_blank" rel="noopener" class="plan-cta">Get Started</a>
+            </div>
           </div>
 
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- MARQUEE -->
-  <div class="marquee-wrap">
-    <div class="marquee-track">
-      <div class="marquee-item">Professional Design</div>
-      <div class="marquee-item">Monthly Updates Included</div>
-      <div class="marquee-item">Domain Management</div>
-      <div class="marquee-item">SEO Optimized</div>
-      <div class="marquee-item">Google Business Profile</div>
-      <div class="marquee-item">Analytics Reporting</div>
-      <div class="marquee-item">No Long Contracts</div>
-      <div class="marquee-item">Same Day Response</div>
-      <div class="marquee-item">Professional Design</div>
-      <div class="marquee-item">Monthly Updates Included</div>
-      <div class="marquee-item">Domain Management</div>
-      <div class="marquee-item">SEO Optimized</div>
-      <div class="marquee-item">Google Business Profile</div>
-      <div class="marquee-item">Analytics Reporting</div>
-      <div class="marquee-item">No Long Contracts</div>
-      <div class="marquee-item">Same Day Response</div>
-    </div>
-  </div>
-
-  <!-- CLIENT LOGOS -->
-  <section id="clients">
-    <div class="clients-label">Trusted By Local Businesses</div>
-    <div class="clients-track-wrap">
-      <div class="clients-track">
-        <img class="client-logo" loading="lazy" src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/atwood.png" alt="Atwood Furniture">
-        <img class="client-logo" loading="lazy" src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/baselines.png" alt="Baselines Pub">
-        <img class="client-logo" loading="lazy" src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/chipd-logo.png" alt="Chipd">
-        <img class="client-logo" loading="lazy" src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/cortex.png" alt="Cortex">
-        <img class="client-logo" loading="lazy" src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/fineline%20plotworks.png" alt="Fine Line Plotworks">
-        <img class="client-logo" loading="lazy" src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/littlegreens.png" alt="Lit Greens">
-        <img class="client-logo" loading="lazy" src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/pitchd-logo.png" alt="Pitchd">
-        <img class="client-logo" loading="lazy" src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/vomad-logo.png" alt="Vomad Rentals">
-        <!-- duplicate for seamless loop -->
-        <img class="client-logo" loading="lazy" src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/atwood.png" alt="Atwood Furniture">
-        <img class="client-logo" loading="lazy" src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/baselines.png" alt="Baselines Pub">
-        <img class="client-logo" loading="lazy" src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/chipd-logo.png" alt="Chipd">
-        <img class="client-logo" loading="lazy" src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/cortex.png" alt="Cortex">
-        <img class="client-logo" loading="lazy" src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/fineline%20plotworks.png" alt="Fine Line Plotworks">
-        <img class="client-logo" loading="lazy" src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/littlegreens.png" alt="Lit Greens">
-        <img class="client-logo" loading="lazy" src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/pitchd-logo.png" alt="Pitchd">
-        <img class="client-logo" loading="lazy" src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/vomad-logo.png" alt="Vomad Rentals">
-      </div>
-    </div>
-  </section>
-
-  <!-- THE PRICING PROBLEM -->
-  <section id="pricing-problem" style="border-top: 1px solid var(--border);">
-    <p class="section-label reveal">The Reality</p>
-    <h2 class="reveal">The Pricing Problem</h2>
-    <p class="reveal" style="color:var(--grey);max-width:520px;font-size:0.95rem;line-height:1.8;margin-top:1rem;">Most businesses are overpaying for hosting they don't control and updates they have to beg for. Here's what it actually looks like.</p>
-
-    <div class="pp-grid reveal">
-
-      <!-- LEFT: Them -->
-      <div class="pp-them">
-        <div class="pp-them-label">Everyone Else</div>
-
-        <div class="pp-them-row">
-          <div class="pp-them-source">GoDaddy / Wix / Squarespace</div>
-          <div class="pp-them-pain">$25–50/mo hosting, then $50–100 per update you forgot was extra</div>
-        </div>
-
-        <div class="pp-them-row">
-          <div class="pp-them-source">Web Design Agencies</div>
-          <div class="pp-them-pain">$2,500–5,000 upfront, 6-month contracts, you don't own the files</div>
-        </div>
-
-        <div class="pp-them-row">
-          <div class="pp-them-source">Freelancers</div>
-          <div class="pp-them-pain">Great until they disappear. No support, no updates, no continuity</div>
-        </div>
-
-        <div class="pp-them-row">
-          <div class="pp-them-source">DIY Builders</div>
-          <div class="pp-them-pain">Hours of your time, a mediocre result, and a bill that keeps growing</div>
-        </div>
-      </div>
-
-      <!-- RIGHT: Us -->
-      <div class="pp-us">
-        <div class="pp-us-label">Stackwell Digital</div>
-
-        <div class="pp-us-row">
-          <div class="pp-us-fix">One flat monthly rate. Everything included.</div>
-        </div>
-        <div class="pp-us-row">
-          <div class="pp-us-fix">Domain, hosting, updates, support. All in.</div>
-        </div>
-        <div class="pp-us-row">
-          <div class="pp-us-fix">Month-to-month. Cancel anytime, no penalty.</div>
-        </div>
-        <div class="pp-us-row">
-          <div class="pp-us-fix">You own your site and your content.</div>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- HOW IT WORKS -->
-  <section id="how" style="border-top: 1px solid var(--border);">
-    <p class="section-label reveal">Process</p>
-    <h2 class="reveal">How It Works</h2>
-    <div class="steps reveal">
-      <div class="step">
-        <div class="step-num">01</div>
-        <div class="step-body">
-          <h3>We Build It</h3>
-          <p>We design and build your site from scratch. Professional, fast, and tailored to your business. Ready in days, not months.</p>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">02</div>
-        <div class="step-body">
-          <h3>You Review It</h3>
-          <p>We walk you through the site and make adjustments until it's exactly what you want. Your input, our execution.</p>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">03</div>
-        <div class="step-body">
-          <h3>We Launch It</h3>
-          <p>Domain connected, site goes live. We handle the tech: DNS, hosting, SSL, all of it. You don't touch a thing.</p>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">04</div>
-        <div class="step-body">
-          <h3>We Manage It</h3>
-          <p>Need new hours posted? A menu update? A new photo? Just send us a message. Updates are included in your monthly plan.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- SERVICES -->
-  <section id="services">
-    <p class="section-label reveal">What We Do</p>
-    <h2 class="reveal">Services We Provide</h2>
-    <div class="services-grid reveal">
-      <div class="service-card">
-        <div class="service-icon">◈</div>
-        <h3>Web Design</h3>
-        <p>Custom-built sites designed around your business. Fast, professional, and ready to work on any device.</p>
-      </div>
-      <div class="service-card">
-        <div class="service-icon">⬡</div>
-        <h3>Managed Hosting</h3>
-        <p>Your site lives on our infrastructure. Uptime, SSL, backups. All handled. Nothing for you to manage.</p>
-      </div>
-      <div class="service-card">
-        <div class="service-icon">◎</div>
-        <h3>Domain Management</h3>
-        <p>We register, configure, and maintain your domain. DNS, renewals, redirects. All ours to deal with.</p>
-      </div>
-      <div class="service-card">
-        <div class="service-icon">⌖</div>
-        <h3>SEO &amp; Analytics</h3>
-        <p>Built-in SEO fundamentals from day one. Monthly reporting on traffic, rankings, and how your site performs.</p>
-      </div>
-      <div class="service-card">
-        <div class="service-icon">◉</div>
-        <h3>Google Business Profile</h3>
-        <p>We set up and manage your Google Business listing so customers can find you in local search and Maps.</p>
-      </div>
-      <div class="service-card">
-        <div class="service-icon">✦</div>
-        <h3>Content Updates</h3>
-        <p>New hours, a menu change, a fresh photo. Just message us. Updates are included in your monthly plan.</p>
-      </div>
-    </div>
-  </section>
 
 
-  <!-- PRICING -->
-  <section id="pricing">
-    <p class="section-label reveal">Plans</p>
-    <div class="pricing-intro reveal">
-      <h2>Simple,<br />Flat Pricing</h2>
-      <p>Every plan is month-to-month. No long-term contracts, no hidden fees, no surprise invoices. Pick the level of service that fits your business and change anytime.</p>
-    </div>
-
-    <div class="plans reveal">
-      <!-- STARTER -->
-      <div class="plan">
-        <p class="plan-name">Starter</p>
-        <div class="plan-price">$60</div>
-        <div class="plan-cycle">/ month CAD</div>
-        <ul class="plan-features">
-          <li>Professional website build</li>
-          <li>Domain management included</li>
-          <li>2 content updates per month</li>
-          <li>Hosting included</li>
-          <li>Email support</li>
-        </ul>
-        <a href="https://square.link/u/5vbs2nRZ" target="_blank" rel="noopener" class="plan-cta">Get Started</a>
-      </div>
-
-      <!-- GROWTH -->
-      <div class="plan featured">
-        <p class="plan-name">Growth</p>
-        <div class="plan-price">$100</div>
-        <div class="plan-cycle">/ month CAD</div>
-        <ul class="plan-features">
-          <li>Professional website build</li>
-          <li>Domain management included</li>
-          <li>Hosting included</li>
-          <li>6 content updates per month</li>
-          <li>Basic SEO optimization</li>
-          <li>Monthly analytics reports</li>
-          <li>Priority email support</li>
-          <li>Semi-annual site refresh</li>
-        </ul>
-        <a href="https://square.link/u/6uF6mGMl" target="_blank" rel="noopener" class="plan-cta">Get Started</a>
-      </div>
-
-      <!-- PRO -->
-      <div class="plan">
-        <p class="plan-name">Pro</p>
-        <div class="plan-price">$150</div>
-        <div class="plan-cycle">/ month CAD</div>
-        <ul class="plan-features">
-          <li>Professional website build</li>
-          <li>Domain management included</li>
-          <li>Hosting included</li>
-          <li>Unlimited content updates</li>
-          <li>Advanced SEO optimization</li>
-          <li>Monthly analytics reports</li>
-          <li>Same-day response guarantee</li>
-          <li>Google Business Profile build</li>
-          <li>Workspace email setup</li>
-          <li>Quarterly strategy check-in</li>
-          <li>Seasonal site refreshes</li>
-        </ul>
-        <a href="https://square.link/u/xSMif3fX" target="_blank" rel="noopener" class="plan-cta">Get Started</a>
-      </div>
-    </div>
-
-    <!-- ADD-ONS -->
-    <div class="addons-wrap reveal" style="margin-top: 5rem; border-top: 1px solid var(--border); padding-top: 5rem;">
-      <div style="margin-bottom: 3rem;">
-        <p class="section-label">Add Booking or Retail</p>
-        <h3 style="font-family: var(--display); font-size: clamp(1.5rem, 4vw, 2rem); letter-spacing: -0.02em; margin: 1rem 0 1.5rem;">Integrate What You Need</h3>
-        <p style="color: var(--grey-light); max-width: 620px; line-height: 1.8;">Add Stackwell-Book for appointment scheduling, or Stackwell-Shop to sell products. Both integrate seamlessly into your site. Or stack them together for full-service + retail in one platform.</p>
-      </div>
-
-      <div class="addons-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-bottom: 3rem;">
-        
-        <!-- STACKWELL-BOOK -->
-        <div class="addon-card" style="border: 1px solid var(--border); border-radius: 8px; padding: 2rem; background: rgba(255,255,255,0.015); transition: all 0.2s;">
-          <p style="font-family: var(--display); font-size: 1.2rem; letter-spacing: 0.05em; margin-bottom: 0.5rem;">Stackwell-Book</p>
-          <div style="display: flex; align-items: baseline; gap: 0.5rem; margin-bottom: 1.5rem;">
-            <div style="font-family: var(--display); font-size: clamp(1.5rem, 5vw, 2rem); letter-spacing: -0.02em;">+$15</div>
-            <div style="font-family: var(--mono); font-size: 0.75rem; color: var(--grey);">/ month</div>
+          <!-- MIGRATION -->
+          <div class="migration-wrap">
+            <div class="migration-header">
+              <div class="migration-eyebrow">Already Have a Website?</div>
+              <div class="migration-title">Hosting + Management<br /><span class="migration-title-sub">Without the Rebuild</span></div>
+              <div class="migration-header-right">Already on GoDaddy, Squarespace, or Wix? We migrate your existing site and handle day-to-day management. No rebuild needed.</div>
+            </div>
+            <div class="migration-body">
+              <div class="migration-plan" style="max-width:400px;">
+                <div class="migration-plan-name">Hosting + Management</div>
+                <div class="migration-price">$40</div>
+                <div class="migration-cycle">/ month CAD</div>
+                <ul class="migration-features">
+                  <li>Site migrated to our infrastructure</li>
+                  <li>Domain management included</li>
+                  <li>Fast, reliable hosting</li>
+                  <li>SSL certificate included</li>
+                  <li>Day-to-day site management</li>
+                  <li>Email support</li>
+                </ul>
+                <a href="https://square.link/u/M7dPjP4o" target="_blank" rel="noopener" class="migration-cta">Get Started</a>
+              </div>
+            </div>
+            <div class="migration-note">All plans are month-to-month. No lock-in, no penalties, no surprises.</div>
           </div>
-          <ul style="list-style: none; margin-bottom: 2rem;">
-            <li style="margin-bottom: 0.75rem; color: var(--grey-light); font-size: 0.9rem;"><span style="color: var(--accent); margin-right: 0.5rem;">·</span>Multi-service booking</li>
-            <li style="margin-bottom: 0.75rem; color: var(--grey-light); font-size: 0.9rem;"><span style="color: var(--accent); margin-right: 0.5rem;">·</span>Multi-staff support</li>
-            <li style="margin-bottom: 0.75rem; color: var(--grey-light); font-size: 0.9rem;"><span style="color: var(--accent); margin-right: 0.5rem;">·</span>Client notifications</li>
-            <li style="margin-bottom: 0.75rem; color: var(--grey-light); font-size: 0.9rem;"><span style="color: var(--accent); margin-right: 0.5rem;">·</span>Fully integrated</li>
-            <li style="color: var(--accent); font-size: 0.85rem;"><span style="margin-right: 0.5rem;">✦</span>Replaces Acuity & Calendly</li>
-          </ul>
-          <a href="#contact" style="display: block; text-align: center; padding: 0.75rem 1.5rem; border: 1px solid var(--accent-border); color: var(--white); font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; transition: all 0.2s; border-radius: 4px; width: 100%;">Learn More</a>
         </div>
-
-        <!-- STACKWELL-SHOP -->
-        <div class="addon-card" style="border: 1px solid var(--accent-border); border-radius: 8px; padding: 2rem; background: rgba(249,115,22,0.08); transition: all 0.2s;">
-          <p style="font-family: var(--display); font-size: 1.2rem; letter-spacing: 0.05em; margin-bottom: 0.5rem;">Stackwell-Shop</p>
-          <div style="display: flex; align-items: baseline; gap: 0.5rem; margin-bottom: 1.5rem;">
-            <div style="font-family: var(--display); font-size: clamp(1.5rem, 5vw, 2rem); letter-spacing: -0.02em;">+$15</div>
-            <div style="font-family: var(--mono); font-size: 0.75rem; color: var(--grey);">/ month</div>
-          </div>
-          <ul style="list-style: none; margin-bottom: 2rem;">
-            <li style="margin-bottom: 0.75rem; color: var(--grey-light); font-size: 0.9rem;"><span style="color: var(--accent); margin-right: 0.5rem;">·</span>Product catalog + checkout</li>
-            <li style="margin-bottom: 0.75rem; color: var(--grey-light); font-size: 0.9rem;"><span style="color: var(--accent); margin-right: 0.5rem;">·</span>Square inventory sync</li>
-            <li style="margin-bottom: 0.75rem; color: var(--grey-light); font-size: 0.9rem;"><span style="color: var(--accent); margin-right: 0.5rem;">·</span>Brand-matched design</li>
-            <li style="margin-bottom: 0.75rem; color: var(--grey-light); font-size: 0.9rem;"><span style="color: var(--accent); margin-right: 0.5rem;">·</span>Printful ready</li>
-            <li style="color: var(--accent); font-size: 0.85rem;"><span style="margin-right: 0.5rem;">✦</span>Replaces Shopify</li>
-          </ul>
-          <a href="#contact" style="display: block; text-align: center; padding: 0.75rem 1.5rem; background: var(--accent); color: #000; font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; transition: all 0.2s; border-radius: 4px; border: none; width: 100%;">Learn More</a>
-        </div>
-
-        <!-- BOTH BUNDLE -->
-        <div class="addon-card" style="border: 1px solid var(--border); border-radius: 8px; padding: 2rem; background: rgba(255,255,255,0.015); transition: all 0.2s;">
-          <p style="font-family: var(--display); font-size: 1.2rem; letter-spacing: 0.05em; margin-bottom: 0.5rem;">Both</p>
-          <div style="display: flex; align-items: baseline; gap: 0.5rem; margin-bottom: 1.5rem;">
-            <div style="font-family: var(--display); font-size: clamp(1.5rem, 5vw, 2rem); letter-spacing: -0.02em;">+$25</div>
-            <div style="font-family: var(--mono); font-size: 0.75rem; color: var(--grey);">/ month</div>
-          </div>
-          <ul style="list-style: none; margin-bottom: 2rem;">
-            <li style="margin-bottom: 0.75rem; color: var(--grey-light); font-size: 0.9rem;"><span style="color: var(--accent); margin-right: 0.5rem;">·</span>Stackwell-Book</li>
-            <li style="margin-bottom: 0.75rem; color: var(--grey-light); font-size: 0.9rem;"><span style="color: var(--accent); margin-right: 0.5rem;">·</span>Stackwell-Shop</li>
-            <li style="margin-bottom: 0.75rem; color: var(--grey-light); font-size: 0.9rem;"><span style="color: var(--accent); margin-right: 0.5rem;">·</span>Unified dashboard</li>
-            <li style="margin-bottom: 0.75rem; color: var(--grey-light); font-size: 0.9rem;"><span style="color: var(--accent); margin-right: 0.5rem;">·</span>Full integration</li>
-            <li style="color: var(--accent); font-size: 0.85rem;"><span style="margin-right: 0.5rem;">✦</span>Best value bundle</li>
-          </ul>
-          <a href="#contact" style="display: block; text-align: center; padding: 0.75rem 1.5rem; border: 1px solid var(--accent-border); color: var(--white); font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; transition: all 0.2s; border-radius: 4px; width: 100%;">Learn More</a>
-        </div>
-
       </div>
     </div>
 
+    <!-- CARD 6: ADD-ONS -->
+    <div class="flow-section" id="card-addons">
+      <div class="flow-inner">
+        <span class="card-index">07 / 12</span>
+        <div class="section-pad">
+          <span class="card-big-title">ADD-ONS</span>
+          <h2>Integrate What<br />You Need</h2>
+          <p style="color:var(--grey-light);max-width:620px;line-height:1.8;margin-top:1rem;margin-bottom:3rem;">Add Stackwell-Book for appointment scheduling, or Stackwell-Shop to sell products online. Both plug directly into your site. No third-party logins, no extra platform bills.</p>
+          <div class="addons-grid">
 
-    <!-- ALREADY HAVE A SITE -->
-    <div class="migration-wrap reveal">
-      <div class="migration-header">
-        <div class="migration-header-left">
-          <div class="migration-eyebrow">Already Have a Website?</div>
-          <div class="migration-title">Hosting + Management<br /><span class="migration-title-sub">Without the Rebuild</span></div>
-          <div class="migration-header-right">Already on GoDaddy, Squarespace, or Wix? We migrate your existing site to our infrastructure and handle day-to-day management. No rebuild needed. Hosting, updates, and support included.</div>
-        </div>
-      </div>
-      <div class="migration-body">
-        <div class="migration-plan" style="max-width: 400px;">
-          <div class="migration-plan-name">Hosting + Management</div>
-          <div class="migration-price-row">
-            <div class="migration-price">$40</div>
+            <div class="addon-card">
+              <p style="font-family:var(--display);font-size:1.4rem;letter-spacing:0.05em;margin-bottom:0.5rem;">Stackwell-Book</p>
+              <div style="display:flex;align-items:baseline;gap:0.5rem;margin-bottom:1.5rem;">
+                <div style="font-family:var(--display);font-size:2.5rem;color:var(--accent);">+$15</div>
+                <div style="font-family:var(--mono);font-size:0.75rem;color:var(--grey);">/ month</div>
+              </div>
+              <ul style="list-style:none;margin-bottom:2rem;">
+                <li style="margin-bottom:0.75rem;color:var(--grey-light);font-size:0.9rem;display:flex;gap:0.6rem;align-items:flex-start;"><span style="color:var(--accent);margin-top:0.1rem;">✦</span>Multi-service booking</li>
+                <li style="margin-bottom:0.75rem;color:var(--grey-light);font-size:0.9rem;display:flex;gap:0.6rem;align-items:flex-start;"><span style="color:var(--accent);margin-top:0.1rem;">✦</span>Multi-staff support</li>
+                <li style="margin-bottom:0.75rem;color:var(--grey-light);font-size:0.9rem;display:flex;gap:0.6rem;align-items:flex-start;"><span style="color:var(--accent);margin-top:0.1rem;">✦</span>Client notifications</li>
+                <li style="margin-bottom:0.75rem;color:var(--grey-light);font-size:0.9rem;display:flex;gap:0.6rem;align-items:flex-start;"><span style="color:var(--accent);margin-top:0.1rem;">✦</span>Fully integrated into your site</li>
+                <li style="color:var(--accent);font-size:0.85rem;margin-top:0.5rem;">Replaces Acuity &amp; Calendly</li>
+              </ul>
+              <a href="#card-contact" style="display:block;text-align:center;padding:0.85rem;border:1px solid var(--accent-border);color:var(--white);font-family:var(--mono);font-size:0.65rem;letter-spacing:0.12em;text-transform:uppercase;text-decoration:none;transition:all 0.2s;">Get Started</a>
+            </div>
+
+            <div class="addon-card featured-addon">
+              <p style="font-family:var(--display);font-size:1.4rem;letter-spacing:0.05em;margin-bottom:0.5rem;">Stackwell-Shop</p>
+              <div style="display:flex;align-items:baseline;gap:0.5rem;margin-bottom:1.5rem;">
+                <div style="font-family:var(--display);font-size:2.5rem;color:var(--accent);">+$15</div>
+                <div style="font-family:var(--mono);font-size:0.75rem;color:var(--grey);">/ month</div>
+              </div>
+              <ul style="list-style:none;margin-bottom:2rem;">
+                <li style="margin-bottom:0.75rem;color:var(--grey-light);font-size:0.9rem;display:flex;gap:0.6rem;align-items:flex-start;"><span style="color:var(--accent);margin-top:0.1rem;">✦</span>Product catalog + checkout</li>
+                <li style="margin-bottom:0.75rem;color:var(--grey-light);font-size:0.9rem;display:flex;gap:0.6rem;align-items:flex-start;"><span style="color:var(--accent);margin-top:0.1rem;">✦</span>Square inventory sync</li>
+                <li style="margin-bottom:0.75rem;color:var(--grey-light);font-size:0.9rem;display:flex;gap:0.6rem;align-items:flex-start;"><span style="color:var(--accent);margin-top:0.1rem;">✦</span>Brand-matched design</li>
+                <li style="margin-bottom:0.75rem;color:var(--grey-light);font-size:0.9rem;display:flex;gap:0.6rem;align-items:flex-start;"><span style="color:var(--accent);margin-top:0.1rem;">✦</span>Printful ready</li>
+                <li style="color:var(--accent);font-size:0.85rem;margin-top:0.5rem;">Replaces Shopify</li>
+              </ul>
+              <a href="#card-contact" style="display:block;text-align:center;padding:0.85rem;background:var(--accent);color:#000;font-family:var(--mono);font-size:0.65rem;letter-spacing:0.12em;text-transform:uppercase;text-decoration:none;transition:all 0.2s;">Get Started</a>
+            </div>
+
+            <div class="addon-card">
+              <p style="font-family:var(--display);font-size:1.4rem;letter-spacing:0.05em;margin-bottom:0.5rem;">Both</p>
+              <div style="display:flex;align-items:baseline;gap:0.5rem;margin-bottom:1.5rem;">
+                <div style="font-family:var(--display);font-size:2.5rem;color:var(--accent);">+$25</div>
+                <div style="font-family:var(--mono);font-size:0.75rem;color:var(--grey);">/ month</div>
+              </div>
+              <ul style="list-style:none;margin-bottom:2rem;">
+                <li style="margin-bottom:0.75rem;color:var(--grey-light);font-size:0.9rem;display:flex;gap:0.6rem;align-items:flex-start;"><span style="color:var(--accent);margin-top:0.1rem;">✦</span>Stackwell-Book included</li>
+                <li style="margin-bottom:0.75rem;color:var(--grey-light);font-size:0.9rem;display:flex;gap:0.6rem;align-items:flex-start;"><span style="color:var(--accent);margin-top:0.1rem;">✦</span>Stackwell-Shop included</li>
+                <li style="margin-bottom:0.75rem;color:var(--grey-light);font-size:0.9rem;display:flex;gap:0.6rem;align-items:flex-start;"><span style="color:var(--accent);margin-top:0.1rem;">✦</span>Unified dashboard</li>
+                <li style="margin-bottom:0.75rem;color:var(--grey-light);font-size:0.9rem;display:flex;gap:0.6rem;align-items:flex-start;"><span style="color:var(--accent);margin-top:0.1rem;">✦</span>Save $5/mo vs separate</li>
+                <li style="color:var(--accent);font-size:0.85rem;margin-top:0.5rem;">Best value bundle</li>
+              </ul>
+              <a href="#card-contact" style="display:block;text-align:center;padding:0.85rem;border:1px solid var(--accent-border);color:var(--white);font-family:var(--mono);font-size:0.65rem;letter-spacing:0.12em;text-transform:uppercase;text-decoration:none;transition:all 0.2s;">Get Started</a>
+            </div>
+
           </div>
-          <div class="migration-cycle">/ month CAD</div>
-          <ul class="migration-features">
-            <li>Site migrated to our infrastructure</li>
-            <li>Domain management included</li>
-            <li>Fast, reliable hosting</li>
-            <li>SSL certificate included</li>
-            <li>Day-to-day site management</li>
-            <li>Email support</li>
-          </ul>
-          <a href="https://square.link/u/M7dPjP4o" target="_blank" rel="noopener" class="migration-cta">Get Started</a>
         </div>
       </div>
-
     </div>
 
-  </section>
-
-  <!-- REPORTS -->
-  <section id="reports">
-    <div class="reports-layout reveal">
-
-      <!-- LEFT: intro + bullets -->
-      <div class="reports-left">
-        <p class="section-label">Reports &amp; Analytics</p>
-        <h2>Know Exactly<br />How You're Doing.</h2>
-        <p style="color:var(--grey-light);font-size:0.95rem;line-height:1.8;margin-top:1rem;margin-bottom:2rem;">Growth and Pro clients get a monthly report delivered straight to their inbox. Traffic, search rankings, top pages. The stuff that actually tells you if your site is working.</p>
-
-        <div class="reports-plan-tags" style="margin-bottom:2.5rem;">
-          <span class="reports-plan-tag">Starter</span>
-          <span class="reports-plan-tag active">Growth ✦</span>
-          <span class="reports-plan-tag active">Pro ✦</span>
-        </div>
-
-        <div class="reports-bullets-vert">
-          <div class="reports-bullet-vert">
-            <span class="reports-bullet-icon">◎</span>
+    <!-- CARD 7: REPORTS -->
+    <div class="flow-section" id="card-reports">
+      <div class="flow-inner">
+        <span class="card-index">08 / 12</span>
+        <div class="section-pad">
+          <span class="card-big-title">REPORTS</span>
+          <div class="reports-layout">
             <div>
-              <h4>Traffic &amp; Visitors</h4>
-              <p>See how many people visited your site, where they came from, and which pages they landed on.</p>
+              <h2>Know Exactly<br />How You're Doing.</h2>
+              <p style="color:var(--grey-light);font-size:0.95rem;line-height:1.8;margin-top:1rem;margin-bottom:2rem;">Growth and Pro clients get a monthly report delivered straight to their inbox. Traffic, search rankings, top pages. The stuff that actually tells you if your site is working.</p>
+              <div class="reports-plan-tags" style="margin-bottom:2.5rem;">
+                <span class="reports-plan-tag">Starter</span>
+                <span class="reports-plan-tag active">Growth ✦</span>
+                <span class="reports-plan-tag active">Pro ✦</span>
+              </div>
+              <div class="reports-bullets-vert">
+                <div class="reports-bullet-vert">
+                  <span class="reports-bullet-icon">◎</span>
+                  <div>
+                    <h4>Traffic &amp; Visitors</h4>
+                    <p>See how many people visited your site, where they came from, and which pages they landed on.</p>
+                  </div>
+                </div>
+                <div class="reports-bullet-vert">
+                  <span class="reports-bullet-icon">⌖</span>
+                  <div>
+                    <h4>Search Rankings</h4>
+                    <p>Track how you're showing up in Google search for the terms that matter to your business.</p>
+                  </div>
+                </div>
+                <div class="reports-bullet-vert">
+                  <span class="reports-bullet-icon">✦</span>
+                  <div>
+                    <h4>Month-over-Month</h4>
+                    <p>Every report compares to the prior month so you can see if things are trending the right direction.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="report-desktop-wrap">
+              <div class="report-desktop-badge">Monthly Report</div>
+              <img src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/monthly%20report.png" loading="lazy" alt="Monthly analytics report">
             </div>
           </div>
-          <div class="reports-bullet-vert">
-            <span class="reports-bullet-icon">⌖</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARD 7: PORTFOLIO -->
+    <div class="flow-section" id="card-portfolio">
+      <div class="flow-inner">
+        <span class="card-index">09 / 12</span>
+        <div class="section-pad">
+          <span class="card-big-title">OUR WORK</span>
+          <h2>Sites We've<br />Built.</h2>
+          <p style="color:var(--grey);max-width:520px;font-size:0.95rem;line-height:1.8;margin-top:1rem;">A selection of sites we've designed and built for local businesses across BC. Each one managed monthly.</p>
+          <div class="portfolio-grid">
+            <div class="portfolio-card">
+              <div class="pc-img-wrap">
+                <img class="pc-screenshot" loading="lazy" src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/pitchd.png" alt="Pitchd campsite cancellation alert service">
+              </div>
+              <div class="pc-info">
+                <div><div class="pc-name">Pitchd</div><div class="pc-type">Campsite Cancellation Alerts · BC</div></div>
+                <a href="https://www.pitchd.ca" target="_blank" rel="noopener" class="pc-tag" style="text-decoration:none;cursor:pointer;">↗ Visit</a>
+              </div>
+            </div>
+            <div class="portfolio-card">
+              <div class="pc-img-wrap">
+                <img class="pc-screenshot" loading="lazy" src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/vomadrentals.png" alt="Vomad Rentals equipment rental">
+              </div>
+              <div class="pc-info">
+                <div><div class="pc-name">Vomad Rentals</div><div class="pc-type">Equipment Rentals · BC</div></div>
+                <a href="https://www.vomadrentals.ca" target="_blank" rel="noopener" class="pc-tag" style="text-decoration:none;cursor:pointer;">↗ Visit</a>
+              </div>
+            </div>
+            <div class="portfolio-card">
+              <div class="pc-img-wrap">
+                <img class="pc-screenshot" loading="lazy" src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/chipd.png" alt="Chipd Golf tee time alerts">
+              </div>
+              <div class="pc-info">
+                <div><div class="pc-name">Chipd Golf</div><div class="pc-type">Tee Time Cancellation Alerts · BC</div></div>
+                <a href="https://www.chipdgolf.ca" target="_blank" rel="noopener" class="pc-tag" style="text-decoration:none;cursor:pointer;">↗ Visit</a>
+              </div>
+            </div>
+            <div class="portfolio-card">
+              <div class="pc-img-wrap">
+                <img class="pc-screenshot" loading="lazy" src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/little-greens-farm.png" alt="Little Greens Farm organic microgreens">
+              </div>
+              <div class="pc-info">
+                <div><div class="pc-name">Little Greens Farm</div><div class="pc-type">Organic Microgreens · South Surrey</div></div>
+                <div class="pc-tag">Starter</div>
+              </div>
+            </div>
+            <div class="portfolio-card">
+              <div class="pc-img-wrap">
+                <img class="pc-screenshot" loading="lazy" src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/atwood-furniture.png" alt="Atwood Furniture Co.">
+              </div>
+              <div class="pc-info">
+                <div><div class="pc-name">Atwood Furniture Co.</div><div class="pc-type">Handcrafted Furniture · BC</div></div>
+                <div class="pc-tag">Growth</div>
+              </div>
+            </div>
+            <div class="portfolio-card">
+              <div class="pc-img-wrap">
+                <img class="pc-screenshot" loading="lazy" src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/lark-knives.png" alt="Lark Knives custom knife making">
+              </div>
+              <div class="pc-info">
+                <div><div class="pc-name">Lark Knives</div><div class="pc-type">Custom Knife Making · BC</div></div>
+                <div class="pc-tag">Growth</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARD 8: TEAM + CONTACT -->
+    <div class="flow-section" id="card-team">
+      <div class="flow-inner">
+        <span class="card-index">10 / 12</span>
+        <div class="section-pad">
+          <span class="card-big-title">THE TEAM</span>
+          <h2>Who's<br />Behind It.</h2>
+          <p style="color:var(--grey);max-width:520px;font-size:0.95rem;line-height:1.8;margin-top:1rem;">Two people. One mission. Get local BC businesses online without the runaround.</p>
+          <div class="team-grid">
+            <div class="team-card">
+              <div class="team-photo-wrap">
+                <img class="team-photo" loading="lazy" src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/1_20260506_204743_0000.png" alt="Adam Vollet, Founder">
+              </div>
+              <div class="team-info">
+                <div class="team-title">Founder &amp; Lead Designer</div>
+                <div class="team-name">Adam Vollet</div>
+                <p class="team-bio">Adam has spent years designing complex systems for enterprise clients, certified across AWS, CompTIA, and cybersecurity, but his favorite problems tend to be the simple ones nobody's bothered to solve. Like the fact that half the best local businesses in BC don't have a website worth finding. Stackwell came out of all of that: less a business idea, more an obvious gap that needed filling.</p>
+                <span class="team-tag">British Columbia</span>
+              </div>
+            </div>
+            <div class="team-card team-card-hank">
+              <div class="team-photo-wrap">
+                <img class="team-photo" loading="lazy" src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/2_20260506_204743_0001.png" alt="Hank, Chief Morale Officer">
+              </div>
+              <div class="team-info">
+                <div class="team-title">Chief Morale Officer</div>
+                <div class="team-name">Hank</div>
+                <p class="team-bio">Hank is a black lab with zero web design skills and absolutely no intention of developing any. His responsibilities include occupying the office chair, providing unsolicited feedback on lunch choices, and ensuring no deadline ever gets taken too seriously. He is, by most measures, irreplaceable.</p>
+                <span class="team-tag">Good Boy. BC</span>
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+
+    <!-- CARD 9: CONTACT -->
+    <div class="flow-section" id="card-contact">
+      <div class="flow-inner">
+        <span class="card-index">11 / 12</span>
+        <div class="section-pad">
+          <span class="card-big-title">CONTACT</span>
+          <div class="contact-layout">
+            <div class="contact-left">
+              <h2>Let's Talk<br />About Your<br />Business.</h2>
+              <p>Fill out the form and we'll get back to you within one business day. No sales pressure, no commitment. Just a straight conversation about whether we're a good fit.</p>
+              <div class="contact-detail">
+                <span class="contact-detail-label">Email</span>
+                <a href="mailto:adam@stackwell.digital">adam@stackwell.digital</a>
+              </div>
+              <div class="contact-detail" style="border-top:none;margin-top:1rem;padding-top:0;">
+                <span class="contact-detail-label">Based In</span>
+                <span style="font-family:var(--mono);font-size:0.75rem;letter-spacing:0.08em;color:var(--grey-light);">British Columbia, Canada</span>
+              </div>
+            </div>
             <div>
-              <h4>Search Rankings</h4>
-              <p>Track how you're showing up in Google search for the terms that matter to your business.</p>
-            </div>
-          </div>
-          <div class="reports-bullet-vert">
-            <span class="reports-bullet-icon">✦</span>
-            <div>
-              <h4>Month-over-Month</h4>
-              <p>Every report compares to the prior month so you can see if things are trending the right direction.</p>
+              <div class="cf-status" id="cfStatus"></div>
+              <div class="contact-form" id="contactForm">
+                <div class="cf-row">
+                  <div class="cf-field">
+                    <label for="cf-name">Your Name</label>
+                    <input type="text" id="cf-name" name="name" placeholder="Jane Smith" autocomplete="name" />
+                  </div>
+                  <div class="cf-field">
+                    <label for="cf-biz">Business Name</label>
+                    <input type="text" id="cf-biz" name="business" placeholder="Smith Plumbing Co." />
+                  </div>
+                </div>
+                <div class="cf-row">
+                  <div class="cf-field">
+                    <label for="cf-email">Email Address</label>
+                    <input type="email" id="cf-email" name="email" placeholder="you@yourbusiness.com" autocomplete="email" />
+                  </div>
+                  <div class="cf-field">
+                    <label for="cf-phone">Phone (optional)</label>
+                    <input type="tel" id="cf-phone" name="phone" placeholder="604-555-0100" autocomplete="tel" />
+                  </div>
+                </div>
+                <div class="cf-field">
+                  <label for="cf-plan">Plan You're Interested In</label>
+                  <select id="cf-plan" name="plan">
+                    <option value="">Not sure yet</option>
+                    <option value="Starter">Starter (new site) · $60/mo</option>
+                    <option value="Growth">Growth (new site) · $100/mo</option>
+                    <option value="Pro">Pro (new site) · $150/mo</option>
+                    <option value="Hosting + Management">Hosting + Management (existing site) · $40/mo</option>
+                    <option value="Just exploring">Just exploring</option>
+                  </select>
+                </div>
+                <div class="cf-field">
+                  <label for="cf-msg">Tell Us a Bit About Your Business</label>
+                  <textarea id="cf-msg" name="message" placeholder="What kind of business do you run? Do you currently have a website? What are you looking for help with?"></textarea>
+                </div>
+                <button type="button" class="cf-submit" id="cfSubmit">Send Message</button>
+              </div>
             </div>
           </div>
         </div>
       </div>
-
-      <!-- RIGHT: image -->
-      <div class="report-desktop-wrap">
-        <div class="report-desktop-badge">Monthly Report</div>
-        <img src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/monthly%20report.png" loading="lazy" alt="Monthly analytics report">
-      </div>
-
     </div>
-  </section>
 
-  <!-- PORTFOLIO -->
-  <section id="portfolio">
-    <p class="section-label reveal">Our Work</p>
-    <h2 class="reveal">Sites We've<br />Built.</h2>
-    <p class="reveal" style="color:var(--grey);max-width:520px;font-size:0.95rem;line-height:1.8;margin-top:1rem;">A selection of sites we've designed and built for local businesses across BC. Each one managed monthly. Updates, hosting, domain, all handled.</p>
-
-    <div class="portfolio-grid reveal">
-
-      <!-- Pitchd spot 1 -->
-      <div class="portfolio-card">
-        <div class="pc-img-wrap">
-          <img class="pc-screenshot" loading="lazy"
-            src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/pitchd.png"
-            alt="Pitchd campsite cancellation alert service website screenshot, BC">
-        </div>
-        <div class="pc-info">
-          <div>
-            <div class="pc-name">Pitchd</div>
-            <div class="pc-type">Campsite Cancellation Alerts · BC</div>
-          </div>
-          <a href="https://www.pitchd.ca" target="_blank" rel="noopener" class="pc-tag" style="text-decoration:none;cursor:pointer;" aria-label="Visit Pitchd website">↗ Visit</a>
-        </div>
-      </div>
-
-      <!-- Vomad Rentals spot 2 -->
-      <div class="portfolio-card">
-        <div class="pc-img-wrap">
-          <img class="pc-screenshot" loading="lazy"
-            src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/vomadrentals.png"
-            alt="Vomad Rentals equipment rental company website screenshot, BC">
-        </div>
-        <div class="pc-info">
-          <div>
-            <div class="pc-name">Vomad Rentals</div>
-            <div class="pc-type">Equipment Rentals · BC</div>
-          </div>
-          <a href="https://www.vomadrentals.ca" target="_blank" rel="noopener" class="pc-tag" style="text-decoration:none;cursor:pointer;" aria-label="Visit Vomad Rentals website">↗ Visit</a>
-        </div>
-      </div>
-
-      <!-- Chipd Golf spot 3 -->
-      <div class="portfolio-card">
-        <div class="pc-img-wrap">
-          <img class="pc-screenshot" loading="lazy"
-            src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/chipd.png"
-            alt="Chipd Golf tee time cancellation alerts website screenshot, BC">
-        </div>
-        <div class="pc-info">
-          <div>
-            <div class="pc-name">Chipd Golf</div>
-            <div class="pc-type">Tee Time Cancellation Alerts · BC</div>
-          </div>
-          <a href="https://www.chipdgolf.ca" target="_blank" rel="noopener" class="pc-tag" style="text-decoration:none;cursor:pointer;" aria-label="Visit Chipd Golf website">↗ Visit</a>
-        </div>
-      </div>
-
-      <!-- Little Greens Farm -->
-      <div class="portfolio-card">
-        <div class="pc-img-wrap">
-          <img class="pc-screenshot" loading="lazy"
-            src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/little-greens-farm.png"
-            alt="Little Greens Farm organic microgreens website screenshot, South Surrey BC">
-        </div>
-        <div class="pc-info">
-          <div>
-            <div class="pc-name">Little Greens Farm</div>
-            <div class="pc-type">Organic Microgreens · South Surrey</div>
-          </div>
-          <div class="pc-tag">Starter</div>
-        </div>
-      </div>
-
-      <!-- Atwood Furniture -->
-      <div class="portfolio-card">
-        <div class="pc-img-wrap">
-          <img class="pc-screenshot" loading="lazy"
-            src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/atwood-furniture.png"
-            alt="Atwood Furniture Co. handcrafted furniture website screenshot, BC">
-        </div>
-        <div class="pc-info">
-          <div>
-            <div class="pc-name">Atwood Furniture Co.</div>
-            <div class="pc-type">Handcrafted Furniture · BC</div>
-          </div>
-          <div class="pc-tag">Active Biz</div>
-        </div>
-      </div>
-
-      <!-- Lark Knives -->
-      <div class="portfolio-card">
-        <div class="pc-img-wrap">
-          <img class="pc-screenshot" loading="lazy"
-            src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/lark-knives.png"
-            alt="Lark Knives custom knife making website screenshot, BC">
-        </div>
-        <div class="pc-info">
-          <div>
-            <div class="pc-name">Lark Knives</div>
-            <div class="pc-type">Custom Knife Making · BC</div>
-          </div>
-          <div class="pc-tag">Active Biz</div>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- TEAM -->
-  <section id="team">
-    <p class="section-label reveal">The Team</p>
-    <h2 class="reveal">Who's<br />Behind It.</h2>
-    <p class="reveal" style="color:var(--grey);max-width:520px;font-size:0.95rem;line-height:1.8;margin-top:1rem;">Two people. One mission. Get local BC businesses online without the runaround.</p>
-
-    <div class="team-grid reveal">
-
-      <!-- Adam -->
-      <div class="team-card">
-        <div class="team-photo-wrap">
-          <img class="team-photo" loading="lazy"
-            src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/1_20260506_204743_0000.png"
-            alt="Adam Vollet, Founder">
-        </div>
-        <div class="team-info">
-          <div class="team-title">Founder &amp; Lead Designer</div>
-          <div class="team-name">Adam Vollet</div>
-          <p class="team-bio">Adam has spent years designing complex systems for enterprise clients, certified across AWS, CompTIA, and cybersecurity, but his favorite problems tend to be the simple ones nobody's bothered to solve. Like the fact that half the best local businesses in BC don't have a website worth finding. He also runs a couple of web platforms on the side and has a well-documented habit of collecting hobbies. Stackwell came out of all of that: less a business idea, more an obvious gap that needed filling.</p>
-          <span class="team-tag">British Columbia</span>
-        </div>
-      </div>
-
-      <!-- Hank -->
-      <div class="team-card team-card-hank">
-        <div class="team-photo-wrap">
-          <img class="team-photo" loading="lazy"
-            src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/2_20260506_204743_0001.png"
-            alt="Hank, Chief Morale Officer">
-        </div>
-        <div class="team-info">
-          <div class="team-title">Chief Morale Officer</div>
-          <div class="team-name">Hank</div>
-          <p class="team-bio">Hank is a black lab with zero web design skills and absolutely no intention of developing any. His responsibilities include occupying the office chair, providing unsolicited feedback on lunch choices, and ensuring no deadline ever gets taken too seriously. Since joining the team he has successfully attended zero client calls, chewed through one charging cable, and dramatically improved average office morale by approximately 51%. He is, by most measures, irreplaceable.</p>
-          <span class="team-tag">Good Boy. BC</span>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- FAQ -->
-  <section id="faq">
-    <p class="section-label reveal">Common Questions</p>
-    <h2 class="reveal">Straight<br />Answers.</h2>
-    <p class="reveal" style="color:var(--grey);max-width:520px;font-size:0.95rem;line-height:1.8;margin-top:1rem;">No tech jargon. No runaround. Here's what people actually ask before they sign up.</p>
-
-    <div class="faq-grid reveal">
-
-      <div class="faq-item">
-        <button class="faq-q" aria-expanded="false">
-          <span class="faq-q-text">What's actually included in the monthly fee?</span>
-          <span class="faq-icon">+</span>
-        </button>
-        <div class="faq-a" role="region">
-          <p>Everything your site needs to exist and stay current. Hosting, SSL, domain management, and content updates are all bundled in. No separate invoices for renewals, no surprise charges when you need a change made. What you pay on day one is what you pay every month.</p>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-q" aria-expanded="false">
-          <span class="faq-q-text">How long does it take to get my site live?</span>
-          <span class="faq-icon">+</span>
-        </button>
-        <div class="faq-a" role="region">
-          <p>Most sites are ready for your review within 3 to 5 business days. Once you've approved it, we connect your domain and go live. The whole process, start to finish, is typically under two weeks. Even faster if you have your content ready to go.</p>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-q" aria-expanded="false">
-          <span class="faq-q-text">Do I own my website?</span>
-          <span class="faq-icon">+</span>
-        </button>
-        <div class="faq-a" role="region">
-          <p>Yes, fully. Your content, your domain, your site. All yours. If you ever decide to take hosting elsewhere, we hand everything over. No lock-in, no held files, no funny business. We think that's just how it should work.</p>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-q" aria-expanded="false">
-          <span class="faq-q-text">What if I want to cancel?</span>
-          <span class="faq-icon">+</span>
-        </button>
-        <div class="faq-a" role="region">
-          <p>Cancel anytime, no penalty. There are no long-term contracts and no cancellation fees. Just let us know before your next billing date and you're done. We'll give you your site files and point you in the right direction if you want to move hosting somewhere else.</p>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-q" aria-expanded="false">
-          <span class="faq-q-text">I already have a website. Can you just take over managing it?</span>
-          <span class="faq-icon">+</span>
-        </button>
-        <div class="faq-a" role="region">
-          <p>Yes. If you're on GoDaddy, Wix, Squarespace, or similar, and just tired of paying too much for too little. We can migrate your site and take over. Hosting, updates, domain, all handled. Check out the "Already Have a Website?" section under Pricing for details.</p>
-          <p style="margin-top:1rem;">Already working with a marketing agency or web firm? We can take over the hosting and day-to-day management side while they stay focused on the marketing. We'd just need a bit more info about your current setup to make sure the transition is smooth. Reach out and we'll figure it out.</p>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-q" aria-expanded="false">
-          <span class="faq-q-text">How do content updates work?</span>
-          <span class="faq-icon">+</span>
-        </button>
-        <div class="faq-a" role="region">
-          <p>Simple: send us an email or message with what you need changed. New hours, a photo swap, updated menu prices, a seasonal promo. Whatever it is. We handle it, usually the same day. Each plan includes a set number of updates per month (2 on Starter, 6 on Growth, unlimited on Pro). Need something outside that? Extra updates are $25 each.</p>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-q" aria-expanded="false">
-          <span class="faq-q-text">Do I need to provide my own photos and content?</span>
-          <span class="faq-icon">+</span>
-        </button>
-        <div class="faq-a" role="region">
-          <p>It helps, but it's not required. If you have photos and written content ready, we'll use them. If you don't, we can work with stock photography and help shape the copy based on a quick conversation about your business. Your site will still look sharp either way.</p>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-q" aria-expanded="false">
-          <span class="faq-q-text">Is there a setup or build fee on top of the monthly price?</span>
-          <span class="faq-icon">+</span>
-        </button>
-        <div class="faq-a" role="region">
-          <p>There can be, depending on the complexity of your site. Simple single-page sites for most service businesses are often included. More involved builds. Multiple pages, booking integrations, custom features. One-time build fee of $250. We'll be upfront about that before anything starts. No surprises.</p>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-q" aria-expanded="false">
-          <span class="faq-q-text">What if I need something outside the plan, like a booking system or online store?</span>
-          <span class="faq-icon">+</span>
-        </button>
-        <div class="faq-a" role="region">
-          <p>We handle this regularly, and we have two purpose-built tools for it. <strong>Stackwell-Book</strong> is our own booking platform that plugs directly into your site. Online scheduling, client management, confirmation emails. No third-party login required, no monthly Acuity bill. <strong>Stackwell-Shop</strong> is our lightweight e-commerce add-on, built for local businesses that want to sell products or services online without the Shopify overhead.</p>
-          <p style="margin-top:1rem;">Both are available as add-ons to any plan. If you need something more custom, we'll talk through it and give you a straight answer on what's realistic.</p>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-q" aria-expanded="false">
-          <span class="faq-q-text">Who am I actually dealing with? Is this a big agency?</span>
-          <span class="faq-icon">+</span>
-        </button>
-        <div class="faq-a" role="region">
-          <p>No. Stackwell is a small BC-based operation run by Adam, a senior technical architect who built enterprise systems for years and got tired of watching good local businesses get gouged by platforms that don't care about them. When you email, you're talking to the person who built your site. No ticket queues, no overseas handoffs.</p>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- CONTACT -->
-  <section id="contact">
-    <p class="section-label reveal" style="justify-content:center;">Contact</p>
-    <div class="contact-layout reveal">
-
-      <!-- LEFT -->
-      <div class="contact-left">
-        <h2>Let's Talk<br />About Your<br />Business.</h2>
-        <p>Fill out the form and we'll get back to you within one business day. No sales pressure, no commitment. Just a straight conversation about whether we're a good fit.</p>
-        <div class="contact-detail">
-          <span class="contact-detail-label">Email</span>
-          <a href="mailto:adam@stackwell.digital">adam@stackwell.digital</a>
-        </div>
-        <div class="contact-detail" style="border-top:none;margin-top:1rem;padding-top:0;">
-          <span class="contact-detail-label">Based In</span>
-          <span style="font-family:var(--mono);font-size:0.75rem;letter-spacing:0.08em;color:var(--grey-light);">British Columbia, Canada</span>
-        </div>
-      </div>
-
-      <!-- RIGHT: FORM -->
-      <div>
-        <div class="cf-status" id="cfStatus"></div>
-        <div class="contact-form" id="contactForm">
-          <div class="cf-row">
-            <div class="cf-field">
-              <label for="cf-name">Your Name</label>
-              <input type="text" id="cf-name" name="name" placeholder="Jane Smith" autocomplete="name" />
+    <!-- CARD 10: FAQ -->
+    <div class="flow-section" id="card-faq">
+      <div class="flow-inner">
+        <span class="card-index">12 / 12</span>
+        <div class="section-pad">
+          <span class="card-big-title">FAQ</span>
+          <h2>Straight<br />Answers.</h2>
+          <p style="color:var(--grey);max-width:520px;font-size:0.95rem;line-height:1.8;margin-top:1rem;">No tech jargon. No runaround. Here's what people actually ask before they sign up.</p>
+          <div class="faq-grid">
+            <div class="faq-item">
+              <button class="faq-q" aria-expanded="false"><span class="faq-q-text">What's actually included in the monthly fee?</span><span class="faq-icon">+</span></button>
+              <div class="faq-a" role="region"><p>Everything your site needs to exist and stay current. Hosting, SSL, domain management, and content updates are all bundled in. No separate invoices for renewals, no surprise charges when you need a change made. What you pay on day one is what you pay every month.</p></div>
             </div>
-            <div class="cf-field">
-              <label for="cf-biz">Business Name</label>
-              <input type="text" id="cf-biz" name="business" placeholder="Smith Plumbing Co." />
+            <div class="faq-item">
+              <button class="faq-q" aria-expanded="false"><span class="faq-q-text">How long does it take to get my site live?</span><span class="faq-icon">+</span></button>
+              <div class="faq-a" role="region"><p>Most sites are ready for your review within 3 to 5 business days. Once you've approved it, we connect your domain and go live. The whole process, start to finish, is typically under two weeks.</p></div>
+            </div>
+            <div class="faq-item">
+              <button class="faq-q" aria-expanded="false"><span class="faq-q-text">Do I own my website?</span><span class="faq-icon">+</span></button>
+              <div class="faq-a" role="region"><p>Yes, fully. Your content, your domain, your site. All yours. If you ever decide to take hosting elsewhere, we hand everything over. No lock-in, no held files, no funny business.</p></div>
+            </div>
+            <div class="faq-item">
+              <button class="faq-q" aria-expanded="false"><span class="faq-q-text">What if I want to cancel?</span><span class="faq-icon">+</span></button>
+              <div class="faq-a" role="region"><p>Cancel anytime, no penalty. There are no long-term contracts and no cancellation fees. Just let us know before your next billing date and you're done.</p></div>
+            </div>
+            <div class="faq-item">
+              <button class="faq-q" aria-expanded="false"><span class="faq-q-text">I already have a website. Can you just take over managing it?</span><span class="faq-icon">+</span></button>
+              <div class="faq-a" role="region"><p>Yes. If you're on GoDaddy, Wix, Squarespace, or similar, and just tired of paying too much for too little, we can migrate your site and take over. Hosting, updates, domain, all handled. Check out the Pricing card for details.</p></div>
+            </div>
+            <div class="faq-item">
+              <button class="faq-q" aria-expanded="false"><span class="faq-q-text">How do content updates work?</span><span class="faq-icon">+</span></button>
+              <div class="faq-a" role="region"><p>Simple: send us an email or message with what you need changed. New hours, a photo swap, updated menu prices, a seasonal promo. We handle it, usually the same day. Each plan includes a set number of updates per month (2 on Starter, 6 on Growth, unlimited on Pro). Extra updates are $25 each.</p></div>
+            </div>
+            <div class="faq-item">
+              <button class="faq-q" aria-expanded="false"><span class="faq-q-text">Do I need to provide my own photos and content?</span><span class="faq-icon">+</span></button>
+              <div class="faq-a" role="region"><p>It helps, but it's not required. If you have photos and written content ready, we'll use them. If you don't, we can work with stock photography and help shape the copy based on a quick conversation about your business.</p></div>
+            </div>
+            <div class="faq-item">
+              <button class="faq-q" aria-expanded="false"><span class="faq-q-text">Is there a setup or build fee on top of the monthly price?</span><span class="faq-icon">+</span></button>
+              <div class="faq-a" role="region"><p>There can be, depending on the complexity of your site. Simple single-page sites for most service businesses are often included. More involved builds: one-time build fee of $250. We'll be upfront about that before anything starts. No surprises.</p></div>
+            </div>
+            <div class="faq-item">
+              <button class="faq-q" aria-expanded="false"><span class="faq-q-text">What if I need something outside the plan, like a booking system or online store?</span><span class="faq-icon">+</span></button>
+              <div class="faq-a" role="region"><p>We have two purpose-built tools for it. Stackwell-Book is our own booking platform that plugs directly into your site. Stackwell-Shop is our lightweight e-commerce add-on built for local businesses. Both are available as add-ons to any plan.</p></div>
+            </div>
+            <div class="faq-item">
+              <button class="faq-q" aria-expanded="false"><span class="faq-q-text">Who am I actually dealing with? Is this a big agency?</span><span class="faq-icon">+</span></button>
+              <div class="faq-a" role="region"><p>No. Stackwell is a small BC-based operation run by Adam, a senior technical architect who built enterprise systems for years and got tired of watching good local businesses get gouged by platforms that don't care about them. When you email, you're talking to the person who built your site.</p></div>
             </div>
           </div>
-          <div class="cf-row">
-            <div class="cf-field">
-              <label for="cf-email">Email Address</label>
-              <input type="email" id="cf-email" name="email" placeholder="you@yourbusiness.com" autocomplete="email" />
-            </div>
-            <div class="cf-field">
-              <label for="cf-phone">Phone (optional)</label>
-              <input type="tel" id="cf-phone" name="phone" placeholder="604-555-0100" autocomplete="tel" />
-            </div>
-          </div>
-          <div class="cf-field">
-            <label for="cf-plan">Plan You're Interested In</label>
-            <select id="cf-plan" name="plan">
-              <option value="">Not sure yet</option>
-              <option value="Starter">Starter (new site) · $60/mo</option>
-              <option value="Growth">Growth (new site) · $100/mo</option>
-              <option value="Pro">Pro (new site) · $150/mo</option>
-              <option value="Hosting + Management">Hosting + Management (existing site) · $40/mo</option>
-              <option value="Just exploring">Just exploring</option>
-            </select>
-          </div>
-          <div class="cf-field">
-            <label for="cf-msg">Tell Us a Bit About Your Business</label>
-            <textarea id="cf-msg" name="message" placeholder="What kind of business do you run? Do you currently have a website? What are you looking for help with?"></textarea>
-          </div>
-          <button type="button" class="cf-submit" id="cfSubmit">Send Message</button>
         </div>
       </div>
-
     </div>
-  </section>
 
-  <!-- FOOTER -->
+  </main>
+
+  <!-- FOOTER (outside flow, normal scroll) -->
   <footer>
     <div class="footer-left">&copy; 2026 Stackwell Digital · British Columbia, Canada</div>
     <div class="footer-right">
@@ -2847,8 +2500,110 @@
     </div>
   </footer>
 
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollToPlugin.min.js"></script>
+
   <script>
-    // Hamburger menu
+    // ── FLOW ANIMATION (desktop only) ──
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+
+      // Intercept all #card-* anchor clicks and use GSAP scrollTo
+      // so pinned sections don't break native anchor scroll
+      document.querySelectorAll('a[href^="#card-"]').forEach(link => {
+        link.addEventListener('click', e => {
+          e.preventDefault();
+          const target = document.querySelector(link.getAttribute('href'));
+          if (!target) return;
+          // close mobile menu if open
+          document.getElementById('hamburger').classList.remove('open');
+          document.getElementById('mobileMenu').classList.remove('open');
+          document.body.style.overflow = '';
+          gsap.to(window, {
+            duration: 0.8,
+            scrollTo: { y: target, offsetY: 0 },
+            ease: 'power2.inOut'
+          });
+        });
+      });
+
+      const isMobile = window.innerWidth <= 768;
+      const rotationStart = isMobile ? 12 : 30;
+      const rotationOrigin = isMobile ? 'bottom center' : 'bottom left';
+      const sections = document.querySelectorAll('.flow-section');
+
+      // Force every card to be at least 100vh tall so pin duration
+      // always covers the full rotate-in travel of the next card
+      function enforceMinHeight() {
+        const vh = window.innerHeight;
+        sections.forEach(section => {
+          const inner = section.querySelector('.flow-inner');
+          if (!inner) return;
+          inner.style.minHeight = '100vh';
+          const natural = inner.scrollHeight;
+          inner.style.minHeight = Math.max(natural, vh) + 'px';
+        });
+      }
+
+      enforceMinHeight();
+
+      const navEl = document.getElementById('nav');
+      const navHeight = navEl ? navEl.offsetHeight : 96;
+
+      sections.forEach((section, i) => {
+        gsap.set(section, { zIndex: i + 1 });
+
+        const inner = section.querySelector('.flow-inner');
+        if (!inner) return;
+
+        // All cards except first rotate in
+        if (i > 0) {
+          gsap.set(inner, { rotation: rotationStart, transformOrigin: rotationOrigin });
+          gsap.to(inner, {
+            rotation: 0,
+            ease: 'none',
+            scrollTrigger: {
+              trigger: section,
+              start: 'top bottom',
+              end: `top ${navHeight}px`,
+              scrub: true,
+            }
+          });
+        }
+
+        // All cards except last get pinned
+        if (i < sections.length - 1) {
+          ScrollTrigger.create({
+            trigger: section,
+            start: 'bottom bottom',
+            end: 'bottom top',
+            pin: true,
+            pinSpacing: false,
+          });
+        }
+      });
+
+      ScrollTrigger.refresh();
+
+      let resizeTimer;
+      window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => {
+          enforceMinHeight();
+          ScrollTrigger.refresh();
+        }, 200);
+      });
+    }
+
+    // ── NAV SCROLL ──
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 40);
+    });
+
+    // ── HAMBURGER ──
     const hamburger = document.getElementById('hamburger');
     const mobileMenu = document.getElementById('mobileMenu');
     hamburger.addEventListener('click', () => {
@@ -2866,18 +2621,11 @@
       });
     });
 
-    // Nav scroll effect
-    const nav = document.getElementById('nav');
-    window.addEventListener('scroll', () => {
-      nav.classList.toggle('scrolled', window.scrollY > 40);
-    });
-
-    // FAQ accordion
+    // ── FAQ ──
     document.querySelectorAll('.faq-item').forEach(item => {
       const btn = item.querySelector('.faq-q');
       btn.addEventListener('click', () => {
         const isOpen = item.classList.contains('open');
-        // close all
         document.querySelectorAll('.faq-item.open').forEach(o => {
           o.classList.remove('open');
           o.querySelector('.faq-q').setAttribute('aria-expanded', 'false');
@@ -2889,7 +2637,7 @@
       });
     });
 
-    // Contact form
+    // ── CONTACT FORM ──
     document.getElementById('cfSubmit').addEventListener('click', async () => {
       const name    = document.getElementById('cf-name').value.trim();
       const email   = document.getElementById('cf-email').value.trim();
@@ -2905,53 +2653,27 @@
         status.className = 'cf-status error';
         return;
       }
-
       btn.disabled = true;
       btn.textContent = 'Sending...';
       status.className = 'cf-status';
-
       try {
         const res = await fetch('https://submit-stackwell.adam-8d6.workers.dev', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ name, email, business: biz, phone, plan, message, source: 'contact-form' })
         });
-
         if (res.ok) {
-          status.textContent = 'Message sent. We\'ll be in touch within one business day.';
+          status.textContent = "Message sent. We'll be in touch within one business day.";
           status.className = 'cf-status success';
           document.getElementById('contactForm').querySelectorAll('input, textarea, select').forEach(el => el.value = '');
-        } else {
-          throw new Error('Server error');
-        }
+        } else { throw new Error('Server error'); }
       } catch (e) {
         status.textContent = 'Something went wrong. Email us directly at adam@stackwell.digital';
         status.className = 'cf-status error';
       }
-
       btn.disabled = false;
       btn.textContent = 'Send Message';
     });
-    // Scroll reveal with staggered timing
-    const revealEls = document.querySelectorAll('.reveal');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          // Get parent section or use document as fallback
-          const parent = entry.target.closest('section') || document;
-          const revealsInParent = parent.querySelectorAll('.reveal');
-          const index = Array.from(revealsInParent).indexOf(entry.target);
-          
-          // Stagger delay: 0s for first, 0.1s for second, 0.2s for third, etc.
-          const delay = Math.min(index * 0.1, 0.3);
-          entry.target.style.transitionDelay = `${delay}s`;
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.12 });
-    revealEls.forEach(el => observer.observe(el));
-
   </script>
 
   <!-- LOCAL BUSINESS SCHEMA -->
@@ -2963,11 +2685,7 @@
     "url": "https://stackwell.digital",
     "logo": "https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/logo.photo.png",
     "description": "Web design and managed hosting for local businesses in British Columbia. Flat monthly subscription, no contracts.",
-    "address": {
-      "@type": "PostalAddress",
-      "addressRegion": "BC",
-      "addressCountry": "CA"
-    },
+    "address": { "@type": "PostalAddress", "addressRegion": "BC", "addressCountry": "CA" },
     "areaServed": [
       { "@type": "City", "name": "Surrey" },
       { "@type": "City", "name": "Langley" },
@@ -2978,38 +2696,167 @@
     "priceRange": "$$",
     "email": "adam@stackwell.digital",
     "foundingDate": "2025",
-    "founder": {
-      "@type": "Person",
-      "name": "Adam Vollet"
-    },
-    "hasOfferCatalog": {
-      "@type": "OfferCatalog",
-      "name": "Website Plans",
-      "itemListElement": [
-        {
-          "@type": "Offer",
-          "name": "Starter Plan",
-          "description": "Professional website, domain management, hosting, 2 updates/mo, annual refresh",
-          "price": "120",
-          "priceCurrency": "CAD"
-        },
-        {
-          "@type": "Offer",
-          "name": "Growth Plan",
-          "description": "Everything in Starter plus 6 updates/mo, SEO setup, monthly analytics report",
-          "price": "175",
-          "priceCurrency": "CAD"
-        },
-        {
-          "@type": "Offer",
-          "name": "Pro Plan",
-          "description": "Unlimited updates, same-day response, Google Business Profile management, quarterly strategy",
-          "price": "250",
-          "priceCurrency": "CAD"
-        }
-      ]
-    }
+    "founder": { "@type": "Person", "name": "Adam Vollet" }
   }
   </script>
 
+  <!-- AUDIT TOOL SCRIPT -->
+  <script>
+    async function runAudit(e) {
+      e.preventDefault();
+
+      const url = document.getElementById('auditUrl').value.trim();
+      const loading = document.getElementById('auditLoading');
+      const error = document.getElementById('auditError');
+      const results = document.getElementById('auditResults');
+      const cta = document.getElementById('ctaSection');
+      const btn = document.getElementById('auditBtn');
+
+      // Reset states
+      error.classList.remove('visible');
+      results.classList.remove('visible');
+      cta.style.display = 'none';
+      btn.disabled = true;
+      loading.style.display = 'flex';
+
+      try {
+        // Validate URL format
+        const urlObj = new URL(url);
+        const normalizedUrl = urlObj.toString();
+
+        // Call Worker to run audit
+        const response = await fetch('https://audit-stackwell.adam-8d6.workers.dev', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ url: normalizedUrl })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok || !data.success) {
+          throw new Error(data.error || 'Audit failed');
+        }
+
+        // Render results
+        renderResults(normalizedUrl, data.checks);
+        results.classList.add('visible');
+        cta.style.display = 'flex';
+
+        // Store in session for contact form
+        sessionStorage.setItem('auditData', JSON.stringify({
+          url: normalizedUrl,
+          checks: data.checks,
+          timestamp: new Date().toISOString()
+        }));
+
+      } catch (err) {
+        console.error('Audit error:', err);
+        error.textContent = err.message || 'Could not audit this site. Make sure the URL is correct and the site is publicly accessible.';
+        error.classList.add('visible');
+      } finally {
+        loading.style.display = 'none';
+        btn.disabled = false;
+      }
+    }
+
+    function renderResults(url, checks) {
+      // Calculate score - count passing checks
+      const passingChecks = [
+        checks.https,
+        checks.title,
+        checks.metaDescription,
+        checks.h1,
+        checks.viewport,
+        checks.favicon,
+        checks.canonical,
+        checks.lang
+      ].filter(Boolean).length;
+
+      const totalChecks = 8;
+      const score = Math.round((passingChecks / totalChecks) * 100);
+
+      // Grade
+      let gradeLetter = 'F';
+      let gradeDescription = 'Needs serious work';
+      if (score >= 88) { gradeLetter = 'A'; gradeDescription = 'Really solid'; }
+      else if (score >= 75) { gradeLetter = 'B'; gradeDescription = 'Pretty good'; }
+      else if (score >= 63) { gradeLetter = 'C'; gradeDescription = 'Okay, but missing basics'; }
+      else if (score >= 50) { gradeLetter = 'D'; gradeDescription = 'Missing key stuff'; }
+
+      // Render header
+      document.getElementById('resultsUrl').textContent = url;
+      const gradeEl = document.getElementById('scoreGrade');
+      gradeEl.textContent = gradeLetter;
+      gradeEl.className = `score-grade ${gradeLetter.toLowerCase()}`;
+      document.getElementById('scoreSummary').textContent = gradeDescription;
+
+      // Render simplified checks (business-focused)
+      const body = document.getElementById('resultsBody');
+      body.innerHTML = `
+        <div class="check-item">
+          <div class="check-label">Security</div>
+          <div class="check-value">
+            <span class="check-icon ${checks.https ? 'pass' : 'fail'}">${checks.https ? '✓' : '✕'}</span>
+            <span>${checks.https ? 'Your site is secure' : 'Not secure'}</span>
+          </div>
+        </div>
+
+        <div class="check-item">
+          <div class="check-label">Mobile Friendly</div>
+          <div class="check-value">
+            <span class="check-icon ${checks.viewport ? 'pass' : 'fail'}">${checks.viewport ? '✓' : '✕'}</span>
+            <span>${checks.viewport ? 'Works on phones' : 'Doesn't work on phones'}</span>
+          </div>
+        </div>
+
+        <div class="check-item">
+          <div class="check-label">Speed</div>
+          <div class="check-value">
+            <span class="check-icon ${checks.loadTime < 3000 ? 'pass' : checks.loadTime < 5000 ? 'warning' : 'fail'}">${checks.loadTime < 3000 ? '✓' : checks.loadTime < 5000 ? '⚠' : '✕'}</span>
+            <span>${checks.loadTime < 3000 ? 'Loads fast' : checks.loadTime < 5000 ? 'A bit slow' : 'Too slow'}</span>
+          </div>
+        </div>
+
+        <div class="check-item">
+          <div class="check-label">Search Visibility</div>
+          <div class="check-value">
+            <span class="check-icon ${checks.title && checks.metaDescription && checks.h1 ? 'pass' : 'fail'}">${checks.title && checks.metaDescription && checks.h1 ? '✓' : '✕'}</span>
+            <span>${checks.title && checks.metaDescription && checks.h1 ? 'Google can find you' : 'Google has trouble finding you'}</span>
+          </div>
+        </div>
+
+        <div class="check-item">
+          <div class="check-label">Branding</div>
+          <div class="check-value">
+            <span class="check-icon ${checks.favicon && checks.openGraph ? 'pass' : 'fail'}">${checks.favicon && checks.openGraph ? '✓' : '✕'}</span>
+            <span>${checks.favicon && checks.openGraph ? 'Looks polished' : 'Looks unfinished'}</span>
+          </div>
+          <div class="metrics-badge">15+ metrics tested</div>
+        </div>
+      `;
+
+      // Render issues in plain English
+      const issues = [];
+      if (!checks.https) issues.push('Your site isn\'t encrypted. Visitors won\'t trust it, and Google ranks it lower.');
+      if (!checks.viewport) issues.push('Your site doesn\'t work properly on phones. Most of your traffic is mobile.');
+      if (checks.loadTime > 3000) issues.push(`Your site is slow (${(checks.loadTime / 1000).toFixed(1)}s). People leave if it takes too long to load.`);
+      if (!checks.title || !checks.metaDescription || !checks.h1) issues.push('Google can\'t properly understand your site. You\'re missing basic info that helps search rankings.');
+      if (!checks.favicon) issues.push('No icon in the browser tab. Small detail, but it looks unprofessional.');
+      if (!checks.openGraph) issues.push('Your site won\'t preview nicely when shared on social media (Facebook, LinkedIn, etc.).');
+
+      if (issues.length > 0) {
+        const issuesSection = document.getElementById('resultsIssues');
+        const issuesList = document.getElementById('issuesList');
+        issuesList.innerHTML = issues.map(issue => `
+          <li class="issue-item">
+            <span class="issue-icon">✕</span>
+            <span class="issue-text">${issue}</span>
+          </li>
+        `).join('');
+        issuesSection.style.display = 'block';
+      }
+    }
+  </script>
+
 </body>
+</html>
