@@ -1355,43 +1355,45 @@
       .services-grid { grid-template-columns: 1fr 1fr; gap: 0.75rem; background: transparent; border: none; }
       .service-card { border: 1px solid var(--border); border-radius: 4px; padding: 1.25rem 1rem; }
 
-      /* pricing: full-width stacked cards on mobile */
+      /* pricing: 3-col compact on mobile */
       .plans {
-        display: flex !important;
-        flex-direction: column !important;
-        border: none !important;
-        gap: 1rem !important;
+        display: grid !important;
+        grid-template-columns: repeat(3, 1fr) !important;
+        border: 1px solid var(--border) !important;
+        gap: 0 !important;
       }
       .plan {
-        border: 1px solid var(--border) !important;
         border-right: 1px solid var(--border) !important;
-        padding: 1.75rem 1.5rem !important;
+        padding: 1rem 0.6rem !important;
         width: 100% !important;
       }
-      .plan:last-child { border-right: 1px solid var(--border) !important; }
-      .plan.featured {
-        border-color: var(--accent) !important;
-        border-width: 2px !important;
-      }
-      .plan-price { font-size: 3.5rem !important; }
-      .plan-cycle { font-size: 0.65rem !important; margin-bottom: 1.5rem !important; }
-      .plan-name { font-size: 0.62rem !important; margin-bottom: 1rem !important; }
-      .plan-features { gap: 0.6rem !important; margin-bottom: 1.75rem !important; }
-      .plan-features li { font-size: 0.88rem !important; }
-      .plan-cta { font-size: 0.65rem !important; padding: 0.85rem !important; }
+      .plan:last-child { border-right: none !important; }
+      .plan.featured { border-top: 2px solid var(--accent) !important; }
+      .plan-price { font-size: 1.75rem !important; line-height: 1.1 !important; }
+      .plan-cycle { font-size: 0.52rem !important; margin-bottom: 1rem !important; letter-spacing: 0.05em !important; }
+      .plan-name { font-size: 0.52rem !important; margin-bottom: 0.75rem !important; letter-spacing: 0.1em !important; }
+      .plan-features { gap: 0.45rem !important; margin-bottom: 1.25rem !important; }
+      .plan-features li { font-size: 0.72rem !important; line-height: 1.4 !important; }
+      .plan-features li::before { font-size: 0.35rem !important; margin-top: 0.3rem !important; }
+      .plan-cta { font-size: 0.52rem !important; padding: 0.65rem 0.25rem !important; letter-spacing: 0.06em !important; }
       .plan.featured .plan-cta {
         background: var(--accent) !important;
         color: #ffffff !important;
         border-color: var(--accent) !important;
-        font-size: 0.72rem !important;
-        padding: 1rem !important;
       }
-      .plan::before { margin-bottom: 0.75rem; }
-      .plan:not(.featured)::before { margin-bottom: 0.75rem; }
+      .plan::before { margin-bottom: 0.5rem !important; font-size: 0.42rem !important; }
+      .plan:not(.featured)::before { margin-bottom: 0.5rem !important; height: 0.42rem !important; }
 
-      .addons-grid { grid-template-columns: 1fr; gap: 0.75rem; }
-      .addon-card { padding: 1.5rem 1.25rem; border-radius: 4px; }
-      .addon-card ul li { font-size: 0.85rem; margin-bottom: 0.65rem; }
+      .addons-grid { grid-template-columns: repeat(3, 1fr); gap: 0.35rem; }
+      .addon-card { padding: 0.75rem 0.5rem !important; border-radius: 4px; }
+      .addon-card p { font-size: 0.85rem !important; letter-spacing: 0.02em !important; margin-bottom: 0.35rem !important; }
+      .addon-card ul { margin-bottom: 1rem !important; }
+      .addon-card ul li { font-size: 0.62rem !important; margin-bottom: 0.4rem !important; line-height: 1.3 !important; }
+      .addon-card ul li span { font-size: 0.55rem !important; }
+      .addon-card > div { margin-bottom: 0.75rem !important; }
+      .addon-card > div > div:first-child { font-size: 1.6rem !important; }
+      .addon-card > div > div:last-child { font-size: 0.62rem !important; }
+      .addon-card a { font-size: 0.52rem !important; padding: 0.6rem 0.25rem !important; letter-spacing: 0.06em !important; }
       .addons-wrap { margin-top: 3rem; padding-top: 3rem; }
       .migration-body { grid-template-columns: 1fr; }
       .migration-plan { border-right: none; border-bottom: 1px solid var(--border); }
