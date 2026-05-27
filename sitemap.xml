@@ -7,13 +7,31 @@
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://stackwell.digital/#card-reality</loc>
+    <loc>https://stackwell.digital/audit</loc>
     <lastmod>2026-05-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://stackwell.digital/#card-audit</loc>
+    <loc>https://stackwell.digital/pricing</loc>
+    <lastmod>2026-05-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://stackwell.digital/reports</loc>
+    <lastmod>2026-05-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://stackwell.digital/portfolio</loc>
+    <lastmod>2026-05-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://stackwell.digital/contact</loc>
     <lastmod>2026-05-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
@@ -31,28 +49,10 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://stackwell.digital/#card-pricing</loc>
-    <lastmod>2026-05-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.95</priority>
-  </url>
-  <url>
     <loc>https://stackwell.digital/#card-addons</loc>
     <lastmod>2026-05-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://stackwell.digital/#card-reports</loc>
-    <lastmod>2026-05-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://stackwell.digital/#card-portfolio</loc>
-    <lastmod>2026-05-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
   </url>
   <url>
     <loc>https://stackwell.digital/#card-team</loc>
@@ -65,11 +65,5 @@
     <lastmod>2026-05-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://stackwell.digital/#card-contact</loc>
-    <lastmod>2026-05-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
   </url>
 </urlset>
