@@ -1384,6 +1384,10 @@
       .plan::before { margin-bottom: 0.5rem !important; font-size: 0.42rem !important; }
       .plan:not(.featured)::before { margin-bottom: 0.5rem !important; height: 0.42rem !important; }
 
+      /* cards: no forced 100vh on mobile — shrink to content */
+      .flow-section { min-height: unset !important; }
+      .flow-inner { min-height: unset !important; padding-top: 5rem !important; padding-bottom: 3rem !important; }
+
       .addons-grid { grid-template-columns: repeat(3, 1fr); gap: 0.35rem; }
       .addon-card { padding: 0.75rem 0.5rem !important; border-radius: 4px; }
       .addon-card p { font-size: 0.85rem !important; letter-spacing: 0.02em !important; margin-bottom: 0.35rem !important; }
@@ -2538,6 +2542,7 @@
       if (isMobile) {
         // just set z-index so stacking looks right, no pins no rotation
         document.querySelectorAll('.flow-section').forEach((s, i) => gsap.set(s, { zIndex: i + 1 }));
+        // don't enforceMinHeight on mobile — cards should be content height only
       } else {
 
       const rotationStart = 30;
