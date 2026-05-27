@@ -2543,6 +2543,18 @@
         // just set z-index so stacking looks right, no pins no rotation
         document.querySelectorAll('.flow-section').forEach((s, i) => gsap.set(s, { zIndex: i + 1 }));
         // don't enforceMinHeight on mobile — cards should be content height only
+
+        // Handle direct hash links on mobile
+        if (window.location.hash) {
+          const target = document.querySelector(window.location.hash);
+          if (target) {
+            setTimeout(() => {
+              const navH = document.getElementById('nav').offsetHeight;
+              const top = target.getBoundingClientRect().top + window.scrollY - navH;
+              window.scrollTo({ top: top, behavior: 'smooth' });
+            }, 100);
+          }
+        }
       } else {
 
       const rotationStart = 30;
@@ -2601,6 +2613,18 @@
       });
 
       ScrollTrigger.refresh();
+
+      // Handle direct hash links on page load (e.g. stackwell.digital/#card-audit)
+      if (window.location.hash) {
+        const target = document.querySelector(window.location.hash);
+        if (target) {
+          setTimeout(() => {
+            const navH = document.getElementById('nav').offsetHeight;
+            const top = target.getBoundingClientRect().top + window.scrollY - navH;
+            window.scrollTo({ top: top, behavior: 'smooth' });
+          }, 300);
+        }
+      }
 
       } // end desktop-only block
 
