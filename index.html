@@ -263,11 +263,11 @@
     .mobile-menu.open { display: flex; }
     .mobile-link {
       font-family: var(--display);
-      font-size: 2.5rem;
+      font-size: 1.5rem;
       letter-spacing: 0.04em;
       color: var(--grey);
       text-decoration: none;
-      padding: 0.85rem 2rem;
+      padding: 0.55rem 2rem;
       transition: color 0.2s;
       text-align: center;
     }
@@ -1743,7 +1743,7 @@
       <img src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/logo.photo.png" alt="Stackwell Digital" class="nav-logo-img" />
     </a>
     <ul class="nav-links">
-      <li><a href="#card-audit">Free Audit</a></li>
+      <li><a href="#card-audit">Free Website Audit</a></li>
       <li class="nav-dropdown">
         <a href="#card-pricing">Pricing</a>
         <div class="nav-dropdown-menu">
@@ -1768,7 +1768,7 @@
 
   <!-- MOBILE MENU -->
   <div class="mobile-menu" id="mobileMenu" role="dialog" aria-modal="true" aria-label="Navigation menu">
-    <a href="#card-audit"     class="mobile-link">Free Audit</a>
+    <a href="#card-audit"     class="mobile-link">Free Website Audit</a>
     <a href="#card-how"      class="mobile-link">How It Works</a>
     <a href="#card-pricing"  class="mobile-link">Pricing</a>
     <a href="#card-addons"   class="mobile-link">Add-Ons</a>
@@ -2626,10 +2626,24 @@
       hamburger.setAttribute('aria-expanded', isOpen);
     });
     document.querySelectorAll('.mobile-link').forEach(link => {
-      link.addEventListener('click', () => {
-        hamburger.classList.remove('open');
-        mobileMenu.classList.remove('open');
-        document.body.style.overflow = '';
+      link.addEventListener('click', (e) => {
+        const href = link.getAttribute('href');
+        if (href && href.startsWith('#')) {
+          e.preventDefault();
+          const target = document.querySelector(href);
+          hamburger.classList.remove('open');
+          mobileMenu.classList.remove('open');
+          document.body.style.overflow = '';
+          if (target) {
+            setTimeout(() => {
+              target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 50);
+          }
+        } else {
+          hamburger.classList.remove('open');
+          mobileMenu.classList.remove('open');
+          document.body.style.overflow = '';
+        }
       });
     });
 
