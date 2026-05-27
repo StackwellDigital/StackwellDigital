@@ -1019,55 +1019,100 @@
     }
     .reports-bullet-vert p { font-size: 0.8rem; color: var(--grey); line-height: 1.6; }
 
-    /* ── PORTFOLIO ── */
-    .portfolio-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.5rem;
+    /* ── PORTFOLIO ACCORDION ── */
+    .sw-acc {
+      display: flex;
+      width: 100%;
+      height: 520px;
+      overflow: hidden;
+      border: 1px solid var(--border);
       margin-top: 4rem;
     }
-    .portfolio-card {
-      display: flex;
-      flex-direction: column;
-      border: 1px solid var(--border);
-      transition: border-color 0.3s;
-      text-decoration: none;
-      color: inherit;
-      cursor: default;
-    }
-    .pc-img-wrap {
+    .sw-p {
       position: relative;
       overflow: hidden;
-      aspect-ratio: 16/10;
+      cursor: pointer;
+      transition: flex 0.65s cubic-bezier(0.4, 0, 0.2, 1);
+      flex: 1 1 0%;
+      min-width: 52px;
+      border-right: 1px solid var(--border);
       background: #0d0d0d;
     }
-    .pc-screenshot {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: top left;
-      display: block;
-      transition: transform 0.5s ease;
+    .sw-p:last-child { border-right: none; }
+    .sw-p.act { flex: 6 1 0%; }
+    .sw-bg {
+      position: absolute; inset: 0;
+      background-repeat: no-repeat;
+      background-position: center top;
+      background-size: cover;
+      transition: opacity 0.65s ease, background-size 0.65s ease;
+      opacity: 0.18;
     }
-    .pc-info {
-      padding: 1.1rem 1.25rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-top: 1px solid var(--border);
+    .sw-p.act .sw-bg {
+      opacity: 1;
+      background-size: contain;
+      background-position: center top;
     }
-    .pc-name { font-size: 0.85rem; font-weight: 500; color: var(--white); }
-    .pc-type { font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.1em; color: var(--grey); margin-top: 0.2rem; }
-    .pc-tag {
+    .sw-fade {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(10,10,10,0.97) 0%, rgba(10,10,10,0.35) 50%, rgba(10,10,10,0.1) 100%);
+    }
+    .sw-p.act .sw-fade {
+      background: linear-gradient(to top, rgba(10,10,10,0.97) 0%, rgba(10,10,10,0.25) 40%, transparent 65%);
+    }
+    .sw-side {
+      position: absolute; bottom: 1.1rem; left: 0; right: 0;
+      display: flex; justify-content: center;
+      z-index: 2;
+      transition: opacity 0.3s;
+    }
+    .sw-p.act .sw-side { opacity: 0; pointer-events: none; }
+    .sw-side span {
+      font-family: var(--display);
+      font-size: 0.8rem; letter-spacing: 0.14em;
+      color: rgba(255,255,255,0.28);
+      writing-mode: vertical-rl; transform: rotate(180deg);
+      white-space: nowrap;
+    }
+    .sw-bot {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 1.25rem 1.1rem;
+      display: flex; align-items: flex-end; gap: 0.7rem;
+      z-index: 2;
+    }
+    .sw-ic {
+      width: 38px; height: 38px; border-radius: 50%;
+      background: rgba(15,15,15,0.9);
+      border: 1px solid rgba(255,255,255,0.1);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; color: var(--accent); font-size: 0.9rem;
+    }
+    .sw-nm {
+      font-size: 1rem; font-weight: 500; color: var(--white); white-space: nowrap;
+      transition: opacity 0.45s ease 0.1s, transform 0.45s ease 0.1s;
+      opacity: 0; transform: translateX(16px);
+    }
+    .sw-p.act .sw-nm { opacity: 1; transform: translateX(0); }
+    .sw-tp {
       font-family: var(--mono);
-      font-size: 0.52rem;
-      letter-spacing: 0.15em;
-      padding: 0.3rem 0.7rem;
-      border: 1px solid var(--border);
-      color: var(--grey);
-      text-transform: uppercase;
-      flex-shrink: 0;
+      font-size: 0.56rem; letter-spacing: 0.1em; color: var(--grey);
+      text-transform: uppercase; white-space: nowrap;
+      transition: opacity 0.45s ease 0.15s, transform 0.45s ease 0.15s;
+      opacity: 0; transform: translateX(16px);
     }
+    .sw-p.act .sw-tp { opacity: 1; transform: translateX(0); }
+    .sw-tg {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 0.52rem; letter-spacing: 0.1em;
+      padding: 0.2rem 0.6rem; margin-top: 0.35rem;
+      border: 1px solid var(--accent-border);
+      color: var(--accent); text-transform: uppercase; text-decoration: none;
+      transition: opacity 0.4s ease 0.2s, border-color 0.2s, color 0.2s;
+      opacity: 0;
+    }
+    .sw-p.act .sw-tg { opacity: 1; }
+    .sw-tg:hover { border-color: var(--accent); color: var(--white); }
 
     /* ── TEAM ── */
     .team-grid {
@@ -1404,7 +1449,16 @@
       .migration-plan:last-child { border-bottom: none; }
 
       .reports-layout { grid-template-columns: 1fr; gap: 2rem; }
-      .portfolio-grid { grid-template-columns: 1fr; gap: 0.75rem; margin-top: 2rem; }
+      .sw-acc { flex-direction: column; height: auto; margin-top: 2rem; }
+      .sw-p { min-width: unset; min-height: 64px; border-right: none; border-bottom: 1px solid var(--border); }
+      .sw-p:last-child { border-bottom: none; }
+      .sw-p.act { min-height: 300px; }
+      .sw-side { bottom: auto; top: 50%; transform: translateY(-50%); writing-mode: unset; }
+      .sw-side span { writing-mode: unset; transform: none; font-size: 0.75rem; }
+      .sw-p.act .sw-side { opacity: 0; }
+      .sw-bot { padding: 1rem; }
+      .sw-nm { font-size: 0.9rem; }
+      .sw-tp { font-size: 0.52rem; }
       .team-grid { grid-template-columns: 1fr; max-width: 100%; margin-top: 2rem; }
       .team-photo-wrap { height: 260px; }
       .contact-layout { grid-template-columns: 1fr; gap: 2rem; }
@@ -2279,59 +2333,83 @@
           <span class="card-big-title">OUR WORK</span>
           <h2>Sites We've<br />Built.</h2>
           <p style="color:var(--grey);max-width:520px;font-size:0.95rem;line-height:1.8;margin-top:1rem;">A selection of sites we've designed and built for local businesses across BC. Each one managed monthly.</p>
-          <div class="portfolio-grid">
-            <div class="portfolio-card">
-              <div class="pc-img-wrap">
-                <img class="pc-screenshot" loading="lazy" src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/pitchd.png" alt="Pitchd campsite cancellation alert service">
-              </div>
-              <div class="pc-info">
-                <div><div class="pc-name">Pitchd</div><div class="pc-type">Campsite Cancellation Alerts · BC</div></div>
-                <a href="https://www.pitchd.ca" target="_blank" rel="noopener" class="pc-tag" style="text-decoration:none;cursor:pointer;">↗ Visit</a>
-              </div>
-            </div>
-            <div class="portfolio-card">
-              <div class="pc-img-wrap">
-                <img class="pc-screenshot" loading="lazy" src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/vomadrentals.png" alt="Vomad Rentals equipment rental">
-              </div>
-              <div class="pc-info">
-                <div><div class="pc-name">Vomad Rentals</div><div class="pc-type">Equipment Rentals · BC</div></div>
-                <a href="https://www.vomadrentals.ca" target="_blank" rel="noopener" class="pc-tag" style="text-decoration:none;cursor:pointer;">↗ Visit</a>
+          <div class="sw-acc" id="swPortfolio">
+            <div class="sw-p act">
+              <div class="sw-bg" style="background-image:url('https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/pitchd.png')"></div>
+              <div class="sw-fade"></div>
+              <div class="sw-side"><span>Pitchd</span></div>
+              <div class="sw-bot">
+                <div class="sw-ic">↗</div>
+                <div>
+                  <div class="sw-nm">Pitchd</div>
+                  <div class="sw-tp">Campsite Cancellation Alerts · BC</div>
+                  <a href="https://www.pitchd.ca" target="_blank" rel="noopener" class="sw-tg">↗ Visit Site</a>
+                </div>
               </div>
             </div>
-            <div class="portfolio-card">
-              <div class="pc-img-wrap">
-                <img class="pc-screenshot" loading="lazy" src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/chipd.png" alt="Chipd Golf tee time alerts">
-              </div>
-              <div class="pc-info">
-                <div><div class="pc-name">Chipd Golf</div><div class="pc-type">Tee Time Cancellation Alerts · BC</div></div>
-                <a href="https://www.chipdgolf.ca" target="_blank" rel="noopener" class="pc-tag" style="text-decoration:none;cursor:pointer;">↗ Visit</a>
-              </div>
-            </div>
-            <div class="portfolio-card">
-              <div class="pc-img-wrap">
-                <img class="pc-screenshot" loading="lazy" src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/little-greens-farm.png" alt="Little Greens Farm organic microgreens">
-              </div>
-              <div class="pc-info">
-                <div><div class="pc-name">Little Greens Farm</div><div class="pc-type">Organic Microgreens · South Surrey</div></div>
-                <div class="pc-tag">Starter</div>
+            <div class="sw-p">
+              <div class="sw-bg" style="background-image:url('https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/vomadrentals.png')"></div>
+              <div class="sw-fade"></div>
+              <div class="sw-side"><span>Vomad Rentals</span></div>
+              <div class="sw-bot">
+                <div class="sw-ic">↗</div>
+                <div>
+                  <div class="sw-nm">Vomad Rentals</div>
+                  <div class="sw-tp">Equipment Rentals · BC</div>
+                  <a href="https://www.vomadrentals.ca" target="_blank" rel="noopener" class="sw-tg">↗ Visit Site</a>
+                </div>
               </div>
             </div>
-            <div class="portfolio-card">
-              <div class="pc-img-wrap">
-                <img class="pc-screenshot" loading="lazy" src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/atwood-furniture.png" alt="Atwood Furniture Co.">
-              </div>
-              <div class="pc-info">
-                <div><div class="pc-name">Atwood Furniture Co.</div><div class="pc-type">Handcrafted Furniture · BC</div></div>
-                <div class="pc-tag">Growth</div>
+            <div class="sw-p">
+              <div class="sw-bg" style="background-image:url('https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/chipd.png')"></div>
+              <div class="sw-fade"></div>
+              <div class="sw-side"><span>Chipd Golf</span></div>
+              <div class="sw-bot">
+                <div class="sw-ic">◈</div>
+                <div>
+                  <div class="sw-nm">Chipd Golf</div>
+                  <div class="sw-tp">Tee Time Cancellation Alerts · BC</div>
+                  <div class="sw-tg">Growth Plan</div>
+                </div>
               </div>
             </div>
-            <div class="portfolio-card">
-              <div class="pc-img-wrap">
-                <img class="pc-screenshot" loading="lazy" src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/lark-knives.png" alt="Lark Knives custom knife making">
+            <div class="sw-p">
+              <div class="sw-bg" style="background-image:url('https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/little-greens-farm.png')"></div>
+              <div class="sw-fade"></div>
+              <div class="sw-side"><span>Little Greens</span></div>
+              <div class="sw-bot">
+                <div class="sw-ic">◈</div>
+                <div>
+                  <div class="sw-nm">Little Greens Farm</div>
+                  <div class="sw-tp">Organic Microgreens · South Surrey</div>
+                  <div class="sw-tg">Starter Plan</div>
+                </div>
               </div>
-              <div class="pc-info">
-                <div><div class="pc-name">Lark Knives</div><div class="pc-type">Custom Knife Making · BC</div></div>
-                <div class="pc-tag">Growth</div>
+            </div>
+            <div class="sw-p">
+              <div class="sw-bg" style="background-image:url('https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/atwood-furniture.png')"></div>
+              <div class="sw-fade"></div>
+              <div class="sw-side"><span>Atwood Furniture</span></div>
+              <div class="sw-bot">
+                <div class="sw-ic">◈</div>
+                <div>
+                  <div class="sw-nm">Atwood Furniture Co.</div>
+                  <div class="sw-tp">Handcrafted Furniture · BC</div>
+                  <div class="sw-tg">Growth Plan</div>
+                </div>
+              </div>
+            </div>
+            <div class="sw-p">
+              <div class="sw-bg" style="background-image:url('https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/lark-knives.png')"></div>
+              <div class="sw-fade"></div>
+              <div class="sw-side"><span>Lark Knives</span></div>
+              <div class="sw-bot">
+                <div class="sw-ic">◈</div>
+                <div>
+                  <div class="sw-nm">Lark Knives</div>
+                  <div class="sw-tp">Custom Knife Making · BC</div>
+                  <div class="sw-tg">Growth Plan</div>
+                </div>
               </div>
             </div>
           </div>
@@ -2941,6 +3019,16 @@
     // Enter key in input triggers audit
     document.getElementById('auditUrl').addEventListener('keydown', function(e) {
       if (e.key === 'Enter') { e.preventDefault(); runAudit(); }
+    });
+  </script>
+
+  <script>
+    // Portfolio accordion
+    document.querySelectorAll('#swPortfolio .sw-p').forEach(function(p) {
+      p.addEventListener('click', function() {
+        document.querySelectorAll('#swPortfolio .sw-p').forEach(function(x) { x.classList.remove('act'); });
+        p.classList.add('act');
+      });
     });
   </script>
 
