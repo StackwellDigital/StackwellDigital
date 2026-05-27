@@ -2533,8 +2533,15 @@
       });
 
       const isMobile = window.innerWidth <= 768;
-      const rotationStart = isMobile ? 12 : 30;
-      const rotationOrigin = isMobile ? 'bottom center' : 'bottom left';
+
+      // On mobile: skip all GSAP pinning and rotation — it fights the keyboard and scroll
+      if (isMobile) {
+        // just set z-index so stacking looks right, no pins no rotation
+        document.querySelectorAll('.flow-section').forEach((s, i) => gsap.set(s, { zIndex: i + 1 }));
+      } else {
+
+      const rotationStart = 30;
+      const rotationOrigin = 'bottom left';
       const sections = document.querySelectorAll('.flow-section');
 
       // Force every card to be at least 100vh tall so pin duration
@@ -2589,6 +2596,8 @@
       });
 
       ScrollTrigger.refresh();
+
+      } // end desktop-only block
 
       let resizeTimer;
       window.addEventListener('resize', () => {
@@ -2750,13 +2759,13 @@
         results.classList.add('visible');
         cta.style.display = 'flex';
 
-        // Scroll to results after render
+        // Scroll to results after render — fallback for mobile where GSAP ScrollTo may not be active
         setTimeout(() => {
-          gsap.to(window, {
-            duration: 0.8,
-            scrollTo: { y: results, offsetY: 80 },
-            ease: 'power2.inOut'
-          });
+          if (typeof gsap !== 'undefined' && gsap.plugins && gsap.plugins.scrollTo) {
+            gsap.to(window, { duration: 0.8, scrollTo: { y: results, offsetY: 80 }, ease: 'power2.inOut' });
+          } else {
+            results.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
         }, 100);
 
         // Store in session for contact form
