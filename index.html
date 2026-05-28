@@ -418,6 +418,23 @@ footer{background:var(--ink);border-top:1px solid rgba(232,227,216,.08)}
 .client-logo{height:42px;width:auto;max-width:160px;object-fit:contain;opacity:.3;filter:grayscale(100%);transition:opacity .3s,filter .3s}
 .client-logo:hover{opacity:.75;filter:grayscale(0%)}
 </style>
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1496430375858707');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1496430375858707&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
 </head>
 <body>
 
@@ -1118,7 +1135,8 @@ document.getElementById('cfSubmit').addEventListener('click',async()=>{
   btn.disabled=true;btn.textContent='Sending...';status.className='cf-status';
   try{
     const res=await fetch('https://submit-stackwell.adam-8d6.workers.dev',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,email,business:biz,phone,plan,message,source:'contact-form'})});
-    if(res.ok){status.textContent="Message sent. We'll be in touch within one business day.";status.className='cf-status ok';document.getElementById('cfForm').querySelectorAll('input,textarea,select').forEach(el=>el.value='');}
+    if(res.ok){status.textContent="Message sent. We'll be in touch within one business day.";status.className='cf-status ok';document.getElementById('cfForm').querySelectorAll('input,textarea,select').forEach(el=>el.value='');
+      if(typeof fbq==='function')fbq('track','Lead');}
     else throw new Error();
   }catch{status.textContent='Something went wrong. Email us at adam@stackwell.digital';status.className='cf-status err';}
   btn.disabled=false;btn.textContent='Send Message';
@@ -1140,6 +1158,7 @@ async function runAudit(){
     const data=await res.json();
     if(!res.ok||!data.success)throw new Error(data.error||'Audit failed');
     renderAudit(u,data.checks);results.classList.add('vis');cta.classList.add('vis');
+    if(typeof fbq==='function')fbq('trackCustom','AuditRun',{url:u});
     setTimeout(()=>results.scrollIntoView({behavior:'smooth',block:'start'}),100);
     sessionStorage.setItem('auditData',JSON.stringify({url:u,checks:data.checks,timestamp:new Date().toISOString()}));
   }catch(err){error.textContent=err.message||'Could not audit this site.';error.classList.add('vis');}
