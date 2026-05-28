@@ -12,6 +12,14 @@
 <meta property="og:description" content="Flat monthly websites for BC local businesses. From $60/mo."/>
 <meta property="og:image" content="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/logo.photo.png"/>
 <meta name="theme-color" content="#e8e3d8"/>
+<meta property="og:site_name" content="Stackwell Digital"/>
+<meta property="og:locale" content="en_CA"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="Stackwell Digital — Web Design &amp; Managed Hosting for BC"/>
+<meta name="twitter:description" content="Flat monthly websites for BC local businesses. From $60/mo."/>
+<meta name="twitter:image" content="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/logo.photo.png"/>
+<link rel="preload" as="image" href="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/matthew-smith-Rfflri94rs8-unsplash.jpg"/>
+<link rel="preconnect" href="https://raw.githubusercontent.com" crossorigin/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Barlow:wght@300;400;500&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet"/>
@@ -52,7 +60,8 @@ nav{position:fixed;top:1.25rem;right:1.5rem;z-index:1000;display:flex;align-item
 
 /* Logo top-left */
 .nav-logo{position:fixed;top:1.25rem;left:1.5rem;z-index:1000}
-.nav-logo img{height:52px;width:auto;display:block;mix-blend-mode:multiply;filter:invert(1) sepia(1) saturate(0) brightness(0)}
+.nav-logo img{height:52px;width:auto;display:block;filter:brightness(0) invert(1);transition:filter .4s}
+.nav-logo.dark img{filter:brightness(0)}
 
 /* MOBILE OVERLAY MENU */
 .mob-overlay{display:none;position:fixed;inset:0;background:var(--ink);z-index:900;flex-direction:column;align-items:flex-start;justify-content:flex-end;padding:var(--pad);padding-bottom:4rem;gap:.15rem}
@@ -61,7 +70,7 @@ nav{position:fixed;top:1.25rem;right:1.5rem;z-index:1000;display:flex;align-item
 .mob-link:hover{color:var(--cream)}
 
 /* ====== HERO ====== */
-#hero{position:relative;min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden}
+#hero{position:relative;min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;background:#111009}
 .hero-bg{position:absolute;inset:0;z-index:0}
 .hero-bg img{width:100%;height:100%;object-fit:cover;object-position:center 30%;display:block;will-change:transform}
 .hero-bg-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(10,8,6,0.75) 0%,rgba(10,8,6,0.3) 50%,rgba(10,8,6,0.15) 100%)}
@@ -433,7 +442,7 @@ footer{background:var(--ink);border-top:1px solid rgba(232,227,216,.08)}
 <!-- HERO -->
 <section id="hero">
   <div class="hero-bg" id="heroBg">
-    <img id="heroImg" src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/matthew-smith-Rfflri94rs8-unsplash.jpg" alt="Local BC business" loading="eager"/>
+    <img id="heroImg" src="https://raw.githubusercontent.com/StackwellDigital/StackwellDigital/main/matthew-smith-Rfflri94rs8-unsplash.jpg" alt="Local BC business" loading="eager" fetchpriority="high"/>
     <div class="hero-bg-overlay"></div>
   </div>
   <div class="hero-content">
@@ -555,7 +564,8 @@ footer{background:var(--ink);border-top:1px solid rgba(232,227,216,.08)}
 </section>
 
 <!-- AUDIT -->
-<section id="audit">
+<div id="card-audit" style="position:relative;top:-20px"></div>
+<section id="audit" data-also="card-audit">
   <div class="section-giant js-giant"><span class="giant-line">AUDIT</span></div>
   <div class="section-sub">
     <div class="section-sub-grid reveal">
@@ -912,7 +922,24 @@ footer{background:var(--ink);border-top:1px solid rgba(232,227,216,.08)}
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"ProfessionalService","name":"Stackwell Digital","url":"https://stackwell.digital","description":"Web design and managed hosting for local businesses in British Columbia.","address":{"@type":"PostalAddress","addressRegion":"BC","addressCountry":"CA"},"priceRange":"$$","email":"adam@stackwell.digital","foundingDate":"2025","founder":{"@type":"Person","name":"Adam Vollet"}}</script>
 
 <script>
-// HERO PARALLAX
+// LOGO COLOR — white on dark sections, black on light
+const logoEl=document.querySelector('.nav-logo');
+// Dark sections: hero, work, team, contact
+const darkSections=['hero','work','team','contact'];
+function updateLogo(){
+  const mid=window.innerHeight*0.15;
+  // Walk through all sections and find which one's top is above mid
+  let currentDark=false;
+  document.querySelectorAll('section[id], #hero').forEach(sec=>{
+    const rect=sec.getBoundingClientRect();
+    if(rect.top<=mid&&rect.bottom>mid){
+      currentDark=darkSections.includes(sec.id);
+    }
+  });
+  logoEl.classList.toggle('dark',!currentDark);
+}
+window.addEventListener('scroll',updateLogo,{passive:true});
+updateLogo();
 const heroImg=document.getElementById('heroImg');
 window.addEventListener('scroll',()=>{
   if(heroImg&&window.scrollY<window.innerHeight*1.5)
