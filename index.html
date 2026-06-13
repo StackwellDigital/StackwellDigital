@@ -279,25 +279,43 @@ function layout() {
   const mx = ((ox % BLOCK_W) + BLOCK_W) % BLOCK_W;
   const my = ((oy % BLOCK_H) + BLOCK_H) % BLOCK_H;
   const cx = innerWidth / 2, cy = innerHeight / 2;
+  const vw = innerWidth, vh = innerHeight;
+  const cullPad = 320;   /* px of slack around viewport before a tile is hidden */
   for (const c of cells) {
     const x = c.tile.x + c.bx * BLOCK_W + mx - BLOCK_W;
     const y = c.tile.y + c.by * BLOCK_H + my - BLOCK_H;
-    c.el.style.transform = `translate3d(${x}px,${y}px,0)`;
-    c.sx = (x - cx) * zoom + cx;
-    c.sy = (y - cy) * zoom + cy;
+    /* screen-space box after world zoom */
+    const sx = (x - cx) * zoom + cx;
+    const sy = (y - cy) * zoom + cy;
+    const w = c.tile.w * zoom, h = c.tile.h * zoom;
+    const onScreen = sx + w > -cullPad && sx < vw + cullPad && sy + h > -cullPad && sy < vh + cullPad;
+
+    if (!onScreen) {
+      /* hide it: no transform writes, no iframe, taken out of paint */
+      if (c.shown !== false) { c.el.style.display = 'none'; c.shown = false; }
+      if (c.framed) { const f = c.el.querySelector('iframe'); if (f) f.remove(); c.framed = false; frameCount--; }
+      continue;
+    }
+    if (c.shown === false) { c.el.style.display = ''; c.shown = true; c.px = c.py = null; }
+    c.sx = sx; c.sy = sy;
+    /* only write transform if it actually moved */
+    if (x !== c.px || y !== c.py) {
+      c.el.style.transform = `translate3d(${x}px,${y}px,0)`;
+      c.px = x; c.py = y;
+    }
   }
   world.style.transform = `translate3d(${(1 - zoom) * innerWidth / 2}px,${(1 - zoom) * innerHeight / 2}px,0) scale(${zoom})`;
-  manageIframes();
 }
 
 let frameCount = 0;
+let lastFrameCheck = 0;
 function manageIframes() {
-  const vw = innerWidth, vh = innerHeight, pad = 260;
+  /* only mount iframes for currently-shown tiles, capped, throttled by caller */
   for (const c of cells) {
-    const w = c.tile.w * zoom, h = c.tile.h * zoom;
-    const visible = c.sx + w > -pad && c.sx < vw + pad && c.sy + h > -pad && c.sy < vh + pad;
-    if (visible && !c.framed && frameCount < MAX_IFRAMES) {
+    if (c.shown === false) continue;
+    if (!c.framed && frameCount < MAX_IFRAMES) {
       const wrap = c.el.querySelector('.tile-frame-wrap');
+      if (!wrap) continue;
       const f = document.createElement('iframe');
       f.loading = 'lazy';
       f.src = c.tile.src;
@@ -309,10 +327,6 @@ function manageIframes() {
       f.style.transform = `scale(${scale})`;
       wrap.appendChild(f);
       c.framed = true; frameCount++;
-    } else if (!visible && c.framed) {
-      const f = c.el.querySelector('iframe');
-      if (f) f.remove();
-      c.framed = false; frameCount--;
     }
   }
 }
@@ -356,10 +370,14 @@ function tick() {
   }
   const ease = reduceMotion ? 1 : SMOOTHING;
   ox += (tx - ox) * ease; oy += (ty - oy) * ease;
-  if (Math.abs(tx - ox) > 0.05 || Math.abs(ty - oy) > 0.05 || Math.abs(tzoom - zoom) > 0.0005 || dragging) {
+  const moving = Math.abs(tx - ox) > 0.05 || Math.abs(ty - oy) > 0.05 || Math.abs(tzoom - zoom) > 0.0005 || dragging;
+  if (moving) {
     zoom += (tzoom - zoom) * (reduceMotion ? 1 : 0.08);
     layout();
   }
+  /* mount/unmount iframes on a throttle, and once more after motion settles */
+  const now = performance.now();
+  if (now - lastFrameCheck > 150) { lastFrameCheck = now; manageIframes(); }
   requestAnimationFrame(tick);
 }
 
@@ -377,6 +395,7 @@ function initView() {
   const z = Math.min(innerWidth / t.w, innerHeight / t.h) * 1.02;
   zoom = tzoom = z;
   layout();
+  manageIframes();
   if (reduceMotion) releaseIntro();
 }
 
