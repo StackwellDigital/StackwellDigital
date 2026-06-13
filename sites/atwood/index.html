@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Atwood Furniture — Considered Design. Lasting Form.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,700;1,400;1,500&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ivory: #f8f5f0;
+    --warm-white: #faf8f5;
+    --sand: #e8e0d2;
+    --taupe: #c8bca8;
+    --warm-gray: #8a8278;
+    --brown: #4a3c2e;
+    --brown-mid: #6a5848;
+    --charcoal: #2a2520;
+    --accent: #9a7a5a;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--warm-white);
+    color: var(--charcoal);
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 60px;
+    height: 72px;
+    background: rgba(250, 248, 245, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(74,60,46,0.08);
+  }
+
+  .nav-logo {
+    font-family: 'EB Garamond', serif;
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--charcoal);
+    text-decoration: none;
+    letter-spacing: 0.04em;
+  }
+
+  .nav-center {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 48px;
+    list-style: none;
+  }
+
+  .nav-center a {
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 300;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--warm-gray);
+    transition: color 0.2s;
+  }
+
+  .nav-center a:hover { color: var(--charcoal); }
+
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .nav-visit {
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--charcoal);
+    text-decoration: none;
+    font-weight: 400;
+    transition: opacity 0.2s;
+  }
+
+  .nav-visit:hover { opacity: 0.5; }
+
+  /* ── HERO ── */
+  .hero {
+    padding-top: 72px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 100vh;
+  }
+
+  .hero-left {
+    padding: 0 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: var(--warm-white);
+  }
+
+  .hero-issue {
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--taupe);
+    margin-bottom: 40px;
+  }
+
+  .hero-title {
+    font-family: 'EB Garamond', serif;
+    font-size: clamp(48px, 5.5vw, 80px);
+    font-weight: 400;
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    color: var(--charcoal);
+    margin-bottom: 40px;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--brown-mid);
+  }
+
+  .hero-pull {
+    font-family: 'EB Garamond', serif;
+    font-style: italic;
+    font-size: 18px;
+    color: var(--warm-gray);
+    line-height: 1.6;
+    max-width: 380px;
+    padding-left: 20px;
+    border-left: 2px solid var(--sand);
+    margin-bottom: 56px;
+  }
+
+  .hero-meta {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+  }
+
+  .hero-link {
+    font-size: 13px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--charcoal);
+    text-decoration: none;
+    font-weight: 400;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: gap 0.3s ease;
+  }
+
+  .hero-link:hover { gap: 16px; }
+
+  .hero-link::after {
+    content: '→';
+    font-size: 14px;
+  }
+
+  .hero-divider { width: 1px; height: 20px; background: var(--sand); }
+
+  .hero-sub-link {
+    font-size: 13px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--taupe);
+    text-decoration: none;
+    font-weight: 300;
+    transition: color 0.2s;
+  }
+
+  .hero-sub-link:hover { color: var(--charcoal); }
+
+  .hero-right {
+    background: var(--sand);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .hero-img-area {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  /* Furniture illustration */
+  .furniture-hero-svg {
+    width: 70%;
+    max-width: 380px;
+    opacity: 0.5;
+  }
+
+  .hero-caption {
+    position: absolute;
+    bottom: 40px;
+    right: 40px;
+    text-align: right;
+  }
+
+  .caption-name {
+    font-family: 'EB Garamond', serif;
+    font-size: 16px;
+    color: var(--brown);
+    font-style: italic;
+  }
+
+  .caption-detail {
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--warm-gray);
+    margin-top: 4px;
+  }
+
+  /* ── EDITORIAL STRIP ── */
+  .editorial-strip {
+    background: var(--charcoal);
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1px;
+    background-color: rgba(250,248,245,0.06);
+  }
+
+  .ed-item {
+    background: var(--charcoal);
+    padding: 40px 48px;
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+  }
+
+  .ed-num {
+    font-family: 'EB Garamond', serif;
+    font-size: 44px;
+    color: rgba(250,248,245,0.12);
+    line-height: 1;
+    flex-shrink: 0;
+  }
+
+  .ed-text {}
+
+  .ed-title {
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(250,248,245,0.7);
+    margin-bottom: 6px;
+  }
+
+  .ed-desc {
+    font-size: 13px;
+    color: rgba(250,248,245,0.3);
+    line-height: 1.6;
+  }
+
+  /* ── COLLECTION ── */
+  .collection {
+    padding: 120px 60px;
+  }
+
+  .collection-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    margin-bottom: 80px;
+    align-items: end;
+  }
+
+  .col-issue {
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--taupe);
+    margin-bottom: 20px;
+  }
+
+  .col-title {
+    font-family: 'EB Garamond', serif;
+    font-size: clamp(36px, 4vw, 56px);
+    font-weight: 400;
+    line-height: 1.1;
+    color: var(--charcoal);
+  }
+
+  .col-title em { font-style: italic; color: var(--accent); }
+
+  .col-intro {
+    font-size: 15px;
+    line-height: 1.8;
+    color: var(--warm-gray);
+    font-weight: 300;
+  }
+
+  .col-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--charcoal);
+    text-decoration: none;
+    font-weight: 400;
+    margin-top: 28px;
+    border-bottom: 1px solid var(--sand);
+    padding-bottom: 3px;
+    transition: border-color 0.2s, gap 0.3s;
+  }
+
+  .col-link:hover { border-color: var(--charcoal); gap: 16px; }
+
+  /* Asymmetric grid */
+  .pieces-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr;
+    grid-template-rows: auto auto;
+    gap: 20px;
+  }
+
+  .piece-card {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .piece-card.featured { grid-row: 1 / 3; }
+
+  .piece-img {
+    aspect-ratio: 3/4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 20px;
+    transition: opacity 0.3s;
+    cursor: pointer;
+  }
+
+  .piece-card.featured .piece-img { aspect-ratio: 2/3; }
+  .piece-card:not(.featured) .piece-img { aspect-ratio: 4/3; }
+
+  .piece-img:hover { opacity: 0.9; }
+
+  .pc-1 { background: linear-gradient(155deg, #d8cfc0, #c0b59e); }
+  .pc-2 { background: linear-gradient(155deg, #d0ccc8, #b8b4b0); }
+  .pc-3 { background: linear-gradient(155deg, #d4c8b4, #bcad98); }
+  .pc-4 { background: linear-gradient(155deg, #c8d0cc, #a8b4b0); }
+
+  .piece-svg { width: 55%; opacity: 0.45; }
+
+  .piece-meta {}
+
+  .piece-category {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--taupe);
+    margin-bottom: 6px;
+  }
+
+  .piece-name {
+    font-family: 'EB Garamond', serif;
+    font-size: 20px;
+    color: var(--charcoal);
+    margin-bottom: 4px;
+  }
+
+  .piece-detail {
+    font-size: 12px;
+    color: var(--warm-gray);
+    margin-bottom: 10px;
+  }
+
+  .piece-price {
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--charcoal);
+    letter-spacing: 0.02em;
+  }
+
+  /* ── MATERIALS ── */
+  .materials {
+    background: var(--ivory);
+    padding: 120px 60px;
+  }
+
+  .mat-header {
+    text-align: center;
+    margin-bottom: 80px;
+  }
+
+  .mat-issue { font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--taupe); margin-bottom: 20px; }
+
+  .mat-title {
+    font-family: 'EB Garamond', serif;
+    font-size: clamp(36px, 4vw, 52px);
+    font-weight: 400;
+    color: var(--charcoal);
+  }
+
+  .mat-title em { font-style: italic; color: var(--accent); }
+
+  .mat-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 32px;
+  }
+
+  .mat-item {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .mat-swatch {
+    aspect-ratio: 1;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .sw-1 { background: linear-gradient(135deg, #8a6a4a, #6a4a2a); }
+  .sw-2 { background: linear-gradient(135deg, #c0a880, #9a8460); }
+  .sw-3 { background: linear-gradient(135deg, #d0cac0, #b0aaa0); }
+  .sw-4 { background: linear-gradient(135deg, #606a50, #404830); }
+
+  .mat-name {
+    font-family: 'EB Garamond', serif;
+    font-size: 18px;
+    color: var(--charcoal);
+  }
+
+  .mat-desc {
+    font-size: 13px;
+    color: var(--warm-gray);
+    line-height: 1.6;
+  }
+
+  /* ── PROCESS ── */
+  .process {
+    padding: 120px 60px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 100px;
+    align-items: center;
+  }
+
+  .process-content {}
+
+  .process-content .col-issue { margin-bottom: 20px; }
+
+  .process-title {
+    font-family: 'EB Garamond', serif;
+    font-size: clamp(36px, 4vw, 52px);
+    font-weight: 400;
+    line-height: 1.12;
+    color: var(--charcoal);
+    margin-bottom: 36px;
+  }
+
+  .process-title em { font-style: italic; color: var(--accent); }
+
+  .process-text {
+    font-size: 15px;
+    line-height: 1.8;
+    color: var(--warm-gray);
+    margin-bottom: 16px;
+  }
+
+  .process-steps {
+    margin-top: 56px;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+
+  .proc-step {
+    display: grid;
+    grid-template-columns: 40px 1fr;
+    gap: 20px;
+    align-items: start;
+  }
+
+  .proc-num {
+    font-family: 'EB Garamond', serif;
+    font-size: 13px;
+    font-style: italic;
+    color: var(--taupe);
+    padding-top: 2px;
+  }
+
+  .proc-content {}
+
+  .proc-title {
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    color: var(--charcoal);
+    margin-bottom: 4px;
+  }
+
+  .proc-desc {
+    font-size: 13px;
+    color: var(--warm-gray);
+    line-height: 1.6;
+  }
+
+  .process-visual {
+    background: var(--sand);
+    aspect-ratio: 3/4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  .process-visual::before {
+    content: '';
+    position: absolute;
+    inset: 20px;
+    border: 1px solid rgba(74,60,46,0.1);
+  }
+
+  /* ── CTA ── */
+  .cta-section {
+    background: var(--charcoal);
+    padding: 120px 60px;
+    text-align: center;
+  }
+
+  .cta-issue {
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(250,248,245,0.25);
+    margin-bottom: 32px;
+  }
+
+  .cta-title {
+    font-family: 'EB Garamond', serif;
+    font-size: clamp(40px, 5vw, 72px);
+    font-weight: 400;
+    line-height: 1.1;
+    color: var(--warm-white);
+    margin-bottom: 24px;
+  }
+
+  .cta-title em { font-style: italic; color: var(--taupe); }
+
+  .cta-text {
+    font-size: 15px;
+    color: rgba(250,248,245,0.4);
+    max-width: 440px;
+    margin: 0 auto 52px;
+    line-height: 1.7;
+  }
+
+  .cta-actions {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .btn-light {
+    background: var(--warm-white);
+    color: var(--charcoal);
+    padding: 14px 36px;
+    font-family: 'Jost', sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    display: inline-block;
+    transition: opacity 0.2s;
+  }
+
+  .btn-light:hover { opacity: 0.85; }
+
+  .btn-outline {
+    border: 1px solid rgba(250,248,245,0.2);
+    color: rgba(250,248,245,0.6);
+    padding: 14px 36px;
+    font-family: 'Jost', sans-serif;
+    font-size: 12px;
+    font-weight: 300;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    display: inline-block;
+    transition: border-color 0.2s, color 0.2s;
+  }
+
+  .btn-outline:hover { border-color: rgba(250,248,245,0.4); color: var(--warm-white); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--charcoal);
+    border-top: 1px solid rgba(250,248,245,0.05);
+    padding: 64px 60px 40px;
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 64px;
+    margin-bottom: 56px;
+  }
+
+  .footer-brand-name {
+    font-family: 'EB Garamond', serif;
+    font-size: 22px;
+    color: var(--warm-white);
+    margin-bottom: 16px;
+    display: block;
+    letter-spacing: 0.04em;
+  }
+
+  .footer-brand p {
+    font-size: 13px;
+    line-height: 1.7;
+    color: rgba(250,248,245,0.3);
+    max-width: 230px;
+  }
+
+  .footer-col h4 {
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(250,248,245,0.2);
+    margin-bottom: 20px;
+    font-weight: 400;
+  }
+
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+
+  .footer-col ul a {
+    text-decoration: none;
+    color: rgba(250,248,245,0.4);
+    font-size: 13px;
+    font-weight: 300;
+    transition: color 0.2s;
+  }
+
+  .footer-col ul a:hover { color: rgba(250,248,245,0.8); }
+
+  .footer-bottom {
+    border-top: 1px solid rgba(250,248,245,0.05);
+    padding-top: 24px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    color: rgba(250,248,245,0.2);
+  }
+
+  /* Animations */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-issue { animation: fadeUp 0.7s ease both; }
+  .hero-title { animation: fadeUp 0.7s 0.1s ease both; }
+  .hero-pull { animation: fadeUp 0.7s 0.2s ease both; }
+  .hero-meta { animation: fadeUp 0.7s 0.3s ease both; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Atwood Furniture</a>
+  <ul class="nav-center">
+    <li><a href="#collection">Collection</a></li>
+    <li><a href="#materials">Materials</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#contact">Commission</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="#" class="nav-visit">Visit Studio</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-issue">Collection No. 7 — Autumn 2025</div>
+    <h1 class="hero-title">
+      Furniture made<br>
+      to be <em>lived with,</em><br>
+      not looked at.
+    </h1>
+    <p class="hero-pull">
+      We design and build furniture for the way people actually live — pieces that age gracefully, carry memory, and get better with time.
+    </p>
+    <div class="hero-meta">
+      <a href="#collection" class="hero-link">Explore Collection</a>
+      <div class="hero-divider"></div>
+      <a href="#process" class="hero-sub-link">Our Process</a>
+    </div>
+  </div>
+  <div class="hero-right" style="padding:0;overflow:hidden;">
+    <img src="https://raw.githubusercontent.com/StackwellDigital/AtwoodFurnitureCo/main/Screenshot_20260319-200925.png" alt="Featured furniture piece" style="width:100%;height:100%;object-fit:cover;object-position:center top;">
+    <div class="hero-caption">
+      <div class="caption-name">The Barnsby Chair</div>
+      <div class="caption-detail">White Oak · Hand-stitched Leather</div>
+    </div>
+  </div>
+</section>
+
+<!-- EDITORIAL STRIP -->
+<div class="editorial-strip">
+  <div class="ed-item">
+    <div class="ed-num">01</div>
+    <div class="ed-text">
+      <div class="ed-title">Local Hardwoods</div>
+      <div class="ed-desc">Sourced from sustainable BC sawmills. Every board selected by hand.</div>
+    </div>
+  </div>
+  <div class="ed-item">
+    <div class="ed-num">02</div>
+    <div class="ed-text">
+      <div class="ed-title">Made to Order</div>
+      <div class="ed-desc">Nothing is mass produced. Each piece is built for the person who ordered it.</div>
+    </div>
+  </div>
+  <div class="ed-item">
+    <div class="ed-num">03</div>
+    <div class="ed-text">
+      <div class="ed-title">25-Year Guarantee</div>
+      <div class="ed-desc">We stand behind every joint and finish. Built to outlast trends.</div>
+    </div>
+  </div>
+</div>
+
+<!-- COLLECTION -->
+<section class="collection" id="collection">
+  <div class="collection-header">
+    <div>
+      <div class="col-issue">Autumn 2025</div>
+      <h2 class="col-title">Current<br><em>Collection.</em></h2>
+    </div>
+    <div>
+      <p class="col-intro">Each piece in the current collection is available to order in your choice of wood species and finish. Lead time is typically 10–14 weeks from order confirmation.</p>
+      <a href="#" class="col-link">View Full Catalogue →</a>
+    </div>
+  </div>
+
+  <div class="pieces-grid">
+    <!-- Featured -->
+    <div class="piece-card featured">
+      <div class="piece-img pc-1" style="padding:0;">
+        <img src="https://raw.githubusercontent.com/StackwellDigital/AtwoodFurnitureCo/main/Screenshot_20260319-200941.png" alt="The Marsden Sofa" style="width:100%;height:100%;object-fit:cover;object-position:center;">
+      </div>
+      <div class="piece-meta">
+        <div class="piece-category">Seating · Living Room</div>
+        <div class="piece-name">The Marsden Sofa</div>
+        <div class="piece-detail">White oak frame · Belgian linen · 3-seat</div>
+        <div class="piece-price">From $4,200</div>
+      </div>
+    </div>
+
+    <!-- Regular 1 -->
+    <div class="piece-card">
+      <div class="piece-img pc-2" style="padding:0;">
+        <img src="https://raw.githubusercontent.com/StackwellDigital/AtwoodFurnitureCo/main/Screenshot_20260319-201005.png" alt="The Croft Table" style="width:100%;height:100%;object-fit:cover;object-position:center;">
+      </div>
+      <div class="piece-meta">
+        <div class="piece-category">Dining</div>
+        <div class="piece-name">The Croft Table</div>
+        <div class="piece-detail">Black walnut · 72" × 38"</div>
+        <div class="piece-price">From $2,800</div>
+      </div>
+    </div>
+
+    <!-- Regular 2 -->
+    <div class="piece-card">
+      <div class="piece-img pc-3" style="padding:0;">
+        <img src="https://raw.githubusercontent.com/StackwellDigital/AtwoodFurnitureCo/main/Screenshot_20260319-201024.png" alt="The Field Shelving" style="width:100%;height:100%;object-fit:cover;object-position:center;">
+      </div>
+      <div class="piece-meta">
+        <div class="piece-category">Storage · Office</div>
+        <div class="piece-name">The Field Shelving</div>
+        <div class="piece-detail">Maple · Steel pins · 72" tall</div>
+        <div class="piece-price">From $1,650</div>
+      </div>
+    </div>
+
+    <!-- Regular 3 -->
+    <div class="piece-card">
+      <div class="piece-img pc-4" style="padding:0;">
+        <img src="https://raw.githubusercontent.com/StackwellDigital/AtwoodFurnitureCo/main/Screenshot_20260319-201042.png" alt="The Orton Bed" style="width:100%;height:100%;object-fit:cover;object-position:center;">
+      </div>
+      <div class="piece-meta">
+        <div class="piece-category">Bedroom</div>
+        <div class="piece-name">The Orton Bed</div>
+        <div class="piece-detail">Cherry · Queen & King · Low profile</div>
+        <div class="piece-price">From $3,100</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MATERIALS -->
+<section class="materials" id="materials">
+  <div class="mat-header">
+    <div class="mat-issue">What we use</div>
+    <h2 class="mat-title">Material <em>honestly</em> selected.</h2>
+  </div>
+    <div class="mat-grid">
+      <div class="mat-item">
+        <div class="mat-swatch" style="padding:0;overflow:hidden;border-radius:4px;">
+          <img src="https://raw.githubusercontent.com/StackwellDigital/AtwoodFurnitureCo/main/Screenshot_20260319-201132.png" alt="Black Walnut" style="width:100%;height:100%;object-fit:cover;">
+        </div>
+        <div class="mat-name">Black Walnut</div>
+        <div class="mat-desc">Rich, dark tones that deepen with age. Our most requested species for dining and bedroom furniture.</div>
+      </div>
+      <div class="mat-item">
+        <div class="mat-swatch" style="padding:0;overflow:hidden;border-radius:4px;">
+          <img src="https://raw.githubusercontent.com/StackwellDigital/AtwoodFurnitureCo/main/Screenshot_20260319-201147.png" alt="White Oak" style="width:100%;height:100%;object-fit:cover;">
+        </div>
+        <div class="mat-name">White Oak</div>
+        <div class="mat-desc">Warm, versatile, and hardwearing. Takes stain beautifully and suits almost every interior style.</div>
+      </div>
+      <div class="mat-item">
+        <div class="mat-swatch" style="padding:0;overflow:hidden;border-radius:4px;">
+          <img src="https://raw.githubusercontent.com/StackwellDigital/AtwoodFurnitureCo/main/Screenshot_20260319-201204.png" alt="Maple" style="width:100%;height:100%;object-fit:cover;">
+        </div>
+        <div class="mat-name">Maple</div>
+        <div class="mat-desc">Clean, pale, and tight-grained. Ideal for pieces where the form is meant to speak louder than the wood.</div>
+      </div>
+      <div class="mat-item">
+        <div class="mat-swatch" style="padding:0;overflow:hidden;border-radius:4px;">
+          <img src="https://raw.githubusercontent.com/StackwellDigital/AtwoodFurnitureCo/main/Screenshot_20260319-201219.png" alt="Douglas Fir" style="width:100%;height:100%;object-fit:cover;">
+        </div>
+        <div class="mat-name">Douglas Fir</div>
+        <div class="mat-desc">Our local BC species. Sustainably sourced, characterful, and deeply connected to where we live.</div>
+      </div>
+    </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process" id="process">
+  <div class="process-content">
+    <div class="col-issue">How it works</div>
+    <h2 class="process-title">From sketch<br>to <em>your home.</em></h2>
+    <p class="process-text">Every piece we build starts with a conversation. We want to understand how you live before we make anything.</p>
+    <div class="process-steps">
+      <div class="proc-step">
+        <div class="proc-num">i.</div>
+        <div class="proc-content">
+          <div class="proc-title">Consultation</div>
+          <div class="proc-desc">We meet in person or over video to discuss your space, your needs, and the pieces you're drawn to.</div>
+        </div>
+      </div>
+      <div class="proc-step">
+        <div class="proc-num">ii.</div>
+        <div class="proc-content">
+          <div class="proc-title">Design & Approval</div>
+          <div class="proc-desc">We produce detailed drawings and material samples. You approve before anything is cut.</div>
+        </div>
+      </div>
+      <div class="proc-step">
+        <div class="proc-num">iii.</div>
+        <div class="proc-content">
+          <div class="proc-title">Build</div>
+          <div class="proc-desc">Your piece is built in our studio. You'll receive progress photos throughout the 10–14 week process.</div>
+        </div>
+      </div>
+      <div class="proc-step">
+        <div class="proc-num">iv.</div>
+        <div class="proc-content">
+          <div class="proc-title">White Glove Delivery</div>
+          <div class="proc-desc">We deliver and install every piece ourselves. No couriers, no flat-pack, no surprises.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="process-visual" style="padding:0;overflow:hidden;">
+    <img src="https://raw.githubusercontent.com/StackwellDigital/AtwoodFurnitureCo/main/Screenshot_20260319-201237.png" alt="Craftsmanship process" style="width:100%;height:100%;object-fit:cover;">
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="contact">
+  <div class="cta-issue">Ready to begin</div>
+  <h2 class="cta-title">Let's build<br>something <em>lasting.</em></h2>
+  <p class="cta-text">Commission a piece or visit our studio in person. We'd love to talk about what you have in mind.</p>
+  <div class="cta-actions">
+    <a href="mailto:hello@atwoodfurniture.ca" class="btn-light">Start a Commission</a>
+    <a href="#" class="btn-outline">Visit the Studio</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <span class="footer-brand-name">Atwood Furniture</span>
+      <p>Handcrafted furniture designed and built in British Columbia. Made to last a lifetime.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Collection</h4>
+      <ul>
+        <li><a href="#">Seating</a></li>
+        <li><a href="#">Tables</a></li>
+        <li><a href="#">Storage</a></li>
+        <li><a href="#">Bedroom</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Studio</h4>
+      <ul>
+        <li><a href="#">Our Process</a></li>
+        <li><a href="#">Materials</a></li>
+        <li><a href="#">Custom Work</a></li>
+        <li><a href="#">Care Guide</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="#">hello@atwoodfurniture.ca</a></li>
+        <li><a href="#">Book a Consultation</a></li>
+        <li><a href="#">Instagram</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Atwood Furniture. All rights reserved.</span>
+    <span>Designed & Built in British Columbia</span>
+  </div>
+</footer>
+
+</body>
+</html>

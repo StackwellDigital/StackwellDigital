@@ -1,0 +1,1347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="shortcut icon" href="/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <meta name="apple-mobile-web-app-title" content="Pitchd" />
+  <link rel="manifest" href="/site.webmanifest" />
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GK335Z9ZG6"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-GK335Z9ZG6');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pitchd — Never miss a campsite cancellation</title>
+<link rel="preload" href="/hero.webp" as="image" type="image/webp">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,900;1,9..144,900&family=Epilogue:wght@400;500&family=DM+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream:    #f5f0e8;
+    --paper:    #faf7f2;
+    --navy:     #1c2b3a;
+    --navy-mid: #2a3f54;
+    --navy-lt:  #3d5a73;
+    --amber:    #c9823a;
+    --amber-lt: #e09a52;
+    --slate:    #6b7f8e;
+    --mist:     #9aacb8;
+    --rule:     rgba(28,43,58,0.12);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
+  body {
+    background: var(--cream);
+    color: var(--navy);
+    font-family: 'Epilogue', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    opacity: 0.025;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    pointer-events: none;
+  }
+
+  section, nav, footer, div, header { position: relative; }
+  img { display: block; max-width: 100%; }
+
+  /* ── NAV ── */
+  nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid var(--rule);
+    background: rgba(245,240,232,0.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    position: sticky;
+    top: 0;
+    z-index: 200;
+  }
+
+  .logo { display: flex; align-items: center; gap: 0.5rem; text-decoration: none; overflow: visible; }
+  .logo-mark { width: 28px; height: 28px; }
+  .logo-wordmark {
+    font-family: 'Fraunces', serif;
+    font-size: 1.35rem;
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    color: var(--navy);
+    line-height: 1;
+  }
+  .logo-wordmark span { color: var(--amber); }
+
+  .nav-links { display: none; align-items: center; gap: 2rem; list-style: none; }
+  .nav-links a { color: var(--slate); text-decoration: none; font-size: 0.78rem; font-weight: 400; letter-spacing: 0.08em; text-transform: uppercase; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--navy); }
+  .btn-nav { background: var(--navy) !important; color: var(--cream) !important; padding: 0.5rem 1.1rem !important; border-radius: 2px; }
+
+  /* hamburger */
+  .hamburger { background: none; border: none; cursor: pointer; padding: 0.4rem; display: flex; flex-direction: column; gap: 5px; z-index: 300; -webkit-tap-highlight-color: transparent; }
+  .hamburger span { display: block; width: 22px; height: 2px; background: var(--navy); border-radius: 2px; transition: transform 0.3s, opacity 0.3s; transform-origin: center; }
+  .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  /* mobile drawer */
+  .mobile-menu {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 150;
+    background: var(--cream);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 5rem 2rem 3rem;
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a {
+    display: block;
+    width: 100%;
+    text-align: center;
+    font-family: 'Fraunces', serif;
+    font-size: 2rem;
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    color: var(--navy);
+    text-decoration: none;
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--rule);
+    transition: color 0.2s;
+  }
+  .mobile-menu a:first-child { border-top: 1px solid var(--rule); }
+  .mobile-menu a:hover, .mobile-menu a:active { color: var(--amber); }
+  .mobile-cta {
+    margin-top: 2rem !important;
+    background: var(--amber) !important;
+    color: white !important;
+    border-radius: 2px !important;
+    border: none !important;
+    padding: 1rem 2.5rem !important;
+    font-size: 1rem !important;
+    font-family: 'Epilogue', sans-serif !important;
+    font-weight: 500 !important;
+    width: auto !important;
+    border-top: none !important;
+  }
+
+  /* ── HERO ── */
+  .hero { padding: 2.5rem 1.25rem 2rem; min-height: unset; }
+.hero-left { position: relative; }
+.hero-left::before { display: none; }
+.hero-left::after { display: none; }
+.hero-left > * { position: relative; }
+
+  .hero-photo {
+    width: 100%;
+    height: 210px;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 1.75rem;
+    position: relative;
+  }
+  .hero-photo img { width: 100%; height: 100%; object-fit: cover; object-position: center 60%; }
+  .hero-photo::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, transparent 40%, rgba(28,43,58,0.55) 100%);
+  }
+  .hero-photo-tag {
+    position: absolute;
+    bottom: 1rem;
+    left: 1rem;
+    z-index: 2;
+    background: var(--amber);
+    color: white;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.7rem;
+    border-radius: 20px;
+  }
+
+  .eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  .eyebrow::before { content: ''; display: inline-block; width: 1.2rem; height: 1px; background: var(--amber); flex-shrink: 0; }
+
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(2.6rem, 10vw, 4.5rem);
+    font-weight: 900;
+    line-height: 1.0;
+    letter-spacing: -0.03em;
+    margin-bottom: 1.25rem;
+    color: var(--navy);
+  }
+  h1 em { font-style: italic; color: var(--amber); }
+
+  .hero-sub { font-size: 1rem; line-height: 1.7; color: var(--slate); margin-bottom: 2rem; }
+
+  /* ── SCAN FORM ── */
+  .scan-form { overflow: visible; background: var(--paper); border: 1px solid var(--rule); border-radius: 4px; padding: 1.25rem; }
+  .form-title { font-family: 'DM Mono', monospace; font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--slate); margin-bottom: 1rem; padding-bottom: 0.85rem; border-bottom: 1px solid var(--rule); }
+  .form-label { font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--slate); display: block; margin-bottom: 0.35rem; }
+  .form-input {
+    width: 100%;
+    background: white;
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    color: var(--navy);
+    font-family: 'Epilogue', sans-serif;
+    font-size: 1rem;
+    font-weight: 300;
+    padding: 0.75rem 0.85rem;
+    outline: none;
+    transition: border-color 0.2s;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+  .form-input:focus { border-color: var(--amber); }
+  .form-input::placeholder { color: var(--mist); }
+  .form-input option { background: white; color: var(--navy); }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.65rem; margin-bottom: 0.65rem; }
+  .form-group { overflow: visible; margin-bottom: 0.65rem; }
+  .form-submit {
+    width: 100%;
+    background: var(--amber);
+    color: white;
+    border: none;
+    border-radius: 2px;
+    padding: 1rem;
+    font-family: 'Epilogue', sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    margin-top: 0.5rem;
+    -webkit-appearance: none;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .form-submit:active { background: var(--amber-lt); }
+  .free-note { text-align: center; font-family: 'DM Mono', monospace; font-size: 0.58rem; color: var(--mist); letter-spacing: 0.08em; text-transform: uppercase; margin-top: 0.65rem; line-height: 1.6; }
+
+  /* ── STATS ── */
+  .stats-bar { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); background: var(--paper); }
+  .stat { padding: 1.5rem 1rem; text-align: center; border-right: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+  .stat:nth-child(2) { border-right: none; }
+  .stat:nth-child(3) { border-bottom: none; }
+  .stat:nth-child(4) { border-right: none; border-bottom: none; }
+  .stat-num { font-family: 'Fraunces', serif; font-size: 2.2rem; font-weight: 900; line-height: 1; color: var(--navy); letter-spacing: -0.03em; }
+  .stat-num em { color: var(--amber); font-style: normal; }
+  .stat-label { font-family: 'DM Mono', monospace; font-size: 0.58rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mist); margin-top: 0.4rem; line-height: 1.4; }
+
+  /* ── SECTIONS ── */
+  .section { padding: 3.5rem 1.25rem; }
+  .section-eyebrow { font-family: 'DM Mono', monospace; font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--amber); margin-bottom: 0.75rem; }
+  .section-title { font-family: 'Fraunces', serif; font-size: clamp(1.85rem, 7vw, 3rem); font-weight: 900; line-height: 1.1; letter-spacing: -0.025em; margin-bottom: 0.75rem; color: var(--navy); }
+  .section-sub { color: var(--slate); font-size: 0.95rem; line-height: 1.75; margin-bottom: 2.5rem; }
+
+  /* ── HOW IT WORKS ── */
+  .steps { display: flex; flex-direction: column; border: 1px solid var(--rule); border-radius: 4px; overflow: hidden; }
+  .step { padding: 2rem 1.5rem; border-bottom: 1px solid var(--rule); background: var(--paper); }
+  .step:last-child { border-bottom: none; }
+  .step-num { font-family: 'Fraunces', serif; font-size: 3rem; font-weight: 900; color: rgba(28,43,58,0.07); line-height: 1; margin-bottom: 1rem; letter-spacing: -0.04em; }
+  .step-icon { width: 38px; height: 38px; background: var(--navy); border-radius: 2px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; }
+  .step h3 { font-family: 'Fraunces', serif; font-size: 1.2rem; font-weight: 700; margin-bottom: 0.6rem; color: var(--navy); letter-spacing: -0.02em; }
+  .step p { font-size: 0.875rem; color: var(--slate); line-height: 1.75; }
+  .step-tag { display: inline-block; margin-top: 1rem; font-family: 'DM Mono', monospace; font-size: 0.58rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--amber); border: 1px solid rgba(201,130,58,0.3); padding: 0.25rem 0.55rem; border-radius: 2px; }
+
+  /* ── PHOTO STRIP ── */
+  .photo-strip-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+  .photo-strip-wrap::-webkit-scrollbar { display: none; }
+  .photo-strip { display: flex; height: 200px; min-width: max-content; }
+  .photo-strip-item { width: 260px; flex-shrink: 0; overflow: hidden; position: relative; }
+  .photo-strip-item img { width: 100%; height: 100%; object-fit: cover; filter: saturate(0.85); }
+  .photo-strip-item::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 50%, rgba(28,43,58,0.3) 100%); }
+  .photo-strip-hint { text-align: center; font-family: 'DM Mono', monospace; font-size: 0.58rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mist); padding: 0.6rem 0; border-bottom: 1px solid var(--rule); }
+
+  /* ── PRICING ── */
+  .pricing-section { background: var(--navy); padding: 3.5rem 1.25rem; color: var(--cream); }
+  .pricing-section .section-eyebrow { color: var(--amber); }
+  .pricing-section .section-title { color: var(--cream); }
+  .pricing-section .section-sub { color: var(--mist); }
+  .pricing-scroll-hint { font-family: 'DM Mono', monospace; font-size: 0.58rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mist); margin-bottom: 1rem; }
+  .pricing-outer { overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; margin: 0 -1.25rem; padding: 0 1.25rem 0.5rem; }
+  .pricing-outer::-webkit-scrollbar { display: none; }
+  .pricing-grid { display: flex; gap: 1rem; min-width: max-content; }
+
+  .plan { width: 290px; flex-shrink: 0; border: 1px solid rgba(255,255,255,0.08); border-radius: 4px; padding: 2rem 1.5rem; display: flex; flex-direction: column; background: rgba(255,255,255,0.02); }
+  .plan.featured { border-color: rgba(201,130,58,0.4); background: rgba(201,130,58,0.07); position: relative; }
+  .plan-badge { position: absolute; top: 0; left: 50%; transform: translateX(-50%); background: var(--amber); color: white; font-family: 'DM Mono', monospace; font-size: 0.55rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.28rem 0.75rem; border-radius: 0 0 4px 4px; white-space: nowrap; }
+  .plan-name { font-family: 'DM Mono', monospace; font-size: 0.62rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--mist); margin-bottom: 1.25rem; margin-top: 0.4rem; }
+  .plan-price { font-family: 'Fraunces', serif; font-size: 3rem; font-weight: 900; line-height: 1; letter-spacing: -0.04em; color: var(--cream); margin-bottom: 0.2rem; }
+  .plan-price sup { font-size: 1.1rem; vertical-align: super; font-family: 'Epilogue', sans-serif; font-weight: 300; }
+  .plan-period { font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 0.08em; color: var(--mist); margin-bottom: 1.5rem; }
+  .plan-divider { height: 1px; background: rgba(255,255,255,0.08); margin-bottom: 1.5rem; }
+  .plan-polling { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 2px; padding: 0.7rem 0.9rem; margin-bottom: 1.25rem; display: flex; align-items: center; justify-content: space-between; }
+  .plan.featured .plan-polling { background: rgba(201,130,58,0.1); border-color: rgba(201,130,58,0.25); }
+  .poll-label { font-family: 'DM Mono', monospace; font-size: 0.58rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mist); }
+  .poll-value { font-family: 'Fraunces', serif; font-size: 1.1rem; font-weight: 700; color: var(--cream); letter-spacing: -0.02em; }
+  .plan.featured .poll-value { color: var(--amber); }
+  .plan-desc { font-size: 0.82rem; color: var(--mist); line-height: 1.7; margin-bottom: 1.5rem; }
+
+  .credit-packs { display: grid; grid-template-columns: repeat(3,1fr); gap: 0.4rem; margin-bottom: 1.25rem; }
+  .credit-pkg { border: 1px solid rgba(255,255,255,0.08); border-radius: 2px; padding: 0.65rem 0.4rem; text-align: center; cursor: pointer; touch-action: manipulation; -webkit-tap-highlight-color: transparent; transition: all 0.15s; }
+  .credit-pkg.active, .credit-pkg:active { border-color: var(--amber); background: rgba(201,130,58,0.1); }
+  .pkg-count { font-family: 'Fraunces', serif; font-size: 1.5rem; font-weight: 900; line-height: 1; color: var(--cream); display: block; }
+  .pkg-word { font-family: 'DM Mono', monospace; font-size: 0.52rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--mist); display: block; margin-top: 0.1rem; }
+  .pkg-price { color: var(--amber); font-size: 0.75rem; font-weight: 500; margin-top: 0.35rem; display: block; font-family: 'DM Mono', monospace; }
+
+  .plan-features { list-style: none; display: flex; flex-direction: column; gap: 0.65rem; margin-bottom: 1.5rem; flex: 1; }
+  .plan-features li { font-size: 0.8rem; color: rgba(245,240,232,0.7); display: flex; align-items: flex-start; gap: 0.55rem; line-height: 1.5; }
+  .plan-features li .check { color: var(--amber); flex-shrink: 0; margin-top: 1px; font-size: 0.72rem; }
+  .plan-features li.dim { color: rgba(245,240,232,0.25); }
+  .plan-features li.dim .check { color: rgba(245,240,232,0.15); }
+
+  .btn-plan { display: block; text-align: center; padding: 0.9rem; border-radius: 2px; font-size: 0.85rem; font-weight: 500; text-decoration: none; cursor: pointer; border: none; font-family: 'Epilogue', sans-serif; touch-action: manipulation; -webkit-tap-highlight-color: transparent; -webkit-appearance: none; }
+  .btn-outline { background: transparent; border: 1px solid rgba(255,255,255,0.15); color: rgba(245,240,232,0.7); }
+  .btn-outline:active { border-color: rgba(255,255,255,0.4); }
+  .btn-amber { background: var(--amber); color: white; }
+  .btn-amber:active { background: var(--amber-lt); }
+  .btn-navy-lt { background: rgba(255,255,255,0.08); color: var(--cream); border: 1px solid rgba(255,255,255,0.1); }
+  .btn-navy-lt:active { background: rgba(255,255,255,0.15); }
+
+  /* ── PARKS ── */
+  .parks-section { background: var(--paper); border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); padding: 3.5rem 1.25rem; }
+  .parks-grid { display: grid; grid-template-columns: 1fr 1fr; border: 1px solid var(--rule); border-radius: 4px; overflow: hidden; margin-top: 2rem; }
+  .park-card { padding: 1.1rem 1rem; border-right: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+  .park-card:nth-child(2n) { border-right: none; }
+  .park-card:nth-last-child(-n+2) { border-bottom: none; }
+  .park-region { font-family: 'DM Mono', monospace; font-size: 0.55rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--amber); margin-bottom: 0.3rem; }
+  .park-name { font-family: 'Fraunces', serif; font-size: 0.88rem; font-weight: 700; color: var(--navy); line-height: 1.25; letter-spacing: -0.01em; }
+  .park-sites { font-family: 'DM Mono', monospace; font-size: 0.56rem; color: var(--mist); margin-top: 0.25rem; line-height: 1.4; }
+  .parks-more { display: flex; align-items: center; justify-content: center; flex-direction: column; background: rgba(28,43,58,0.03); }
+
+  /* ── FAQ ── */
+  .faq-section { padding: 3.5rem 1.25rem; background: var(--navy); color: var(--cream); position: relative; z-index: 2; }
+  .faq-sidebar-mobile { margin-bottom: 2rem; }
+  .faq-list { display: flex; flex-direction: column; position: relative; z-index: 1; }
+  .faq-item { border-bottom: 1px solid var(--rule); }
+  .faq-q { width: 100%; background: none; border: none; color: var(--cream); font-family: 'Fraunces', serif; font-size: 1rem; font-weight: 700; text-align: left; padding: 1.25rem 0; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 0.75rem; letter-spacing: -0.01em; line-height: 1.3; touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+  .faq-q .arr { color: var(--amber); font-size: 1.2rem; flex-shrink: 0; transition: transform 0.3s; font-family: 'Epilogue', sans-serif; font-weight: 300; }
+  .faq-item.open .faq-q .arr { transform: rotate(45deg); }
+  .faq-a { display: none; padding: 0 0 1.25rem; font-size: 0.875rem; color: var(--slate); line-height: 1.8; }
+  .faq-item.open .faq-a { display: block; }
+
+  /* ── CTA ── */
+  .cta-section { background: var(--navy); padding: 4rem 1.25rem; text-align: center; position: relative; overflow: hidden; }
+  .cta-section::before { content: ''; position: absolute; inset: 0; background-image: url('/dominik-camping.webp'); background-size: cover; background-position: center 40%; opacity: 0.1; }
+  .cta-section::after { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 80% 70% at 50% 50%, rgba(201,130,58,0.12) 0%, transparent 70%); }
+  .cta-section h2 { font-family: 'Fraunces', serif; font-size: clamp(2.2rem, 9vw, 4rem); font-weight: 900; letter-spacing: -0.03em; color: var(--cream); line-height: 1.05; margin-bottom: 1rem; position: relative; z-index: 1; }
+  .cta-section h2 em { font-style: italic; color: var(--amber); }
+  .cta-section p { color: var(--mist); font-size: 0.95rem; margin-bottom: 2rem; line-height: 1.75; position: relative; z-index: 1; }
+  .btn-cta { display: inline-block; background: var(--amber); color: white; padding: 1rem 2.25rem; border-radius: 2px; font-family: 'Epilogue', sans-serif; font-size: 0.95rem; font-weight: 500; text-decoration: none; touch-action: manipulation; position: relative; z-index: 1; -webkit-tap-highlight-color: transparent; }
+  .btn-cta:active { background: var(--amber-lt); }
+  .cta-sub { font-family: 'DM Mono', monospace; font-size: 0.58rem; color: rgba(154,172,184,0.5); letter-spacing: 0.1em; text-transform: uppercase; margin-top: 1rem; position: relative; z-index: 1; line-height: 1.8; }
+
+  /* ── FOOTER ── */
+  footer { border-top: 1px solid var(--rule); padding: 2rem 1.25rem; background: var(--paper); }
+  .footer-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; }
+  .footer-links { display: flex; flex-wrap: wrap; gap: 0.75rem 1.5rem; list-style: none; margin-bottom: 1.25rem; }
+  .footer-links a { color: var(--mist); text-decoration: none; font-family: 'DM Mono', monospace; font-size: 0.7rem; letter-spacing: 0.05em; }
+  .footer-links a:hover { color: var(--navy); }
+  .footer-copy { font-family: 'DM Mono', monospace; font-size: 0.6rem; color: var(--mist); letter-spacing: 0.08em; text-transform: uppercase; }
+
+  /* ── DESKTOP 768px+ ── */
+  @media (min-width: 768px) {
+    nav { padding: 1.5rem 3rem; }
+    .hamburger { display: none; }
+    .nav-links { display: flex; }
+
+    .hero-photo { display: none; }
+    .hero-right-panel { display: none; }
+    .hero-right-panel::before { content: ''; position: absolute; inset: 0; background-image: url('/hero.webp'); background-size: cover; background-position: center 50%; z-index: 0; }
+    .hero-right-panel::after { content: ''; position: absolute; inset: 0; background-image: radial-gradient(circle, rgba(255,255,255,0.05) 1px, transparent 1px); background-size: 28px 28px; z-index: 1; }
+
+    .stats-bar { grid-template-columns: repeat(4,1fr); }
+    .stat { border-bottom: none; padding: 2.5rem 2rem; }
+    .stat:nth-child(2) { border-right: 1px solid var(--rule); }
+    .stat:nth-child(4) { border-right: none; }
+    .stat-num { font-size: 2.75rem; }
+
+    .section { padding: 6rem 4rem; max-width: 1300px; margin: 0 auto; }
+    .steps { flex-direction: row; }
+    .step { flex: 1; border-bottom: none; border-right: 1px solid var(--rule); }
+    .step:last-child { border-right: none; }
+
+    .photo-strip { min-width: unset; height: 280px; }
+    .photo-strip-item { width: auto; flex: 1; }
+    .photo-strip-hint { display: none; }
+
+    .pricing-section { padding: 6rem 4rem; }
+    .pricing-scroll-hint { display: none; }
+    .pricing-outer { margin: 0; padding: 0; overflow: visible; }
+    .pricing-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 0; min-width: unset; border: 1px solid rgba(255,255,255,0.08); border-radius: 4px; overflow: hidden; }
+    .plan { width: auto; border: none; border-right: 1px solid rgba(255,255,255,0.08); border-radius: 0; }
+    .plan:last-child { border-right: none; }
+    .plan.featured { border: none; border-right: 1px solid rgba(201,130,58,0.2); border-left: 1px solid rgba(201,130,58,0.2); margin-left: -1px; }
+
+    .parks-section { padding: 6rem 4rem; }
+    .parks-inner { max-width: 1300px; margin: 0 auto; }
+    .parks-grid { grid-template-columns: repeat(auto-fill, minmax(200px,1fr)); }
+    .park-card { padding: 1.4rem 1.6rem; border-right: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+    .park-card:nth-child(2n) { border-right: 1px solid var(--rule); }
+    .park-card:nth-last-child(-n+2) { border-bottom: 1px solid var(--rule); }
+
+    .faq-section { padding: 6rem 4rem; max-width: 1300px; margin: 0 auto; }
+    .faq-sidebar-mobile { display: none; }
+    .faq-content { display: grid; grid-template-columns: 1fr 2fr; gap: 6rem; align-items: start; }
+    .faq-desktop-sidebar { display: block !important; position: sticky; top: 6rem; }
+
+    .cta-section { padding: 7rem 4rem; }
+    footer { padding: 2.5rem 4rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+    .footer-top { display: none; }
+    .footer-links { margin-bottom: 0; }
+  }
+
+  @media (min-width: 1100px) {
+    nav { padding: 1.75rem 5rem; }
+    .section { padding: 8rem 5rem; }
+    .pricing-section { padding: 8rem 5rem; }
+    .parks-section { padding: 8rem 5rem; }
+    .faq-section { padding: 8rem 5rem; }
+  .hero { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); align-items: stretch; }
+  .hero-left { padding: 3rem 3.5rem; border-right: 1px solid var(--rule); min-width: 0; overflow: hidden; }
+  .hero-right-panel { display: flex !important; position: relative; overflow: hidden; }
+  }
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .eyebrow    { animation: fadeUp 0.5s ease both; }
+  h1          { animation: fadeUp 0.5s ease 0.08s both; }
+  .hero-sub   { animation: fadeUp 0.5s ease 0.15s both; }
+  .scan-form  { animation: fadeUp 0.5s ease 0.2s both; }
+  .hero-photo { animation: fadeUp 0.5s ease both; }
+
+/* Active scans badge */
+.active-scans-badge {
+  position: absolute;
+  top: 1.75rem;
+  left: 1.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  background: rgba(10,24,48,0.82);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: #fff;
+  font-family: var(--mono);
+  font-size: 1.05rem;
+  letter-spacing: 0.05em;
+  padding: 0.7rem 1.25rem;
+  border-radius: 2rem;
+  border: 1px solid rgba(255,255,255,0.2);
+  z-index: 10;
+  pointer-events: none;
+}
+.active-scans-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #4ade80;
+  box-shadow: 0 0 6px #4ade80;
+  animation: pulseDot 2s ease-in-out infinite;
+  flex-shrink: 0;
+}
+@media (max-width:1099px) { .active-scans-badge { display: none !important; } }
+.active-scans-mobile {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  background: rgba(10,24,48,0.88);
+  color: #fff;
+  font-family: var(--mono);
+  font-size: 0.95rem;
+  letter-spacing: 0.05em;
+  padding: 0.65rem 1.4rem;
+  border-radius: 2rem;
+  border: 1px solid rgba(255,255,255,0.15);
+  margin: 0 auto 1.25rem;
+  width: fit-content;
+}
+@media (max-width:1099px) { .active-scans-mobile { display: flex; } }
+@keyframes pulseDot {
+  0%,100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.75); }
+}
+
+/* Reviews section */
+.reviews-section {
+  background: var(--paper);
+  border-top: 1px solid var(--rule);
+  padding: 5rem 1.5rem;
+}
+.reviews-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.reviews-heading {
+  font-family: var(--serif);
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  color: var(--navy);
+  text-align: center;
+  margin-bottom: 3rem;
+}
+.reviews-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.75rem;
+}
+.review-card {
+  background: #fff;
+  border: 1px solid var(--rule);
+  border-radius: 0.75rem;
+  padding: 2rem 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.review-stars {
+  color: var(--amber);
+  font-size: 1rem;
+  letter-spacing: 0.1em;
+}
+.review-text {
+  font-family: var(--sans);
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: #3a4a5c;
+  flex: 1;
+  margin: 0;
+}
+.review-author {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--rule);
+}
+.review-name {
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: 0.88rem;
+  color: var(--navy);
+}
+.review-location {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: #7a8fa6;
+  letter-spacing: 0.03em;
+}
+</style>
+<link rel="canonical" href="https://pitchd.ca/">
+</head>
+<body>
+
+<!-- MOBILE DRAWER -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#how-it-works" onclick="closeMenu()">How It Works</a>
+  <a href="#pricing" onclick="closeMenu()">Pricing</a>
+  <a href="#faq" onclick="closeMenu()">FAQ</a>
+  <a href="#reviews" onclick="closeMenu()">Reviews</a>
+  <a href="/members.html" onclick="closeMenu()">Members</a>
+  <a href="/blog/" onclick="closeMenu()">Articles</a>
+  <a href="#pricing" class="mobile-cta" onclick="closeMenu()">Start Free →</a>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="logo">
+    <img src="/logo_transp.webp" alt="Pitchd" style="height:54px;width:auto;display:block;"></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#how-it-works">How It Works</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#faq">FAQ</a></li>
+    <li><a href="#reviews">Reviews</a></li>
+    <li><a href="/members.html">Members</a></li>
+    <li><a href="/blog/">Articles</a></li>
+    <li><a href="#pricing" class="btn-nav">Start Free</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-left">
+
+    <p class="eyebrow">BC Parks · Parks Canada</p>
+    <h1>Your campsite<br>is out there.<br><em>We'll find it.</em></h1>
+    <p class="hero-sub">Pitchd watches sold-out campgrounds around the clock and texts you the second a cancellation matches your trip. You click, you book.</p>
+    <div class="scan-form" id="scan-form">
+      <div class="form-title"> Create a free scan</div>
+      <div class="form-group">
+        <label class="form-label">Park or Campground</label>
+        <div class="park-search-wrap" style="position:relative;z-index:1000;">
+          <input type="text" class="form-input park-search-input" placeholder="e.g. Garibaldi Provincial Park…" autocomplete="off" id="parkSearchInput" />
+          <input type="hidden" id="parkIdInput" name="park_id" />
+          <div class="park-dropdown" id="parkDropdown" style="top:100%;left:0;right:0;display:none;position:absolute;background:var(--paper);border:1px solid var(--rule);border-radius:0 0 4px 4px;max-height:320px;overflow-y:auto;z-index:9999;box-shadow:0 8px 24px rgba(28,43,58,0.15);"></div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div>
+          <label class="form-label">Arrival Date</label>
+          <input type="date" class="form-input" id="arrivalDate" />
+        </div>
+        <div>
+          <label class="form-label">Nights</label>
+          <select class="form-input" id="nightsSelect">
+            <option>1 night</option>
+            <option>2 nights</option>
+            <option selected>3 nights</option>
+            <option>4 nights</option>
+            <option>5 nights</option>
+            <option>6 nights</option>
+            <option>7 nights</option>
+            <option>8 nights</option>
+            <option>9 nights</option>
+            <option>10 nights</option>
+            <option>11 nights</option>
+            <option>12 nights</option>
+            <option>13 nights</option>
+            <option>14 nights</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group" style="position:relative;">
+        <label class="form-label">Equipment</label>
+        <input type="text" id="equipmentDisplay" readonly placeholder="1 Tent" class="form-input" style="cursor:pointer;" onclick="toggleEquipmentDropdown()">
+        <input type="hidden" id="equipmentSelect" value="-32768,-32768">
+        <div id="equipmentDropdown" style="display:none;position:absolute;top:100%;left:0;right:0;background:var(--paper);border:1px solid var(--rule);border-radius:0 0 4px 4px;max-height:220px;overflow-y:auto;z-index:9999;box-shadow:0 8px 24px rgba(28,43,58,0.15);"></div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Email</label>
+        <input type="email" class="form-input" id="emailInput" placeholder="you@example.com" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Mobile Number</label>
+        <input type="tel" class="form-input" id="phoneInput" placeholder="+1 (604) 555-0000" autocomplete="tel" />
+        <p class="free-note" style="text-align:left;margin-top:0.25rem;">Mobile number is for account sign-up only &mdash; no spam, ever.</p>
+      </div>
+      <button class="form-submit" id="watchBtn" onclick="submitScan()">Watch This Park →</button>
+      <p id="scanConfirmMsg" style="display:none;margin-top:0.75rem;font-size:0.85rem;color:var(--navy);text-align:center;font-family:'Epilogue',sans-serif;">Your scan has started — check your email for confirmation and details.</p>
+      <p class="free-note">Free &middot; 1 scan per number &middot; email only &middot; checks every 4 hrs</p>
+    </div>
+      </div>
+  <div class="hero-right-panel">
+  <div class="active-scans-badge" id="activeScansBadge">
+    <span class="active-scans-dot"></span>
+    <span id="activeScansCount">523</span> Active Scans
+  </div>
+</div>
+</div>
+<div class="active-scans-mobile">
+  <span class="active-scans-dot"></span>
+  <span id="activeScansCountMobile">523</span> Active Scans
+</div>
+<div class="stats-bar">
+    <div class="stat"><div class="stat-num">140<em>+</em></div><div class="stat-label">Parks Monitored</div></div>
+    <div class="stat"><div class="stat-num">60<em>sec</em></div><div class="stat-label">Fastest Alert</div></div>
+    <div class="stat"><div class="stat-num">BC</div><div class="stat-label">Coverage</div></div>
+    <div class="stat"><div class="stat-num">24<em>/</em>7</div><div class="stat-label">Always On</div></div>
+</div>
+<div class="section" id="how-it-works">
+  <p class="section-eyebrow">How It Works</p>
+  <h2 class="section-title">Three steps to your perfect campsite.</h2>
+  <p class="section-sub">No bots. No auto-booking. We watch relentlessly — you just show up.</p>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">01</div>
+      <div class="step-icon">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 2L2 14h14L9 2z" stroke="#f5f0e8" stroke-width="1.5" stroke-linejoin="round"/><line x1="9" y1="2" x2="6" y2="14" stroke="#c9823a" stroke-width="1" stroke-linecap="round"/></svg>
+      </div>
+      <h3>Tell us where you want to pitch</h3>
+      <p>Search any BC Parks, Parks Canada, or  campground. Set your dates, nights, and site preferences.</p>
+      <span class="step-tag">Takes 60 seconds</span>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <div class="step-icon">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="6" stroke="#f5f0e8" stroke-width="1.5"/><circle cx="9" cy="9" r="2" fill="#c9823a"/><line x1="9" y1="3" x2="9" y2="1" stroke="#f5f0e8" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </div>
+      <h3>We watch it around the clock</h3>
+      <p>Pitchd polls the booking system continuously. The moment a cancellation matches your criteria, we catch it before anyone else.</p>
+      <span class="step-tag">24/7 monitoring</span>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <div class="step-icon">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="2" y="4" width="14" height="10" rx="2" stroke="#f5f0e8" stroke-width="1.5"/><path d="M5 8h8M5 11h5" stroke="#c9823a" stroke-width="1.2" stroke-linecap="round"/></svg>
+      </div>
+      <h3>You get a text — act fast</h3>
+      <p>We fire you an SMS with a direct booking link. Tap it, check availability, and reserve before someone else does.</p>
+      <span class="step-tag">SMS fired instantly</span>
+    </div>
+  </div>
+  <!-- ALERT SCREENSHOTS -->
+  <div style="display:flex;gap:2rem;justify-content:center;align-items:flex-start;flex-wrap:wrap;margin-top:3rem;padding-top:2.5rem;border-top:1px solid var(--rule);">
+    <div style="flex:1;min-width:260px;max-width:420px;text-align:center;">
+      <p class="section-eyebrow" style="margin-bottom:0.75rem;">SMS Alert</p>
+      <img src="/signal-1.webp" alt="Pitchd SMS alert example" style="width:100%;border-radius:12px;box-shadow:0 8px 32px rgba(28,43,58,0.15);" />
+    </div>
+    <div style="flex:1;min-width:260px;max-width:420px;text-align:center;">
+      <p class="section-eyebrow" style="margin-bottom:0.75rem;">Email Alert</p>
+      <img src="/signal-2.webp" alt="Pitchd email alert example" style="width:100%;border-radius:12px;box-shadow:0 8px 32px rgba(28,43,58,0.15);" />
+    </div>
+  </div>
+</div>
+
+<!-- PHOTO STRIP -->
+<div class="photo-strip-wrap">
+  <div class="photo-strip">
+    <div class="photo-strip-item"><img src="https://raw.githubusercontent.com/StackwellDigital/Pitchd/a024b2af247aad44aa7aa2afbdfd540312d90d94/dominik-jirovsky-re2LZOB2XvY-unsplash.jpg" alt="BC camping" loading="lazy" /></div>
+    <div class="photo-strip-item"><img src="/strip2.webp" alt="Mountain campsite" loading="lazy" /></div>
+    <div class="photo-strip-item"><img src="/strip3.webp" alt="Forest camping" loading="lazy" /></div>
+    <div class="photo-strip-item"><img src="/strip4.webp" alt="Tent in wilderness" loading="lazy" /></div>
+    <div class="photo-strip-item"><img src="/strip5.webp" alt="BC wilderness" loading="lazy" /></div>
+  </div>
+  <p class="photo-strip-hint">← swipe to see more →</p>
+</div>
+
+<!-- PRICING -->
+<div class="pricing-section" id="pricing">
+  <p class="section-eyebrow">Pricing</p>
+  <h2 class="section-title">Start free.<br>Upgrade when it matters.</h2>
+  <p class="section-sub">No subscription to get started. Credits never expire. Cancel anytime.</p>
+  <p class="pricing-scroll-hint">← swipe to compare plans →</p>
+  <div class="pricing-outer">
+    <div class="pricing-grid">
+
+      <div class="plan">
+        <div class="plan-name">Trailhead</div>
+        <div class="plan-price">Free</div>
+        <div class="plan-period">forever · no card required</div>
+        <div class="plan-divider"></div>
+        <div class="plan-polling"><span class="poll-label">Checks every</span><span class="poll-value">4 hrs</span></div>
+        <div class="plan-desc">Better than refreshing manually. One scan per phone number — enough to try it out, not enough to rely on for a hot park on a long weekend.</div>
+        <ul class="plan-features">
+          <li><span class="check">✓</span> 1 active scan</li>
+          <li><span class="check">✓</span> Email alerts</li>
+          <li><span class="check">✓</span> BC Parks + Parks Canada</li>
+          <li class="dim"><span class="check">✗</span> SMS alerts</li>
+          <li class="dim"><span class="check">✗</span> Flexible date range</li>
+          <li class="dim"><span class="check">✗</span> Site type filters</li>
+        </ul>
+        <a href="#" class="btn-plan btn-outline" onclick="document.querySelector('.scan-form .form-input').focus(); document.querySelector('.hero').scrollIntoView({behavior:'smooth'}); return false;">Start Watching Free</a>
+      </div>
+
+      <div class="plan featured">
+        <div class="plan-badge">Most Popular</div>
+        <div class="plan-name">Credit Packs</div>
+        <div class="plan-price"><sup>$</sup>5</div>
+        <div class="plan-period">per pack · credits never expire</div>
+        <div class="plan-divider"></div>
+        <div class="plan-polling"><span class="poll-label">Checks every</span><span class="poll-value">5 min</span></div>
+        <div class="plan-desc">5-minute polling means you're actually competitive — not finding out hours after a spot opened and closed.</div>
+        <div class="credit-packs">
+          <div class="credit-pkg active"><span class="pkg-count">3</span><span class="pkg-word">scans</span><span class="pkg-price">$5</span></div>
+          <div class="credit-pkg"><span class="pkg-count">10</span><span class="pkg-word">scans</span><span class="pkg-price">$15</span></div>
+          <div class="credit-pkg"><span class="pkg-count">25</span><span class="pkg-word">scans</span><span class="pkg-price">$30</span></div>
+        </div>
+        <ul class="plan-features">
+          <li><span class="check">✓</span> SMS + Email alerts</li>
+          <li><span class="check">✓</span> All booking systems</li>
+          <li><span class="check">✓</span> Flexible dates (±2 days)</li>
+          <li><span class="check">✓</span> Site type filters</li>
+          <li><span class="check">✓</span> Credits never expire</li>
+          <li><span class="check">✓</span> Priority 5-min polling</li>
+        </ul>
+        <a href="#" class="btn-plan btn-amber" id="credit-pack-btn" onclick="goToCredits(); return false;">Buy a Credit Pack</a>
+      </div>
+
+      <div class="plan">
+        <div class="plan-name">Season Pass</div>
+        <div class="plan-price"><sup>$</sup>12</div>
+        <div class="plan-period">/ month · cancel anytime</div>
+        <div class="plan-divider"></div>
+        <div class="plan-polling"><span class="poll-label">Checks every</span><span class="poll-value">1 min</span></div>
+        <div class="plan-desc">By the time someone else sees a cancellation, you've already booked it. Unlimited scans, fastest polling, every feature unlocked.</div>
+        <ul class="plan-features">
+          <li><span class="check">✓</span> Unlimited concurrent scans</li>
+          <li><span class="check">✓</span> SMS + Email alerts</li>
+            <li><span class="check">✓</span> Priority 1-min polling</li>
+          <li><span class="check">✓</span> All booking systems</li>
+          <li><span class="check">✓</span> Flexible dates (±3 days)</li>
+          <li><span class="check">✓</span> All site type filters</li>
+        </ul>
+        <a href="https://buy.stripe.com/cNieVc2439x74yLaFx14403" class="btn-plan btn-navy-lt">Get Season Pass</a>
+      </div>
+
+    </div>
+  </div>
+<!-- FAQ -->
+<div class="faq-section" id="faq" style="background:var(--navy);color:var(--cream);padding:5rem 1.5rem;">
+  <div style="max-width:720px;margin:0 auto;">
+    <p class="section-eyebrow" style="color:var(--amber);">FAQ</p>
+    <h2 style="font-family:'Fraunces',serif;font-size:clamp(2rem,5vw,2.8rem);font-weight:900;color:var(--cream);margin-bottom:2.5rem;line-height:1.1;">Good questions.</h2>
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">Does this actually work? <span class="arr">+</span></button>
+        <div class="faq-a">Yes — but it's not magic. Pitchd catches real cancellations as they happen. If nobody cancels a matching spot, you won't get an alert. Best odds: scan multiple parks, turn on flexible dates, keep your minimum nights low.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">Will it auto-book for me? <span class="arr">+</span></button>
+        <div class="faq-a">Nope — and we'll never do that. Auto-booking is against booking system terms and bad for the camping community. We alert you, you book through the park's official site.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">What booking systems do you cover? <span class="arr">+</span></button>
+        <div class="faq-a">Discover Camping (BC Parks). Continuously adding more — drop us a line if you need a specific park.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">How fast will I get alerted? <span class="arr">+</span></button>
+        <div class="faq-a">Free checks every 4 hours. Credit packs run every 5 minutes. Season Pass gets priority 1-minute polling. For a high-demand park, Season Pass is absolutely worth it.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">Do credits expire? <span class="arr">+</span></button>
+        <div class="faq-a">Never. Buy in March, use in September. They're yours until you spend them.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">Can I cancel Season Pass anytime? <span class="arr">+</span></button>
+        <div class="faq-a">Absolutely. No contracts. Cancel from your dashboard and you keep access until the end of the billing period.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-section">
+  <h2>Stop refreshing.<br><em>Start camping.</em></h2>
+  <p>Let Pitchd do the watching while you get on with your life.</p>
+  <a href="#scan-form" class="btn-cta">Create Your First Scan — Free</a>
+  <p class="cta-sub">No credit card · 1 scan per number · cancel anytime</p>
+</div>
+
+<!-- REVIEWS -->
+<section class="reviews-section" id="reviews">
+  <div class="reviews-inner">
+    <h2 class="reviews-heading">What campers are saying</h2>
+    <div class="reviews-grid">
+      <div class="review-card">
+        <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <p class="review-text">"Honestly didn't expect it to work this fast. Scored a spot at Cultus Lake literally 20 minutes after I set up the alert. Been trying to book that site for two summers. Worth every penny."</p>
+        <div class="review-author">
+          <span class="review-name">Mark T.</span>
+          <span class="review-location">Abbotsford, BC</span>
+        </div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <p class="review-text">"I've been refreshing BC Parks manually every morning for like three weeks. A friend told me about Pitchd and I had a campsite by that afternoon. Wish I found this sooner, honestly."</p>
+        <div class="review-author">
+          <span class="review-name">Jess R.</span>
+          <span class="review-location">Victoria, BC</span>
+        </div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <p class="review-text">"Set up alerts for three different parks and had two of them ping me within 48 hours. The SMS is what sold me — I wasn't checking email but the text got me right away. Kids are pumped for the trip."</p>
+        <div class="review-author">
+          <span class="review-name">Dave &amp; Sarah K.</span>
+          <span class="review-location">North Vancouver, BC</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <a href="#" class="logo">
+      <img src="/logo_transp.webp" alt="Pitchd" style="height:54px;width:auto;display:block;"></span>
+    </a>
+  </div>
+  <ul class="footer-links">
+    <li><a href="#how-it-works">How It Works</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="privacy.html">Privacy</a></li>
+    <li><a href="terms.html">Terms</a></li>
+    <li><a href="mailto:info@pitchd.ca">Contact</a></li>
+  </ul>
+  <div class="footer-copy">© 2025 Pitchd · Built in BC 🏔️</div>
+    <div class="footer-copy" style="margin-top:0.4rem;">Built by <a href="https://www.stackwell.digital/" target="_blank" rel="noopener" style="color:var(--mist);text-decoration:underline;">Stackwell.Digital</a></div>
+</footer>
+
+<script>
+  // hamburger
+  function toggleMenu() {
+    const menu = document.getElementById('mobileMenu');
+    const burger = document.getElementById('hamburger');
+    const isOpen = menu.classList.toggle('open');
+    burger.classList.toggle('open');
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+  }
+
+  function closeMenu() {
+    document.getElementById('mobileMenu').classList.remove('open');
+    document.getElementById('hamburger').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  // faq
+  function toggleFaq(btn) {
+    const item = btn.closest('.faq-item');
+    const wasOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if (!wasOpen) item.classList.add('open');
+  }
+
+  // Stripe payment links
+  const STRIPE = {
+    credits_3:  'https://buy.stripe.com/7sYbJ0243eRr6GT4h914402',
+    credits_10: 'https://buy.stripe.com/14A5kC9wv38J6GTaFx14401',
+    credits_25: 'https://buy.stripe.com/aFa14m4cb4cNaX95ld14400',
+    season:     'https://buy.stripe.com/cNieVc2439x74yLaFx14403',
+  };
+  let selectedCreditPack = 'credits_3';
+
+  function goToCredits() {
+    window.location.href = STRIPE[selectedCreditPack];
+  }
+
+  // credit packs
+  document.querySelectorAll('.credit-pkg').forEach((pkg, i) => {
+    pkg.addEventListener('click', () => {
+      document.querySelectorAll('.credit-pkg').forEach(p => p.classList.remove('active'));
+      pkg.classList.add('active');
+      const counts = ['credits_3', 'credits_10', 'credits_25'];
+      selectedCreditPack = counts[i];
+    });
+  });
+
+  // scroll fade in
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.06 });
+
+  document.querySelectorAll('.stat, .step, .plan, .park-card').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(14px)';
+    el.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+    io.observe(el);
+  });
+</script>
+
+<script>
+(function() {
+  const PARKS = [
+    { region: "Coastal Mainland", name: "Alice Lake", id: -2147483648 },
+    { region: "Coastal Mainland", name: "Birkenhead Lake", id: -2147483631 },
+    { region: "Coastal Mainland", name: "Sx̱ótsaqel / Chilliwack Lake", id: -2147483619 },
+    { region: "Coastal Mainland", name: "Cultus Lake", id: -2147483610 },
+    { region: "Coastal Mainland", name: "Golden Ears", id: -2147483576 },
+    { region: "Coastal Mainland", name: "Inland Lake", id: -2147483554 },
+    { region: "Coastal Mainland", name: "Mount Seymour", id: -2147483474 },
+    { region: "Coastal Mainland", name: "Nairn Falls", id: -2147483471 },
+    { region: "Coastal Mainland", name: "Peace Arch", id: -2147483454 },
+    { region: "Coastal Mainland", name: "Porteau Cove", id: -2147483449 },
+    { region: "Coastal Mainland", name: "Rolley Lake", id: -2147483430 },
+    { region: "Coastal Mainland", name: "Saltery Bay", id: -2147483422 },
+    { region: "Coastal Mainland", name: "Sasquatch", id: -2147483420 },
+    { region: "Coastal Mainland", name: "Silver Lake", id: -2147483410 },
+    { region: "Islands", name: "Bamberton", id: -2147483643 },
+    { region: "Islands", name: "Cowichan River", id: -2147483612 },
+    { region: "Islands", name: "Englishman River Falls", id: -2147483589 },
+    { region: "Islands", name: "Fillongley", id: -2147483588 },
+    { region: "Islands", name: "French Beach", id: -2147483581 },
+    { region: "Islands", name: "Gordon Bay", id: -2147483566 },
+    { region: "Islands", name: "Little Qualicum Falls", id: -2147483510 },
+    { region: "Islands", name: "Loveland Bay", id: -2147483507 },
+    { region: "Islands", name: "Miracle Beach", id: -2147483492 },
+    { region: "Islands", name: "Montague Harbour Marine", id: -2147483482 },
+    { region: "Islands", name: "Morton Lake", id: -2147483481 },
+    { region: "Islands", name: "Saysutshun (Newcastle Island Marine)", id: -2147483470 },
+    { region: "Islands", name: "Rathtrevor Beach", id: -2147483437 },
+    { region: "Islands", name: "Ruckle", id: -2147483426 },
+    { region: "Islands", name: "Smelt Bay", id: -2147483404 },
+    { region: "Islands", name: "Sproat Lake", id: -2147483402 },
+    { region: "Islands", name: "Stamp River", id: -2147483401 },
+    { region: "Islands", name: "Strathcona", id: -2147483399 },
+    { region: "Islands", name: "Taylor Arm", id: -2147483386 },
+    { region: "Islands", name: "Dionisio Point", id: -2147483355 },
+    { region: "Islands", name: "Main Lake", id: -2147483345 },
+    { region: "Islands", name: "Raft Cove", id: -2147483341 },
+    { region: "Islands", name: "Tribune Bay", id: -2147483242 },
+    { region: "Southern Interior", name: "Bear Creek", id: -2147483641 },
+    { region: "Southern Interior", name: "Blanket Creek", id: -2147483630 },
+    { region: "Southern Interior", name: "Bromley Rock", id: -2147483624 },
+    { region: "Southern Interior", name: "Conkle Lake", id: -2147483613 },
+    { region: "Southern Interior", name: "Dry Gulch", id: -2147483603 },
+    { region: "Southern Interior", name: "E.C. Manning", id: -2147483601 },
+    { region: "Southern Interior", name: "Ellison", id: -2147483591 },
+    { region: "Southern Interior", name: "Fintry", id: -2147483586 },
+    { region: "Southern Interior", name: "Gladstone", id: -2147483577 },
+    { region: "Southern Interior", name: "Green Lake", id: -2147483562 },
+    { region: "Southern Interior", name: "sẁiẁs (Haynes Point)", id: -2147483558 },
+    { region: "Southern Interior", name: "Herald", id: -2147483557 },
+    { region: "Southern Interior", name: "Horsefly Lake", id: -2147483555 },
+    { region: "Southern Interior", name: "Juniper Beach", id: -2147483545 },
+    { region: "Southern Interior", name: "Kekuli Bay", id: -2147483542 },
+    { region: "Southern Interior", name: "Kentucky-Alleyne", id: -2147483541 },
+    { region: "Southern Interior", name: "Kettle River", id: -2147483538 },
+    { region: "Southern Interior", name: "Kikomun Creek", id: -2147483534 },
+    { region: "Southern Interior", name: "Kokanee Creek", id: -2147483528 },
+    { region: "Southern Interior", name: "Lac La Hache", id: -2147483518 },
+    { region: "Southern Interior", name: "Lac Le Jeune", id: -2147483516 },
+    { region: "Southern Interior", name: "Mabel Lake", id: -2147483506 },
+    { region: "Southern Interior", name: "Martha Creek", id: -2147483502 },
+    { region: "Southern Interior", name: "McDonald Creek", id: -2147483499 },
+    { region: "Southern Interior", name: "Monck", id: -2147483486 },
+    { region: "Southern Interior", name: "Mount Assiniboine", id: -2147483480 },
+    { region: "Southern Interior", name: "Mount Fernie", id: -2147483479 },
+    { region: "Southern Interior", name: "Mount Robson", id: -2147483478 },
+    { region: "Southern Interior", name: "Moyie Lake", id: -2147483473 },
+    { region: "Southern Interior", name: "North Thompson River", id: -2147483468 },
+    { region: "Southern Interior", name: "sx̌ʷəx̌ʷnitkʷ (Okanagan Falls)", id: -2147483466 },
+    { region: "Southern Interior", name: "Okanagan Lake North", id: -2147483464 },
+    { region: "Southern Interior", name: "Okanagan Lake South", id: -2147483463 },
+    { region: "Southern Interior", name: "Otter Lake", id: -2147483459 },
+    { region: "Southern Interior", name: "Paul Lake", id: -2147483457 },
+    { region: "Southern Interior", name: "Premier Lake", id: -2147483444 },
+    { region: "Southern Interior", name: "Rosebery", id: -2147483428 },
+    { region: "Southern Interior", name: "Shuswap Lake", id: -2147483414 },
+    { region: "Southern Interior", name: "Stemwinder", id: -2147483400 },
+    { region: "Southern Interior", name: "Summit Lake - Nakusp", id: -2147483395 },
+    { region: "Southern Interior", name: "Syringa", id: -2147483391 },
+    { region: "Southern Interior", name: "Ten Mile Lake", id: -2147483385 },
+    { region: "Southern Interior", name: "Wasa Lake", id: -2147483376 },
+    { region: "Southern Interior", name: "Wells Gray", id: -2147483375 },
+    { region: "Southern Interior", name: "Clearwater Lake", id: 0 },
+    { region: "Southern Interior", name: "Falls Creek", id: 0 },
+    { region: "Southern Interior", name: "Mahood Lake", id: 0 },
+    { region: "Southern Interior", name: "Skagit Valley", id: -2147483368 },
+    { region: "Southern Interior", name: "Bowron Lake", id: -2147483362 },
+    { region: "Southern Interior", name: "Elk Lakes", id: -2147483352 },
+    { region: "Southern Interior", name: "Monashee", id: -2147483344 },
+    { region: "Southern Interior", name: "Pilot Bay", id: -2147483343 },
+    { region: "Southern Interior", name: "Whiteswan Lake", id: -2147483334 },
+    { region: "Southern Interior", name: "Norbury Lake", id: -2147483313 },
+    { region: "Southern Interior", name: "Jimsmith Lake", id: -2147483311 },
+    { region: "Southern Interior", name: "Yahk", id: -2147483310 },
+    { region: "Southern Interior", name: "Lockhart Beach", id: -2147483309 },
+    { region: "Southern Interior", name: "Allison Lake", id: -2147483306 },
+    { region: "Southern Interior", name: "Kootenay Lake", id: -2147483279 },
+    { region: "Southern Interior", name: "Beaver Creek", id: -2147483271 },
+    { region: "Northern", name: "Beatton", id: -2147483637 },
+    { region: "Northern", name: "Beaumont", id: -2147483636 },
+    { region: "Northern", name: "Tā Ch'ilā [a.k.a. Boya Lake]", id: -2147483626 },
+    { region: "Northern", name: "Carp Lake", id: -2147483623 },
+    { region: "Northern", name: "Charlie Lake", id: -2147483620 },
+    { region: "Northern", name: "Crooked River", id: -2147483611 },
+    { region: "Northern", name: "Kleanza Creek", id: -2147483529 },
+    { region: "Northern", name: "Lakelse Lake", id: -2147483515 },
+    { region: "Northern", name: "Liard River Hot Springs", id: -2147483511 },
+    { region: "Northern", name: "Meziadin Lake", id: -2147483495 },
+    { region: "Northern", name: "Moberly Lake", id: -2147483487 },
+    { region: "Northern", name: "Paarens Beach", id: -2147483458 },
+    { region: "Northern", name: "Prudhomme Lake", id: -2147483441 },
+    { region: "Northern", name: "Purden Lake", id: -2147483439 },
+    { region: "Northern", name: "Red Bluff", id: -2147483431 },
+    { region: "Northern", name: "Sowchea Bay", id: -2147483403 },
+    { region: "Northern", name: "Swan Lake", id: -2147483393 },
+    { region: "Northern", name: "Tweedsmuir South", id: -2147483381 },
+    { region: "Northern", name: "Tyhee Lake", id: -2147483378 },
+    { region: "Northern", name: "West Lake", id: -2147483371 },
+    { region: "Northern", name: "Whiskers Point", id: -2147483370 },
+    { region: "Northern", name: "Muncho Lake", id: -2147483305 },
+    { region: "Northern", name: "Gwillim Lake", id: -2147483302 },
+  ];
+
+  const REGION_ORDER = ["Coastal Mainland", "Islands", "Southern Interior", "Northern"];
+
+  const input = document.getElementById('parkSearchInput');
+  const dropdown = document.getElementById('parkDropdown');
+  const hiddenInput = document.getElementById('parkIdInput');
+
+  function buildDropdown(filter) {
+    dropdown.innerHTML = '';
+    const q = (filter || '').toLowerCase().trim();
+    const regions = {};
+    PARKS.forEach(p => {
+      if (!q || p.name.toLowerCase().includes(q) || p.region.toLowerCase().includes(q)) {
+        if (!regions[p.region]) regions[p.region] = [];
+        regions[p.region].push(p);
+      }
+    });
+    const order = q ? Object.keys(regions) : REGION_ORDER;
+    let count = 0;
+    order.forEach(region => {
+      if (!regions[region] || !regions[region].length) return;
+      const header = document.createElement('div');
+      header.style.cssText = "font-family:'DM Mono',monospace;font-size:0.52rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--amber);padding:0.6rem 0.9rem 0.3rem;background:var(--paper);position:sticky;top:0;border-bottom:1px solid var(--rule);";
+      header.textContent = region;
+      dropdown.appendChild(header);
+      regions[region].forEach(park => {
+        const item = document.createElement('div');
+        item.style.cssText = "padding:0.55rem 0.9rem;font-family:'Epilogue',sans-serif;font-size:0.82rem;color:var(--navy);cursor:pointer;border-bottom:1px solid var(--rule);";
+        item.textContent = park.name;
+        item.addEventListener('mouseenter', () => item.style.background = 'rgba(201,130,58,0.08)');
+        item.addEventListener('mouseleave', () => item.style.background = '');
+        item.addEventListener('mousedown', (e) => {
+          e.preventDefault();
+          input.value = park.name;
+          hiddenInput.value = park.id;
+          dropdown.style.display = 'none';
+        });
+        dropdown.appendChild(item);
+        count++;
+      });
+    });
+    if (count === 0) {
+      const none = document.createElement('div');
+      none.style.cssText = "padding:0.75rem 0.9rem;font-family:'Epilogue',sans-serif;font-size:0.82rem;color:var(--mist);";
+      none.textContent = 'No parks found';
+      dropdown.appendChild(none);
+    }
+  }
+
+  function positionDropdown() {
+    dropdown.style.position = 'absolute';
+    dropdown.style.top = '100%';
+    dropdown.style.left = '0';
+    dropdown.style.width = '100%';
+    dropdown.style.zIndex = '99999';
+  }
+
+  input.addEventListener('focus', () => {
+    buildDropdown(input.value);
+    positionDropdown();
+    dropdown.style.display = 'block';
+  });
+
+  input.addEventListener('input', () => {
+    hiddenInput.value = '';
+    buildDropdown(input.value);
+    positionDropdown();
+    dropdown.style.display = 'block';
+  });
+
+  input.addEventListener('blur', () => {
+    setTimeout(() => { dropdown.style.display = 'none'; }, 150);
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.park-search-wrap')) {
+      dropdown.style.display = 'none';
+    }
+  });
+})();
+
+// ── Park Dropdown ──────────────────────────────────────────────
+const PARKS = [
+  "Alice Lake Provincial Park","Bamberton Provincial Park","Bear Creek Provincial Park",
+  "Birkenhead Lake Provincial Park","Blanket Creek Provincial Park","Bowen Island Provincial Park",
+  "Bowron Lake Provincial Park","Brandywine Falls Provincial Park","Bromley Rock Provincial Park",
+  "Burton Historical Townsite Provincial Park","Cache Creek Provincial Park","Canyon Hot Springs",
+  "Cathedral Provincial Park","Cayoosh Creek Provincial Park","Champion Lakes Provincial Park",
+  "Charlie Lake Provincial Park","Chilliwack Lake Provincial Park","Conkle Lake Provincial Park",
+  "Cultus Lake Provincial Park","Cypress Provincial Park","Darke Lake Provincial Park",
+  "Deka Lake Provincial Park","Dry Gulch Provincial Park","E.C. Manning Provincial Park",
+  "Elk Falls Provincial Park","Ellison Provincial Park","Emory Creek Provincial Park",
+  "Englishman River Falls Provincial Park","Fintry Provincial Park","Flood-Hope Road Provincial Park",
+  "Garibaldi Provincial Park","Golden Ears Provincial Park","Gordon Bay Provincial Park",
+  "Grant Narrows Provincial Park","Green Lake Provincial Park","Haynes Point Provincial Park",
+  "Herald Provincial Park","Inkaneep Provincial Park","Jedediah Island Provincial Park",
+  "Jimsmith Lake Provincial Park","Johnstone Creek Provincial Park","Jones Lake Provincial Park",
+  "Juniper Beach Provincial Park","Kalamalka Lake Provincial Park","Kettle River Provincial Park",
+  "Kilby Provincial Park","Kinaskan Lake Provincial Park","Kokanee Creek Provincial Park",
+  "Kokanee Glacier Provincial Park","Kootenay Lake Provincial Park","Lac du Bois Grasslands Protected Area",
+  "Lac La Hache Provincial Park","Lakelse Lake Provincial Park","Liard River Hot Springs Provincial Park",
+  "Lightning Lake Provincial Park","Lily Lake Provincial Park","Linkwater Provincial Park",
+  "Little Qualicum Falls Provincial Park","Loon Lake Provincial Park","Loveland Bay Provincial Park",
+  "Lucy Islands Provincial Park","Lumby Centennial Provincial Park","Lundbom Lake Provincial Park",
+  "Mabel Lake Provincial Park","Martha Creek Provincial Park","McDonald Creek Provincial Park",
+  "Miracle Beach Provincial Park","Monkman Provincial Park","Montague Harbour Provincial Park",
+  "Moyie Lake Provincial Park","Nairn Falls Provincial Park","Newcastle Island Provincial Park",
+  "Nickel Plate Provincial Park","Nimpkish Lake Provincial Park","Nisga'a Memorial Lava Bed Provincial Park",
+  "Norbury Lake Provincial Park","Okanagan Lake Provincial Park","Okeover Arm Provincial Park",
+  "Otter Lake Provincial Park","Paul Lake Provincial Park","Pinnacles Provincial Park",
+  "Porpoise Bay Provincial Park","Premier Lake Provincial Park","Prince George City Beach",
+  "Purden Lake Provincial Park","Rathtrevor Beach Provincial Park","Rearguard Falls Provincial Park",
+  "Rolley Lake Provincial Park","Ruckle Provincial Park","Salmon Arm Bay Provincial Park",
+  "Sasquatch Provincial Park","Shuswap Lake Provincial Park","Sikanni Chief Falls Provincial Park",
+  "Silver Beach Provincial Park","Skaha Lake Provincial Park","Skihist Provincial Park",
+  "Stawamus Chief Provincial Park","Stone Mountain Provincial Park","Strathcona Provincial Park",
+  "Stuie Provincial Park","Summit Lake Provincial Park","Swan Lake Provincial Park",
+  "Syringa Provincial Park","Tahtsa Lake Provincial Park","Takla Lake Provincial Park",
+  "Tatlatui Provincial Park","Tatshenshini-Alsek Provincial Park","Tay John Provincial Park",
+  "Thunder Lake Provincial Park","Tobacco Plains Provincial Park","Ts'yl-os Provincial Park",
+  "Tunkwa Lake Provincial Park","Tweedsmuir Provincial Park","Vaseux Lake Provincial Park",
+  "Wasa Lake Provincial Park","Wells Gray Provincial Park","Whiskers Point Provincial Park",
+  "White Lake Provincial Park","Whiteswan Lake Provincial Park","Wickaninnish Provincial Park",
+  "Wokkpash Provincial Park","Yard Creek Provincial Park","Yoho National Park",
+  "Pacific Rim National Park Reserve","Gulf Islands National Park Reserve",
+  "Mount Revelstoke National Park","Glacier National Park","Kootenay National Park"
+];
+// ── End Park Dropdown ──────────────────────────────────────────
+
+// Equipment custom dropdown
+(function() {
+  const EQUIP = [
+    {val:'-32768,-32768', label:'1 Tent'},
+    {val:'-32768,-32767', label:'2 Tents'},
+    {val:'-32768,-32766', label:'3 Tents'},
+    {val:'-32768,-32765', label:'Van / Camper'},
+    {val:'-32768,-32764', label:'Trailer up to 18ft'},
+    {val:'-32768,-32763', label:'Trailer / RV up to 32ft'},
+    {val:'-32768,-32762', label:'Trailer / RV over 32ft'}
+  ];
+  const dd = document.getElementById('equipmentDropdown');
+  const display = document.getElementById('equipmentDisplay');
+  const hidden = document.getElementById('equipmentSelect');
+  if (!dd) return;
+  EQUIP.forEach(opt => {
+    const item = document.createElement('div');
+    item.style.cssText = "padding:0.6rem 1rem;font-family:'Epilogue',sans-serif;font-size:0.95rem;color:var(--ink);cursor:pointer;border-bottom:1px solid var(--rule);";
+    item.textContent = opt.label;
+    item.addEventListener('mouseenter', () => item.style.background = 'rgba(201,130,58,0.12)');
+    item.addEventListener('mouseleave', () => item.style.background = '');
+    item.addEventListener('mousedown', e => {
+      e.preventDefault();
+      display.value = opt.label;
+      hidden.value = opt.val;
+      dd.style.display = 'none';
+    });
+    dd.appendChild(item);
+  });
+  window.toggleEquipmentDropdown = function() {
+    dd.style.display = dd.style.display === 'none' ? 'block' : 'none';
+  };
+  document.addEventListener('click', e => {
+    if (!e.target.closest('#equipmentDisplay') && !e.target.closest('#equipmentDropdown')) dd.style.display = 'none';
+  });
+})();
+
+async function submitScan() {
+  const btn = document.getElementById('watchBtn');
+  const parkId = document.getElementById('parkIdInput').value;
+  const parkName = document.getElementById('parkSearchInput').value.trim();
+  const arrival = document.getElementById('arrivalDate').value;
+  const nightsRaw = document.getElementById('nightsSelect').value;
+  const email = document.getElementById('emailInput').value.trim();
+  const phone = document.getElementById('phoneInput').value.trim();
+  const equipVal = document.getElementById('equipmentSelect').value;
+  if (!parkName || !parkId) return alert('Pick a park from the dropdown.');
+  if (!arrival) return alert('Pick an arrival date.');
+  if (!email || !email.includes('@')) return alert('Enter a valid email.');
+  if (!phone || phone.replace(/\D/g,'').length < 10) return alert('Enter a valid mobile number.');
+  const nights = parseInt(nightsRaw, 10) || 3;
+  const start = new Date(arrival);
+  const end = new Date(start);
+  end.setDate(end.getDate() + nights + 2);
+  const fmt = d => d.toISOString().split('T')[0];
+  const equipParts = equipVal.split(',');
+  const originalText = btn.textContent;
+  btn.disabled = true;
+  btn.textContent = 'Scan Started ✓';
+  try {
+    const res = await fetch('/api/scan', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({
+        phone: phone,
+        email: email,
+        campground_name: parkName,
+        start_date: fmt(start),
+        end_date: fmt(end),
+        min_nights: nights,
+        tier: 'free',
+        equipment_id: parseInt(equipParts[0]),
+        sub_equipment_id: parseInt(equipParts[1])
+      })
+    });
+    const data = await res.json();
+    if (res.ok) {
+      btn.textContent = 'Scan Started ✓';
+      btn.disabled = true;
+      btn.style.background = 'var(--navy)';
+      btn.style.cursor = 'default';
+      const msg = document.getElementById('scanConfirmMsg');
+      if (msg) msg.style.display = 'block';
+    } else {
+      alert(data.detail || 'Something went wrong. Try again.');
+      btn.textContent = originalText;
+      btn.disabled = false;
+    }
+  } catch(e) {
+    alert('Network error. Please try again.');
+    btn.textContent = originalText;
+    btn.disabled = false;
+  }
+}
+</script>
+
+
+<!-- SUCCESS MODAL -->
+<div id="successModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(28,43,58,0.7);z-index:99999;align-items:center;justify-content:center;">
+  <div style="background:var(--paper);border-radius:12px;padding:2.5rem 2rem;max-width:420px;width:90%;text-align:center;box-shadow:0 24px 64px rgba(28,43,58,0.3);">
+    <div style="font-size:2.5rem;margin-bottom:1rem;">&#x26FA;</div>
+    <h2 style="font-family:'Fraunces',serif;font-size:1.6rem;color:var(--navy);margin-bottom:0.5rem;">You're watching <span id="successParkName"></span>!</h2>
+    <p style="color:var(--mist);font-size:0.95rem;margin-bottom:1.5rem;">We'll email you the moment a site opens up. Check your inbox for a confirmation.</p>
+    <button onclick="document.getElementById('successModal').style.display='none'" style="background:var(--amber);color:white;border:none;padding:0.75rem 2rem;border-radius:6px;font-family:'Epilogue',sans-serif;font-size:1rem;cursor:pointer;">Got it!</button>
+  </div>
+</div>
+<script src="/modal.js"></script>
+<script>
+(function(){
+  var d = new Date();
+  d.setDate(d.getDate() + 92);
+  var maxDate = d.toISOString().split('T')[0];
+  document.querySelectorAll('input[type=date]').forEach(function(el){ el.max = maxDate; });
+})();
+
+// Active scans counter
+(function() {
+  var d = new Date(); var seed = d.getFullYear()*10000 + (d.getMonth()+1)*100 + d.getDate(); var base = Math.floor(((seed * 9301 + 49297) % 233280) / 233280 * 351) + 400;
+  var el = document.getElementById('activeScansCount');
+  if (!el) return;
+  function flicker() {
+      var delta = Math.floor(Math.random() * 41) - 20;
+      var next = Math.max(400, Math.min(750, base + delta));
+    base = next;
+    el.textContent = next;
+    var elM = document.getElementById('activeScansCountMobile');
+    if (elM) elM.textContent = next;
+    setTimeout(flicker, 45000 + Math.random() * 30000);
+  }
+  setTimeout(flicker, 60000 + Math.random() * 60000);
+})();
+</script>
+</body>
+</html>

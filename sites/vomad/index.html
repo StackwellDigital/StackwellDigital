@@ -1,0 +1,1368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vomad Rentals — Starlink & Power Rentals for Remote BC</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg-dark: #0a0e14;
+    --bg-mid: #111720;
+    --bg-card: #161d28;
+    --bg-card-hover: #1c2535;
+    --accent: #e8630a;
+    --accent-light: #ff7c24;
+    --accent-dim: rgba(232, 99, 10, 0.15);
+    --text-primary: #f0f2f5;
+    --text-secondary: #8a9bb0;
+    --text-muted: #4a5568;
+    --border: rgba(255,255,255,0.07);
+    --border-accent: rgba(232, 99, 10, 0.4);
+    --font-display: 'Barlow Condensed', sans-serif;
+    --font-body: 'Barlow', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg-dark);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-weight: 400;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 0 40px;
+    height: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(10, 14, 20, 0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    transition: background 0.3s;
+  }
+
+  .nav-logo img {
+    height: 44px;
+    width: auto;
+    display: block;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 36px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: var(--font-display);
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--text-primary); }
+
+  .nav-cta {
+    font-family: var(--font-display);
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--bg-dark) !important;
+    background: var(--accent);
+    padding: 10px 24px;
+    border-radius: 3px;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.15s;
+  }
+
+  .nav-cta:hover {
+    background: var(--accent-light) !important;
+    color: var(--bg-dark) !important;
+    transform: translateY(-1px);
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background-image: url('https://raw.githubusercontent.com/StackwellDigital/vomadrentals/main/starlink_mountains.jpg');
+    background-size: cover;
+    background-position: center 30%;
+    filter: brightness(0.35) saturate(0.7);
+    transform: scale(1.05);
+    animation: heroZoom 20s ease-in-out infinite alternate;
+  }
+
+  @keyframes heroZoom {
+    from { transform: scale(1.05); }
+    to { transform: scale(1.0); }
+  }
+
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to right,
+      rgba(10, 14, 20, 0.92) 0%,
+      rgba(10, 14, 20, 0.6) 50%,
+      rgba(10, 14, 20, 0.2) 100%
+    );
+  }
+
+  .hero-overlay-bottom {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 200px;
+    background: linear-gradient(to top, var(--bg-dark), transparent);
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 40px;
+    padding-top: 72px;
+  }
+
+  .hero-eyebrow {
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    animation: fadeUp 0.8s ease both;
+  }
+
+  .hero-eyebrow::before {
+    content: '';
+    display: block;
+    width: 32px;
+    height: 2px;
+    background: var(--accent);
+  }
+
+  .hero-title {
+    font-family: var(--font-display);
+    font-size: clamp(56px, 8vw, 96px);
+    font-weight: 800;
+    line-height: 0.95;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+    color: var(--text-primary);
+    margin-bottom: 28px;
+    animation: fadeUp 0.8s 0.1s ease both;
+  }
+
+  .hero-title span {
+    color: var(--accent);
+    display: block;
+  }
+
+  .hero-sub {
+    font-size: 18px;
+    font-weight: 300;
+    color: var(--text-secondary);
+    max-width: 480px;
+    margin-bottom: 44px;
+    line-height: 1.7;
+    animation: fadeUp 0.8s 0.2s ease both;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    animation: fadeUp 0.8s 0.3s ease both;
+  }
+
+  .btn-primary {
+    font-family: var(--font-display);
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #fff;
+    background: var(--accent);
+    padding: 16px 36px;
+    border-radius: 3px;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+    display: inline-block;
+  }
+
+  .btn-primary:hover {
+    background: var(--accent-light);
+    transform: translateY(-2px);
+  }
+
+  .btn-secondary {
+    font-family: var(--font-display);
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-primary);
+    background: transparent;
+    padding: 16px 36px;
+    border-radius: 3px;
+    text-decoration: none;
+    border: 1px solid rgba(255,255,255,0.2);
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+    display: inline-block;
+  }
+
+  .btn-secondary:hover {
+    border-color: rgba(255,255,255,0.5);
+    background: rgba(255,255,255,0.05);
+  }
+
+  .hero-stats {
+    position: absolute;
+    bottom: 60px;
+    right: 60px;
+    z-index: 2;
+    display: flex;
+    gap: 40px;
+    animation: fadeUp 0.8s 0.4s ease both;
+  }
+
+  .hero-stat {
+    text-align: right;
+  }
+
+  .hero-stat-number {
+    font-family: var(--font-display);
+    font-size: 36px;
+    font-weight: 800;
+    color: var(--text-primary);
+    line-height: 1;
+  }
+
+  .hero-stat-label {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    margin-top: 4px;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── SIGNAL BAR ── */
+  .signal-bar {
+    background: var(--accent);
+    padding: 14px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+  }
+
+  .signal-bar-item {
+    font-family: var(--font-display);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .signal-bar-item svg {
+    opacity: 0.8;
+  }
+
+  .signal-divider {
+    width: 1px;
+    height: 20px;
+    background: rgba(255,255,255,0.3);
+  }
+
+  /* ── SECTION GENERIC ── */
+  section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 80px 40px;
+  }
+
+  .section-eyebrow {
+    font-family: var(--font-display);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .section-eyebrow::before {
+    content: '';
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: var(--accent);
+  }
+
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(36px, 5vw, 56px);
+    font-weight: 800;
+    text-transform: uppercase;
+    line-height: 1;
+    letter-spacing: -0.01em;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+  }
+
+  .section-sub {
+    font-size: 16px;
+    color: var(--text-secondary);
+    font-weight: 300;
+    max-width: 520px;
+    margin-bottom: 52px;
+    line-height: 1.7;
+  }
+
+  /* ── EQUIPMENT CARDS ── */
+  .equipment-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 24px;
+  }
+
+  .equipment-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+    transition: transform 0.25s, border-color 0.25s, background 0.25s;
+    cursor: pointer;
+    text-decoration: none;
+    display: block;
+  }
+
+  .equipment-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--border-accent);
+    background: var(--bg-card-hover);
+  }
+
+  .equipment-card-img {
+    width: 100%;
+    height: 240px;
+    object-fit: cover;
+    display: block;
+    filter: brightness(0.85) saturate(0.8);
+    transition: filter 0.3s;
+  }
+
+  .equipment-card:hover .equipment-card-img {
+    filter: brightness(0.95) saturate(1);
+  }
+
+  .equipment-card-body {
+    padding: 24px;
+  }
+
+  .equipment-tag {
+    font-family: var(--font-display);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: var(--accent-dim);
+    padding: 4px 10px;
+    border-radius: 2px;
+    display: inline-block;
+    margin-bottom: 14px;
+  }
+
+  .equipment-card-title {
+    font-family: var(--font-display);
+    font-size: 26px;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: var(--text-primary);
+    line-height: 1.1;
+    margin-bottom: 10px;
+  }
+
+  .equipment-card-desc {
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--text-secondary);
+    line-height: 1.65;
+    margin-bottom: 20px;
+  }
+
+  .equipment-specs {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 24px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+  }
+
+  .equipment-spec {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+  }
+
+  .equipment-spec-label {
+    color: var(--text-muted);
+    font-weight: 400;
+    letter-spacing: 0.05em;
+  }
+
+  .equipment-spec-value {
+    color: var(--text-primary);
+    font-weight: 500;
+    font-family: var(--font-display);
+    font-size: 14px;
+    letter-spacing: 0.05em;
+  }
+
+  .equipment-pricing {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+    margin-bottom: 20px;
+  }
+
+  .price-amount {
+    font-family: var(--font-display);
+    font-size: 38px;
+    font-weight: 800;
+    color: var(--accent);
+    line-height: 1;
+  }
+
+  .price-period {
+    font-size: 13px;
+    color: var(--text-secondary);
+    font-weight: 300;
+  }
+
+  .equipment-card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .availability-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #2dcc70;
+    display: inline-block;
+    margin-right: 6px;
+    animation: pulse-green 2s infinite;
+  }
+
+  @keyframes pulse-green {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(45, 204, 112, 0.4); }
+    50% { box-shadow: 0 0 0 5px rgba(45, 204, 112, 0); }
+  }
+
+  .availability-label {
+    font-size: 12px;
+    color: var(--text-secondary);
+    letter-spacing: 0.06em;
+  }
+
+  /* ── HOW IT WORKS ── */
+  .how-section {
+    background: var(--bg-mid);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .how-section > section {
+    padding: 80px 40px;
+  }
+
+  .steps-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 0;
+    position: relative;
+  }
+
+  .steps-grid::before {
+    content: '';
+    position: absolute;
+    top: 28px;
+    left: 10%;
+    right: 10%;
+    height: 1px;
+    background: var(--border);
+    z-index: 0;
+  }
+
+  .step {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 0 24px;
+  }
+
+  .step-number {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--bg-dark);
+    border: 2px solid var(--accent);
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+  }
+
+  .step-title {
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-primary);
+    margin-bottom: 10px;
+  }
+
+  .step-desc {
+    font-size: 13px;
+    font-weight: 300;
+    color: var(--text-secondary);
+    line-height: 1.65;
+  }
+
+  /* ── GALLERY ── */
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    grid-template-rows: 260px 260px;
+    gap: 8px;
+    border-radius: 6px;
+    overflow: hidden;
+  }
+
+  .gallery-item {
+    overflow: hidden;
+    position: relative;
+  }
+
+  .gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.75) saturate(0.7);
+    transition: filter 0.4s, transform 0.4s;
+    display: block;
+  }
+
+  .gallery-item:hover img {
+    filter: brightness(0.95) saturate(1);
+    transform: scale(1.04);
+  }
+
+  .gallery-item-large {
+    grid-row: span 2;
+  }
+
+  /* ── WHY VOMAD ── */
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 2px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+
+  .feature-item {
+    background: var(--bg-card);
+    padding: 32px 28px;
+    transition: background 0.25s;
+  }
+
+  .feature-item:hover {
+    background: var(--bg-card-hover);
+  }
+
+  .feature-icon {
+    width: 44px;
+    height: 44px;
+    background: var(--accent-dim);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 18px;
+  }
+
+  .feature-icon svg {
+    color: var(--accent);
+  }
+
+  .feature-title {
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-primary);
+    margin-bottom: 10px;
+  }
+
+  .feature-desc {
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--text-secondary);
+    line-height: 1.65;
+  }
+
+  /* ── BOOKING FORM ── */
+  .booking-section {
+    background: var(--bg-mid);
+    border-top: 1px solid var(--border);
+  }
+
+  .booking-section > section {
+    padding: 80px 40px;
+  }
+
+  .booking-layout {
+    display: grid;
+    grid-template-columns: 1fr 420px;
+    gap: 60px;
+    align-items: start;
+  }
+
+  .booking-info h2 {
+    font-family: var(--font-display);
+    font-size: clamp(36px, 5vw, 56px);
+    font-weight: 800;
+    text-transform: uppercase;
+    line-height: 1;
+    margin-bottom: 20px;
+  }
+
+  .booking-info p {
+    font-size: 15px;
+    font-weight: 300;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin-bottom: 32px;
+  }
+
+  .booking-contact {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .contact-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-size: 14px;
+    color: var(--text-secondary);
+  }
+
+  .contact-item svg {
+    color: var(--accent);
+    flex-shrink: 0;
+  }
+
+  .booking-form {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 36px;
+  }
+
+  .form-title {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-primary);
+    margin-bottom: 28px;
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+
+  .form-group {
+    margin-bottom: 16px;
+  }
+
+  .form-label {
+    display: block;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+  }
+
+  .form-input, .form-select, .form-textarea {
+    width: 100%;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 12px 16px;
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--text-primary);
+    outline: none;
+    transition: border-color 0.2s, background 0.2s;
+    -webkit-appearance: none;
+  }
+
+  .form-input::placeholder, .form-textarea::placeholder {
+    color: var(--text-muted);
+  }
+
+  .form-input:focus, .form-select:focus, .form-textarea:focus {
+    border-color: var(--accent);
+    background: rgba(232, 99, 10, 0.05);
+  }
+
+  .form-select {
+    cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238a9bb0' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    padding-right: 40px;
+  }
+
+  .form-select option {
+    background: var(--bg-card);
+    color: var(--text-primary);
+  }
+
+  .form-textarea {
+    resize: vertical;
+    min-height: 80px;
+  }
+
+  .form-submit {
+    width: 100%;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    padding: 16px;
+    font-family: var(--font-display);
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+    margin-top: 8px;
+  }
+
+  .form-submit:hover {
+    background: var(--accent-light);
+    transform: translateY(-1px);
+  }
+
+  .form-note {
+    font-size: 11px;
+    color: var(--text-muted);
+    text-align: center;
+    margin-top: 12px;
+    line-height: 1.6;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #07090d;
+    border-top: 1px solid var(--border);
+    padding: 60px 40px 40px;
+  }
+
+  .footer-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .footer-top {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr;
+    gap: 60px;
+    padding-bottom: 48px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .footer-logo img {
+    height: 40px;
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  .footer-tagline {
+    font-size: 13px;
+    font-weight: 300;
+    color: var(--text-muted);
+    line-height: 1.7;
+    max-width: 280px;
+  }
+
+  .footer-heading {
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    margin-bottom: 18px;
+  }
+
+  .footer-links {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .footer-links a {
+    font-size: 13px;
+    font-weight: 300;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover {
+    color: var(--text-primary);
+  }
+
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 32px;
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+
+  .footer-accent {
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  /* ── MOBILE ── */
+  @media (max-width: 768px) {
+    nav { padding: 0 20px; }
+    .nav-links { display: none; }
+    .hero-content { padding: 0 20px; padding-top: 72px; }
+    .hero-stats { display: none; }
+    section { padding: 60px 20px; }
+    .booking-layout { grid-template-columns: 1fr; }
+    .gallery-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+    .gallery-item-large { grid-row: span 1; }
+    .footer-top { grid-template-columns: 1fr; gap: 36px; }
+    .steps-grid::before { display: none; }
+    .signal-bar { flex-wrap: wrap; gap: 16px; padding: 14px 20px; }
+    .form-row { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <img src="https://raw.githubusercontent.com/StackwellDigital/vomadrentals/main/logo_vomadrentals.png" alt="Vomad Rentals">
+  </a>
+  <ul class="nav-links">
+    <li><a href="#equipment">Equipment</a></li>
+    <li><a href="#how">How It Works</a></li>
+    <li><a href="#why">Why Vomad</a></li>
+    <li><a href="#book" class="nav-cta">Book Now</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-overlay-bottom"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Remote Connectivity Solutions</div>
+    <h1 class="hero-title">
+      Stay Connected
+      <span>Anywhere.</span>
+    </h1>
+    <p class="hero-sub">
+      Starlink internet and portable power rentals for worksites, remote camps, film productions, and off-grid adventures across British Columbia.
+    </p>
+    <div class="hero-actions">
+      <a href="#book" class="btn-primary">Book Your Rental</a>
+      <a href="#equipment" class="btn-secondary">View Equipment</a>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <div class="hero-stat-number">250+</div>
+      <div class="hero-stat-label">Mbps Download</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-number">48hr</div>
+      <div class="hero-stat-label">Min Rental</div>
+    </div>
+  </div>
+</div>
+
+<!-- SIGNAL BAR -->
+<div class="signal-bar">
+  <div class="signal-bar-item">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M1.5 8.5a13 13 0 0 1 21 0"/><path d="M5 12a9 9 0 0 1 14 0"/><path d="M8.5 15.5a5 5 0 0 1 7 0"/><circle cx="12" cy="19" r="1" fill="currentColor"/></svg>
+    Satellite Internet Rental
+  </div>
+  <div class="signal-divider"></div>
+  <div class="signal-bar-item">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg>
+    Portable Power Solutions
+  </div>
+  <div class="signal-divider"></div>
+  <div class="signal-bar-item">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 0 1-2.827 0l-4.244-4.243a8 8 0 1 1 11.314 0z"/><circle cx="12" cy="11" r="3"/></svg>
+    Delivery Across BC
+  </div>
+  <div class="signal-divider"></div>
+  <div class="signal-bar-item">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.79a16 16 0 0 0 6 6l.95-.95a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+    24/7 Support
+  </div>
+</div>
+
+<!-- EQUIPMENT -->
+<section id="equipment">
+  <div class="section-eyebrow">What We Rent</div>
+  <h2 class="section-title">The Equipment</h2>
+  <p class="section-sub">Everything you need to stay online and powered up — wherever the job or adventure takes you.</p>
+
+  <div class="equipment-grid">
+
+    <!-- Starlink Kit -->
+    <a href="#book" class="equipment-card">
+      <img class="equipment-card-img"
+        src="https://raw.githubusercontent.com/StackwellDigital/vomadrentals/main/PXL_20240814_022829134.jpg"
+        alt="Starlink Rental Kit"
+        onerror="this.src='https://raw.githubusercontent.com/StackwellDigital/vomadrentals/main/chip-vincent-POEx9sEZcpE-unsplash.jpg'">
+      <div class="equipment-card-body">
+        <span class="equipment-tag">Most Popular</span>
+        <h3 class="equipment-card-title">Starlink Kit</h3>
+        <p class="equipment-card-desc">Complete Starlink setup including dish, router, all cables, and mounting hardware. Plug in and you're online within minutes — no technical knowledge needed.</p>
+        <div class="equipment-specs">
+          <div class="equipment-spec">
+            <span class="equipment-spec-label">Download Speed</span>
+            <span class="equipment-spec-value">50–250 Mbps</span>
+          </div>
+          <div class="equipment-spec">
+            <span class="equipment-spec-label">Latency</span>
+            <span class="equipment-spec-value">25–60 ms</span>
+          </div>
+          <div class="equipment-spec">
+            <span class="equipment-spec-label">Coverage</span>
+            <span class="equipment-spec-value">Anywhere in BC</span>
+          </div>
+          <div class="equipment-spec">
+            <span class="equipment-spec-label">Setup Time</span>
+            <span class="equipment-spec-value">&lt; 10 minutes</span>
+          </div>
+        </div>
+        <div class="equipment-pricing">
+          <span class="price-amount">$75</span>
+          <span class="price-period">/ day &nbsp;·&nbsp; $350 / week</span>
+        </div>
+        <div class="equipment-card-footer">
+          <div>
+            <span class="availability-dot"></span>
+            <span class="availability-label">Available Now</span>
+          </div>
+          <span class="btn-primary" style="padding: 10px 20px; font-size: 13px;">Book This</span>
+        </div>
+      </div>
+    </a>
+
+    <!-- Generator -->
+    <a href="#book" class="equipment-card">
+      <img class="equipment-card-img"
+        src="https://raw.githubusercontent.com/StackwellDigital/vomadrentals/main/generator.jpg"
+        alt="Portable Generator Rental">
+      <div class="equipment-card-body">
+        <span class="equipment-tag">Power Solution</span>
+        <h3 class="equipment-card-title">Portable Generator</h3>
+        <p class="equipment-card-desc">Reliable portable generator perfect for powering your Starlink kit, worksite equipment, or camp setup. Fuel-efficient and quiet enough for residential use.</p>
+        <div class="equipment-specs">
+          <div class="equipment-spec">
+            <span class="equipment-spec-label">Output</span>
+            <span class="equipment-spec-value">2000W–3500W</span>
+          </div>
+          <div class="equipment-spec">
+            <span class="equipment-spec-label">Run Time</span>
+            <span class="equipment-spec-value">Up to 10 hrs</span>
+          </div>
+          <div class="equipment-spec">
+            <span class="equipment-spec-label">Fuel Type</span>
+            <span class="equipment-spec-value">Gasoline</span>
+          </div>
+          <div class="equipment-spec">
+            <span class="equipment-spec-label">Outlets</span>
+            <span class="equipment-spec-value">120V AC + USB</span>
+          </div>
+        </div>
+        <div class="equipment-pricing">
+          <span class="price-amount">$65</span>
+          <span class="price-period">/ day &nbsp;·&nbsp; $300 / week</span>
+        </div>
+        <div class="equipment-card-footer">
+          <div>
+            <span class="availability-dot"></span>
+            <span class="availability-label">Available Now</span>
+          </div>
+          <span class="btn-primary" style="padding: 10px 20px; font-size: 13px;">Book This</span>
+        </div>
+      </div>
+    </a>
+
+    <!-- Bundle -->
+    <a href="#book" class="equipment-card" style="border-color: var(--border-accent);">
+      <img class="equipment-card-img"
+        src="https://raw.githubusercontent.com/StackwellDigital/vomadrentals/main/bernd-dittrich-MTVNraFCRrc-unsplash.jpg"
+        alt="Starlink + Generator Bundle">
+      <div class="equipment-card-body">
+        <span class="equipment-tag" style="background: var(--accent); color: #fff;">Best Value Bundle</span>
+        <h3 class="equipment-card-title">Starlink + Power Bundle</h3>
+        <p class="equipment-card-desc">The full off-grid package. Starlink kit + generator together — everything you need to set up a fully connected remote site with zero infrastructure required.</p>
+        <div class="equipment-specs">
+          <div class="equipment-spec">
+            <span class="equipment-spec-label">Includes</span>
+            <span class="equipment-spec-value">Starlink + Generator</span>
+          </div>
+          <div class="equipment-spec">
+            <span class="equipment-spec-label">Min Rental</span>
+            <span class="equipment-spec-value">2 days</span>
+          </div>
+          <div class="equipment-spec">
+            <span class="equipment-spec-label">Delivery</span>
+            <span class="equipment-spec-value">Available</span>
+          </div>
+          <div class="equipment-spec">
+            <span class="equipment-spec-label">Support</span>
+            <span class="equipment-spec-value">24/7 by phone</span>
+          </div>
+        </div>
+        <div class="equipment-pricing">
+          <span class="price-amount">$120</span>
+          <span class="price-period">/ day &nbsp;·&nbsp; Save $20/day</span>
+        </div>
+        <div class="equipment-card-footer">
+          <div>
+            <span class="availability-dot"></span>
+            <span class="availability-label">Available Now</span>
+          </div>
+          <span class="btn-primary" style="padding: 10px 20px; font-size: 13px;">Book Bundle</span>
+        </div>
+      </div>
+    </a>
+
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<div class="how-section" id="how">
+  <section>
+    <div class="section-eyebrow">Simple Process</div>
+    <h2 class="section-title">How It Works</h2>
+    <p class="section-sub">From booking to being online — we make it dead simple.</p>
+    <div class="steps-grid">
+      <div class="step">
+        <div class="step-number">01</div>
+        <div class="step-title">Book Online</div>
+        <p class="step-desc">Choose your equipment and dates. Pay a refundable deposit to secure your reservation — takes under 5 minutes.</p>
+      </div>
+      <div class="step">
+        <div class="step-number">02</div>
+        <div class="step-title">We Deliver</div>
+        <p class="step-desc">We deliver to your location across BC, or you can pick up. Equipment arrives fully tested and ready to go.</p>
+      </div>
+      <div class="step">
+        <div class="step-number">03</div>
+        <div class="step-title">Plug In & Go</div>
+        <p class="step-desc">Point the dish at open sky, power it on, connect to the WiFi. You're online in minutes with no technical setup needed.</p>
+      </div>
+      <div class="step">
+        <div class="step-number">04</div>
+        <div class="step-title">Return & Done</div>
+        <p class="step-desc">Drop it off or we pick it up. Deposit released same day once equipment is checked in — zero hassle.</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- GALLERY -->
+<section>
+  <div class="section-eyebrow">In The Field</div>
+  <h2 class="section-title">Where We Work</h2>
+  <p class="section-sub">Worksites, remote camps, film productions — wherever you need connectivity, we've been there.</p>
+  <div class="gallery-grid">
+    <div class="gallery-item gallery-item-large">
+      <img src="https://raw.githubusercontent.com/StackwellDigital/vomadrentals/main/starlink_mountains.jpg" alt="Starlink in the mountains">
+    </div>
+    <div class="gallery-item">
+      <img src="https://raw.githubusercontent.com/StackwellDigital/vomadrentals/main/chip-vincent-POEx9sEZcpE-unsplash.jpg" alt="Remote site connectivity">
+    </div>
+    <div class="gallery-item">
+      <img src="https://raw.githubusercontent.com/StackwellDigital/vomadrentals/main/generator.jpg" alt="Portable power">
+    </div>
+    <div class="gallery-item">
+      <img src="https://raw.githubusercontent.com/StackwellDigital/vomadrentals/main/bernd-dittrich-MTVNraFCRrc-unsplash.jpg" alt="Off-grid camp">
+    </div>
+    <div class="gallery-item">
+      <img src="https://raw.githubusercontent.com/StackwellDigital/vomadrentals/main/PXL_20240814_022829134.jpg" alt="Starlink kit setup">
+    </div>
+  </div>
+</section>
+
+<!-- WHY VOMAD -->
+<div class="how-section" id="why">
+  <section>
+    <div class="section-eyebrow">Why Vomad</div>
+    <h2 class="section-title">Built for BC</h2>
+    <p class="section-sub">We're not a big rental chain. We're local, we're fast, and we actually pick up the phone.</p>
+    <div class="features-grid">
+      <div class="feature-item">
+        <div class="feature-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+        </div>
+        <div class="feature-title">Fast Delivery</div>
+        <p class="feature-desc">Same or next-day delivery across most of BC. We know how to get gear to remote locations — logging roads included.</p>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.79a16 16 0 0 0 6 6l.95-.95a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        </div>
+        <div class="feature-title">24/7 Support</div>
+        <p class="feature-desc">Real person, real phone number. If something isn't working at 11pm on a Friday we'll pick up and walk you through it.</p>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <div class="feature-title">Deposit Protected</div>
+        <p class="feature-desc">Security deposit is held — not charged. It's released same day on return. We use Stripe so everything is transparent.</p>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+        </div>
+        <div class="feature-title">Ready to Use</div>
+        <p class="feature-desc">Every kit goes out fully tested. Dish aligned, router configured, cables packed. No IT knowledge required — seriously.</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- BOOKING FORM -->
+<div class="booking-section" id="book">
+  <section>
+    <div class="booking-layout">
+      <div class="booking-info">
+        <div class="section-eyebrow">Reserve Your Gear</div>
+        <h2>Ready to Book?</h2>
+        <p>Fill out the form and we'll get back to you within a few hours to confirm availability, arrange delivery, and sort out payment — simple as that.</p>
+        <div class="booking-contact">
+          <div class="contact-item">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.79a16 16 0 0 0 6 6l.95-.95a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            <span>Call or text us anytime</span>
+          </div>
+          <div class="contact-item">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            <span>info@vomadrentals.ca</span>
+          </div>
+          <div class="contact-item">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 0 1-2.827 0l-4.244-4.243a8 8 0 1 1 11.314 0z"/><circle cx="12" cy="11" r="3"/></svg>
+            <span>Serving British Columbia</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="booking-form">
+        <div class="form-title">Request a Rental</div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">First Name</label>
+            <input type="text" class="form-input" placeholder="Adam">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Last Name</label>
+            <input type="text" class="form-input" placeholder="Smith">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email</label>
+          <input type="email" class="form-input" placeholder="you@example.com">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Phone</label>
+          <input type="tel" class="form-input" placeholder="(604) 555-0123">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Equipment Needed</label>
+          <select class="form-select">
+            <option value="">Select equipment...</option>
+            <option>Starlink Kit — $75/day</option>
+            <option>Portable Generator — $65/day</option>
+            <option>Starlink + Generator Bundle — $120/day</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Start Date</label>
+            <input type="date" class="form-input">
+          </div>
+          <div class="form-group">
+            <label class="form-label">End Date</label>
+            <input type="date" class="form-input">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Delivery Location</label>
+          <input type="text" class="form-input" placeholder="City or address in BC">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Additional Notes</label>
+          <textarea class="form-textarea" placeholder="Worksite details, access requirements, special needs..."></textarea>
+        </div>
+        <button class="form-submit">Send Booking Request</button>
+        <p class="form-note">No payment required yet. We'll confirm availability and send a secure payment link via Stripe.</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <div class="footer-logo">
+          <img src="https://raw.githubusercontent.com/StackwellDigital/vomadrentals/main/logo_vomadrentals.png" alt="Vomad Rentals">
+        </div>
+        <p class="footer-tagline">Satellite internet and portable power rentals for remote British Columbia. We get signal where there is none.</p>
+      </div>
+      <div>
+        <div class="footer-heading">Equipment</div>
+        <ul class="footer-links">
+          <li><a href="#equipment">Starlink Kit</a></li>
+          <li><a href="#equipment">Portable Generator</a></li>
+          <li><a href="#equipment">Bundle Package</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-heading">Company</div>
+        <ul class="footer-links">
+          <li><a href="#how">How It Works</a></li>
+          <li><a href="#why">Why Vomad</a></li>
+          <li><a href="#book">Contact Us</a></li>
+          <li><a href="#">Terms & Conditions</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 Vomad Rentals. British Columbia, Canada.</span>
+      <span>Built by <a href="https://stackwell.digital" class="footer-accent">Stackwell Digital</a></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Smooth nav background on scroll
+  const nav = document.querySelector('nav');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 60) {
+      nav.style.background = 'rgba(10, 14, 20, 0.98)';
+    } else {
+      nav.style.background = 'rgba(10, 14, 20, 0.85)';
+    }
+  });
+
+  // Basic form handler (wire to your Express API later)
+  document.querySelector('.form-submit').addEventListener('click', () => {
+    alert('Booking request received! We\'ll be in touch within a few hours to confirm.');
+  });
+
+  // Set date min to today
+  const today = new Date().toISOString().split('T')[0];
+  document.querySelectorAll('input[type="date"]').forEach(el => {
+    el.min = today;
+  });
+</script>
+</body>
+</html>

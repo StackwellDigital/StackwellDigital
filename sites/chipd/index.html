@@ -1,0 +1,1179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chipd - Golf Tee Time Alerts</title>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --navy: #0f1417;
+      --gold: #d4a574;
+      --dark-gold: #b8925f;
+      --cream: #f5f1e;
+      --cream: #f5f1e0;
+      --rule: rgba(212,165,116,0.2);
+    }
+
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: var(--navy);
+      color: var(--cream);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 40px;
+      background: rgba(15,20,23,0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--rule);
+    }
+    .logo { display: flex; align-items: center; }
+    .logo img {
+      display: block;
+      height: 96px;
+      width: auto;
+    }
+    .logo_ORIG {
+      font-family: 'EB Garamond', serif;
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--gold);
+      letter-spacing: 2px;
+      text-decoration: none;
+    }
+    nav ul { list-style: none; display: flex; gap: 36px; align-items: center; }
+    nav a {
+      text-decoration: none;
+      color: var(--cream);
+      font-size: 12px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      transition: color 0.2s;
+    }
+    nav a:hover { color: var(--gold); }
+    .cta-header {
+      background: var(--gold);
+      color: var(--navy);
+      padding: 9px 18px;
+      border-radius: 2px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: background 0.2s;
+      text-decoration: none;
+    }
+    .cta-header:hover { background: var(--dark-gold); color: var(--navy); }
+
+    /* ── HERO + FORM COMBINED SPLIT ── */
+    .hero {
+      margin-top: 120px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 620px;
+    }
+
+    /* LEFT: Form panel */
+    .hero-left {
+      background: var(--cream);
+      padding: 52px 48px 52px 52px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .hero-left .section-title {
+      font-family: 'EB Garamond', serif;
+      font-size: 2rem;
+      color: var(--navy);
+      margin-bottom: 4px;
+      font-weight: 700;
+    }
+    .hero-left .section-subtitle {
+      font-size: 13px;
+      color: #777;
+      margin-bottom: 22px;
+      line-height: 1.5;
+    }
+
+    /* RIGHT: Image with text overlay */
+    .hero-right {
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-golf-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 30%;
+      display: block;
+    }
+    .hero-right::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(15,20,23,0.92) 0%, rgba(15,20,23,0.3) 50%, rgba(15,20,23,0.15) 100%);
+      z-index: 1;
+      pointer-events: none;
+    }
+    .hero-overlay-content {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      z-index: 2;
+      padding: 48px 44px;
+    }
+    .hero-eyebrow {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 3.5px;
+      color: var(--gold);
+      margin-bottom: 14px;
+      font-weight: 500;
+    }
+    .hero-overlay-content h1 {
+      font-family: 'EB Garamond', serif;
+      font-size: clamp(2rem, 3.2vw, 2.9rem);
+      font-weight: 700;
+      color: var(--cream);
+      line-height: 1.08;
+      margin-bottom: 14px;
+      letter-spacing: -0.5px;
+    }
+    .hero-overlay-content p {
+      font-size: 14px;
+      color: rgba(245,241,224,0.72);
+      line-height: 1.6;
+      margin-bottom: 28px;
+      max-width: 380px;
+    }
+    .hero-stat-row {
+      display: flex;
+      gap: 32px;
+      border-top: 1px solid rgba(212,165,116,0.35);
+      padding-top: 22px;
+    }
+    .hero-stat { display: flex; flex-direction: column; }
+    .hero-stat-num {
+      font-family: 'EB Garamond', serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--gold);
+      line-height: 1;
+    }
+    .hero-stat-label {
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: rgba(245,241,224,0.45);
+      margin-top: 4px;
+    }
+
+    /* Hide the old separate alert section */
+    .alert-section { display: none; }
+
+    /* ── FORM ELEMENTS ── */
+    .form-group { margin-bottom: 14px; }
+    .form-group label {
+      display: block;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--navy);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      margin-bottom: 5px;
+    }
+    .form-group select,
+    .form-group input[type="number"] {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid #d5ccba;
+      background: #fff;
+      color: var(--navy);
+      font-family: 'Roboto', sans-serif;
+      font-size: 13px;
+      border-radius: 2px;
+      appearance: none;
+      -webkit-appearance: none;
+      cursor: pointer;
+      transition: border-color 0.2s;
+    }
+    .form-group select:focus,
+    .form-group input[type="number"]:focus {
+      outline: none;
+      border-color: var(--dark-gold);
+      box-shadow: 0 0 0 3px rgba(212,165,116,0.1);
+    }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .checkbox-group { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 2px; }
+    .checkbox-label {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      cursor: pointer;
+      font-size: 13px;
+      color: var(--navy);
+    }
+    .checkbox-label input[type="checkbox"] {
+      accent-color: var(--dark-gold);
+      width: 16px;
+      height: 16px;
+      cursor: pointer;
+    }
+    .submit-btn {
+      width: 100%;
+      padding: 14px;
+      background: var(--navy);
+      color: var(--gold);
+      border: none;
+      border-radius: 2px;
+      font-family: 'Roboto', sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      cursor: pointer;
+      margin-top: 6px;
+      transition: background 0.2s;
+    }
+    .submit-btn:hover { background: #1a2030; }
+    .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+    .form-fine-print {
+      font-size: 10px;
+      color: #999;
+      margin-top: 10px;
+      text-align: center;
+      line-height: 1.5;
+    }
+    .form-fine-print a { color: var(--dark-gold); text-decoration: none; }
+    .message {
+      padding: 10px 14px;
+      border-radius: 2px;
+      font-size: 12px;
+      margin-top: 10px;
+      display: none;
+    }
+    .message.success { background: #e8f5e9; color: #2e7d32; border: 1px solid #c8e6c9; }
+    .message.error { background: #fdecea; color: #c62828; border: 1px solid #ffcdd2; }
+
+    /* ── FEATURES ── */
+    .features {
+      background: var(--navy);
+      padding: 70px 60px;
+      border-top: 1px solid var(--rule);
+    }
+    .features-container { max-width: 960px; margin: 0 auto; text-align: center; }
+    .section-eyebrow {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: var(--gold);
+      margin-bottom: 10px;
+    }
+    .features h2 {
+      font-family: 'EB Garamond', serif;
+      font-size: clamp(1.8rem, 3vw, 2.4rem);
+      font-weight: 700;
+      color: var(--cream);
+      margin-bottom: 48px;
+    }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      border: 1px solid var(--rule);
+    }
+    .feature-card {
+      padding: 36px 28px;
+      border-right: 1px solid var(--rule);
+      text-align: left;
+    }
+    .feature-card:last-child { border-right: none; }
+    .feature-icon { font-size: 24px; margin-bottom: 16px; display: block; }
+    .feature-card h3 {
+      font-family: 'EB Garamond', serif;
+      font-size: 1.2rem;
+      color: var(--cream);
+      margin-bottom: 10px;
+    }
+    .feature-card p { font-size: 13px; color: rgba(245,241,224,0.55); line-height: 1.65; }
+
+    /* ── COURSES PHOTO GRID ── */
+    .courses {
+      border-top: 1px solid var(--rule);
+    }
+    .courses-header {
+      text-align: center;
+      padding: 60px 60px 40px;
+      background: var(--navy);
+    }
+    .courses-header h2 {
+      font-family: 'EB Garamond', serif;
+      font-size: clamp(1.8rem, 3vw, 2.4rem);
+      color: var(--cream);
+      margin-bottom: 8px;
+    }
+    .courses-header p { font-size: 13px; color: rgba(245,241,224,0.5); }
+    .courses-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+    }
+    .course-card {
+      position: relative;
+      overflow: hidden;
+      aspect-ratio: 1/1;
+      cursor: pointer;
+    }
+    .course-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+      transition: transform 0.5s ease;
+    }
+    .course-card:hover img { transform: scale(1.06); }
+    .course-card-overlay {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      background: linear-gradient(transparent, rgba(15,20,23,0.95));
+      padding: 24px 12px 12px;
+      transition: padding 0.3s;
+    }
+    .course-card-name {
+      font-family: 'EB Garamond', serif;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--cream);
+      margin: 0 0 2px;
+    }
+    .course-card-meta {
+      font-size: 8px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--gold);
+      margin: 0;
+    }
+    /* img placeholder if missing */
+    .course-card-fallback {
+      width: 100%;
+      aspect-ratio: 3/4;
+      background: linear-gradient(160deg, #1a2a1a, #0d1a0d);
+      display: flex;
+      align-items: flex-end;
+      padding: 22px 20px;
+    }
+
+    /* ── PRICING ── */
+    .pricing {
+      background: var(--navy);
+      padding: 80px 40px;
+      border-top: 1px solid var(--rule);
+      text-align: center;
+    }
+    .pricing-container { max-width: 1040px; margin: 0 auto; }
+    .pricing .section-eyebrow { margin-bottom: 12px; }
+    .pricing h2 {
+      font-family: 'EB Garamond', serif;
+      font-size: clamp(2rem, 4vw, 2.8rem);
+      font-weight: 900;
+      color: var(--cream);
+      margin-bottom: 10px;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+    }
+    .pricing .section-sub {
+      font-size: 13px;
+      color: rgba(245,241,224,0.45);
+      margin-bottom: 0;
+    }
+    .pricing-scroll-hint {
+      font-size: 10px;
+      color: rgba(245,241,224,0.3);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin: 16px 0 0;
+      display: none;
+    }
+    .pricing-outer {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      margin: 0 -1.25rem;
+      padding: 0 1.25rem 0.5rem;
+    }
+    .pricing-outer::-webkit-scrollbar { display: none; }
+    .pricing-grid {
+      display: flex;
+      gap: 1rem;
+      min-width: max-content;
+      justify-content: center;
+      padding: 2rem 0 0.5rem;
+    }
+
+    /* Plan cards */
+    .plan {
+      width: 290px;
+      flex-shrink: 0;
+      border: 1px solid rgba(212,165,116,0.2);
+      border-radius: 4px;
+      padding: 2rem 1.6rem;
+      display: flex;
+      flex-direction: column;
+      background: rgba(255,255,255,0.025);
+      position: relative;
+      text-align: left;
+    }
+    .plan.featured {
+      border-color: rgba(212,165,116,0.5);
+      background: rgba(212,165,116,0.06);
+    }
+    .plan-badge {
+      position: absolute;
+      top: 0; left: 50%;
+      transform: translateX(-50%);
+      background: var(--gold);
+      color: var(--navy);
+      font-family: 'Roboto', monospace;
+      font-size: 0.52rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 0.28rem 0.85rem;
+      border-radius: 0 0 4px 4px;
+      white-space: nowrap;
+      font-weight: 700;
+    }
+    .plan-name {
+      font-family: 'Roboto', sans-serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(245,241,224,0.4);
+      margin-bottom: 1.2rem;
+      margin-top: 0.5rem;
+    }
+    .plan-price {
+      font-family: 'EB Garamond', serif;
+      font-size: 3.2rem;
+      font-weight: 900;
+      line-height: 1;
+      letter-spacing: -0.04em;
+      color: var(--cream);
+      margin-bottom: 0.2rem;
+    }
+    .plan-price sup {
+      font-size: 1.1rem;
+      vertical-align: super;
+      font-family: 'Roboto', sans-serif;
+      font-weight: 300;
+    }
+    .plan-period {
+      font-family: 'Roboto', sans-serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.06em;
+      color: rgba(245,241,224,0.4);
+      margin-bottom: 1.5rem;
+    }
+    .plan-divider {
+      height: 1px;
+      background: rgba(255,255,255,0.07);
+      margin-bottom: 1.5rem;
+    }
+    .plan-polling {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 2px;
+      padding: 0.7rem 1rem;
+      margin-bottom: 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .plan.featured .plan-polling {
+      background: rgba(212,165,116,0.08);
+      border-color: rgba(212,165,116,0.2);
+    }
+    .poll-label {
+      font-family: 'Roboto', sans-serif;
+      font-size: 0.56rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(245,241,224,0.4);
+    }
+    .poll-value {
+      font-family: 'EB Garamond', serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--cream);
+      letter-spacing: -0.02em;
+    }
+    .plan.featured .poll-value { color: var(--gold); }
+    .plan-desc {
+      font-size: 0.8rem;
+      color: rgba(245,241,224,0.45);
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+    }
+    .plan-features {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 1.6rem;
+      flex: 1;
+    }
+    .plan-features li {
+      padding: 9px 0;
+      border-bottom: 1px solid rgba(245,240,230,0.07);
+      font-size: 0.8rem;
+      color: var(--cream);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .plan-features li:last-child { border-bottom: none; }
+    .plan-features li.dim { color: rgba(245,241,224,0.28); }
+    .check { font-size: 0.85rem; flex-shrink: 0; }
+
+    /* Credit packs */
+    .credit-packs {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.4rem;
+      margin-bottom: 1.25rem;
+    }
+    .credit-pkg {
+      border: 1px solid rgba(212,165,116,0.2);
+      border-radius: 2px;
+      padding: 0.65rem 0.4rem;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: all 0.15s;
+    }
+    .credit-pkg:hover, .credit-pkg.active {
+      border-color: var(--gold);
+      background: rgba(212,165,116,0.1);
+    }
+    .pkg-count {
+      font-family: 'EB Garamond', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--cream);
+      line-height: 1;
+    }
+    .pkg-word {
+      font-size: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: rgba(245,241,224,0.35);
+      margin: 2px 0;
+    }
+    .pkg-price { font-size: 0.78rem; color: var(--gold); font-weight: 700; }
+
+    /* Buttons */
+    .btn-plan {
+      display: block;
+      text-align: center;
+      padding: 0.9rem;
+      border-radius: 2px;
+      font-family: 'Roboto', sans-serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: none;
+      font-weight: 600;
+    }
+    .btn-outline {
+      background: transparent;
+      border: 1px solid rgba(245,241,224,0.25);
+      color: var(--cream);
+    }
+    .btn-outline:hover { border-color: rgba(245,241,224,0.6); }
+    .btn-amber {
+      background: var(--gold);
+      color: var(--navy);
+      font-weight: 700;
+    }
+    .btn-amber:hover { background: #c4904a; }
+    .btn-navy-lt {
+      background: rgba(255,255,255,0.07);
+      color: var(--cream);
+      border: 1px solid rgba(255,255,255,0.12);
+    }
+    .btn-navy-lt:hover { background: rgba(255,255,255,0.13); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #080c0f;
+      border-top: 1px solid var(--rule);
+      padding: 28px 40px;
+      text-align: center;
+    }
+    footer p { font-size: 11px; color: rgba(245,241,224,0.25); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 960px) {
+      nav { padding: 16px 24px; }
+      .hero { grid-template-columns: 1fr; }
+      .hero-right { min-height: 320px; }
+      .hero-left { padding: 40px 28px; }
+      .hero-overlay-content { padding: 28px; }
+      .features { padding: 52px 24px; }
+      .features-grid { grid-template-columns: 1fr; }
+      .feature-card { border-right: none; border-bottom: 1px solid var(--rule); }
+      .feature-card:last-child { border-bottom: none; }
+      .courses-header { padding: 48px 24px 32px; }
+      .courses-grid { grid-template-columns: repeat(4, 1fr); }
+      .pricing { padding: 60px 20px; }
+      .pricing-grid { justify-content: flex-start; }
+      .pricing-scroll-hint { display: block; }
+    }
+    @media (max-width: 600px) {
+      .courses-grid { grid-template-columns: repeat(3, 1fr); }
+      .form-row { grid-template-columns: 1fr; }
+      .hero-stat-row { gap: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="/" class="logo"><img src="/static/images/chipd-logo.png" alt="Chipd" style="height:96px;width:auto;"></a>
+  <ul>
+    <li><a href="#courses">Courses</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="/dashboard">Login</a></li>
+    <li><a href="#alert-form" class="cta-header">Start Alert</a></li>
+  </ul>
+</nav>
+
+<!-- HERO: Form Left, Image+Overlay Right -->
+<section class="hero" id="alert-form">
+
+  <!-- LEFT: Alert Form -->
+  <div class="hero-left">
+    <h2 class="section-title">Create Your Alert</h2>
+    <p class="section-subtitle">Set your preferences once. We handle the rest.</p>
+
+    <form id="chipd-form">
+      <!-- Course -->
+      <div class="form-group">
+        <label for="course">Golf Course</label>
+        <select id="course" name="course_id" required>
+          <option value="">Select a course...</option>
+          <optgroup label="Vancouver / Fraser Valley">
+            <option value="morgan-creek">Morgan Creek</option>
+            <option value="northview-ridge">Northview Ridge</option>
+            <option value="northview-canal">Northview Canal</option>
+            <option value="hazelmere">Hazelmere</option>
+            <option value="fraserview">Fraserview</option>
+            <option value="mccleery">McCleery</option>
+            <option value="langara">Langara</option>
+            <option value="redwoods">The Redwoods</option>
+            <option value="fort-langley">Fort Langley</option>
+            <option value="fraserglen">Fraserglen</option>
+          </optgroup>
+          <optgroup label="Lower Mainland &amp; Sea to Sky">
+            <option value="hills-peace-portal">Hills at Peace Portal</option>
+            <option value="university-gc">University Golf Club</option>
+            <option value="meadow-gardens">Meadow Gardens</option>
+            <option value="golden-eagle-north">Golden Eagle (North)</option>
+            <option value="golden-eagle-south">Golden Eagle (South)</option>
+            <option value="furry-creek">Furry Creek</option>
+            <option value="greentee">Greentee</option>
+          </optgroup>
+        </select>
+      </div>
+
+      <!-- Date + Time row -->
+      <div class="form-row">
+        <div class="form-group">
+          <label for="date">Tee Time Date</label>
+          <select id="date" name="min_date" required>
+            <option value="">Select a date...</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="time">Earliest Time</label>
+          <select id="time" name="min_time">
+            <option value="07:00">7:00 AM</option>
+            <option value="07:30">7:30 AM</option>
+            <option value="08:00">8:00 AM</option>
+            <option value="08:30">8:30 AM</option>
+            <option value="09:00" selected>9:00 AM</option>
+            <option value="09:30">9:30 AM</option>
+            <option value="10:00">10:00 AM</option>
+            <option value="10:30">10:30 AM</option>
+            <option value="11:00">11:00 AM</option>
+            <option value="11:30">11:30 AM</option>
+            <option value="12:00">12:00 PM</option>
+            <option value="13:00">1:00 PM</option>
+            <option value="14:00">2:00 PM</option>
+            <option value="15:00">3:00 PM</option>
+            <option value="16:00">4:00 PM</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Players + Holes row -->
+      <div class="form-row">
+        <div class="form-group">
+          <label for="players">Players</label>
+          <select id="players" name="max_players">
+            <option value="1">1 player</option>
+            <option value="2">2 players</option>
+            <option value="3">3 players</option>
+            <option value="4" selected>4 players</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Holes</label>
+          <div class="checkbox-group">
+            <label class="checkbox-label">
+              <input type="checkbox" name="holes" value="9"> 9 holes
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="holes" value="18" checked> 18 holes
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Email -->
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" placeholder="you@example.com" required
+          style="width:100%;padding:10px 12px;border:1px solid #d5ccba;background:#fff;color:var(--navy);font-family:'Roboto',sans-serif;font-size:13px;border-radius:2px;">
+      </div>
+
+      <!-- Max Price optional -->
+      <div class="form-group">
+        <label for="price">Max Price Per Player (Optional)</label>
+        <input type="number" id="price" name="max_price" placeholder="e.g. 80.00" step="0.01" min="0">
+      </div>
+
+      <button type="submit" class="submit-btn" id="submit-btn">Get Notified &mdash; It's Free</button>
+      <div id="message" class="message" style="display:none;"></div>
+      <p class="form-fine-print">No credit card required. 1 free alert, 30 days. <a href="#pricing">Upgrade anytime.</a></p>
+    </form>
+  </div>
+
+  <!-- RIGHT: Golf photo with text overlay -->
+  <div class="hero-right">
+    <img
+      src="/static/images/hero.jpg"
+      alt="Golf Course"
+      class="hero-golf-img"
+      onerror="this.onerror=null;this.src='/static/images/morgan-creek.jpg';"
+    >
+    <div class="hero-overlay-content">
+      <p class="hero-eyebrow">Golf Tee Time Alerts</p>
+      <h1>Never Miss a Tee Time</h1>
+      <p>Tee times get cancelled every day across hundreds of courses. Chipd watches 24/7 and alerts you the moment a spot opens up.</p>
+      <div class="hero-stat-row">
+        <div class="hero-stat">
+          <span class="hero-stat-num">17</span>
+          <span class="hero-stat-label">Courses Watched</span>
+        </div>
+        <div class="hero-stat">
+          <span class="hero-stat-num">15m</span>
+          <span class="hero-stat-label">Fastest Alert</span>
+        </div>
+        <div class="hero-stat">
+          <span class="hero-stat-num">Free</span>
+          <span class="hero-stat-label">To Start</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- FEATURES -->
+<section class="features" id="features">
+  <div class="features-container">
+    <p class="section-eyebrow">Why Chipd</p>
+    <h2>Stop refreshing. Start playing.</h2>
+    <div class="features-grid">
+      <div class="feature-card">
+        <span class="feature-icon">⚡</span>
+        <h3>Instant Alerts</h3>
+        <p>Get notified via SMS or email the moment a tee time matching your criteria becomes available. Premium users get 15-minute polling.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">🎯</span>
+        <h3>Precise Filters</h3>
+        <p>Filter by date, time, player count, hole count, and maximum price. Only get alerts for tee times you'd actually book.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">⛳</span>
+        <h3>Top Courses</h3>
+        <p>Monitor top courses across Canada — all in one place.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COURSES PHOTO GRID -->
+<section class="courses" id="courses">
+  <div class="courses-header">
+    <p class="section-eyebrow">Courses</p>
+    <h2>17 Courses. One Alert.</h2>
+    <p>Top courses across BC, monitored simultaneously.</p>
+  </div>
+  <div class="courses-grid">
+
+    <div class="course-card">
+      <img src="/static/images/courses/Morgan-Creek-New-1.jpg" alt="Morgan Creek Golf Course"
+        onerror="this.onerror=null;this.parentElement.style.background='linear-gradient(160deg,#1a2a1a,#0d1a0d)';">
+      <div class="course-card-overlay">
+        <p class="course-card-name">Morgan Creek</p>
+        <p class="course-card-meta">Par 72 &middot; 6,955 yds &middot; Dynamic Pricing</p>
+      </div>
+    </div>
+
+    <div class="course-card">
+      <img src="/static/images/courses/Northview-July-2022-256-1920x1280.jpg.webp" alt="Northview Ridge Golf Course"
+        onerror="this.onerror=null;this.parentElement.style.background='linear-gradient(160deg,#1a2418,#0d190b)';">
+      <div class="course-card-overlay">
+        <p class="course-card-name">Northview Ridge</p>
+        <p class="course-card-meta">Par 72 &middot; 7,034 yds &middot; Arnold Palmer</p>
+      </div>
+    </div>
+
+    <div class="course-card">
+      <img src="/static/images/courses/Northview-July-2022-256-1920x1280.jpg.webp" alt="Northview Canal Golf Course"
+        onerror="this.onerror=null;this.parentElement.style.background='linear-gradient(160deg,#18201a,#0b140d)';">
+      <div class="course-card-overlay">
+        <p class="course-card-name">Northview Canal</p>
+        <p class="course-card-meta">Par 72 &middot; 7,101 yds &middot; Arnold Palmer</p>
+      </div>
+    </div>
+
+    <div class="course-card">
+      <img src="/static/images/courses/hazelmere.png" alt="Hazelmere Golf Course"
+        onerror="this.onerror=null;this.parentElement.style.background='linear-gradient(160deg,#1a2218,#0d1a0b)';">
+      <div class="course-card-overlay">
+        <p class="course-card-name">Hazelmere</p>
+        <p class="course-card-meta">Par 72 &middot; 6,627 yds &middot; Semi-Private</p>
+      </div>
+    </div>
+
+    <div class="course-card">
+      <img src="/static/images/courses/fraserview_golf_course_cover_picture.jpg" alt="Fraserview Golf Course"
+        onerror="this.onerror=null;this.parentElement.style.background='linear-gradient(160deg,#1a2a1a,#0d1a0d)';">
+      <div class="course-card-overlay">
+        <p class="course-card-name">Fraserview</p>
+        <p class="course-card-meta">Par 71 &middot; 6,704 yds &middot; City of Vancouver</p>
+      </div>
+    </div>
+
+    <div class="course-card">
+      <img src="/static/images/courses/mccleery-golf-course.webp" alt="McCleery Golf Course"
+        onerror="this.onerror=null;this.parentElement.style.background='linear-gradient(160deg,#1a2418,#0d1a0b)';">
+      <div class="course-card-overlay">
+        <p class="course-card-name">McCleery</p>
+        <p class="course-card-meta">Par 71 &middot; 6,208 yds &middot; City of Vancouver</p>
+      </div>
+    </div>
+
+    <div class="course-card">
+      <img src="/static/images/courses/Langara golf course.webp" alt="Langara Golf Course"
+        onerror="this.onerror=null;this.parentElement.style.background='linear-gradient(160deg,#18201a,#0b140d)';">
+      <div class="course-card-overlay">
+        <p class="course-card-name">Langara</p>
+        <p class="course-card-meta">Par 71 &middot; 6,026 yds &middot; City of Vancouver</p>
+      </div>
+    </div>
+
+    <div class="course-card">
+      <img src="/static/images/courses/the-redwoods-golf-course.webp" alt="The Redwoods Golf Course"
+        onerror="this.onerror=null;this.parentElement.style.background='linear-gradient(160deg,#1a2a1a,#0d1a0d)';">
+      <div class="course-card-overlay">
+        <p class="course-card-name">The Redwoods</p>
+        <p class="course-card-meta">Par 72 &middot; 6,814 yds &middot; Langley</p>
+      </div>
+    </div>
+
+    <div class="course-card">
+      <img src="/static/images/courses/Fort Langley Golf Course.webp" alt="Fort Langley Golf Course"
+        onerror="this.onerror=null;this.parentElement.style.background='linear-gradient(160deg,#1a2418,#0d190b)';">
+      <div class="course-card-overlay">
+        <p class="course-card-name">Fort Langley</p>
+        <p class="course-card-meta">Par 71 &middot; 6,204 yds &middot; Historic Langley</p>
+      </div>
+    </div>
+
+    <div class="course-card">
+      <img src="/static/images/courses/Fraserglen.jpg" alt="Fraserglen Golf Course"
+        onerror="this.onerror=null;this.parentElement.style.background='linear-gradient(160deg,#18201a,#0b140d)';">
+      <div class="course-card-overlay">
+        <p class="course-card-name">Fraserglen</p>
+        <p class="course-card-meta">Par 71 &middot; 6,001 yds &middot; Surrey</p>
+      </div>
+    </div>
+
+    <div class="course-card">
+      <img src="/static/images/courses/Hills Peace Portal.webp" alt="Hills at Peace Portal Golf Course"
+        onerror="this.onerror=null;this.parentElement.style.background='linear-gradient(160deg,#1a2a1a,#0d1a0d)';">
+      <div class="course-card-overlay">
+        <p class="course-card-name">Hills at Peace Portal</p>
+        <p class="course-card-meta">Par 72 &middot; 6,368 yds &middot; Est. 1928</p>
+      </div>
+    </div>
+
+    <div class="course-card">
+      <img src="/static/images/courses/university-golf-club-1_760x410.jpg" alt="University Golf Club"
+        onerror="this.onerror=null;this.parentElement.style.background='linear-gradient(160deg,#1a2418,#0d190b)';">
+      <div class="course-card-overlay">
+        <p class="course-card-name">University Golf Club</p>
+        <p class="course-card-meta">Par 72 &middot; 6,584 yds &middot; UBC</p>
+      </div>
+    </div>
+
+    <div class="course-card">
+      <img src="/static/images/courses/Meadow Gardens.webp" alt="Meadow Gardens Golf Course"
+        onerror="this.onerror=null;this.parentElement.style.background='linear-gradient(160deg,#18201a,#0b140d)';">
+      <div class="course-card-overlay">
+        <p class="course-card-name">Meadow Gardens</p>
+        <p class="course-card-meta">Par 72 &middot; 6,734 yds &middot; Pitt Meadows</p>
+      </div>
+    </div>
+
+    <div class="course-card">
+      <img src="/static/images/courses/Golden Eagle.webp" alt="Golden Eagle Golf Club North"
+        onerror="this.onerror=null;this.parentElement.style.background='linear-gradient(160deg,#1a2a1a,#0d1a0d)';">
+      <div class="course-card-overlay">
+        <p class="course-card-name">Golden Eagle North</p>
+        <p class="course-card-meta">Par 72 &middot; Pitt Meadows</p>
+      </div>
+    </div>
+
+    <div class="course-card">
+      <img src="/static/images/courses/Golden Eagle.webp" alt="Golden Eagle Golf Club South"
+        onerror="this.onerror=null;this.parentElement.style.background='linear-gradient(160deg,#1a2418,#0d190b)';">
+      <div class="course-card-overlay">
+        <p class="course-card-name">Golden Eagle South</p>
+        <p class="course-card-meta">Par 72 &middot; Pitt Meadows</p>
+      </div>
+    </div>
+
+    <div class="course-card">
+      <img src="/static/images/courses/Furry Creek Golf & Country Club.webp" alt="Furry Creek Golf and Country Club"
+        onerror="this.onerror=null;this.parentElement.style.background='linear-gradient(160deg,#18201a,#0b140d)';">
+      <div class="course-card-overlay">
+        <p class="course-card-name">Furry Creek</p>
+        <p class="course-card-meta">Par 72 &middot; 6,022 yds &middot; Sea to Sky</p>
+      </div>
+    </div>
+
+    <div class="course-card">
+      <img src="/static/images/courses/Greentee.webp" alt="Greentee Golf Course"
+        onerror="this.onerror=null;this.parentElement.style.background='linear-gradient(160deg,#1a2a1a,#0d1a0d)';">
+      <div class="course-card-overlay">
+        <p class="course-card-name">Greentee</p>
+        <p class="course-card-meta">Par 72 &middot; Maple Ridge</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing" id="pricing">
+  <div class="pricing-container">
+    <p class="section-eyebrow">Pricing</p>
+    <h2>Start free.<br>Upgrade when it matters.</h2>
+    <p class="section-sub">No subscription to get started. Credits never expire. Cancel anytime.</p>
+    <p class="pricing-scroll-hint">← swipe to compare plans →</p>
+    <div class="pricing-outer">
+      <div class="pricing-grid">
+
+        <!-- TRAILHEAD (FREE) -->
+        <div class="plan">
+          <div class="plan-name">Trailhead</div>
+          <div class="plan-price">Free</div>
+          <div class="plan-period">no card required</div>
+          <div class="plan-divider"></div>
+          <div class="plan-polling">
+            <span class="poll-label">Checks every</span>
+            <span class="poll-value">4 hrs</span>
+          </div>
+          <div class="plan-desc">Better than refreshing manually. One alert per account — enough to try it out, not enough to rely on for a hot tee time on a long weekend.</div>
+          <ul class="plan-features">
+            <li><span class="check">✓</span> 1 active alert</li>
+            <li><span class="check">✓</span> Email notifications</li>
+            <li><span class="check">✓</span> Expires after 30 days</li>
+            <li><span class="check">✓</span> All 17 courses</li>
+            <li class="dim"><span class="check">✗</span> SMS alerts</li>
+            <li class="dim"><span class="check">✗</span> Flexible date range</li>
+          </ul>
+          <a href="/signup.html" class="btn-plan btn-outline">Start Watching Free</a>
+        </div>
+
+        <!-- CREDITS (FEATURED) -->
+        <div class="plan featured">
+          <div class="plan-badge">Most Popular</div>
+          <div class="plan-name">Credits</div>
+          <div class="plan-price">$5<sup>+</sup></div>
+          <div class="plan-period">no subscription &middot; credits never expire</div>
+          <div class="plan-divider"></div>
+          <div class="plan-polling">
+            <span class="poll-label">Checks every</span>
+            <span class="poll-value">1 hr</span>
+          </div>
+          <div class="plan-desc">Pay once, use when you need it. Credits don't expire, so stock up and alert only when you're hunting for a specific round.</div>
+          <div class="credit-packs">
+            <div class="credit-pkg active" data-stripe="https://buy.stripe.com/aFa3cufLi0A45TvcVT4AU00">
+              <span class="pkg-count">3</span>
+              <span class="pkg-word">scans</span>
+              <span class="pkg-price">$5</span>
+            </div>
+            <div class="credit-pkg" data-stripe="https://buy.stripe.com/9B6aEWeHeciMeq1dZX4AU03">
+              <span class="pkg-count">10</span>
+              <span class="pkg-word">scans</span>
+              <span class="pkg-price">$15</span>
+            </div>
+            <div class="credit-pkg" data-stripe="https://buy.stripe.com/9B6eVc6aIciMeq10974AU02">
+              <span class="pkg-count">25</span>
+              <span class="pkg-word">scans</span>
+              <span class="pkg-price">$30</span>
+            </div>
+          </div>
+          <ul class="plan-features">
+            <li><span class="check">✓</span> SMS + Email alerts</li>
+            <li><span class="check">✓</span> All 17 courses</li>
+            <li><span class="check">✓</span> Flexible date range</li>
+            <li><span class="check">✓</span> Player count filter</li>
+            <li><span class="check">✓</span> Credits never expire</li>
+            <li class="dim"><span class="check">✗</span> Priority 15-min polling</li>
+          </ul>
+          <a href="/signup.html" class="btn-plan btn-amber" id="credit-pack-btn">Buy a Credit Pack</a>
+        </div>
+
+        <!-- PREMIUM -->
+        <div class="plan">
+          <div class="plan-name">Premium</div>
+          <div class="plan-price"><sup>$</sup>15</div>
+          <div class="plan-period">/ month &middot; cancel anytime</div>
+          <div class="plan-divider"></div>
+          <div class="plan-polling">
+            <span class="poll-label">Checks every</span>
+            <span class="poll-value">15 min</span>
+          </div>
+          <div class="plan-desc">By the time someone else sees a cancellation, you've already booked it. Unlimited alerts, fastest polling, every feature unlocked.</div>
+          <ul class="plan-features">
+            <li><span class="check">✓</span> Unlimited concurrent alerts</li>
+            <li><span class="check">✓</span> SMS + Email alerts</li>
+            <li><span class="check">✓</span> Priority 15-min polling</li>
+            <li><span class="check">✓</span> All 17 courses</li>
+            <li><span class="check">✓</span> Flexible dates (&plusmn;3 days)</li>
+            <li><span class="check">✓</span> All filters unlocked</li>
+          </ul>
+          <a href="https://buy.stripe.com/28E00icz696A1Df2hf4AU01" class="btn-plan btn-navy-lt">Get Premium</a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>&copy; 2026 Chipd. All rights reserved.</p>
+</footer>
+
+<script>
+  // Populate date dropdown (next 60 days)
+  const dateSelect = document.getElementById('date');
+  const today = new Date();
+  for (let i = 1; i <= 60; i++) {
+    const d = new Date(today);
+    d.setDate(today.getDate() + i);
+    const val = d.toISOString().split('T')[0];
+    const label = d.toLocaleDateString('en-CA', { weekday: 'short', month: 'short', day: 'numeric' });
+    const opt = document.createElement('option');
+    opt.value = val;
+    opt.textContent = label;
+    dateSelect.appendChild(opt);
+  }
+
+  // Credit pack selector
+  document.querySelectorAll('.credit-pkg').forEach(pkg => {
+    pkg.addEventListener('click', function() {
+      document.querySelectorAll('.credit-pkg').forEach(p => p.classList.remove('active'));
+      this.classList.add('active');
+      const btn = document.getElementById('credit-pack-btn');
+      if (btn && this.dataset.stripe) btn.href = this.dataset.stripe;
+    });
+  });
+  // Set initial href on credit btn
+  const firstPkg = document.querySelector('.credit-pkg.active');
+  const creditBtn = document.getElementById('credit-pack-btn');
+  if (firstPkg && creditBtn) creditBtn.href = firstPkg.dataset.stripe || '/signup.html';
+
+  // Form submit
+  const form = document.getElementById('chipd-form');
+  const submitBtn = document.getElementById('submit-btn');
+  const messageDiv = document.getElementById('message');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const holes = [...document.querySelectorAll('input[name="holes"]:checked')].map(cb => parseInt(cb.value));
+    const payload = {
+      email: document.getElementById('email').value,
+      course_id: document.getElementById('course').value,
+      min_date: document.getElementById('date').value,
+      max_date: document.getElementById('date').value,
+      min_time: document.getElementById('time').value,
+      max_time: '18:00',
+      holes: holes,
+      max_players: parseInt(document.getElementById('players').value),
+      max_price: document.getElementById('price').value ? parseFloat(document.getElementById('price').value) : null,
+    };
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Setting up your alert...';
+
+    try {
+      const response = await fetch('/api/public/scan', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.detail || 'Failed to create alert');
+      showMessage(data.message || "Alert created! We'll notify you when a tee time opens up.", 'success');
+      form.reset();
+    } catch (err) {
+      showMessage(`Error: ${err.message}`, 'error');
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = "Get Notified — It's Free";
+    }
+  });
+
+  function showMessage(text, type) {
+    messageDiv.className = `message ${type}`;
+    messageDiv.textContent = text;
+    messageDiv.style.display = 'block';
+    window.scrollTo({ top: messageDiv.offsetTop - 100, behavior: 'smooth' });
+  }
+</script>
+
+</body>
+</html>

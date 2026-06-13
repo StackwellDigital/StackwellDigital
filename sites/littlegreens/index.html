@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Little Greens Farm — Microgreens Grown with Care</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #f5f0e8;
+    --cream-dark: #ede5d4;
+    --green-deep: #1e3a2a;
+    --green-mid: #2d5a3d;
+    --green-light: #4a7c5f;
+    --green-pale: #c8dcc8;
+    --rust: #8b4a2a;
+    --text: #1a2a1e;
+    --text-light: #5a6b5e;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--cream);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 48px;
+    background: rgba(245, 240, 232, 0.92);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(30,58,42,0.08);
+  }
+
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+  }
+
+  .logo-mark {
+    width: 36px;
+    height: 36px;
+    background: var(--green-deep);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .logo-mark svg { width: 20px; height: 20px; }
+
+  .logo-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    color: var(--green-deep);
+    letter-spacing: 0.01em;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    text-decoration: none;
+    font-size: 14px;
+    color: var(--text-light);
+    letter-spacing: 0.04em;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--green-deep); }
+
+  .nav-cta {
+    background: var(--green-deep);
+    color: var(--cream) !important;
+    padding: 9px 20px;
+    border-radius: 40px;
+    font-weight: 500 !important;
+  }
+
+  .nav-cta:hover { background: var(--green-mid); color: var(--cream) !important; }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding-top: 80px;
+  }
+
+  .hero-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 80px 48px 80px 48px;
+  }
+
+  .hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--green-light);
+    margin-bottom: 28px;
+  }
+
+  .hero-tag::before {
+    content: '';
+    display: block;
+    width: 24px;
+    height: 1px;
+    background: var(--green-light);
+  }
+
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(44px, 5.5vw, 72px);
+    font-weight: 700;
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    color: var(--green-deep);
+    margin-bottom: 28px;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--green-light);
+  }
+
+  .hero-desc {
+    font-size: 17px;
+    line-height: 1.7;
+    color: var(--text-light);
+    max-width: 420px;
+    margin-bottom: 44px;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+  }
+
+  .btn-primary {
+    background: var(--green-deep);
+    color: var(--cream);
+    padding: 14px 28px;
+    border-radius: 40px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    transition: background 0.2s, transform 0.2s;
+    display: inline-block;
+  }
+
+  .btn-primary:hover { background: var(--green-mid); transform: translateY(-1px); }
+
+  .btn-secondary {
+    color: var(--green-deep);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    border-bottom: 1px solid var(--green-pale);
+    padding-bottom: 2px;
+    transition: border-color 0.2s;
+  }
+
+  .btn-secondary:hover { border-color: var(--green-deep); }
+
+  .hero-right {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .hero-illustration {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .botanical {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .hero-photo {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .hero-badge {
+    position: absolute;
+    bottom: 48px;
+    left: 48px;
+    background: rgba(245,240,232,0.12);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(245,240,232,0.15);
+    border-radius: 12px;
+    padding: 16px 20px;
+    color: var(--cream);
+  }
+
+  .badge-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .badge-label {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    opacity: 0.6;
+    margin-top: 4px;
+  }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 40px;
+    right: 48px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    color: rgba(245,240,232,0.4);
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  .scroll-line {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, rgba(245,240,232,0.4), transparent);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 1; }
+  }
+
+  /* ── STATS STRIP ── */
+  .stats-strip {
+    background: var(--green-deep);
+    color: var(--cream);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--green-deep);
+  }
+
+  .stat-item {
+    padding: 40px 48px;
+    background: var(--green-deep);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    border-right: 1px solid rgba(245,240,232,0.08);
+  }
+
+  .stat-item:last-child { border-right: none; }
+
+  .stat-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 44px;
+    font-weight: 700;
+    line-height: 1;
+    color: var(--green-pale);
+  }
+
+  .stat-desc {
+    font-size: 13px;
+    opacity: 0.5;
+    letter-spacing: 0.05em;
+  }
+
+  /* ── PRODUCTS ── */
+  .products {
+    padding: 120px 48px;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 64px;
+  }
+
+  .section-tag {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--green-light);
+    margin-bottom: 12px;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(32px, 4vw, 52px);
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--green-deep);
+  }
+
+  .section-title em { font-style: italic; color: var(--green-light); }
+
+  .view-all {
+    color: var(--green-deep);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    border-bottom: 1px solid var(--green-pale);
+    padding-bottom: 2px;
+    white-space: nowrap;
+    transition: border-color 0.2s;
+    margin-bottom: 4px;
+  }
+
+  .view-all:hover { border-color: var(--green-deep); }
+
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .product-card {
+    background: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+  }
+
+  .product-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 24px 48px rgba(30,58,42,0.12);
+  }
+
+  .product-img {
+    aspect-ratio: 4/3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .img-1 { background: linear-gradient(135deg, #c8dcc8, #a0c0a0); }
+  .img-2 { background: linear-gradient(135deg, #d4c8a0, #b8a870); }
+  .img-3 { background: linear-gradient(135deg, #b0d4b0, #80b080); }
+
+  .product-icon {
+    width: 80px;
+    height: 80px;
+    opacity: 0.4;
+  }
+
+  .product-tag {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    background: var(--green-deep);
+    color: var(--cream);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 20px;
+  }
+
+  .product-info {
+    padding: 24px;
+  }
+
+  .product-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    color: var(--green-deep);
+    margin-bottom: 8px;
+  }
+
+  .product-desc {
+    font-size: 13px;
+    color: var(--text-light);
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+
+  .product-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .product-price {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    color: var(--green-deep);
+  }
+
+  .product-price span {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    color: var(--text-light);
+    font-weight: 300;
+  }
+
+  .add-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--green-deep);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, transform 0.2s;
+  }
+
+  .add-btn:hover { background: var(--green-light); transform: rotate(90deg); }
+
+  /* ── HOW IT WORKS ── */
+  .how-it-works {
+    background: var(--green-deep);
+    padding: 120px 48px;
+    color: var(--cream);
+  }
+
+  .how-it-works .section-title { color: var(--cream); }
+  .how-it-works .section-tag { color: var(--green-pale); opacity: 0.7; }
+
+  .steps-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 48px;
+    margin-top: 72px;
+  }
+
+  .step {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .step-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 64px;
+    font-weight: 700;
+    color: rgba(200,220,200,0.15);
+    line-height: 1;
+  }
+
+  .step-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: rgba(200,220,200,0.1);
+    border: 1px solid rgba(200,220,200,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: -20px;
+  }
+
+  .step-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 600;
+  }
+
+  .step-desc {
+    font-size: 14px;
+    opacity: 0.55;
+    line-height: 1.7;
+  }
+
+  /* ── ABOUT STRIP ── */
+  .about-strip {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 500px;
+  }
+
+  .about-img {
+    background: var(--green-mid);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .about-pattern {
+    position: absolute;
+    inset: 0;
+    opacity: 0.15;
+    background-image: radial-gradient(circle, var(--cream) 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
+
+  .about-content {
+    padding: 80px 64px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: var(--cream-dark);
+  }
+
+  .about-content .section-tag { margin-bottom: 16px; }
+
+  .about-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 38px;
+    font-weight: 700;
+    line-height: 1.15;
+    color: var(--green-deep);
+    margin-bottom: 24px;
+  }
+
+  .about-title em { font-style: italic; color: var(--green-light); }
+
+  .about-text {
+    font-size: 15px;
+    line-height: 1.8;
+    color: var(--text-light);
+    margin-bottom: 36px;
+  }
+
+  .about-signature {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 20px;
+    color: var(--green-deep);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .sig-line { width: 32px; height: 1px; background: var(--green-light); }
+
+  /* ── CTA ── */
+  .cta-section {
+    text-align: center;
+    padding: 120px 48px;
+    background: var(--cream);
+  }
+
+  .cta-section .section-tag { justify-content: center; margin-bottom: 20px; }
+
+  .cta-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(36px, 5vw, 62px);
+    font-weight: 700;
+    color: var(--green-deep);
+    line-height: 1.1;
+    max-width: 640px;
+    margin: 0 auto 20px;
+  }
+
+  .cta-title em { font-style: italic; color: var(--green-light); }
+
+  .cta-sub {
+    font-size: 16px;
+    color: var(--text-light);
+    max-width: 400px;
+    margin: 0 auto 40px;
+    line-height: 1.6;
+  }
+
+  .cta-form {
+    display: flex;
+    gap: 0;
+    max-width: 400px;
+    margin: 0 auto;
+    border-radius: 40px;
+    overflow: hidden;
+    border: 1.5px solid var(--green-pale);
+    background: #fff;
+  }
+
+  .cta-form input {
+    flex: 1;
+    border: none;
+    outline: none;
+    padding: 14px 20px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    background: transparent;
+    color: var(--text);
+  }
+
+  .cta-form input::placeholder { color: var(--text-light); opacity: 0.6; }
+
+  .cta-form button {
+    background: var(--green-deep);
+    color: var(--cream);
+    border: none;
+    padding: 14px 24px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    border-radius: 40px;
+    margin: 4px;
+    transition: background 0.2s;
+  }
+
+  .cta-form button:hover { background: var(--green-light); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--green-deep);
+    color: var(--cream);
+    padding: 64px 48px 40px;
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 48px;
+    margin-bottom: 56px;
+  }
+
+  .footer-brand .logo-text { color: var(--cream); font-size: 20px; margin-bottom: 16px; display: block; font-family: 'Playfair Display', serif; }
+
+  .footer-brand p {
+    font-size: 13px;
+    line-height: 1.7;
+    opacity: 0.45;
+    max-width: 240px;
+  }
+
+  .footer-col h4 {
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    opacity: 0.4;
+    margin-bottom: 20px;
+  }
+
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+
+  .footer-col ul a {
+    text-decoration: none;
+    color: var(--cream);
+    font-size: 13px;
+    opacity: 0.55;
+    transition: opacity 0.2s;
+  }
+
+  .footer-col ul a:hover { opacity: 1; }
+
+  .footer-bottom {
+    border-top: 1px solid rgba(245,240,232,0.08);
+    padding-top: 28px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    opacity: 0.35;
+  }
+
+  /* animations */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-tag { animation: fadeUp 0.6s ease both; }
+  .hero-title { animation: fadeUp 0.6s 0.1s ease both; }
+  .hero-desc { animation: fadeUp 0.6s 0.2s ease both; }
+  .hero-actions { animation: fadeUp 0.6s 0.3s ease both; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <div class="logo-mark">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#c8dcc8" stroke-width="2">
+        <path d="M12 2a10 10 0 000 20"/>
+        <path d="M12 2C6 8 8 14 12 22"/>
+        <path d="M2 12h10"/>
+      </svg>
+    </div>
+    <span class="logo-text">Little Greens Farm</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#products">Shop</a></li>
+    <li><a href="#how">How It Works</a></li>
+    <li><a href="#about">Our Story</a></li>
+    <li><a href="#contact" class="nav-cta">Order Now</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-tag">BC Grown · Harvested Fresh Weekly</div>
+    <h1 class="hero-title">
+      Living greens,<br>
+      <em>delivered to</em><br>
+      your door.
+    </h1>
+    <p class="hero-desc">
+      We grow nutrient-dense microgreens in small batches using only organic methods. Harvested the morning of delivery — still alive, still growing, packed with flavour.
+    </p>
+    <div class="hero-actions">
+      <a href="#products" class="btn-primary">Shop Microgreens</a>
+      <a href="#how" class="btn-secondary">How it works →</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <img class="hero-photo" src="https://raw.githubusercontent.com/StackwellDigital/LittleGreensFarm/main/00100dPORTRAIT_00100_BURST20180829184810754_COVER.jpg" alt="Fresh microgreens">
+    <div class="hero-badge">
+      <div class="badge-num">12+</div>
+      <div class="badge-label">Varieties available</div>
+    </div>
+    <div class="hero-scroll">
+      <div class="scroll-line"></div>
+      <span>Scroll</span>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-strip">
+  <div class="stat-item">
+    <div class="stat-number">48h</div>
+    <div class="stat-desc">from harvest to your table</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-number">100%</div>
+    <div class="stat-desc">organic growing methods</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-number">12+</div>
+    <div class="stat-desc">varieties grown year-round</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-number">BC</div>
+    <div class="stat-desc">locally grown, locally delivered</div>
+  </div>
+</div>
+
+<!-- PRODUCTS -->
+<section class="products" id="products">
+  <div class="section-header">
+    <div>
+      <div class="section-tag">What we grow</div>
+      <h2 class="section-title">Fresh from the<br><em>growing trays.</em></h2>
+    </div>
+    <a href="#" class="view-all">View all varieties →</a>
+  </div>
+
+  <div class="products-grid">
+    <div class="product-card">
+      <div class="product-img" style="padding:0;overflow:hidden;">
+        <img src="https://raw.githubusercontent.com/StackwellDigital/LittleGreensFarm/main/IMG_20180924_100507.jpg" alt="Sunflower Shoots" style="width:100%;height:100%;object-fit:cover;">
+        <div class="product-tag" style="position:absolute;top:16px;left:16px;">Best Seller</div>
+      </div>
+      <div class="product-info">
+        <div class="product-name">Sunflower Shoots</div>
+        <div class="product-desc">Thick, crunchy, and mildly nutty. Perfect raw on salads, bowls, and sandwiches. High in zinc and vitamin E.</div>
+        <div class="product-footer">
+          <div class="product-price">$8 <span>/ tray</span></div>
+          <button class="add-btn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#c8dcc8" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-img" style="padding:0;overflow:hidden;">
+        <img src="https://raw.githubusercontent.com/StackwellDigital/LittleGreensFarm/main/IMG_20181208_105339.jpg" alt="Pea Tendrils" style="width:100%;height:100%;object-fit:cover;">
+        <div class="product-tag" style="position:absolute;top:16px;left:16px;">New</div>
+      </div>
+      <div class="product-info">
+        <div class="product-name">Pea Tendrils</div>
+        <div class="product-desc">Sweet, delicate, and curling. These bright tendrils taste like fresh spring peas. Gorgeous on plates and in stir fries.</div>
+        <div class="product-footer">
+          <div class="product-price">$9 <span>/ tray</span></div>
+          <button class="add-btn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#c8dcc8" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-img" style="padding:0;overflow:hidden;">
+        <div class="product-tag" style="position:absolute;top:16px;left:16px;z-index:1;">Popular</div>
+        <img src="https://raw.githubusercontent.com/StackwellDigital/LittleGreensFarm/main/00100dPORTRAIT_00100_BURST20180831090544041_COVER.jpg" alt="Spicy Radish Mix" style="width:100%;height:100%;object-fit:cover;">
+      </div>
+      <div class="product-info">
+        <div class="product-name">Spicy Radish Mix</div>
+        <div class="product-desc">A punchy blend of daikon and red radish microgreens. Adds a peppery kick to any dish. Ready in just 7 days from seed.</div>
+        <div class="product-footer">
+          <div class="product-price">$7 <span>/ tray</span></div>
+          <button class="add-btn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#c8dcc8" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-it-works" id="how">
+  <div class="section-tag">The process</div>
+  <h2 class="section-title" style="color:var(--cream)">Simple, fresh,<br><em style="color:var(--green-pale)">every week.</em></h2>
+
+  <div class="steps-grid">
+    <div class="step">
+      <div class="step-num">01</div>
+      <div class="step-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c8dcc8" stroke-width="1.5"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+      </div>
+      <div class="step-title">Choose Your Greens</div>
+      <div class="step-desc">Browse our weekly selection and pick the varieties that suit your cooking. Swap or change any time — no locked-in subscriptions.</div>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <div class="step-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c8dcc8" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      </div>
+      <div class="step-title">We Grow & Harvest</div>
+      <div class="step-desc">Your order is seeded, grown, and harvested fresh the morning of delivery. Still living, still growing when it arrives at your door.</div>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <div class="step-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c8dcc8" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      </div>
+      <div class="step-title">Local Delivery</div>
+      <div class="step-desc">We deliver weekly to your area. Same-day harvested, zero packaging waste. Just open, snip, and eat.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about-strip" id="about">
+  <div class="about-img" style="padding:0;">
+    <img src="https://raw.githubusercontent.com/StackwellDigital/LittleGreensFarm/main/00100dPORTRAIT_00100_BURST20180829184810754_COVER.jpg" alt="Growing operation" style="width:100%;height:100%;object-fit:cover;object-position:center;">
+  </div>
+  <div class="about-content">
+    <div class="section-tag">Our story</div>
+    <h2 class="about-title">Started in a<br>garage. Grown with<br><em>intention.</em></h2>
+    <p class="about-text">
+      Little Greens Farm started when we couldn't find fresh, quality microgreens at our local market. So we started growing our own — and quickly realized we had way more than we could eat. Now we grow for restaurants, farmers markets, and households across BC who believe food should be fresh, local, and alive.
+    </p>
+    <div class="about-signature">
+      <div class="sig-line"></div>
+      Sarah & Marcus, Founders
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="contact">
+  <div class="section-tag" style="display:flex;justify-content:center;gap:8px;align-items:center;margin-bottom:20px;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--green-light)">Weekly delivery · No commitment</div>
+  <h2 class="cta-title">Ready for fresher<br><em>greens?</em></h2>
+  <p class="cta-sub">Join our weekly delivery list. We'll let you know when your area opens up or when we have a new variety ready.</p>
+  <div class="cta-form">
+    <input type="email" placeholder="your@email.com">
+    <button>Get Started</button>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <span class="logo-text">Little Greens Farm</span>
+      <p>Microgreens grown with care in British Columbia. Harvested fresh, delivered local.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Shop</h4>
+      <ul>
+        <li><a href="#">All Varieties</a></li>
+        <li><a href="#">Subscriptions</a></li>
+        <li><a href="#">Gift Trays</a></li>
+        <li><a href="#">Wholesale</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Learn</h4>
+      <ul>
+        <li><a href="#">Growing Methods</a></li>
+        <li><a href="#">Nutrition Info</a></li>
+        <li><a href="#">Recipes</a></li>
+        <li><a href="#">FAQ</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="#">hello@littlegreensfarm.ca</a></li>
+        <li><a href="#">Instagram</a></li>
+        <li><a href="#">Delivery Areas</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Little Greens Farm. All rights reserved.</span>
+    <span>Made with care in BC 🌱</span>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Borrowhood - Borrow from people you already trust.</title>
+<meta name="description" content="Borrowhood is the private lending platform for communities. Share tools, equipment, and gear with the people around you. No strangers, no marketplace fees.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<link rel="preload" href="/lee-robinson-Yc9h5SJdEzI-unsplash.webp" as="image" fetchpriority="high">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css"></noscript>
+<!-- Google tag -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-C91FMMGLDZ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-C91FMMGLDZ');
+</script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --brand:#1D6B4A;--brand-mid:#0F6E56;--brand-dark:#085041;--brand-bg:#E1F5EE;
+  --off:#F7F5F0;--off2:#EDEAE3;--off3:#D8D4CB;
+  --dark:#141210;--dark2:#1E1C19;--dark3:#2A2824;
+  --txt:#1A1814;--txt2:#5C5850;--txt3:#9C9890;
+  --white:#FFFFFF;
+  --coho:#1D6B4A;--coho-bg:#E1F5EE;
+  --neigh:#B45309;--neigh-bg:#FEF3E2;
+  --strata:#1D4ED8;--strata-bg:#EFF6FF;
+  --serif:'DM Serif Display',serif;
+  --sans:'DM Sans',sans-serif;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--white);color:var(--txt);overflow-x:hidden;font-size:16px;line-height:1.6;min-height:100vh}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:0 48px;height:68px;background:rgba(255,255,255,0.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid rgba(0,0,0,0.06)}
+.nav-logo img{height:36px;display:block}
+.nav-right{display:flex;gap:10px;align-items:center}
+.btn-sm{padding:8px 18px;border-radius:99px;font-size:13px;font-family:var(--sans);cursor:pointer;text-decoration:none;transition:all .18s;font-weight:500;display:inline-block}
+.btn-outline{border:1px solid var(--off3);background:transparent;color:var(--txt2)}
+.btn-outline:hover{border-color:var(--brand);color:var(--brand)}
+.btn-dark{border:none;background:var(--dark);color:#fff}
+.btn-dark:hover{background:var(--dark3)}
+
+/* HERO */
+.hero{padding-top:68px;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;background:var(--dark);position:relative;overflow:hidden}
+.hero-bg{position:absolute;inset:0;z-index:0}
+.hero-bg img{width:100%;height:100%;object-fit:cover;object-position:center;display:block;opacity:.45}
+.hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,rgba(10,9,8,.55) 0%,rgba(10,9,8,.35) 50%,rgba(10,9,8,.72) 100%)}
+.hero-inner{position:relative;z-index:2;padding:60px 24px 80px;max-width:900px;margin:0 auto;width:100%}
+.hero-eyebrow{display:inline-block;font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.55);margin-bottom:24px;opacity:0;animation:fadeUp .8s .1s cubic-bezier(.22,1,.36,1) forwards}
+.hero h1{font-family:var(--serif);font-size:clamp(44px,6vw,80px);line-height:1.0;letter-spacing:-2.5px;color:#fff;margin-bottom:22px;opacity:0;animation:fadeUp .8s .25s cubic-bezier(.22,1,.36,1) forwards}
+.hero h1 em{font-style:italic;color:rgba(255,255,255,.55)}
+.hero-sub{font-size:18px;color:rgba(255,255,255,.72);max-width:520px;margin:0 auto 56px;line-height:1.75;opacity:0;animation:fadeUp .8s .4s cubic-bezier(.22,1,.36,1) forwards}
+.hero-prompt{font-size:12px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:20px;opacity:0;animation:fadeUp .8s .52s cubic-bezier(.22,1,.36,1) forwards}
+
+/* CARDS */
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:900px;margin:0 auto;width:100%;opacity:0;animation:fadeUp .8s .6s cubic-bezier(.22,1,.36,1) forwards}
+
+.card{border-radius:24px;border:1.5px solid var(--off2);background:var(--white);text-align:left;cursor:pointer;text-decoration:none;display:block;transition:transform .28s cubic-bezier(.22,1,.36,1),border-color .2s,box-shadow .28s cubic-bezier(.22,1,.36,1);position:relative;overflow:hidden}
+.card:hover{transform:translateY(-6px);box-shadow:0 20px 60px rgba(0,0,0,0.13)}
+.card-coho:hover{border-color:var(--coho)}
+.card-neigh:hover{border-color:var(--neigh)}
+.card-strata:hover{border-color:var(--strata)}
+
+/* card photo */
+.card-photo{width:100%;aspect-ratio:16/9;overflow:hidden;position:relative;background:#1a1a18}
+.card-photo img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s cubic-bezier(.22,1,.36,1);opacity:.85}
+.card:hover .card-photo img{transform:scale(1.04)}
+.card-photo-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(8,8,6,.55) 0%,transparent 60%)}
+
+/* card body */
+.card-body{padding:24px 26px 26px}
+.card-label{font-size:10px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;margin-bottom:7px}
+.card-coho .card-label{color:var(--coho)}
+.card-neigh .card-label{color:var(--neigh)}
+.card-strata .card-label{color:var(--strata)}
+.card h2{font-family:var(--serif);font-size:20px;letter-spacing:-0.3px;line-height:1.15;margin-bottom:10px;color:var(--txt)}
+.card p{font-size:13.5px;color:var(--txt2);line-height:1.65;margin-bottom:18px}
+.card-examples{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:18px}
+.card-ex{font-size:11px;padding:3px 10px;border-radius:99px;font-weight:500}
+.card-coho .card-ex{background:var(--coho-bg);color:var(--coho)}
+.card-neigh .card-ex{background:var(--neigh-bg);color:var(--neigh)}
+.card-strata .card-ex{background:var(--strata-bg);color:var(--strata)}
+.card-cta{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:500;transition:gap .2s}
+.card-coho .card-cta{color:var(--coho)}
+.card-neigh .card-cta{color:var(--neigh)}
+.card-strata .card-cta{color:var(--strata)}
+.card:hover .card-cta{gap:12px}
+.card-cta i{font-size:14px}
+
+/* FOOTER STRIP */
+.footer-strip{padding:20px 48px;display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--off2)}
+.footer-strip-copy{font-size:12px;color:var(--txt3)}
+.footer-strip-links{display:flex;gap:20px}
+.footer-strip-links a{font-size:12px;color:var(--txt3);text-decoration:none;transition:color .2s}
+.footer-strip-links a:hover{color:var(--txt)}
+
+/* NOT SURE */
+.not-sure{margin-top:40px;opacity:0;animation:fadeUp .8s .75s cubic-bezier(.22,1,.36,1) forwards}
+.not-sure p{font-size:13px;color:rgba(255,255,255,.45)}
+.not-sure a{color:rgba(255,255,255,.65);text-decoration:underline;text-underline-offset:3px;transition:color .2s}
+.not-sure a:hover{color:#fff}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+/* RESPONSIVE */
+@media(max-width:860px){
+  nav{padding:0 24px}
+  .cards{grid-template-columns:1fr;max-width:440px}
+  .footer-strip{padding:20px 24px}
+  .hero{min-height:auto;padding-bottom:0}
+}
+@media(max-width:480px){
+  .hero h1{letter-spacing:-1.5px}
+  .hero-inner{padding:40px 20px 48px}
+}
+
+/* ── HOW IT WORKS ── */
+.how-section{background:var(--white);border-top:1px solid var(--off2);padding:120px 48px 100px}
+.how-inner{max-width:1200px;margin:0 auto}
+.how-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:72px;gap:40px}
+.how-eyebrow{display:inline-block;font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--brand);margin-bottom:14px}
+.how-header h2{font-family:var(--serif);font-size:clamp(36px,4vw,56px);line-height:1.05;letter-spacing:-1.5px;max-width:540px;margin:0;color:var(--txt)}
+.btn-green{padding:13px 28px;border-radius:99px;font-size:14px;font-family:var(--sans);cursor:pointer;text-decoration:none;transition:all .22s;font-weight:500;display:inline-block;background:var(--brand);color:#fff;border:none;flex-shrink:0}
+.btn-green:hover{background:var(--brand-dark);transform:translateY(-2px);box-shadow:0 8px 28px rgba(29,107,74,.28)}
+
+/* scroll reveal */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s cubic-bezier(.22,1,.36,1),transform .7s cubic-bezier(.22,1,.36,1)}
+.reveal.visible{opacity:1;transform:none}
+.delay-1{transition-delay:.12s}
+.delay-2{transition-delay:.24s}
+.how-tabs{border-top:1px solid var(--off3)}
+.how-tab{border-bottom:1px solid var(--off3);overflow:hidden}
+.how-tab-header{display:flex;align-items:center;gap:20px;padding:24px 0;cursor:pointer;background:none;border:none;width:100%;text-align:left;font-family:var(--sans)}
+.how-tab-num{font-size:12px;font-weight:500;color:var(--txt3);width:32px;flex-shrink:0;transition:color .2s}
+.how-tab-title{font-family:var(--serif);font-size:22px;letter-spacing:-0.3px;color:var(--txt);flex:1;transition:color .2s}
+.how-tab-arrow{font-size:20px;color:var(--txt3);transition:transform .28s cubic-bezier(.22,1,.36,1),color .2s;flex-shrink:0;line-height:1}
+.how-tab.active .how-tab-arrow{transform:rotate(45deg);color:var(--brand)}
+.how-tab.active .how-tab-title{color:var(--brand)}
+.how-tab.active .how-tab-num{color:var(--brand)}
+.how-tab-body{display:none;padding:0 0 36px 52px}
+.how-tab.active .how-tab-body{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
+.how-tab-text{font-size:15px;color:var(--txt2);line-height:1.75}
+.how-tab-points{display:flex;flex-direction:column;gap:10px;margin-top:16px}
+.how-tab-point{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--txt2)}
+.how-tab-point::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--brand);flex-shrink:0}
+.how-tab-img{border-radius:16px;overflow:hidden;aspect-ratio:4/3}
+.how-tab-img img{width:100%;height:100%;object-fit:cover;display:block}
+/* ── PHONE DEMO ── */
+.demo-layout{display:grid;grid-template-columns:340px 1fr;gap:72px;align-items:center}
+.demo-phone-wrap{display:flex;flex-direction:column;align-items:center;gap:20px}
+.demo-phone-outer{width:280px;background:#EDEAE2;border-radius:44px;border:2px solid #B8B4AC;padding:10px;box-shadow:0 0 0 1px rgba(255,255,255,.5) inset,0 24px 60px rgba(0,0,0,.15)}
+.demo-phone-inner{border-radius:34px;overflow:hidden;background:#fff}
+.demo-viewport{width:100%;height:560px;overflow:hidden;position:relative}
+.demo-track{display:flex;width:400%;height:100%;transition:transform .4s cubic-bezier(.4,0,.2,1)}
+.demo-screen{width:25%;height:100%;flex-shrink:0;display:flex;flex-direction:column;background:#fff;overflow:hidden}
+.dp-sbar{display:flex;justify-content:space-between;align-items:center;padding:12px 18px 3px;font-size:11px;font-weight:500;color:#1A1916;flex-shrink:0}
+.dp-topbar{display:flex;align-items:center;justify-content:space-between;padding:8px 14px 10px;border-bottom:1px solid #E2DED6;flex-shrink:0}
+.dp-logo{display:flex;align-items:center;height:22px}
+.dp-logo img{height:22px;display:block;object-fit:contain}
+.dp-ibtn{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#F7F5F0;border:none;cursor:pointer}
+.dp-ibtn i{font-size:15px;color:#5A5750}
+.dp-body{flex:1;overflow-y:auto;padding:11px 13px;background:#fff}
+.dp-body::-webkit-scrollbar{display:none}
+.dp-ctag{font-size:11px;color:#9A9690;margin-bottom:8px}
+.dp-chips{display:flex;gap:5px;margin-bottom:11px;overflow:hidden}
+.dp-chip{flex-shrink:0;padding:4px 11px;border-radius:99px;font-size:11px;font-weight:500;border:1px solid #C8C4BB;background:#fff;color:#5A5750}
+.dp-chip.on{background:#1D6B4A;border-color:#1D6B4A;color:#fff}
+.dp-icard{background:#fff;border:1px solid #E2DED6;border-radius:14px;margin-bottom:8px;overflow:hidden}
+.dp-thumb{height:100px;overflow:hidden;background:#F7F5F0;position:relative}
+.dp-thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.dp-ibody{padding:9px 11px}
+.dp-irow{display:flex;align-items:flex-start;justify-content:space-between;gap:6px}
+.dp-iname{font-size:12px;font-weight:500;color:#1A1916}
+.dp-iowner{font-size:10px;color:#9A9690;margin-top:1px}
+.dp-pill{display:inline-flex;align-items:center;gap:2px;font-size:10px;font-weight:500;padding:2px 8px;border-radius:99px;flex-shrink:0;white-space:nowrap}
+.dp-pill.av{background:#E1F5EE;color:#085041}
+.dp-pill.bo{background:#FEF3E2;color:#92400E}
+.dp-pill.co{background:#EBF4FF;color:#1E40AF}
+.dp-bbtn{margin-top:7px;width:100%;padding:8px;border-radius:9px;border:none;background:#1D6B4A;color:#fff;font-size:11px;font-weight:500;cursor:pointer;font-family:var(--sans)}
+.dp-bbtn.dis{background:#F7F5F0;color:#9A9690;border:1px solid #E2DED6}
+.dp-tabbar{display:flex;border-top:1px solid #E2DED6;background:#fff;padding:6px 0 10px;flex-shrink:0}
+.dp-tab{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:3px 0;position:relative;cursor:pointer}
+.dp-tab i{font-size:17px;color:#9A9690}
+.dp-tab.on i{color:#1D6B4A}
+.dp-tab span{font-size:9px;color:#9A9690;font-weight:500}
+.dp-tab.on span{color:#1D6B4A}
+.dp-badge{position:absolute;top:0;right:calc(50% - 15px);background:#1D6B4A;color:#fff;font-size:8px;font-weight:600;border-radius:99px;padding:1px 4px}
+.dp-slbl{font-size:10px;font-weight:500;color:#9A9690;letter-spacing:.05em;text-transform:uppercase;margin-bottom:8px}
+.dp-camhero{background:#F7F5F0;border-radius:12px;border:1.5px dashed #C8C4BB;height:100px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;margin-bottom:10px}
+.dp-photo-row{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin-bottom:10px}
+.dp-photo-t{aspect-ratio:1;border-radius:8px;overflow:hidden;border:1px solid #E2DED6;position:relative}
+.dp-photo-t img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.dp-photo-t.add{background:#F7F5F0;display:flex;align-items:center;justify-content:center}
+.dp-field{margin-bottom:8px}
+.dp-field label{display:block;font-size:10px;color:#5A5750;margin-bottom:3px;font-weight:500}
+.dp-field input,.dp-field select{width:100%;padding:7px 9px;border:1px solid #C8C4BB;border-radius:8px;font-size:11px;background:#fff;color:#1A1916;font-family:var(--sans)}
+.dp-own-row{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.dp-own{padding:9px 6px;border:1px solid #C8C4BB;border-radius:8px;font-size:10px;text-align:center;color:#5A5750;background:#fff;cursor:pointer}
+.dp-own i{display:block;font-size:15px;margin-bottom:2px}
+.dp-own.sel{border-color:#1D6B4A;background:#E1F5EE;color:#085041}
+.dp-cta{width:100%;padding:10px;border-radius:9px;border:none;background:#1D6B4A;color:#fff;font-size:12px;font-weight:500;cursor:pointer;font-family:var(--sans);margin-top:4px}
+.dp-reqcard{background:#fff;border:1px solid #E2DED6;border-radius:12px;padding:10px;margin-bottom:7px}
+.dp-req-top{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.dp-req-thumb{width:38px;height:38px;border-radius:8px;overflow:hidden;flex-shrink:0;position:relative}
+.dp-req-thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.dp-req-btns{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.dp-req-btn{padding:7px;border-radius:8px;font-size:10px;font-weight:500;border:1px solid #C8C4BB;background:#fff;color:#1A1916;cursor:pointer;font-family:var(--sans)}
+.dp-req-btn.ok{background:#1D6B4A;border-color:#1D6B4A;color:#fff}
+.dp-prof-hero{display:flex;flex-direction:column;align-items:center;padding:18px 0 13px;border-bottom:1px solid #E2DED6}
+.dp-prof-av{width:50px;height:50px;border-radius:50%;background:#E1F5EE;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:500;color:#085041;margin-bottom:8px}
+.dp-prof-stats{display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid #E2DED6}
+.dp-pstat{text-align:center;padding:11px 0;border-right:1px solid #E2DED6}
+.dp-pstat:last-child{border-right:none}
+.dp-pstat-val{font-size:16px;font-weight:500;color:#1A1916}
+.dp-pstat-lbl{font-size:9px;color:#9A9690;margin-top:1px}
+.dp-mrow{display:flex;align-items:center;gap:10px;padding:12px 13px;border-bottom:1px solid #E2DED6}
+.demo-nav{display:flex;align-items:center;gap:14px}
+.demo-arrow{width:36px;height:36px;border-radius:50%;border:1px solid var(--off3);background:var(--white);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .18s}
+.demo-arrow:hover{border-color:var(--brand);background:var(--brand-bg)}
+.demo-arrow:hover i{color:var(--brand)}
+.demo-arrow i{font-size:16px;color:var(--txt2)}
+.demo-dots{display:flex;gap:6px}
+.demo-dot{width:7px;height:7px;border-radius:50%;background:var(--off3);cursor:pointer;transition:background .2s}
+.demo-dot.on{background:var(--brand)}
+.demo-steps{display:flex;flex-direction:column;gap:0}
+.demo-step{display:flex;gap:20px;padding:24px 0;border-bottom:1px solid var(--off2);cursor:pointer;transition:opacity .2s}
+.demo-step:first-child{border-top:1px solid var(--off2)}
+.demo-step.inactive{opacity:.4}
+.demo-step:hover{opacity:1}
+.demo-step-num{font-family:var(--serif);font-size:28px;color:var(--off3);line-height:1;flex-shrink:0;width:40px;transition:color .2s}
+.demo-step.active-step .demo-step-num{color:var(--brand)}
+.demo-step-title{font-family:var(--serif);font-size:19px;letter-spacing:-0.3px;margin-bottom:8px;color:var(--txt)}
+.demo-step-text{font-size:14px;color:var(--txt2);line-height:1.65}
+@media(max-width:860px){
+  .how-section{padding:72px 24px 64px}
+  .how-header{flex-direction:column;align-items:flex-start;margin-bottom:48px}
+  .demo-layout{grid-template-columns:1fr;justify-items:center;gap:48px}
+  .demo-steps{width:100%}
+}
+</style>
+  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="shortcut icon" href="/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <meta name="apple-mobile-web-app-title" content="Borrowhood" />
+  <link rel="manifest" href="/site.webmanifest" />
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">
+    <img src="/logo-cropped.PNG" alt="Borrowhood">
+  </a>
+  <div class="nav-right">
+    <a href="/demo" class="btn-sm btn-outline">Book a demo</a>
+    <a href="/app/login.html" class="btn-sm btn-dark">Sign in</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<main class="hero">
+  <div class="hero-bg">
+    <img src="/lee-robinson-Yc9h5SJdEzI-unsplash.webp" alt="" aria-hidden="true" fetchpriority="high" decoding="async">
+  </div>
+  <div class="hero-inner">
+
+    <span class="hero-eyebrow">Private community lending</span>
+    <h1>Borrow from people<br>you already <em>trust.</em></h1>
+    <p class="hero-sub">Borrowhood is the private lending platform that lets communities share tools, gear, and equipment. No strangers, no marketplace fees, no chaos.</p>
+
+    <p class="hero-prompt">What kind of community are you?</p>
+
+    <div class="cards">
+
+      <!-- COHOUSING -->
+      <a class="card card-coho" href="/cohousing/" onclick="gtag('event','select_community',{community_type:'cohousing'})">
+        <div class="card-photo">
+          <img src="/hero%20image.webp" loading="lazy" alt="Cohousing community">
+          <div class="card-photo-overlay"></div>
+        </div>
+        <div class="card-body">
+          <div class="card-label">Cohousing and Co-ops</div>
+          <h2>Intentional Communities</h2>
+          <p>Purpose-built for cohousing developments, housing co-ops, and ecovillages that already share and need a real system for it.</p>
+          <div class="card-examples">
+            <span class="card-ex">Cohousing</span>
+            <span class="card-ex">Housing co-ops</span>
+            <span class="card-ex">Ecovillages</span>
+            <span class="card-ex">Community land trusts</span>
+          </div>
+          <div class="card-cta">Explore Borrowhood <i class="ti ti-arrow-right"></i></div>
+        </div>
+      </a>
+
+      <!-- NEIGHBOURS -->
+      <a class="card card-neigh" href="/neighbours/" onclick="gtag('event','select_community',{community_type:'neighbours'})">
+        <div class="card-photo">
+          <img src="/culdesac.webp" loading="lazy" alt="Cul-de-sac neighbourhood">
+          <div class="card-photo-overlay"></div>
+        </div>
+        <div class="card-body">
+          <div class="card-label">Neighbourhoods and Friends</div>
+          <h2>Your Block and Friend Groups</h2>
+          <p>For cul-de-sacs, street communities, and close-knit friend groups that share informally and want a simple system that is not a public marketplace.</p>
+          <div class="card-examples">
+            <span class="card-ex">Cul-de-sacs</span>
+            <span class="card-ex">Street groups</span>
+            <span class="card-ex">Friend circles</span>
+            <span class="card-ex">Neighbour networks</span>
+          </div>
+          <div class="card-cta">Explore Neighbours <i class="ti ti-arrow-right"></i></div>
+        </div>
+      </a>
+
+      <!-- STRATA -->
+      <a class="card card-strata" href="/strata/" onclick="gtag('event','select_community',{community_type:'strata'})">
+        <div class="card-photo">
+          <img src="/rowhome.webp" loading="lazy" alt="Strata rowhomes">
+          <div class="card-photo-overlay"></div>
+        </div>
+        <div class="card-body">
+          <div class="card-label">Strata and Condo</div>
+          <h2>Strata and Multi-Family Buildings</h2>
+          <p>For strata councils and property managers who need a proper system for shared building equipment. Tracked, council-approved, and fully auditable.</p>
+          <div class="card-examples">
+            <span class="card-ex">Strata corps</span>
+            <span class="card-ex">Townhomes</span>
+            <span class="card-ex">Condo buildings</span>
+            <span class="card-ex">HOAs</span>
+          </div>
+          <div class="card-cta">Explore Strata <i class="ti ti-arrow-right"></i></div>
+        </div>
+      </a>
+
+    </div>
+
+    <div class="not-sure">
+      <p>Not sure which fits? <a href="mailto:info@borrowhood.ca">Email us</a> and we will point you in the right direction.</p>
+    </div>
+
+  </div>
+
+</main>
+
+<!-- HOW IT WORKS INTERACTIVE PHONE DEMO -->
+<section id="how" class="how-section">
+  <div class="how-inner">
+    <div class="how-header reveal">
+      <div>
+        <span class="how-eyebrow">See it in action</span>
+        <h2>Everything your community<br>needs to share, <em>finally</em> organized.</h2>
+      </div>
+      <div style="text-align:right;flex-shrink:0">
+        <a href="/app/signup.html" class="btn-green">Get started free</a>
+        <div style="font-size:12px;color:var(--txt3);margin-top:8px">15-day free trial. No credit card required.</div>
+        <a href="/demo" style="display:block;font-size:13px;color:var(--txt3);margin-top:10px;text-decoration:underline;text-underline-offset:3px">or book a 15-min demo</a>
+      </div>
+    </div>
+    <div class="demo-layout reveal delay-1">
+
+      <!-- Phone frame -->
+      <div class="demo-phone-wrap">
+        <div class="demo-phone-outer">
+          <div class="demo-phone-inner">
+            <div class="demo-viewport">
+              <div class="demo-track" id="demoTrack">
+
+                <!-- SCREEN 1: BROWSE -->
+                <div class="demo-screen">
+                  <div class="dp-sbar"><span>9:41</span><span>●●●</span></div>
+                  <div class="dp-topbar">
+                    <div class="dp-logo"><img src="/logo-cropped.PNG" alt="Borrowhood"></div>
+                    <div style="display:flex;gap:4px">
+                      <button class="dp-ibtn"><i class="ti ti-search"></i></button>
+                      <button class="dp-ibtn"><i class="ti ti-bell"></i></button>
+                    </div>
+                  </div>
+                  <div class="dp-body">
+                    <div class="dp-ctag">Creekside Cohousing · 42 items</div>
+                    <div class="dp-chips">
+                      <div class="dp-chip on">All</div><div class="dp-chip">Tools</div><div class="dp-chip">Kitchen</div><div class="dp-chip">Outdoor</div>
+                    </div>
+                    <div class="dp-icard">
+                      <div class="dp-thumb"><img src="/circular%20saw.webp" loading="lazy" alt="Circular saw"></div>
+                      <div class="dp-ibody">
+                        <div class="dp-irow"><div><div class="dp-iname">Circular saw</div><div class="dp-iowner">Jamie T. · Tools</div></div><div class="dp-pill av">Available</div></div>
+                        <button class="dp-bbtn" onclick="demoGoTo(2)">Request to borrow</button>
+                      </div>
+                    </div>
+                    <div class="dp-icard">
+                      <div class="dp-thumb"><img src="/cordless%20drill.webp" loading="lazy" alt="Cordless drill"></div>
+                      <div class="dp-ibody">
+                        <div class="dp-irow"><div><div class="dp-iname">Cordless drill</div><div class="dp-iowner">Community owned</div></div><div class="dp-pill co">Shared</div></div>
+                        <button class="dp-bbtn" onclick="demoGoTo(2)">Request to borrow</button>
+                      </div>
+                    </div>
+                    <div class="dp-icard">
+                      <div class="dp-thumb"><img src="/instantpot.webp" loading="lazy" alt="Instant Pot"></div>
+                      <div class="dp-ibody">
+                        <div class="dp-irow"><div><div class="dp-iname">Instant Pot (8qt)</div><div class="dp-iowner">Sarah K. · Kitchen</div></div><div class="dp-pill bo">Borrowed</div></div>
+                        <button class="dp-bbtn dis" disabled>Currently borrowed</button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="dp-tabbar">
+                    <div class="dp-tab on" onclick="demoGoTo(0)"><i class="ti ti-home"></i><span>Browse</span></div>
+                    <div class="dp-tab" onclick="demoGoTo(2)"><i class="ti ti-arrows-exchange"></i><span>Requests</span><span class="dp-badge">3</span></div>
+                    <div class="dp-tab" onclick="demoGoTo(1)"><i class="ti ti-plus"></i><span>Add</span></div>
+                    <div class="dp-tab" onclick="demoGoTo(3)"><i class="ti ti-users"></i><span>Members</span></div>
+                    <div class="dp-tab" onclick="demoGoTo(3)"><i class="ti ti-user"></i><span>Profile</span></div>
+                  </div>
+                </div>
+
+                <!-- SCREEN 2: ADD ITEM -->
+                <div class="demo-screen">
+                  <div class="dp-sbar"><span>9:41</span><span>●●●</span></div>
+                  <div class="dp-topbar">
+                    <button class="dp-ibtn" onclick="demoGoTo(0)"><i class="ti ti-x"></i></button>
+                    <div style="font-size:14px;font-weight:500;color:#1A1916">List an item</div>
+                    <div style="width:30px"></div>
+                  </div>
+                  <div class="dp-body">
+                    <div class="dp-slbl">Photos</div>
+                    <div class="dp-camhero">
+                      <i class="ti ti-camera" style="font-size:24px;color:#1D6B4A"></i>
+                      <div style="font-size:12px;color:#1D6B4A;font-weight:500">Take a photo</div>
+                      <div style="font-size:10px;color:#9A9690">or choose from library</div>
+                    </div>
+                    <div class="dp-photo-row">
+                      <div class="dp-photo-t"><img src="/circular%20saw.webp" loading="lazy" alt=""></div>
+                      <div class="dp-photo-t add"><i class="ti ti-plus" style="font-size:13px;color:#9A9690"></i></div>
+                      <div class="dp-photo-t add"><i class="ti ti-plus" style="font-size:13px;color:#9A9690"></i></div>
+                    </div>
+                    <div class="dp-field"><label>Item name</label><input type="text" value="Circular saw" readonly></div>
+                    <div class="dp-field"><label>Category</label><select><option>Tools</option></select></div>
+                    <div class="dp-field"><label>Condition</label><select><option>Good</option></select></div>
+                    <div class="dp-field"><label>Ownership</label>
+                      <div class="dp-own-row">
+                        <div class="dp-own sel"><i class="ti ti-user"></i>My item</div>
+                        <div class="dp-own"><i class="ti ti-users"></i>Community</div>
+                      </div>
+                    </div>
+                    <button class="dp-cta" onclick="demoGoTo(0)">List item</button>
+                  </div>
+                  <div class="dp-tabbar">
+                    <div class="dp-tab" onclick="demoGoTo(0)"><i class="ti ti-home"></i><span>Browse</span></div>
+                    <div class="dp-tab" onclick="demoGoTo(2)"><i class="ti ti-arrows-exchange"></i><span>Requests</span><span class="dp-badge">3</span></div>
+                    <div class="dp-tab on" onclick="demoGoTo(1)"><i class="ti ti-plus"></i><span>Add</span></div>
+                    <div class="dp-tab" onclick="demoGoTo(3)"><i class="ti ti-users"></i><span>Members</span></div>
+                    <div class="dp-tab" onclick="demoGoTo(3)"><i class="ti ti-user"></i><span>Profile</span></div>
+                  </div>
+                </div>
+
+                <!-- SCREEN 3: REQUESTS -->
+                <div class="demo-screen">
+                  <div class="dp-sbar"><span>9:41</span><span>●●●</span></div>
+                  <div class="dp-topbar"><div class="dp-logo">Requests</div><div></div></div>
+                  <div class="dp-body">
+                    <div class="dp-chips" style="margin-bottom:12px">
+                      <div class="dp-chip on">Pending (3)</div><div class="dp-chip">Active (7)</div><div class="dp-chip">Done</div>
+                    </div>
+                    <div class="dp-reqcard">
+                      <div class="dp-req-top">
+                        <div class="dp-req-thumb"><img src="/circular%20saw.webp" loading="lazy" alt=""></div>
+                        <div><div class="dp-iname">Circular saw</div><div class="dp-iowner">Marcus L. · Jun 3–5 · "Deck repair"</div></div>
+                      </div>
+                      <div class="dp-req-btns"><button class="dp-req-btn">Decline</button><button class="dp-req-btn ok">Approve</button></div>
+                    </div>
+                    <div class="dp-reqcard">
+                      <div class="dp-req-top">
+                        <div class="dp-req-thumb"><img src="/cordless%20drill.webp" loading="lazy" alt=""></div>
+                        <div><div class="dp-iname">Cordless drill</div><div class="dp-iowner">Priya N. · Jun 4 · "Hanging shelves"</div></div>
+                      </div>
+                      <div class="dp-req-btns"><button class="dp-req-btn">Decline</button><button class="dp-req-btn ok">Approve</button></div>
+                    </div>
+                    <div class="dp-reqcard" style="opacity:.6">
+                      <div class="dp-req-top">
+                        <div class="dp-req-thumb"><img src="/instantpot.webp" loading="lazy" alt=""></div>
+                        <div><div class="dp-iname">Instant Pot</div><div class="dp-iowner">Jamie T. · Due back Jun 2</div></div>
+                      </div>
+                      <div class="dp-req-btns"><button class="dp-req-btn ok" style="grid-column:1/-1">Mark as returned</button></div>
+                    </div>
+                  </div>
+                  <div class="dp-tabbar">
+                    <div class="dp-tab" onclick="demoGoTo(0)"><i class="ti ti-home"></i><span>Browse</span></div>
+                    <div class="dp-tab on" onclick="demoGoTo(2)"><i class="ti ti-arrows-exchange"></i><span>Requests</span><span class="dp-badge">3</span></div>
+                    <div class="dp-tab" onclick="demoGoTo(1)"><i class="ti ti-plus"></i><span>Add</span></div>
+                    <div class="dp-tab" onclick="demoGoTo(3)"><i class="ti ti-users"></i><span>Members</span></div>
+                    <div class="dp-tab" onclick="demoGoTo(3)"><i class="ti ti-user"></i><span>Profile</span></div>
+                  </div>
+                </div>
+
+                <!-- SCREEN 4: PROFILE -->
+                <div class="demo-screen">
+                  <div class="dp-sbar"><span>9:41</span><span>●●●</span></div>
+                  <div class="dp-topbar">
+                    <div class="dp-logo">Profile</div>
+                    <button class="dp-ibtn"><i class="ti ti-settings"></i></button>
+                  </div>
+                  <div class="dp-body" style="padding:0">
+                    <div class="dp-prof-hero">
+                      <div class="dp-prof-av">AV</div>
+                      <div style="font-size:15px;font-weight:500;color:#1A1916">Adam V</div>
+                      <div style="font-size:11px;color:#9A9690;margin-top:2px">Creekside Cohousing · Admin</div>
+                    </div>
+                    <div class="dp-prof-stats">
+                      <div class="dp-pstat"><div class="dp-pstat-val">8</div><div class="dp-pstat-lbl">Listed</div></div>
+                      <div class="dp-pstat"><div class="dp-pstat-val">14</div><div class="dp-pstat-lbl">Borrows</div></div>
+                      <div class="dp-pstat"><div class="dp-pstat-val">23</div><div class="dp-pstat-lbl">Lent out</div></div>
+                    </div>
+                    <div style="padding:11px 13px 6px;font-size:10px;font-weight:500;color:#9A9690;letter-spacing:.05em;text-transform:uppercase">My items</div>
+                    <div style="padding:0 12px">
+                      <div class="dp-icard"><div class="dp-ibody"><div class="dp-irow"><div><div class="dp-iname">Camp stove</div><div class="dp-iowner">Outdoor · Excellent</div></div><div class="dp-pill av">Available</div></div></div></div>
+                      <div class="dp-icard"><div class="dp-ibody"><div class="dp-irow"><div><div class="dp-iname">Ladder (8ft)</div><div class="dp-iowner">Tools · Good</div></div><div class="dp-pill bo">Borrowed</div></div></div></div>
+                    </div>
+                    <div class="dp-mrow"><i class="ti ti-bell" style="font-size:16px;color:#5A5750"></i><span style="flex:1;font-size:13px;color:#1A1916">Notifications</span><i class="ti ti-chevron-right" style="font-size:14px;color:#9A9690"></i></div>
+                    <div class="dp-mrow"><i class="ti ti-link" style="font-size:16px;color:#5A5750"></i><span style="flex:1;font-size:13px;color:#1A1916">Invite link</span><i class="ti ti-chevron-right" style="font-size:14px;color:#9A9690"></i></div>
+                    <div class="dp-mrow"><i class="ti ti-logout" style="font-size:16px;color:#5A5750"></i><span style="flex:1;font-size:13px;color:#1A1916">Sign out</span><i class="ti ti-chevron-right" style="font-size:14px;color:#9A9690"></i></div>
+                  </div>
+                  <div class="dp-tabbar">
+                    <div class="dp-tab" onclick="demoGoTo(0)"><i class="ti ti-home"></i><span>Browse</span></div>
+                    <div class="dp-tab" onclick="demoGoTo(2)"><i class="ti ti-arrows-exchange"></i><span>Requests</span><span class="dp-badge">3</span></div>
+                    <div class="dp-tab" onclick="demoGoTo(1)"><i class="ti ti-plus"></i><span>Add</span></div>
+                    <div class="dp-tab" onclick="demoGoTo(3)"><i class="ti ti-users"></i><span>Members</span></div>
+                    <div class="dp-tab on" onclick="demoGoTo(3)"><i class="ti ti-user"></i><span>Profile</span></div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="demo-nav">
+          <button class="demo-arrow" onclick="demoPrev()"><i class="ti ti-chevron-left"></i></button>
+          <div class="demo-dots" id="demoDots">
+            <div class="demo-dot on" onclick="demoGoTo(0)"></div>
+            <div class="demo-dot" onclick="demoGoTo(1)"></div>
+            <div class="demo-dot" onclick="demoGoTo(2)"></div>
+            <div class="demo-dot" onclick="demoGoTo(3)"></div>
+          </div>
+          <button class="demo-arrow" onclick="demoNext()"><i class="ti ti-chevron-right"></i></button>
+        </div>
+      </div>
+
+      <!-- Steps list -->
+      <div class="demo-steps">
+        <div class="demo-step" id="dstep-0" onclick="demoGoTo(0)">
+          <div class="demo-step-num">01</div>
+          <div class="demo-step-body">
+            <div class="demo-step-title">Browse your community's items</div>
+            <p class="demo-step-text">Every item your community has listed personal and collectively owned all in one scrollable feed. Filter by category, see availability at a glance.</p>
+          </div>
+        </div>
+        <div class="demo-step" id="dstep-1" onclick="demoGoTo(1)">
+          <div class="demo-step-num">02</div>
+          <div class="demo-step-body">
+            <div class="demo-step-title">List an item in 30 seconds</div>
+            <p class="demo-step-text">Take a photo, add a name, pick a category. That's it. Members can list personal items or mark something as community-owned.</p>
+          </div>
+        </div>
+        <div class="demo-step" id="dstep-2" onclick="demoGoTo(2)">
+          <div class="demo-step-num">03</div>
+          <div class="demo-step-body">
+            <div class="demo-step-title">Approve and track borrow requests</div>
+            <p class="demo-step-text">Owners approve or decline requests on their items. Admins handle community-owned items. Everything logged automatically no chasing people down.</p>
+          </div>
+        </div>
+        <div class="demo-step" id="dstep-3" onclick="demoGoTo(3)">
+          <div class="demo-step-num">04</div>
+          <div class="demo-step-body">
+            <div class="demo-step-title">Your community, all in one place</div>
+            <p class="demo-step-text">Member profiles, borrow history, stats everything you need to see how active your community is and who's contributing.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer class="footer-strip">
+  <span class="footer-strip-copy">2026 Borrowhood. Built in British Columbia, Canada. Built by <a href="https://stackwell.digital" target="_blank" rel="noopener">Stackwell.Digital</a></span>
+  <div class="footer-strip-links">
+    <a href="/privacy.html">Privacy</a>
+    <a href="/terms.html">Terms</a>
+    <a href="mailto:info@borrowhood.ca">Contact</a>
+    <a href="https://www.instagram.com/borrowhood.community" target="_blank" rel="noopener">Instagram</a>
+  </div>
+</footer>
+
+<script>
+// Scroll reveal
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if(e.isIntersecting) { e.target.classList.add('visible'); revealObserver.unobserve(e.target); } });
+}, {threshold: 0.12});
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+// Phone demo
+let demoIdx = 0;
+function demoGoTo(n) {
+  demoIdx = n;
+  document.getElementById('demoTrack').style.transform = `translateX(-${n*25}%)`;
+  document.querySelectorAll('.demo-dot').forEach((d,i) => d.classList.toggle('on', i===n));
+  document.querySelectorAll('.demo-step').forEach((s,i) => {
+    s.classList.toggle('active-step', i===n);
+    s.classList.toggle('inactive', i!==n);
+  });
+}
+function demoPrev() { demoGoTo((demoIdx + 3) % 4); }
+function demoNext() { demoGoTo((demoIdx + 1) % 4); }
+demoGoTo(0);
+</script>
+</body>
+</html>
