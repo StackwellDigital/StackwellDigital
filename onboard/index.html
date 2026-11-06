@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Client Hub | Stackwell.Digital</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a0a0a; --panel:#121212; --line:#262626; --text:#fff; --muted:#9a9a9a; --accent:#F97316; --ok:#4ade80;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-weight:300;line-height:1.6;min-height:100vh}
+a{color:var(--accent)}
+.mono{font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:.12em;font-size:.72rem}
+.top{position:sticky;top:0;z-index:20;background:rgba(10,10,10,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:.9rem 4vw}
+.brand{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:.06em}
+.brand span{color:var(--accent)}
+.saved{color:var(--muted)}
+.saved.on{color:var(--ok)}
+.bar{height:2px;background:var(--line)}
+.bar i{display:block;height:100%;width:0;background:var(--accent);transition:width .4s}
+.wrap{display:grid;grid-template-columns:260px 1fr;gap:3rem;max-width:1150px;margin:0 auto;padding:3rem 4vw 6rem}
+.side{position:sticky;top:5.5rem;align-self:start}
+.side h3{font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:1.1rem;letter-spacing:.1em;color:var(--muted);margin-bottom:1rem}
+.side a{display:flex;gap:.7rem;align-items:center;text-decoration:none;color:var(--text);padding:.55rem 0;border-bottom:1px solid var(--line);font-size:.92rem}
+.dot{width:10px;height:10px;border:1px solid var(--muted);border-radius:50%;flex:none}
+.dot.done{background:var(--ok);border-color:var(--ok)}
+.hero h1{font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:clamp(2.6rem,7vw,4.6rem);line-height:1;letter-spacing:.02em}
+.hero h1 em{font-style:normal;color:var(--accent)}
+.hero p{max-width:560px;color:#cfcfcf;margin-top:1rem}
+.status{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin:2rem 0 3rem}
+.status div{background:var(--panel);padding:1rem 1.1rem}
+.status b{display:block;font-weight:400;margin-top:.25rem}
+.pill-ok{color:var(--ok)}
+.pill-wait{color:var(--accent)}
+section.card{border-top:1px solid var(--line);padding:2.5rem 0;scroll-margin-top:5rem}
+.idx{color:var(--accent);margin-bottom:.4rem}
+section.card h2{font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:2.2rem;letter-spacing:.03em;line-height:1.05}
+section.card .blurb{color:var(--muted);margin:.5rem 0 1.6rem;max-width:560px}
+.field{margin-bottom:1.3rem}
+.field label{display:block;font-size:.92rem;margin-bottom:.35rem}
+.field label .req{color:var(--accent)}
+.help{color:var(--muted);font-size:.82rem;margin-top:.3rem}
+input[type=text],textarea,select{width:100%;background:var(--panel);border:1px solid var(--line);color:var(--text);padding:.8rem .9rem;font:inherit;font-weight:300;border-radius:2px;outline:none}
+input[type=text]:focus,textarea:focus,select:focus{border-color:var(--accent)}
+textarea{min-height:110px;resize:vertical}
+select{appearance:none;background-image:linear-gradient(45deg,transparent 50%,#9a9a9a 50%),linear-gradient(135deg,#9a9a9a 50%,transparent 50%);background-position:calc(100% - 20px) 55%,calc(100% - 14px) 55%;background-size:6px 6px;background-repeat:no-repeat}
+.note{border-left:2px solid var(--accent);background:var(--panel);padding:1rem 1.2rem;margin:0 0 1.5rem;font-size:.92rem;color:#d6d6d6}
+.drop{border:1px dashed #3a3a3a;background:var(--panel);padding:2rem 1.2rem;text-align:center;cursor:pointer;transition:.2s}
+.drop.over,.drop:hover{border-color:var(--accent)}
+.drop strong{display:block;font-weight:400;font-size:1.05rem;margin-bottom:.2rem}
+.drop span{color:var(--muted);font-size:.85rem}
+.up-group{margin-bottom:1.8rem}
+.up-group h4{font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:1.3rem;letter-spacing:.06em;margin-bottom:.6rem}
+.files{list-style:none;margin-top:.8rem}
+.files li{display:grid;grid-template-columns:1fr auto;gap:.2rem .8rem;padding:.55rem 0;border-bottom:1px solid var(--line);font-size:.88rem}
+.files .meta{color:var(--muted);font-family:'DM Mono',monospace;font-size:.72rem}
+.files .prog{grid-column:1/-1;height:2px;background:var(--line)}
+.files .prog i{display:block;height:100%;width:0;background:var(--accent)}
+.files .err{color:#f87171}
+.check{display:flex;gap:.6rem;align-items:center;margin-top:.8rem;font-size:.92rem}
+.check input{accent-color:var(--accent);width:16px;height:16px}
+.btn{display:inline-block;background:var(--accent);color:#0a0a0a;border:0;padding:1rem 2rem;font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:.12em;font-size:.8rem;cursor:pointer}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.final{border-top:1px solid var(--line);padding-top:2.5rem}
+.done-box{border:1px solid var(--ok);padding:1.5rem;margin-top:1.5rem}
+.hide{display:none}
+.steps{list-style:none;counter-reset:s;margin-top:1.2rem}
+.steps li{counter-increment:s;display:grid;grid-template-columns:2.2rem 1fr;gap:.6rem;padding:.8rem 0;border-bottom:1px solid var(--line)}
+.steps li:before{content:counter(s,decimal-leading-zero);font-family:'DM Mono',monospace;color:var(--accent);font-size:.8rem;padding-top:.15rem}
+footer{border-top:1px solid var(--line);padding:2rem 4vw;color:var(--muted);font-size:.85rem;text-align:center}
+.gate{max-width:520px;margin:20vh auto;padding:0 6vw;text-align:center}
+.gate h1{font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:3rem}
+@media(max-width:860px){
+  .wrap{grid-template-columns:1fr;gap:0;padding-top:2rem}
+  .side{display:none}
+  .status{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<div class="top">
+  <div class="brand">STACKWELL<span>.</span>DIGITAL</div>
+  <div class="mono saved" id="saved">Ready</div>
+</div>
+<div class="bar"><i id="bar"></i></div>
+
+<div id="gate" class="gate hide">
+  <h1>This link is not quite right</h1>
+  <p style="color:#9a9a9a;margin-top:1rem">Your hub link comes from Adam. Open the link from your welcome email, or reply to it and we will send it again.</p>
+</div>
+
+<div id="app" class="wrap hide">
+  <aside class="side">
+    <h3>Your checklist</h3>
+    <div id="nav"></div>
+  </aside>
+
+  <main>
+    <div class="hero">
+      <div class="mono" style="color:var(--accent)" id="planTag"></div>
+      <h1 id="hello"></h1>
+      <p>This is your one stop for everything we need to build your site. Fill in what you can, upload your files, and come back any time. Everything saves as you go, so there is no need to finish in one sitting.</p>
+    </div>
+
+    <div class="status">
+      <div><span class="mono" style="color:var(--muted)">Agreement</span><b id="stContract"></b></div>
+      <div><span class="mono" style="color:var(--muted)">Billing</span><b id="stBilling"></b></div>
+      <div><span class="mono" style="color:var(--muted)">Your progress</span><b id="stProgress"></b></div>
+    </div>
+
+    <div id="sections"></div>
+
+    <section class="card" id="files">
+      <div class="mono idx" id="filesIdx"></div>
+      <h2>Logo and photos</h2>
+      <p class="blurb">Drop files straight in here. They go into a private folder just for your project. Nothing to email, nothing to sign in to.</p>
+
+      <div class="up-group">
+        <h4>Logo</h4>
+        <div class="drop" data-cat="logo"><strong>Drop your logo here, or tap to choose</strong><span>PNG, SVG, PDF, AI or EPS. The original file is best. Up to 95 MB each.</span></div>
+        <ul class="files" id="list_logo"></ul>
+        <label class="check"><input type="checkbox" id="noLogo"> I do not have a logo yet. Please design a simple one for me.</label>
+      </div>
+
+      <div class="up-group">
+        <h4>Photos</h4>
+        <div class="drop" data-cat="photos"><strong>Drop your photos here, or tap to choose</strong><span>Your work, your team, your shop, your vehicles. Full size originals from your phone are perfect.</span></div>
+        <ul class="files" id="list_photos"></ul>
+        <p class="help">Good photos make the biggest difference to how your site feels. Real beats stock every time. If you have none, tell us and we will plan around it.</p>
+      </div>
+
+      <div class="up-group">
+        <h4>Anything else</h4>
+        <div class="drop" data-cat="other"><strong>Menus, price lists, certificates, existing copy</strong><span>PDFs and documents are fine.</span></div>
+        <ul class="files" id="list_other"></ul>
+      </div>
+    </section>
+
+    <section class="card final" id="finish">
+      <div class="mono idx" id="finishIdx"></div>
+      <h2>Send it over</h2>
+      <p class="blurb">When you are happy, hit the button and we will get started. You can still come back and add more afterwards.</p>
+      <button class="btn" id="finishBtn">I am done, send it</button>
+      <div class="done-box hide" id="doneBox">
+        <strong style="font-weight:400">Got it. Thank you.</strong>
+        <p style="color:#cfcfcf;margin-top:.4rem">Adam has been notified. Here is what happens next.</p>
+        <ol class="steps">
+          <li>We review everything you sent and follow up if anything is unclear.</li>
+          <li>We build your site and put it on a private preview link.</li>
+          <li>You review it, ask for changes, and we tidy them up.</li>
+          <li>We connect your domain and launch.</li>
+        </ol>
+      </div>
+    </section>
+  </main>
+</div>
+
+<footer>Questions? Email <a href="mailto:adam@stackwell.digital">adam@stackwell.digital</a> and a real person will answer.</footer>
+
+<script>
+(function(){
+'use strict';
+
+var API = 'https://onboard-stackwell.adam-8d6.workers.dev';
+var qs = new URLSearchParams(location.search);
+var TOKEN = qs.get('c') || '';
+var DEMO = qs.get('demo') === '1';
+
+/* ---------- Section config ---------- */
+var SECTIONS = [
+  {id:'basics', title:'Business basics', blurb:'The details that go on your site and in search results.', fields:[
+    {k:'business_name', l:'Business name as customers know it', t:'text', req:1},
+    {k:'contact_name', l:'Your name', t:'text'},
+    {k:'phone', l:'Phone number for the site', t:'text', req:1, ph:'604 555 1234'},
+    {k:'public_email', l:'Email for the site', t:'text', h:'The address customers should see and use.'},
+    {k:'address', l:'Address, or the areas you serve', t:'textarea', h:'If you travel to customers, list the cities or neighbourhoods you cover.'},
+    {k:'hours', l:'Hours', t:'textarea', ph:'Mon to Fri 8am to 5pm\nSat 9am to 1pm\nSun closed'},
+    {k:'founded', l:'Year you started', t:'text', ph:'2014'}
+  ]},
+  {id:'services', title:'What you offer', blurb:'This becomes the heart of your site. Plain language is perfect.', fields:[
+    {k:'services', l:'Your services or products', t:'textarea', req:1, h:'One per line. A short description after each one is a bonus.'},
+    {k:'different', l:'What makes you different from other local options?', t:'textarea'},
+    {k:'customers', l:'Who are your best customers?', t:'textarea', h:'Homeowners, small businesses, families, contractors, and so on.'},
+    {k:'cta', l:'What should a visitor do first?', t:'select', o:['Call me','Request a quote','Book online','Send a message','Something else, I will explain below']},
+    {k:'pricing', l:'How do you want to handle prices?', t:'select', o:['Show prices on the site','Show starting at prices','Do not show prices','Not sure, advise me']}
+  ]},
+  {id:'look', title:'Look and feel', blurb:'Help us aim at the right target on the first try.', fields:[
+    {k:'colors', l:'Brand colours', t:'textarea', h:'Hex codes are great, plain words are fine, or say you have none and we will pick for you.'},
+    {k:'likes', l:'Up to three websites you like', t:'textarea', h:'Any industry. Tell us what you like about each one.'},
+    {k:'dislikes', l:'Anything you definitely do not want?', t:'textarea'},
+    {k:'tone', l:'How should the site sound?', t:'select', o:['Friendly and casual','Professional and polished','Bold and direct','Warm and family run','Not sure, you decide']},
+    {k:'say', l:'Anything we should say, or avoid saying?', t:'textarea'}
+  ]},
+  {id:'presence', title:'Online presence', blurb:'What you already have, so we can connect it all up.', fields:[
+    {k:'current_site', l:'Current website, if any', t:'text', ph:'yourbusiness.ca'},
+    {k:'gbp', l:'Google Business Profile link', t:'text', h:'Search your business name on Google and copy the link. No profile yet? Leave this blank.'},
+    {k:'facebook', l:'Facebook page', t:'text'},
+    {k:'instagram', l:'Instagram handle', t:'text'},
+    {k:'other_social', l:'Other profiles', t:'text', h:'YouTube, TikTok, LinkedIn, Yelp, and so on.'},
+    {k:'testimonials', l:'Customer quotes we can use', t:'textarea', h:'Only ones you have permission to share. Names or first names are a nice touch.'}
+  ]},
+  {id:'domain', title:'Domain and email', blurb:'The part people worry about, so we handle it carefully.', note:'We never need your passwords. Depending on your setup, we will either ask you to add us as a delegate on your domain, or walk you through a transfer. We map out your email first so nothing stops working along the way.', fields:[
+    {k:'has_domain', l:'Do you own a domain name?', t:'select', o:['Yes, I own one','No, I need one','Not sure']},
+    {k:'domain_name', l:'Your domain, if you have one', t:'text', ph:'yourbusiness.ca'},
+    {k:'registrar', l:'Where is it registered?', t:'select', o:['GoDaddy','Wix','Squarespace','Namecheap','Shopify','Cloudflare','Somewhere else','Not sure']},
+    {k:'email_status', l:'How do you use email today?', t:'select', o:['Email on my own domain, like name@mybusiness.ca','Gmail, Outlook, or similar','I would like email on my own domain','Not sure']},
+    {k:'email_provider', l:'Where does your business email live?', t:'text', ph:'Google Workspace, Microsoft 365, GoDaddy, not sure'},
+    {k:'access', l:'Who can log in to your domain account?', t:'select', o:['I can log in','Someone else manages it','I have lost the login','Not sure']}
+  ]},
+  {id:'book', addon:'book', title:'Online booking', blurb:'Since your plan includes Stackwell Book, we need a few extra details.', fields:[
+    {k:'bookable', l:'What can customers book?', t:'textarea', req:1, h:'One per line, with how long it takes and the price.'},
+    {k:'staff', l:'Who can be booked?', t:'textarea', h:'Names, and which services each person does.'},
+    {k:'availability', l:'When are you bookable?', t:'textarea'},
+    {k:'cancel', l:'Cancellation or notice rules', t:'textarea'}
+  ]},
+  {id:'shop', addon:'shop', title:'Online shop', blurb:'Since your plan includes Stackwell Shop, we need a few extra details.', fields:[
+    {k:'products', l:'What are you selling, and roughly how many items?', t:'textarea', req:1},
+    {k:'square', l:'Do you already use Square?', t:'select', o:['Yes','No','Not sure']},
+    {k:'shipping', l:'Shipping or pickup details', t:'textarea'},
+    {k:'pod', l:'Do you use print on demand, like Printful?', t:'select', o:['Yes','No','Maybe later']}
+  ]}
+];
+
+/* ---------- State ---------- */
+var state = {client:null, answers:{}, uploads:[], activeSections:[]};
+var $ = function(s,r){return (r||document).querySelector(s)};
+var $$ = function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+
+/* ---------- API layer ---------- */
+var demoStore = {answers:{}, uploads:[]};
+function api(path, opts){
+  if(DEMO) return demoApi(path, opts);
+  opts = opts || {};
+  return fetch(API + path, opts).then(function(r){
+    return r.json().catch(function(){return {}}).then(function(j){
+      if(!r.ok) throw new Error(j.error || 'Request failed');
+      return j;
+    });
+  });
+}
+function demoApi(path, opts){
+  return new Promise(function(res){
+    setTimeout(function(){
+      if(path.indexOf('/api/client')===0){
+        res({name:'Demo Plumbing Co', plan:'Growth', addons:['book'], contract_signed:true, billing_active:false, completed:false, answers:demoStore.answers, uploads:demoStore.uploads});
+      } else if(path.indexOf('/api/answers')===0){
+        var b = JSON.parse(opts.body); demoStore.answers[b.section] = b.data; res({ok:true});
+      } else { res({ok:true}); }
+    }, 150);
+  });
+}
+function uploadFile(file, cat, onProg){
+  return new Promise(function(resolve, reject){
+    if(DEMO){
+      var p = 0;
+      var t = setInterval(function(){
+        p += 20; onProg(p);
+        if(p >= 100){clearInterval(t); demoStore.uploads.push({category:cat, filename:file.name, size:file.size}); resolve({ok:true});}
+      }, 140);
+      return;
+    }
+    var x = new XMLHttpRequest();
+    x.open('PUT', API + '/api/upload?c=' + encodeURIComponent(TOKEN) + '&cat=' + cat + '&name=' + encodeURIComponent(file.name));
+    x.setRequestHeader('Content-Type', file.type || 'application/octet-stream');
+    x.upload.onprogress = function(e){ if(e.lengthComputable) onProg(Math.round(e.loaded / e.total * 100)); };
+    x.onload = function(){
+      var j = {}; try{ j = JSON.parse(x.responseText) }catch(e){}
+      if(x.status < 300) resolve(j); else reject(new Error(j.error || 'Upload failed'));
+    };
+    x.onerror = function(){ reject(new Error('Network problem. Please try again.')); };
+    x.send(file);
+  });
+}
+
+/* ---------- Saved indicator ---------- */
+var savedEl = $('#saved'), savedTimer;
+function flag(msg, on){
+  savedEl.textContent = msg; savedEl.classList.toggle('on', !!on);
+  clearTimeout(savedTimer);
+  if(on) savedTimer = setTimeout(function(){ savedEl.textContent='All changes saved'; }, 1800);
+}
+
+/* ---------- Render ---------- */
+function planHas(addon){ return state.client.addons.indexOf(addon) > -1; }
+
+function renderSections(){
+  state.activeSections = SECTIONS.filter(function(s){ return !s.addon || planHas(s.addon); });
+  var total = state.activeSections.length + 3; /* + files + finish ... counted as N / total */
+  var html = '';
+  state.activeSections.forEach(function(s, i){
+    var saved = state.answers[s.id] || {};
+    html += '<section class="card" id="sec_'+s.id+'">' +
+      '<div class="mono idx">'+pad(i+2)+' / '+pad(total)+'</div>' +
+      '<h2>'+esc(s.title)+'</h2><p class="blurb">'+esc(s.blurb)+'</p>' +
+      (s.note ? '<div class="note">'+esc(s.note)+'</div>' : '');
+    s.fields.forEach(function(f){
+      var v = saved[f.k] || '';
+      html += '<div class="field"><label>'+esc(f.l)+(f.req?' <span class="req">*</span>':'')+'</label>';
+      if(f.t === 'textarea'){
+        html += '<textarea data-s="'+s.id+'" data-k="'+f.k+'" placeholder="'+esc(f.ph||'')+'">'+esc(v)+'</textarea>';
+      } else if(f.t === 'select'){
+        html += '<select data-s="'+s.id+'" data-k="'+f.k+'"><option value="">Choose one</option>' +
+          f.o.map(function(o){ return '<option'+(o===v?' selected':'')+'>'+esc(o)+'</option>'; }).join('') + '</select>';
+      } else {
+        html += '<input type="text" data-s="'+s.id+'" data-k="'+f.k+'" value="'+esc(v)+'" placeholder="'+esc(f.ph||'')+'">';
+      }
+      if(f.h) html += '<div class="help">'+esc(f.h)+'</div>';
+      html += '</div>';
+    });
+    html += '</section>';
+  });
+  $('#sections').innerHTML = html;
+  $('#filesIdx').textContent = pad(state.activeSections.length+2) + ' / ' + pad(total);
+  $('#finishIdx').textContent = pad(total) + ' / ' + pad(total);
+
+  var nav = state.activeSections.map(function(s){
+    return '<a href="#sec_'+s.id+'" data-nav="'+s.id+'"><span class="dot"></span>'+esc(s.title)+'</a>';
+  }).join('') +
+  '<a href="#files" data-nav="files"><span class="dot"></span>Logo and photos</a>' +
+  '<a href="#finish" data-nav="finish"><span class="dot"></span>Send it over</a>';
+  $('#nav').innerHTML = nav;
+}
+function pad(n){ return (n<10?'0':'') + n; }
+
+/* ---------- Completion logic ---------- */
+function sectionDone(s){
+  var a = state.answers[s.id] || {};
+  var reqs = s.fields.filter(function(f){return f.req});
+  if(reqs.length) return reqs.every(function(f){ return (a[f.k]||'').trim() !== ''; });
+  return s.fields.some(function(f){ return (a[f.k]||'').trim() !== ''; });
+}
+function filesDone(){
+  var hasLogo = state.uploads.some(function(u){return u.category==='logo'});
+  return hasLogo || !!(state.answers.files && state.answers.files.no_logo === 'yes');
+}
+function refreshProgress(){
+  var done = 0, total = state.activeSections.length + 1;
+  state.activeSections.forEach(function(s){
+    var d = sectionDone(s); if(d) done++;
+    var dot = $('[data-nav="'+s.id+'"] .dot'); if(dot) dot.classList.toggle('done', d);
+  });
+  var fd = filesDone(); if(fd) done++;
+  $('[data-nav="files"] .dot').classList.toggle('done', fd);
+  var pct = Math.round(done / total * 100);
+  $('#bar').style.width = pct + '%';
+  $('#stProgress').textContent = done + ' of ' + total + ' sections';
+}
+
+/* ---------- Autosave ---------- */
+var timers = {};
+function collect(sectionId){
+  var out = {};
+  $$('[data-s="'+sectionId+'"]').forEach(function(el){ out[el.getAttribute('data-k')] = el.value; });
+  return out;
+}
+function save(sectionId, data){
+  state.answers[sectionId] = data;
+  flag('Saving', false);
+  return api('/api/answers?c=' + encodeURIComponent(TOKEN), {
+    method:'POST', headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({section: sectionId, data: data})
+  }).then(function(){ flag('Saved', true); refreshProgress(); })
+    .catch(function(){ flag('Not saved. Check your connection', false); });
+}
+document.addEventListener('input', function(e){
+  var el = e.target, s = el.getAttribute && el.getAttribute('data-s');
+  if(!s) return;
+  clearTimeout(timers[s]);
+  state.answers[s] = collect(s);
+  refreshProgress();
+  timers[s] = setTimeout(function(){ save(s, collect(s)); }, 800);
+});
+document.addEventListener('change', function(e){
+  var el = e.target, s = el.getAttribute && el.getAttribute('data-s');
+  if(s){ clearTimeout(timers[s]); save(s, collect(s)); }
+});
+
+/* ---------- Uploads ---------- */
+var CATS = ['logo','photos','other'];
+var MAX = 95 * 1024 * 1024;
+function fmtSize(n){ return n > 1048576 ? (n/1048576).toFixed(1)+' MB' : Math.max(1,Math.round(n/1024))+' KB'; }
+function listUploaded(){
+  CATS.forEach(function(c){
+    var ul = $('#list_'+c);
+    $$('li.done', ul).forEach(function(li){ li.remove(); });
+    state.uploads.filter(function(u){return u.category===c}).forEach(function(u){
+      var li = document.createElement('li'); li.className='done';
+      li.innerHTML = '<span>'+esc(u.filename)+'</span><span class="meta">'+fmtSize(u.size)+' · Uploaded</span>';
+      ul.appendChild(li);
+    });
+  });
+}
+var queue = [], running = false;
+function addFiles(files, cat){
+  Array.prototype.forEach.call(files, function(f){
+    var li = document.createElement('li');
+    li.innerHTML = '<span>'+esc(f.name)+'</span><span class="meta">'+fmtSize(f.size)+'</span><div class="prog"><i></i></div>';
+    $('#list_'+cat).appendChild(li);
+    if(f.size > MAX){
+      li.querySelector('.meta').innerHTML = '<span class="err">Too large. Max 95 MB. Email it to Adam instead.</span>';
+      return;
+    }
+    queue.push({file:f, cat:cat, li:li});
+  });
+  runQueue();
+}
+function runQueue(){
+  if(running) return;
+  var job = queue.shift(); if(!job) return;
+  running = true;
+  var bar = job.li.querySelector('.prog i'), meta = job.li.querySelector('.meta');
+  flag('Uploading', false);
+  uploadFile(job.file, job.cat, function(p){ bar.style.width = p + '%'; meta.textContent = fmtSize(job.file.size) + ' · ' + p + '%'; })
+  .then(function(){
+    job.li.classList.add('done'); meta.textContent = fmtSize(job.file.size) + ' · Uploaded'; bar.parentNode.remove();
+    state.uploads.push({category:job.cat, filename:job.file.name, size:job.file.size});
+    flag('Uploaded', true); refreshProgress();
+  })
+  .catch(function(err){ meta.innerHTML = '<span class="err">'+esc(err.message)+'</span>'; flag('Upload failed', false); })
+  .then(function(){ running = false; runQueue(); });
+}
+function wireDrops(){
+  $$('.drop').forEach(function(d){
+    var cat = d.getAttribute('data-cat');
+    var input = document.createElement('input');
+    input.type = 'file'; input.multiple = true; input.className = 'hide';
+    d.appendChild(input);
+    d.addEventListener('click', function(e){ if(e.target !== input) input.click(); });
+    input.addEventListener('change', function(){ addFiles(input.files, cat); input.value = ''; });
+    ['dragenter','dragover'].forEach(function(ev){ d.addEventListener(ev, function(e){ e.preventDefault(); d.classList.add('over'); }); });
+    ['dragleave','drop'].forEach(function(ev){ d.addEventListener(ev, function(e){ e.preventDefault(); d.classList.remove('over'); }); });
+    d.addEventListener('drop', function(e){ addFiles(e.dataTransfer.files, cat); });
+  });
+  $('#noLogo').addEventListener('change', function(e){
+    save('files', {no_logo: e.target.checked ? 'yes' : 'no'});
+  });
+}
+
+/* ---------- Finish ---------- */
+function showDone(){
+  $('#doneBox').classList.remove('hide');
+  $('#finishBtn').textContent = 'Send again with updates';
+}
+$('#finishBtn').addEventListener('click', function(){
+  var btn = this; btn.disabled = true; btn.textContent = 'Sending';
+  api('/api/complete?c=' + encodeURIComponent(TOKEN), {method:'POST'})
+    .then(function(){ btn.disabled = false; showDone(); })
+    .catch(function(){ btn.disabled = false; btn.textContent = 'Something went wrong. Try again'; });
+});
+
+/* ---------- Boot ---------- */
+function status(el, ok, yes, no){
+  el.textContent = ok ? yes : no;
+  el.className = ok ? 'pill-ok' : 'pill-wait';
+}
+function boot(){
+  if(!TOKEN && !DEMO){ $('#gate').classList.remove('hide'); return; }
+  api('/api/client?c=' + encodeURIComponent(TOKEN)).then(function(c){
+    state.client = {name:c.name, plan:c.plan, addons:c.addons || []};
+    state.answers = c.answers || {};
+    state.uploads = c.uploads || [];
+    $('#hello').innerHTML = 'Welcome, <em>' + esc(c.name) + '</em>';
+    $('#planTag').textContent = c.plan + ' plan';
+    document.title = c.name + ' | Client Hub';
+    status($('#stContract'), c.contract_signed, 'Signed', 'Adam will send this over');
+    status($('#stBilling'), c.billing_active, 'Active', 'Set up after you sign');
+    renderSections(); wireDrops(); listUploaded();
+    if(state.answers.files && state.answers.files.no_logo === 'yes') $('#noLogo').checked = true;
+    refreshProgress();
+    if(c.completed) showDone();
+    $('#app').classList.remove('hide');
+    flag('Ready', false);
+  }).catch(function(){ $('#gate').classList.remove('hide'); });
+}
+boot();
+})();
+</script>
+</body>
+</html>

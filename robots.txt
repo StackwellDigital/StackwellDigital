@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /onboard/
 
 Sitemap: https://stackwell.digital/sitemap.xml
