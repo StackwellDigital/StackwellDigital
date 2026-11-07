@@ -111,7 +111,7 @@ select{appearance:none;background-image:linear-gradient(45deg,transparent 50%,#5
 .minibtn:hover{border-color:var(--ink);color:var(--ink)}
 
 /* colours */
-.slots{display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem;margin-bottom:1rem}
+.slots{display:grid;grid-template-columns:minmax(0,340px);gap:.8rem;margin-bottom:1rem}
 .slot{border-radius:10px;border:1px solid rgba(26,23,20,.22);background:var(--field);padding:.8rem;cursor:pointer;display:grid;grid-template-columns:44px 1fr;gap:.8rem;align-items:center}
 .slot.active{border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
 .slot.bad input[type=text]{border-color:var(--bad)}
@@ -428,12 +428,12 @@ function hslToHex(h,s,l){
   function f(n){ var k=(n+h/30)%12, c=l-a*Math.max(Math.min(k-3,9-k,1),-1); return Math.round(255*c).toString(16).padStart(2,'0'); }
   return ('#'+f(0)+f(8)+f(4)).toUpperCase();
 }
-var SLOTS = [['main','Main colour'],['accent','Accent colour'],['support','Support colour']];
+var SLOTS = [['main','Main colour']];
 var activeSlot = 'main';
 
 function coloursHtml(){
-  var html = '<div class="field"><label>Brand colours</label>' +
-    '<div class="help" style="margin:0 0 .8rem">Pick a slot, then tap a colour below, or type a hex code. Not sure what a hex code is? Just tap colours.</div><div class="slots">';
+  var html = '<div class="field"><label>Your main brand colour</label>' +
+    '<div class="help" style="margin:0 0 .8rem">Tap the colour that best represents your business, or type a hex code if you have one. We will work out the supporting colours from it.</div><div class="slots">';
   SLOTS.forEach(function(s){
     html += '<div class="slot'+(s[0]===activeSlot?' active':'')+'" data-slot="'+s[0]+'">' +
       '<span class="sw"></span><div><span class="mono">'+s[1]+'</span>' +
@@ -441,7 +441,7 @@ function coloursHtml(){
       '<div class="pickrow"><input type="color" value="#f97316" aria-label="Open colour picker"><span>Custom</span></div></div></div>';
   });
   html += '</div><div class="chart" id="chart"></div><div class="chart neutral" id="chartN"></div>' +
-    '<label class="check"><input type="checkbox" data-s="look" data-k="no_colours"'+(ans('look','no_colours')==='yes'?' checked':'')+'> I do not have brand colours yet. Choose for me.</label></div>';
+    '<label class="check"><input type="checkbox" data-s="look" data-k="no_colours"'+(ans('look','no_colours')==='yes'?' checked':'')+'> I do not have a brand colour yet. Choose for me.</label></div>';
   return html;
 }
 function sitesHtml(){
