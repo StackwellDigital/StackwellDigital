@@ -67,13 +67,55 @@ button{font:inherit;color:inherit}
 .ticks li:before{content:"";position:absolute;left:0;top:1rem;width:7px;height:7px;background:var(--accent);border:1px solid var(--ink)}
 
 /* onboarding layout */
-.ob{display:grid;grid-template-columns:230px 1fr;gap:3rem;margin-top:3rem;padding-top:2.5rem;border-top:1px solid var(--rule)}
-.side{position:sticky;top:8.5rem;align-self:start}
-.side h3{font-family:var(--mono);font-weight:400;font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-mid);margin-bottom:1rem}
-.side a{display:flex;gap:.7rem;align-items:center;text-decoration:none;color:var(--ink);padding:.6rem 0;border-bottom:1px solid var(--rule);font-size:.92rem}
-.side a:hover{color:var(--ink-mid)}
+.ob{max-width:860px;margin-top:3rem;padding-top:2.5rem;border-top:1px solid var(--rule)}
 .dot{width:10px;height:10px;border:1px solid var(--ink-mid);border-radius:50%;flex:none}
 .dot.done{background:var(--accent);border-color:var(--ink)}
+
+/* side panel (desktop only, see media queries) */
+.rail{display:none;position:sticky;top:var(--headh,68px);align-self:start;height:calc(100vh - var(--headh,68px));overflow-y:auto;flex-direction:column;gap:.15rem;padding:1.6rem .9rem;border-right:1px solid var(--rule)}
+.ritem{display:flex;align-items:center;gap:.8rem;width:100%;background:none;border:0;border-radius:10px;padding:.7rem .8rem;cursor:pointer;text-align:left;font-size:.95rem;font-weight:400;color:var(--ink)}
+.ritem svg{width:20px;height:20px;flex:none;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.ritem:hover{background:rgba(26,23,20,.06)}
+.ritem.on{background:rgba(26,23,20,.1)}
+.badge,.tbadge{margin-left:auto;background:var(--ink);color:var(--cream);border-radius:8px;min-width:26px;height:24px;padding:0 .45rem;display:inline-flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.68rem;letter-spacing:0}
+.badge:empty,.tbadge:empty{display:none}
+.tabs .tbadge{margin-left:.5rem;height:18px;min-width:18px;padding:0 .3rem;border-radius:6px;font-size:.58rem;vertical-align:middle}
+.subnav{display:none;margin:.1rem 0 .7rem 1.55rem;border-left:1px solid var(--rule)}
+.rail[data-view=home] .subnav{display:block}
+.subnav a{display:flex;gap:.6rem;align-items:center;text-decoration:none;color:var(--ink-mid);padding:.4rem .8rem;font-size:.84rem}
+.subnav a:hover{color:var(--ink)}
+
+/* action items */
+.bar{height:6px;border-radius:3px;background:var(--rule);overflow:hidden;margin-top:.7rem}
+.bar i{display:block;height:100%;width:0;background:var(--accent);transition:width .3s}
+.ahead{color:var(--ink-mid);margin:2.2rem 0 .3rem}
+.acts{list-style:none}
+.act{display:grid;grid-template-columns:auto 1fr auto;gap:.9rem;align-items:center;padding:.85rem 0;border-bottom:1px solid var(--rule)}
+.act .tx b{display:block;font-weight:500;font-size:.98rem}
+.act .tx small{color:var(--ink-mid);font-size:.8rem}
+.act.done .tx b{color:var(--ink-mid);text-decoration:line-through;text-decoration-color:var(--ink-light)}
+.act .go{background:none;border:1px solid rgba(26,23,20,.3);border-radius:8px;padding:.4rem .8rem;cursor:pointer;font-family:var(--mono);text-transform:uppercase;letter-spacing:.12em;font-size:.58rem;color:var(--ink-mid)}
+.act .go:hover{border-color:var(--ink);color:var(--ink)}
+.acts .empty{padding:1rem 0;color:var(--ink-mid);border-bottom:1px solid var(--rule)}
+.chk{position:relative;display:inline-block;width:20px;height:20px}
+.chk input{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:pointer}
+.chk input:disabled{cursor:default}
+.chk span{display:block;width:20px;height:20px;border:1.5px solid var(--ink);border-radius:5px;background:var(--field)}
+.chk input:checked+span{background:var(--accent)}
+.chk input:checked+span:after{content:"";display:block;width:5px;height:10px;border:solid var(--ink);border-width:0 2px 2px 0;transform:translate(5.5px,1px) rotate(45deg)}
+.chk input:focus-visible+span{outline:2px solid var(--ink);outline-offset:2px}
+
+/* messages */
+.thread{display:flex;flex-direction:column;gap:1rem;margin:0 0 1.5rem}
+.msg{max-width:min(78%,560px)}
+.msg.me{align-self:flex-end}
+.mb{white-space:pre-wrap;word-break:break-word;text-align:left;border:1px solid var(--rule);border-radius:12px;background:rgba(255,255,255,.4);padding:.8rem 1rem}
+.msg.me .mb{background:var(--ink);color:var(--cream);border-color:var(--ink)}
+.mm{margin-top:.3rem;color:var(--ink-mid)}
+.msg.me .mm{text-align:right}
+.composer textarea{margin-top:.5rem;min-height:90px}
+.msgfoot{display:flex;gap:1rem;align-items:center;margin-top:.8rem}
+.msgfoot .help{margin:0;color:var(--bad)}
 section.card{border-top:1px solid var(--rule);padding:2.5rem 0;scroll-margin-top:8.5rem}
 section.card:first-child{border-top:0;padding-top:0}
 .idx{color:var(--ink-mid);margin-bottom:.6rem}
@@ -151,9 +193,13 @@ footer{border-top:1px solid var(--rule);padding:2rem 4vw;color:var(--ink-mid);fo
 .gate{max-width:520px;margin:20vh auto;padding:0 6vw;text-align:center}
 .gate h1{font-family:var(--display);font-weight:900;text-transform:uppercase;font-size:3rem;line-height:1}
 
+@media(min-width:861px){
+  .tabs{display:none!important}
+  .shell.ready{display:grid;grid-template-columns:250px minmax(0,1fr)}
+  .rail{display:flex}
+  section.card{scroll-margin-top:6rem}
+}
 @media(max-width:860px){
-  .ob{grid-template-columns:1fr;gap:0}
-  .side{display:none}
   .grid3{grid-template-columns:1fr}
   .two{grid-template-columns:1fr}
   .slots{grid-template-columns:1fr}
@@ -173,6 +219,8 @@ footer{border-top:1px solid var(--rule);padding:2rem 4vw;color:var(--ink-mid);fo
   </div>
   <nav class="tabs hide" id="tabs">
     <button data-tab="home" class="on">Home</button>
+    <button data-tab="messages" class="hide">Messages<span class="tbadge" id="tbdgM"></span></button>
+    <button data-tab="actions">Action items<span class="tbadge" id="tbdg"></span></button>
     <button data-tab="subscription">Subscription</button>
   </nav>
 </div>
@@ -181,6 +229,16 @@ footer{border-top:1px solid var(--rule);padding:2rem 4vw;color:var(--ink-mid);fo
   <h1>This link is not quite right</h1>
   <p style="color:var(--ink-mid);margin-top:1rem">Your hub link comes from Adam. Open the link from your welcome email, or reply to it and we will send it again.</p>
 </div>
+
+<div class="shell" id="shell">
+
+<aside class="rail hide" id="rail" data-view="home">
+  <button class="ritem on" data-tab="home"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11l8-7 8 7"/><path d="M6 10v10h12V10"/></svg><span>Home</span></button>
+  <div class="subnav" id="nav"></div>
+  <button class="ritem hide" data-tab="messages"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5h14a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1h-8l-4 3.5V16H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z"/></svg><span>Messages</span><b class="badge" id="bdgMsgs"></b></button>
+  <button class="ritem" data-tab="actions"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6l2 2 3-3"/><path d="M13 7h7"/><path d="M4 15l2 2 3-3"/><path d="M13 16h7"/></svg><span>Action items</span><b class="badge" id="bdgActions"></b></button>
+  <button class="ritem" data-tab="subscription"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M3 10h18"/></svg><span>Subscription</span><b class="badge" id="bdgSub"></b></button>
+</aside>
 
 <div id="app" class="hide">
 
@@ -194,10 +252,6 @@ footer{border-top:1px solid var(--rule);padding:2rem 4vw;color:var(--ink-mid);fo
 
 
     <div class="ob">
-      <aside class="side">
-        <h3>Your checklist</h3>
-        <div id="nav"></div>
-      </aside>
       <div>
         <div id="sections"></div>
 
@@ -247,6 +301,38 @@ footer{border-top:1px solid var(--rule);padding:2rem 4vw;color:var(--ink-mid);fo
     </div>
   </div>
 
+  <!-- MESSAGES -->
+  <div id="tab_messages" class="hide">
+    <div class="hero" style="margin-bottom:1.5rem">
+      <div class="mono tag">Messages</div>
+      <h1>Talk to Adam</h1>
+      <p>Ask a question or send an update. Replies show up here, and anything we cover by phone or text gets logged in the same thread so nothing gets lost.</p>
+    </div>
+    <div class="thread" id="thread"></div>
+    <div class="panel composer">
+      <label class="mono" for="msgBody">Your message</label>
+      <textarea id="msgBody" maxlength="4000" placeholder="Type here"></textarea>
+      <div class="msgfoot"><button class="btn" id="msgSend" type="button">Send</button><span class="help" id="msgErr"></span></div>
+    </div>
+  </div>
+
+  <!-- ACTION ITEMS -->
+  <div id="tab_actions" class="hide">
+    <div class="hero" style="margin-bottom:2rem">
+      <div class="mono tag">Action items</div>
+      <h1>What is left</h1>
+      <p>Everything that still needs doing, in one place. Most items tick themselves as you fill things in. The rest you can check off yourself.</p>
+    </div>
+    <div class="panel">
+      <div class="mono" id="actProg"></div>
+      <div class="bar"><i id="actBar"></i></div>
+    </div>
+    <div class="mono ahead">To do</div>
+    <ul class="acts" id="actOpen"></ul>
+    <div class="mono ahead" id="actDoneHead">Done</div>
+    <ul class="acts" id="actDone"></ul>
+  </div>
+
   <!-- SUBSCRIPTION -->
   <div id="tab_subscription" class="hide">
     <div class="hero" style="margin-bottom:2rem">
@@ -269,6 +355,7 @@ footer{border-top:1px solid var(--rule);padding:2rem 4vw;color:var(--ink-mid);fo
     <p style="color:var(--ink-mid);margin-top:1.5rem;font-size:.9rem">Want to change your plan, add a feature, or ask about a charge? Email <a href="mailto:adam@stackwell.digital">adam@stackwell.digital</a>.</p>
   </div>
 
+</div>
 </div>
 
 <footer>Questions? Email <a href="mailto:adam@stackwell.digital">adam@stackwell.digital</a></footer>
@@ -348,7 +435,9 @@ function fire(el){
 }
 
 /* ---------- API layer ---------- */
-var demoStore = {answers:{}, uploads:[]};
+var demoStore = {answers:{}, uploads:[], messages:[
+  {id:1, sender:'adam', channel:'call', body:'Thanks for the call today. I will send the agreement from Square this afternoon.', created_at:'2026-11-05 22:10:00'}
+]};
 function api(path, opts){
   if(DEMO) return demoApi(path, opts);
   opts = opts || {};
@@ -366,6 +455,11 @@ function demoApi(path, opts){
         res({name:'Demo Plumbing Co', plan:'Growth', addons:['shop'], monthly_price:100, contract_signed:true, billing_active:false, completed:false, answers:demoStore.answers, uploads:demoStore.uploads});
       } else if(path.indexOf('/api/answers')===0){
         var b = JSON.parse(opts.body); demoStore.answers[b.section] = b.data; res({ok:true});
+      } else if(path.indexOf('/api/messages')===0){
+        if(opts && opts.method === 'POST'){
+          var m = {id:demoStore.messages.length + 1, sender:'client', channel:'hub', body:JSON.parse(opts.body).body, created_at:new Date().toISOString()};
+          demoStore.messages.push(m); res({ok:true, message:m});
+        } else { res({messages:demoStore.messages.slice()}); }
       } else { res({ok:true}); }
     }, 150);
   });
@@ -403,17 +497,35 @@ function flag(msg, on){
 
 /* ---------- Tabs ---------- */
 function showTab(name){
-  ['home','subscription'].forEach(function(t){
+  ['home','messages','actions','subscription'].forEach(function(t){
     $('#tab_'+t).classList.toggle('hide', t !== name);
   });
-  $$('#tabs button').forEach(function(b){ b.classList.toggle('on', b.getAttribute('data-tab') === name); });
+  $$('#tabs button, .ritem').forEach(function(b){ b.classList.toggle('on', b.getAttribute('data-tab') === name); });
+  $('#rail').setAttribute('data-view', name);
   window.scrollTo(0,0);
+  if(name === 'messages' && msgOn){
+    markSeen();
+    setTimeout(function(){ var last = $('#thread .msg:last-child'); if(last) last.scrollIntoView({block:'center'}); }, 40);
+  }
 }
 document.addEventListener('click', function(e){
+  var j = e.target.closest && e.target.closest('[data-jump]');
+  if(j){
+    e.preventDefault(); showTab('home');
+    var el = $(j.getAttribute('data-jump'));
+    setTimeout(function(){ if(el) el.scrollIntoView({behavior:'smooth', block:'start'}); }, 40);
+    return;
+  }
   var t = e.target.closest && e.target.closest('[data-tab],[data-goto]');
   if(!t) return;
   showTab(t.getAttribute('data-tab') || t.getAttribute('data-goto'));
 });
+function setHeadH(){
+  var h = $('.head');
+  if(h) document.documentElement.style.setProperty('--headh', h.offsetHeight + 'px');
+}
+window.addEventListener('resize', setHeadH);
+window.addEventListener('load', setHeadH);
 $('#brand').addEventListener('click', function(e){ e.preventDefault(); showTab('home'); });
 
 /* ---------- Colour tools ---------- */
@@ -599,7 +711,132 @@ function refreshProgress(){
   });
   var fd = filesDone(); if(fd) done++;
   $('[data-nav="files"] .dot').classList.toggle('done', fd);
+  renderActions();
 }
+
+/* ---------- Action items ---------- */
+var MANUAL = [
+  {id:'review_preview', label:'Review your site preview', hint:'We send a private link once your site is built.'},
+  {id:'request_changes', label:'Send us your change requests', hint:'Reply to the preview email, or write to Adam.'},
+  {id:'approve_launch', label:'Approve your site for launch', hint:'Once you are happy, we connect your domain.'}
+];
+function manualOn(id){ return ((state.answers.actions || {})[id]) === 'yes'; }
+function buildActions(){
+  var c = state.client, out = [];
+  state.activeSections.forEach(function(s){
+    out.push({id:'sec_'+s.id, label:'Fill in '+s.title.toLowerCase(), group:'Your details', done:sectionDone(s), jump:'#sec_'+s.id});
+  });
+  out.push({id:'logo', label:'Upload your logo', hint:'Or tick that you do not have one yet.', group:'Your details', done:filesDone(), jump:'#files'});
+  out.push({id:'send', label:'Send it over', hint:'The button at the bottom of Home.', group:'Your details', done:state.completed, jump:'#finish'});
+  out.push({id:'agreement', label:'Sign the service agreement', hint:'Adam sends it from Square.', group:'Account', done:!!c.contract_signed, tab:'subscription'});
+  out.push({id:'billing', label:'Billing set up', hint:'Starts once the agreement is signed.', group:'Account', done:!!c.billing_active, tab:'subscription'});
+  if(state.completed){
+    MANUAL.forEach(function(m){
+      out.push({id:m.id, label:m.label, hint:m.hint, group:'Next steps', done:manualOn(m.id), manual:true});
+    });
+  }
+  return out;
+}
+function actRow(i){
+  var link = i.jump ? '<button type="button" class="go" data-jump="'+i.jump+'">Open</button>'
+           : i.tab ? '<button type="button" class="go" data-tab="'+i.tab+'">View</button>' : '<span></span>';
+  return '<li class="act'+(i.done?' done':'')+'"><label class="chk"><input type="checkbox" data-act="'+i.id+'"'+(i.done?' checked':'')+(i.manual?'':' disabled')+' aria-label="'+esc(i.label)+'"><span></span></label>' +
+    '<div class="tx"><b>'+esc(i.label)+'</b><small>'+esc(i.group)+(i.hint?' · '+esc(i.hint):'')+'</small></div>'+link+'</li>';
+}
+function renderActions(){
+  if(!state.client) return;
+  var items = buildActions();
+  var open = items.filter(function(i){ return !i.done; }), done = items.filter(function(i){ return i.done; });
+  var focusId = document.activeElement && document.activeElement.getAttribute && document.activeElement.getAttribute('data-act');
+  $('#actProg').textContent = done.length + ' of ' + items.length + ' done';
+  $('#actBar').style.width = (items.length ? Math.round(done.length / items.length * 100) : 0) + '%';
+  $('#actOpen').innerHTML = open.length ? open.map(actRow).join('') : '<li class="empty">Nothing outstanding. Nice work.</li>';
+  $('#actDone').innerHTML = done.map(actRow).join('');
+  $('#actDoneHead').classList.toggle('hide', !done.length);
+  $('#bdgActions').textContent = open.length || '';
+  $('#tbdg').textContent = open.length || '';
+  var pend = (state.client.contract_signed ? 0 : 1) + (state.client.billing_active ? 0 : 1);
+  $('#bdgSub').textContent = pend || '';
+  if(focusId){ var f = $('[data-act="'+focusId+'"]'); if(f) f.focus(); }
+}
+document.addEventListener('change', function(e){
+  var el = e.target, id = el.getAttribute && el.getAttribute('data-act');
+  if(!id) return;
+  var a = {}, cur = state.answers.actions || {};
+  Object.keys(cur).forEach(function(k){ a[k] = cur[k]; });
+  if(el.checked) a[id] = 'yes'; else delete a[id];
+  state.answers.actions = a;
+  try{ localStorage.setItem('hub_actions_' + TOKEN, JSON.stringify(a)); }catch(_){}
+  flag('Saving', false);
+  api('/api/answers?c=' + encodeURIComponent(TOKEN), {
+    method:'POST', headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({section:'actions', data:a})
+  }).then(function(){ flag('Saved', true); })
+    .catch(function(){ flag('Saved on this device only', false); });
+  renderActions();
+});
+
+/* ---------- Messages ---------- */
+var msgs = [], msgOn = false;
+var CH = {hub:'', email:'Email', call:'Phone call', text:'Text', meeting:'Meeting'};
+function seenKey(){ return 'hub_msgseen_' + TOKEN; }
+function seenId(){ try{ return parseInt(localStorage.getItem(seenKey()) || '0', 10) || 0; }catch(_){ return 0; } }
+function fmtWhen(s){
+  var t = String(s || '');
+  if(t.indexOf('T') < 0) t = t.replace(' ', 'T') + 'Z';
+  var d = new Date(t);
+  return isNaN(d.getTime()) ? '' : d.toLocaleString('en-CA', {month:'short', day:'numeric', hour:'numeric', minute:'2-digit'});
+}
+function msgHtml(m){
+  var me = m.sender === 'client', ch = CH[m.channel] || '';
+  return '<div class="msg '+(me?'me':'them')+'"><div class="mb">'+esc(m.body)+'</div>' +
+    '<div class="mm mono">'+(me?'You':'Adam')+(ch?' · '+ch:'')+' · '+esc(fmtWhen(m.created_at))+'</div></div>';
+}
+function paintMsgBadges(){
+  var onTab = !$('#tab_messages').classList.contains('hide');
+  var s = seenId();
+  var n = onTab ? 0 : msgs.filter(function(m){ return m.sender === 'adam' && m.id > s; }).length;
+  $('#bdgMsgs').textContent = n || '';
+  $('#tbdgM').textContent = n || '';
+}
+function markSeen(){
+  var max = msgs.reduce(function(a, m){ return Math.max(a, m.id); }, 0);
+  try{ localStorage.setItem(seenKey(), String(max)); }catch(_){}
+  paintMsgBadges();
+}
+function renderMessages(){
+  $('#thread').innerHTML = msgs.length ? msgs.map(msgHtml).join('')
+    : '<p class="help">No messages yet. Ask us anything here and we will reply in this thread. Calls and texts we log show up here too.</p>';
+}
+function loadMessages(){
+  return api('/api/messages?c=' + encodeURIComponent(TOKEN)).then(function(j){
+    msgs = j.messages || [];
+    if(!msgOn){
+      msgOn = true;
+      $$('[data-tab="messages"]').forEach(function(b){ b.classList.remove('hide'); });
+    }
+    renderMessages();
+    if(!$('#tab_messages').classList.contains('hide')) markSeen(); else paintMsgBadges();
+  });
+}
+function sendMsg(){
+  var ta = $('#msgBody'), text = ta.value.trim(), btn = $('#msgSend'), err = $('#msgErr');
+  if(!text) return;
+  err.textContent = ''; btn.disabled = true; btn.textContent = 'Sending';
+  api('/api/messages?c=' + encodeURIComponent(TOKEN), {
+    method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({body:text})
+  }).then(function(j){
+    msgs.push(j.message); ta.value = '';
+    renderMessages(); markSeen(); flag('Sent', true);
+    var last = $('#thread .msg:last-child'); if(last) last.scrollIntoView({block:'center'});
+  }).catch(function(e){ err.textContent = e.message || 'Could not send. Try again.'; })
+    .then(function(){ btn.disabled = false; btn.textContent = 'Send'; });
+}
+$('#msgSend').addEventListener('click', sendMsg);
+$('#msgBody').addEventListener('keydown', function(e){ if((e.ctrlKey || e.metaKey) && e.key === 'Enter') sendMsg(); });
+function pollMessages(){ if(msgOn && !document.hidden) loadMessages().catch(function(){}); }
+setInterval(pollMessages, 60000);
+document.addEventListener('visibilitychange', pollMessages);
 
 /* ---------- Autosave ---------- */
 var timers = {};
@@ -750,8 +987,11 @@ function status(el, ok, yes, no){
 function boot(){
   if(!TOKEN && !DEMO){ $('#gate').classList.remove('hide'); return; }
   api('/api/client?c=' + encodeURIComponent(TOKEN)).then(function(c){
-    state.client = {name:c.name, plan:c.plan, addons:c.addons || []};
+    state.client = {name:c.name, plan:c.plan, addons:c.addons || [], contract_signed:!!c.contract_signed, billing_active:!!c.billing_active};
     state.answers = c.answers || {};
+    if(!state.answers.actions || !Object.keys(state.answers.actions).length){
+      try{ state.answers.actions = JSON.parse(localStorage.getItem('hub_actions_' + TOKEN) || '{}') || {}; }catch(_){ state.answers.actions = {}; }
+    }
     state.uploads = c.uploads || [];
     state.completed = !!c.completed;
     $('#hello').textContent = c.name;
@@ -763,7 +1003,13 @@ function boot(){
     refreshProgress();
     $('#tabs').classList.remove('hide');
     $('#app').classList.remove('hide');
-    if(qs.get('tab') === 'subscription') showTab('subscription');
+    $('#rail').classList.remove('hide');
+    $('#shell').classList.add('ready');
+    setHeadH();
+    var want = qs.get('tab');
+    if(want === 'subscription' || want === 'actions') showTab(want);
+    // Messages only shows once the Worker answers, so an old Worker never leaves a dead tab.
+    loadMessages().then(function(){ if(want === 'messages') showTab('messages'); }).catch(function(){});
     flag('Ready', false);
   }).catch(function(){ $('#gate').classList.remove('hide'); });
 }
