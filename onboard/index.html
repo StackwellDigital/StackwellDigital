@@ -192,11 +192,6 @@ footer{border-top:1px solid var(--rule);padding:2rem 4vw;color:var(--ink-mid);fo
       <p>Fill in your details, upload your files, and come back any time. Everything saves as you go, so there is no need to finish in one sitting.</p>
     </div>
 
-    <div class="grid3">
-      <div class="cell"><span class="mono">Progress</span><b id="stProgress"></b><small id="stProgressSub"></small></div>
-      <button class="cell" data-goto="subscription"><span class="mono">Agreement</span><b id="stContract"></b><small>View details</small></button>
-      <button class="cell" data-goto="subscription"><span class="mono">Billing</span><b id="stBilling"></b><small>View details</small></button>
-    </div>
 
     <div class="ob">
       <aside class="side">
@@ -604,8 +599,6 @@ function refreshProgress(){
   });
   var fd = filesDone(); if(fd) done++;
   $('[data-nav="files"] .dot').classList.toggle('done', fd);
-  $('#stProgress').textContent = done + ' of ' + total + ' sections';
-  $('#stProgressSub').textContent = state.completed ? 'Sent to Adam' : (done === total ? 'Ready to send' : 'Continue where you left off');
 }
 
 /* ---------- Autosave ---------- */
@@ -764,8 +757,6 @@ function boot(){
     $('#hello').textContent = c.name;
     $('#planTag').textContent = c.plan + ' plan';
     document.title = c.name + ' | Client Hub';
-    status($('#stContract'), c.contract_signed, 'Signed', 'Waiting on signature');
-    status($('#stBilling'), c.billing_active, 'Active', 'Not started');
     renderSections(); wireDrops(); listUploaded(); renderSubscription(c);
     if(ans('files','no_logo') === 'yes') $('#noLogo').checked = true;
     if(c.completed) $('#doneBox').classList.remove('hide');
