@@ -46,6 +46,10 @@ tr.row{cursor:pointer}tr.row:hover td{background:rgba(255,255,255,.35)}
 .alist li.done .t{color:var(--ink-mid);text-decoration:line-through}
 .alist .d{font-family:var(--mono);font-size:.58rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-mid);white-space:nowrap}
 .alist .d.late{color:var(--bad)}
+.alist .by{font-family:var(--mono);font-size:.55rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-mid)}
+.alist.auto li{color:var(--ink-mid)}
+.alist .tick{width:15px;text-align:center;color:var(--ink-mid)}
+.alist li.ok .tick{color:var(--ink)}
 .alist .x{background:none;border:0;cursor:pointer;color:var(--ink-mid);font-size:1.15rem;line-height:1;padding:0 .2rem}
 .alist .x:hover{color:var(--bad)}
 .alist .none{color:var(--ink-mid);border-bottom:0;font-size:.88rem}
@@ -88,6 +92,8 @@ tr.row{cursor:pointer}tr.row:hover td{background:rgba(255,255,255,.35)}
           <ul class="alist" id="al_client"></ul>
           <div class="arow"><input type="text" id="ai_client" maxlength="200" placeholder="Add something for them to do"><input type="date" id="ad_client" aria-label="Due date"><button class="btn sm" data-add="client">Add</button></div>
           <div class="chips" id="ch_client"></div>
+          <span class="mono" style="display:block;margin-top:1rem">Automatic, from their progress</span>
+          <ul class="alist auto" id="al_auto"></ul>
         </div>
         <div class="card"><span class="mono">My action items</span>
           <ul class="alist" id="al_adam"></ul>
@@ -221,7 +227,7 @@ var QUICK={
   client:['Send us your logo and photos','Give us access to your Google Business Profile','Confirm who manages your domain','Review your site preview','Approve your site for launch'],
   adam:['Send the service agreement','Build the first draft','Send the preview link','Connect the domain','Set up Google Business Profile']
 };
-var items=[];
+var items=[],cl=null;
 function todayStr(){var d=new Date();return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2)}
 function fmtDue(s){var d=new Date(s+'T00:00:00');return isNaN(d.getTime())?'':d.toLocaleDateString('en-CA',{month:'short',day:'numeric'})}
 function renderItems(){
@@ -230,9 +236,23 @@ function renderItems(){
     var list=all.filter(function(i){return !i.done}).concat(all.filter(function(i){return i.done}));
     $('#al_'+o).innerHTML=list.length?list.map(function(i){
       var late=!i.done&&i.due&&i.due<todayStr();
-      return '<li class="'+(i.done?'done':'')+'"><label class="chk"><input type="checkbox" data-done="'+i.id+'"'+(i.done?' checked':'')+'></label><span class="t">'+esc(i.label)+'</span>'+(i.due?'<span class="d'+(late?' late':'')+'">'+esc(fmtDue(i.due))+'</span>':'')+'<button class="x" data-del="'+i.id+'" aria-label="Delete">×</button></li>';
+      return '<li class="'+(i.done?'done':'')+'"><label class="chk"><input type="checkbox" data-done="'+i.id+'"'+(i.done?' checked':'')+'></label><span class="t">'+esc(i.label)+(i.added_by==='client'?' <span class="by">(added by client)</span>':'')+'</span>'+(i.due?'<span class="d'+(late?' late':'')+'">'+esc(fmtDue(i.due))+'</span>':'')+'<button class="x" data-del="'+i.id+'" aria-label="Delete">×</button></li>';
     }).join(''):'<li class="none">Nothing yet</li>';
   });
+}
+function renderAuto(){
+  if(!cl){$('#al_auto').innerHTML='';return}
+  var a=cl.answers||{},secs=Object.keys(a).filter(function(k){
+    return k!=='files'&&Object.keys(a[k]||{}).some(function(f){return String(a[k][f]).trim()!==''})}).length;
+  var logo=(cl.uploads||[]).some(function(u){return u.category==='logo'})||((a.files||{}).no_logo==='yes');
+  var rows=[
+    [secs>0,'Details filled in ('+secs+' section'+(secs===1?'':'s')+' started)'],
+    [logo,'Logo uploaded, or marked as none'],
+    [!!cl.completed,'Sent it over'],
+    [!!cl.contract_signed,'Service agreement signed'],
+    [!!cl.billing_active,'Billing set up']];
+  $('#al_auto').innerHTML=rows.map(function(x){
+    return '<li class="'+(x[0]?'ok':'')+'"><span class="tick">'+(x[0]?'&#10003;':'&#9675;')+'</span><span class="t">'+esc(x[1])+'</span></li>'}).join('');
 }
 function aErr(m){var e=$('#a_err');e.textContent=m||'';e.classList.toggle('hide',!m)}
 function addItem(owner){
@@ -277,7 +297,7 @@ function edit(id){
   api('GET','/api/admin/client?id='+id).then(function(c){
     cur={id:c.id,token:c.token};$('#editTitle').textContent=c.name;
     setForm(c);setLink(c.token);
-    items=c.actions||[];aErr('');renderItems();$('#actCard').classList.remove('hide');
+    items=c.actions||[];cl=c;aErr('');renderItems();renderAuto();$('#actCard').classList.remove('hide');
     $('#reopen').classList.toggle('hide',!c.completed_at);
     $('#drive').classList.toggle('hide',!c.drive);if(c.drive)$('#drive').href=c.drive;
     show('editView');

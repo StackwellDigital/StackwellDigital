@@ -88,15 +88,30 @@ button{font:inherit;color:inherit}
 /* action items */
 .bar{height:6px;border-radius:3px;background:var(--rule);overflow:hidden;margin-top:.7rem}
 .bar i{display:block;height:100%;width:0;background:var(--accent);transition:width .3s}
-.ahead{color:var(--ink-mid);margin:2.2rem 0 .3rem}
-.agroup+.agroup{margin-top:3.4rem}
+.ahead{color:var(--ink-mid);margin:1.4rem 0 .3rem}
+.agrid{display:grid;grid-template-columns:1fr;gap:2.4rem;align-items:start}
+@media(min-width:861px){.agrid{grid-template-columns:1fr 1fr;gap:2.8rem}}
+.agroup{min-width:0}
+.agroup+.agroup{margin-top:0}
+.agrid .agroup+.agroup{margin-top:0}
+.ghead h2{white-space:nowrap}
+.addrow{display:flex;gap:.5rem;margin-top:1rem}
+.addrow input{flex:1;min-width:0;padding:.5rem .7rem;font-size:.9rem}
+.addrow button{flex:none}
+.act .del{background:none;border:0;cursor:pointer;color:var(--ink-mid);font-size:1.15rem;line-height:1;padding:.2rem .5rem;border-radius:6px}
+.act .del:hover{color:var(--bad)}
+details.dn{margin-top:1.4rem}
+details.dn summary{cursor:pointer;color:var(--ink-mid);list-style:none}
+details.dn summary::-webkit-details-marker{display:none}
+details.dn summary:before{content:"+ "}
+details.dn[open] summary:before{content:"- "}
 .ghead{display:flex;justify-content:space-between;align-items:baseline;gap:1rem}
-.ghead h2{font-family:var(--display);font-weight:800;text-transform:uppercase;font-size:2rem;line-height:1}
+.ghead h2{font-family:var(--display);font-weight:800;text-transform:uppercase;font-size:1.6rem;line-height:1}
 .ghead .mono{color:var(--ink-mid)}
-.agroup .ahead:first-of-type{margin-top:1.6rem}
+.agroup .ahead:first-of-type{margin-top:1.2rem}
 .due.late{color:var(--bad)}
 .acts{list-style:none}
-.act{display:grid;grid-template-columns:auto 1fr auto;gap:.9rem;align-items:center;padding:.85rem 0;border-bottom:1px solid var(--rule)}
+.act{display:grid;grid-template-columns:auto 1fr auto;gap:.8rem;align-items:center;padding:.6rem 0;border-bottom:1px solid var(--rule)}
 .act .tx b{display:block;font-weight:500;font-size:.98rem}
 .act .tx small{color:var(--ink-mid);font-size:.8rem}
 .act.done .tx b{color:var(--ink-mid);text-decoration:line-through;text-decoration-color:var(--ink-light)}
@@ -300,26 +315,33 @@ footer{border-top:1px solid var(--rule);padding:2rem 4vw;color:var(--ink-mid);fo
 
   <!-- ACTION ITEMS -->
   <div id="tab_actions" class="hide">
-    <div class="hero" style="margin-bottom:2rem">
+    <div class="hero" style="margin-bottom:1.4rem">
       <div class="mono tag">Action items</div>
       <h1>What is left</h1>
       <p>Two lists: what we need from you, and what we are working on for you. Anything about your details ticks itself as you fill things in.</p>
     </div>
 
+    <div class="agrid">
     <section class="agroup">
       <div class="ghead"><h2>Your action items</h2><span class="mono" id="actProg"></span></div>
       <div class="bar"><i id="actBar"></i></div>
       <div class="mono ahead">To do</div>
       <ul class="acts" id="actOpen"></ul>
-      <div class="mono ahead" id="actDoneHead">Done</div>
-      <ul class="acts" id="actDone"></ul>
+      <form class="addrow" id="addForm" autocomplete="off">
+        <input type="text" id="addInput" maxlength="200" placeholder="Add your own to do" aria-label="Add your own to do">
+        <button type="submit" class="minibtn" id="addBtn">Add</button>
+      </form>
+      <details class="dn" id="actDoneWrap"><summary class="mono" id="actDoneHead">Done</summary>
+        <ul class="acts" id="actDone"></ul>
+      </details>
     </section>
 
     <section class="agroup">
       <div class="ghead"><h2>Adam's action items</h2><span class="mono" id="adamProg"></span></div>
       <div class="bar"><i id="adamBar"></i></div>
-      <ul class="acts" id="adamList"></ul>
+      <ul class="acts" id="adamList" style="margin-top:1.2rem"></ul>
     </section>
+    </div>
   </div>
 
   <!-- SUBSCRIPTION -->
@@ -451,6 +473,12 @@ function demoApi(path, opts){
         var d = JSON.parse(opts.body);
         demoStore.items.forEach(function(x){ if(x.id === d.id && x.owner === 'client') x.done = d.done; });
         res({ok:true});
+      } else if(path.indexOf('/api/actions/add')===0){
+        var a = JSON.parse(opts.body), it = {id:Date.now(), owner:'client', label:a.label, due:null, done:false, added_by:'client'};
+        demoStore.items.push(it); res({ok:true, item:it});
+      } else if(path.indexOf('/api/actions/delete')===0){
+        var dd = JSON.parse(opts.body);
+        demoStore.items = demoStore.items.filter(function(x){ return !(x.id === dd.id && x.added_by === 'client'); }); res({ok:true});
       } else { res({ok:true}); }
     }, 150);
   });
@@ -711,9 +739,9 @@ function buildActions(){
   var c = state.client, mine = [], adam = [];
   // Items Adam added. Theirs can be ticked by the client, his are read only.
   state.items.forEach(function(it){
-    var row = {id:'i'+it.id, item:it.id, label:it.label, due:it.due, done:!!it.done};
+    var row = {id:'i'+it.id, item:it.id, label:it.label, due:it.due, done:!!it.done, own:it.added_by==='client'};
     if(it.owner === 'adam'){ row.readonly = true; adam.push(row); }
-    else { row.group = 'From Adam'; mine.push(row); }
+    else { row.group = row.own ? 'Added by you' : 'From Adam'; mine.push(row); }
   });
   // Items that tick themselves from what the client has filled in.
   state.activeSections.forEach(function(s){
@@ -726,7 +754,8 @@ function buildActions(){
   return {mine:mine, adam:adam};
 }
 function actRow(i){
-  var link = i.jump ? '<button type="button" class="go" data-jump="'+i.jump+'">Open</button>'
+  var link = i.own ? '<button type="button" class="del" data-del="'+i.item+'" aria-label="Delete '+esc(i.label)+'" title="Delete">&times;</button>' :
+             i.jump ? '<button type="button" class="go" data-jump="'+i.jump+'">Open</button>'
            : i.tab ? '<button type="button" class="go" data-tab="'+i.tab+'">View</button>' : '<span></span>';
   var bits = [];
   if(i.group) bits.push(esc(i.group));
@@ -748,7 +777,8 @@ function renderActions(){
   $('#actBar').style.width = (mine.length ? Math.round(done.length / mine.length * 100) : 0) + '%';
   $('#actOpen').innerHTML = open.length ? open.map(actRow).join('') : '<li class="empty">Nothing outstanding. Nice work.</li>';
   $('#actDone').innerHTML = done.map(actRow).join('');
-  $('#actDoneHead').classList.toggle('hide', !done.length);
+  $('#actDoneHead').textContent = 'Done (' + done.length + ')';
+  $('#actDoneWrap').classList.toggle('hide', !done.length);
 
   var aOpen = adam.filter(function(i){ return !i.done; }), aDone = adam.filter(function(i){ return i.done; });
   $('#adamProg').textContent = adam.length ? aDone.length + ' of ' + adam.length + ' done' : '';
@@ -775,6 +805,32 @@ document.addEventListener('change', function(e){
     body: JSON.stringify({id:it.id, done:want})
   }).then(function(){ flag('Saved', true); })
     .catch(function(){ it.done = !want; renderActions(); flag('Not saved. Check your connection', false); });
+});
+
+$('#addForm').addEventListener('submit', function(e){
+  e.preventDefault();
+  var inp = $('#addInput'), label = inp.value.trim();
+  if(!label) return;
+  $('#addBtn').disabled = true; flag('Saving', false);
+  api('/api/actions/add?c=' + encodeURIComponent(TOKEN), {
+    method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({label:label})
+  }).then(function(j){
+    if(!state.items.some(function(x){ return x.id === j.item.id; })) state.items.push(j.item); inp.value = ''; renderActions(); flag('Saved', true);
+  }).catch(function(er){ flag(er && er.message ? er.message : 'Not saved. Check your connection', false); })
+    .then(function(){ $('#addBtn').disabled = false; inp.focus(); });
+});
+document.addEventListener('click', function(e){
+  var b = e.target.closest && e.target.closest('[data-del]');
+  if(!b) return;
+  var id = parseInt(b.getAttribute('data-del'), 10);
+  var idx = -1; state.items.forEach(function(x, n){ if(x.id === id) idx = n; });
+  if(idx < 0) return;
+  var gone = state.items.splice(idx, 1)[0];
+  renderActions(); flag('Saving', false);
+  api('/api/actions/delete?c=' + encodeURIComponent(TOKEN), {
+    method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({id:id})
+  }).then(function(){ flag('Saved', true); })
+    .catch(function(){ state.items.splice(idx, 0, gone); renderActions(); flag('Not deleted. Check your connection', false); });
 });
 
 /* ---------- Autosave ---------- */
