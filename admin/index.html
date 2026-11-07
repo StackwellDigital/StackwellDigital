@@ -40,6 +40,21 @@ tr.row{cursor:pointer}tr.row:hover td{background:rgba(255,255,255,.35)}
 .linkbox{display:flex;gap:.5rem;margin:.6rem 0 1rem}.linkbox input{font-family:var(--mono);font-size:.78rem}
 .chk{display:flex;gap:.5rem;align-items:center;font-size:.9rem}.chk input{width:15px;height:15px;accent-color:var(--ink)}
 .toast{position:fixed;bottom:1.2rem;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--cream);padding:.7rem 1.2rem;border-radius:8px;font-size:.9rem;z-index:9}
+.alist{list-style:none;margin:.6rem 0 .8rem}
+.alist li{display:flex;align-items:center;gap:.6rem;padding:.5rem 0;border-bottom:1px solid var(--rule);font-size:.92rem}
+.alist .t{flex:1}
+.alist li.done .t{color:var(--ink-mid);text-decoration:line-through}
+.alist .d{font-family:var(--mono);font-size:.58rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-mid);white-space:nowrap}
+.alist .d.late{color:var(--bad)}
+.alist .x{background:none;border:0;cursor:pointer;color:var(--ink-mid);font-size:1.15rem;line-height:1;padding:0 .2rem}
+.alist .x:hover{color:var(--bad)}
+.alist .none{color:var(--ink-mid);border-bottom:0;font-size:.88rem}
+.arow{display:flex;gap:.5rem;flex-wrap:wrap}
+.arow input[type=text]{flex:1 1 180px;width:auto}
+.arow input[type=date]{width:auto}
+.chips{display:flex;gap:.4rem;flex-wrap:wrap;margin-top:.7rem}
+.chip{background:none;border:1px solid rgba(26,23,20,.25);border-radius:20px;padding:.2rem .65rem;cursor:pointer;font:inherit;font-size:.78rem;color:var(--ink-mid)}
+.chip:hover{border-color:var(--ink);color:var(--ink)}
 @media(max-width:700px){.grid{grid-template-columns:1fr}.hidem{display:none}}
 </style>
 </head>
@@ -65,6 +80,22 @@ tr.row{cursor:pointer}tr.row:hover td{background:rgba(255,255,255,.35)}
       <span class="mono">Client link</span>
       <div class="linkbox"><input type="text" id="link" readonly><button class="btn sm" id="copy">Copy</button><button class="btn ghost sm" id="open">Open</button></div>
       <div class="bar" style="margin:0"><button class="btn ghost sm" id="rotate">New link</button><button class="btn ghost sm hide" id="reopen">Reopen onboarding</button><a class="btn ghost sm hide" id="drive" target="_blank" style="text-decoration:none">Drive folder</a></div>
+    </div>
+    <div id="actCard" class="hide">
+      <h3>Action items</h3>
+      <div class="grid">
+        <div class="card"><span class="mono">Their action items</span>
+          <ul class="alist" id="al_client"></ul>
+          <div class="arow"><input type="text" id="ai_client" maxlength="200" placeholder="Add something for them to do"><input type="date" id="ad_client" aria-label="Due date"><button class="btn sm" data-add="client">Add</button></div>
+          <div class="chips" id="ch_client"></div>
+        </div>
+        <div class="card"><span class="mono">My action items</span>
+          <ul class="alist" id="al_adam"></ul>
+          <div class="arow"><input type="text" id="ai_adam" maxlength="200" placeholder="Add something you are working on"><input type="date" id="ad_adam" aria-label="Due date"><button class="btn sm" data-add="adam">Add</button></div>
+          <div class="chips" id="ch_adam"></div>
+        </div>
+      </div>
+      <div class="err hide" id="a_err"></div>
     </div>
     <h3>Plan and status</h3>
     <div class="card"><div class="grid">
@@ -186,14 +217,67 @@ function setLink(tok){
   $('#linkCard').classList.toggle('hide',!tok);
   if(tok){$('#link').value=HUB+tok;}
 }
+var QUICK={
+  client:['Send us your logo and photos','Give us access to your Google Business Profile','Confirm who manages your domain','Review your site preview','Approve your site for launch'],
+  adam:['Send the service agreement','Build the first draft','Send the preview link','Connect the domain','Set up Google Business Profile']
+};
+var items=[];
+function todayStr(){var d=new Date();return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2)}
+function fmtDue(s){var d=new Date(s+'T00:00:00');return isNaN(d.getTime())?'':d.toLocaleDateString('en-CA',{month:'short',day:'numeric'})}
+function renderItems(){
+  ['client','adam'].forEach(function(o){
+    var all=items.filter(function(i){return i.owner===o});
+    var list=all.filter(function(i){return !i.done}).concat(all.filter(function(i){return i.done}));
+    $('#al_'+o).innerHTML=list.length?list.map(function(i){
+      var late=!i.done&&i.due&&i.due<todayStr();
+      return '<li class="'+(i.done?'done':'')+'"><label class="chk"><input type="checkbox" data-done="'+i.id+'"'+(i.done?' checked':'')+'></label><span class="t">'+esc(i.label)+'</span>'+(i.due?'<span class="d'+(late?' late':'')+'">'+esc(fmtDue(i.due))+'</span>':'')+'<button class="x" data-del="'+i.id+'" aria-label="Delete">×</button></li>';
+    }).join(''):'<li class="none">Nothing yet</li>';
+  });
+}
+function aErr(m){var e=$('#a_err');e.textContent=m||'';e.classList.toggle('hide',!m)}
+function addItem(owner){
+  if(!cur)return;aErr('');
+  var label=$('#ai_'+owner).value.trim(),due=$('#ad_'+owner).value;
+  if(!label){aErr('Write the item first.');return}
+  api('POST','/api/admin/actions?id='+cur.id,{owner:owner,label:label,due:due||null}).then(function(j){
+    items.push(j.item);renderItems();$('#ai_'+owner).value='';$('#ad_'+owner).value='';toast('Added');
+  }).catch(function(e){aErr(e.message+'. If this keeps happening, run the schema and deploy the Worker.')});
+}
+function setupItems(){
+  ['client','adam'].forEach(function(o){
+    $('#ch_'+o).innerHTML=QUICK[o].map(function(t){return '<button type="button" class="chip" data-quick="'+o+'">'+esc(t)+'</button>'}).join('');
+    $('#ai_'+o).addEventListener('keydown',function(e){if(e.key==='Enter')addItem(o)});
+  });
+  $('#actCard').addEventListener('click',function(e){
+    var t=e.target.closest('[data-add],[data-quick],[data-del]');if(!t||!cur)return;
+    if(t.dataset.add){addItem(t.dataset.add);return}
+    if(t.dataset.quick){var i=$('#ai_'+t.dataset.quick);i.value=t.textContent;i.focus();return}
+    if(t.dataset.del&&window.confirm('Delete this item?')){
+      var id=parseInt(t.dataset.del,10);
+      api('POST','/api/admin/actions/delete?id='+cur.id+'&item='+id).then(function(){
+        items=items.filter(function(x){return x.id!==id});renderItems();
+      }).catch(function(er){aErr(er.message)});
+    }
+  });
+  $('#actCard').addEventListener('change',function(e){
+    var el=e.target;if(!el.dataset||!el.dataset.done||!cur)return;
+    var id=parseInt(el.dataset.done,10),want=el.checked;
+    items.forEach(function(x){if(x.id===id)x.done=want});renderItems();
+    api('POST','/api/admin/actions/update?id='+cur.id+'&item='+id,{done:want}).catch(function(er){
+      items.forEach(function(x){if(x.id===id)x.done=!want});renderItems();aErr(er.message);
+    });
+  });
+}
+setupItems();
 function newClient(){
   cur=null;$('#editTitle').textContent='New client';
-  setForm({});setLink(null);$('#reopen').classList.add('hide');$('#drive').classList.add('hide');show('editView');
+  setForm({});setLink(null);$('#reopen').classList.add('hide');$('#drive').classList.add('hide');$('#actCard').classList.add('hide');show('editView');
 }
 function edit(id){
   api('GET','/api/admin/client?id='+id).then(function(c){
     cur={id:c.id,token:c.token};$('#editTitle').textContent=c.name;
     setForm(c);setLink(c.token);
+    items=c.actions||[];aErr('');renderItems();$('#actCard').classList.remove('hide');
     $('#reopen').classList.toggle('hide',!c.completed_at);
     $('#drive').classList.toggle('hide',!c.drive);if(c.drive)$('#drive').href=c.drive;
     show('editView');
