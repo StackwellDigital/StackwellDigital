@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
 <title>Client Hub | Stackwell.Digital</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
@@ -13,44 +14,111 @@
   --bg:#0a0a0a; --panel:#121212; --line:#262626; --text:#fff; --muted:#9a9a9a; --accent:#F97316; --ok:#4ade80;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth;color-scheme:dark}
 body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-weight:300;line-height:1.6;min-height:100vh}
 a{color:var(--accent)}
+button{font:inherit;color:inherit}
 .mono{font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:.12em;font-size:.72rem}
-.top{position:sticky;top:0;z-index:20;background:rgba(10,10,10,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:.9rem 4vw}
-.brand{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:.06em}
-.brand span{color:var(--accent)}
+.hide{display:none!important}
+
+/* header */
+.head{position:sticky;top:0;z-index:20;background:rgba(10,10,10,.95);backdrop-filter:blur(8px)}
+.top{display:flex;align-items:center;justify-content:space-between;padding:.7rem 4vw;border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:.8rem;text-decoration:none;color:var(--text)}
+.brand img{height:42px;width:auto;display:block}
+.brand b{font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:1.5rem;letter-spacing:.06em;line-height:1}
+.brand b span{color:var(--accent)}
 .saved{color:var(--muted)}
 .saved.on{color:var(--ok)}
+.tabs{display:flex;gap:0;padding:0 4vw;border-bottom:1px solid var(--line);overflow-x:auto}
+.tabs button{background:none;border:0;border-bottom:2px solid transparent;padding:.85rem 1.2rem;cursor:pointer;color:var(--muted);font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:.12em;font-size:.74rem;white-space:nowrap}
+.tabs button:hover{color:var(--text)}
+.tabs button.on{color:var(--text);border-bottom-color:var(--accent)}
 .bar{height:2px;background:var(--line)}
 .bar i{display:block;height:100%;width:0;background:var(--accent);transition:width .4s}
-.wrap{display:grid;grid-template-columns:260px 1fr;gap:3rem;max-width:1150px;margin:0 auto;padding:3rem 4vw 6rem}
-.side{position:sticky;top:5.5rem;align-self:start}
+
+#app{max-width:1150px;margin:0 auto;padding:2.5rem 4vw 6rem}
+.hero .mono.tag{color:var(--accent)}
+.hero h1{font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:clamp(2.8rem,8vw,5rem);line-height:1;letter-spacing:.02em;margin-top:.3rem}
+.hero p{max-width:560px;color:#cfcfcf;margin-top:.8rem}
+
+/* cards */
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin:2rem 0 2.5rem}
+.grid3 .cell{background:var(--panel);padding:1.1rem 1.2rem;text-align:left;border:0;cursor:pointer;display:block;width:100%}
+.grid3 .cell:hover{background:#171717}
+.grid3 .cell b{display:block;font-weight:400;margin-top:.25rem;font-size:1.05rem}
+.grid3 .cell small{display:block;color:var(--muted);font-size:.8rem;margin-top:.15rem}
+.pill-ok{color:var(--ok)}
+.pill-wait{color:var(--accent)}
+.panel{background:var(--panel);border:1px solid var(--line);padding:1.6rem}
+.panel+.panel{margin-top:1.2rem}
+.panel h2,.sec h2{font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:2rem;letter-spacing:.03em;line-height:1.05}
+.panel .blurb{color:var(--muted);margin:.4rem 0 1.4rem;max-width:560px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin-top:1.2rem}
+.two .panel+.panel{margin-top:0}
+
+/* hours */
+.hrow{display:grid;grid-template-columns:120px auto 1fr auto 1fr;gap:.7rem;align-items:center;padding:.5rem 0;border-bottom:1px solid var(--line)}
+.hrow .dname{font-size:.95rem}
+.hrow .to{color:var(--muted);font-size:.85rem}
+.hrow.closed input[type=time]{opacity:.3}
+.minibtn{background:none;border:1px solid var(--line);padding:.5rem .9rem;cursor:pointer;font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:.1em;font-size:.68rem;color:var(--muted);margin-top:1rem}
+.minibtn:hover{border-color:var(--accent);color:var(--text)}
+
+/* subscription */
+.price{font-family:'Bebas Neue',sans-serif;font-size:3rem;line-height:1;margin-top:.4rem}
+.price small{font-family:'DM Sans',sans-serif;font-size:.9rem;color:var(--muted);font-weight:300}
+.ticks{list-style:none;margin-top:1rem}
+.ticks li{padding:.45rem 0 .45rem 1.4rem;border-bottom:1px solid var(--line);position:relative;font-size:.92rem}
+.ticks li:before{content:"";position:absolute;left:0;top:.95rem;width:8px;height:8px;background:var(--accent)}
+.state{font-family:'Bebas Neue',sans-serif;font-size:2rem;letter-spacing:.03em;line-height:1;margin:.4rem 0 .6rem}
+
+/* onboarding layout */
+.ob{display:grid;grid-template-columns:240px 1fr;gap:3rem}
+.side{position:sticky;top:9.5rem;align-self:start}
 .side h3{font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:1.1rem;letter-spacing:.1em;color:var(--muted);margin-bottom:1rem}
 .side a{display:flex;gap:.7rem;align-items:center;text-decoration:none;color:var(--text);padding:.55rem 0;border-bottom:1px solid var(--line);font-size:.92rem}
 .dot{width:10px;height:10px;border:1px solid var(--muted);border-radius:50%;flex:none}
 .dot.done{background:var(--ok);border-color:var(--ok)}
-.hero h1{font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:clamp(2.6rem,7vw,4.6rem);line-height:1;letter-spacing:.02em}
-.hero h1 em{font-style:normal;color:var(--accent)}
-.hero p{max-width:560px;color:#cfcfcf;margin-top:1rem}
-.status{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin:2rem 0 3rem}
-.status div{background:var(--panel);padding:1rem 1.1rem}
-.status b{display:block;font-weight:400;margin-top:.25rem}
-.pill-ok{color:var(--ok)}
-.pill-wait{color:var(--accent)}
-section.card{border-top:1px solid var(--line);padding:2.5rem 0;scroll-margin-top:5rem}
+section.card{border-top:1px solid var(--line);padding:2.5rem 0;scroll-margin-top:9.5rem}
+section.card:first-child{border-top:0;padding-top:0}
 .idx{color:var(--accent);margin-bottom:.4rem}
 section.card h2{font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:2.2rem;letter-spacing:.03em;line-height:1.05}
 section.card .blurb{color:var(--muted);margin:.5rem 0 1.6rem;max-width:560px}
+
+/* fields */
 .field{margin-bottom:1.3rem}
-.field label{display:block;font-size:.92rem;margin-bottom:.35rem}
-.field label .req{color:var(--accent)}
+.field>label{display:block;font-size:.92rem;margin-bottom:.35rem}
+.field>label .req{color:var(--accent)}
 .help{color:var(--muted);font-size:.82rem;margin-top:.3rem}
-input[type=text],textarea,select{width:100%;background:var(--panel);border:1px solid var(--line);color:var(--text);padding:.8rem .9rem;font:inherit;font-weight:300;border-radius:2px;outline:none}
-input[type=text]:focus,textarea:focus,select:focus{border-color:var(--accent)}
+input[type=text],input[type=time],textarea,select{width:100%;background:var(--bg);border:1px solid var(--line);color:var(--text);padding:.75rem .9rem;font:inherit;font-weight:300;border-radius:2px;outline:none}
+.panel input[type=text],.panel input[type=time],.panel textarea,.panel select{background:var(--bg)}
+section.card input[type=text],section.card textarea,section.card select{background:var(--panel)}
+input[type=text]:focus,input[type=time]:focus,textarea:focus,select:focus{border-color:var(--accent)}
 textarea{min-height:110px;resize:vertical}
 select{appearance:none;background-image:linear-gradient(45deg,transparent 50%,#9a9a9a 50%),linear-gradient(135deg,#9a9a9a 50%,transparent 50%);background-position:calc(100% - 20px) 55%,calc(100% - 14px) 55%;background-size:6px 6px;background-repeat:no-repeat}
 .note{border-left:2px solid var(--accent);background:var(--panel);padding:1rem 1.2rem;margin:0 0 1.5rem;font-size:.92rem;color:#d6d6d6}
+.check{display:flex;gap:.6rem;align-items:center;margin-top:.5rem;font-size:.92rem;cursor:pointer}
+.check input{accent-color:var(--accent);width:16px;height:16px}
+.sites{display:grid;gap:.6rem}
+
+/* colours */
+.slots{display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem;margin-bottom:1rem}
+.slot{border:1px solid var(--line);background:var(--panel);padding:.8rem;cursor:pointer;display:grid;grid-template-columns:44px 1fr;gap:.8rem;align-items:center}
+.slot.active{border-color:var(--accent)}
+.slot.bad input[type=text]{border-color:#f87171}
+.slot .sw{width:44px;height:44px;border:1px solid #3a3a3a;display:block;background:transparent}
+.slot .mono{color:var(--muted);display:block;margin-bottom:.3rem}
+.slot input[type=text]{padding:.45rem .6rem;font-family:'DM Mono',monospace;font-size:.85rem;text-transform:uppercase}
+.slot .pickrow{display:flex;gap:.5rem;align-items:center;margin-top:.4rem}
+.slot input[type=color]{width:28px;height:22px;padding:0;border:1px solid #3a3a3a;background:none;cursor:pointer}
+.slot .pickrow span{color:var(--muted);font-size:.72rem}
+.chart{display:grid;grid-template-columns:repeat(12,1fr);gap:3px}
+.chart.neutral{grid-template-columns:repeat(8,1fr);margin-top:6px}
+.cw{aspect-ratio:1;border:1px solid rgba(255,255,255,.08);cursor:pointer;padding:0}
+.cw:hover{outline:2px solid var(--accent);outline-offset:1px}
+
+/* uploads */
 .drop{border:1px dashed #3a3a3a;background:var(--panel);padding:2rem 1.2rem;text-align:center;cursor:pointer;transition:.2s}
 .drop.over,.drop:hover{border-color:var(--accent)}
 .drop strong{display:block;font-weight:400;font-size:1.05rem;margin-bottom:.2rem}
@@ -63,106 +131,167 @@ select{appearance:none;background-image:linear-gradient(45deg,transparent 50%,#9
 .files .prog{grid-column:1/-1;height:2px;background:var(--line)}
 .files .prog i{display:block;height:100%;width:0;background:var(--accent)}
 .files .err{color:#f87171}
-.check{display:flex;gap:.6rem;align-items:center;margin-top:.8rem;font-size:.92rem}
-.check input{accent-color:var(--accent);width:16px;height:16px}
+
 .btn{display:inline-block;background:var(--accent);color:#0a0a0a;border:0;padding:1rem 2rem;font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:.12em;font-size:.8rem;cursor:pointer}
 .btn:disabled{opacity:.4;cursor:not-allowed}
-.final{border-top:1px solid var(--line);padding-top:2.5rem}
 .done-box{border:1px solid var(--ok);padding:1.5rem;margin-top:1.5rem}
-.hide{display:none}
 .steps{list-style:none;counter-reset:s;margin-top:1.2rem}
 .steps li{counter-increment:s;display:grid;grid-template-columns:2.2rem 1fr;gap:.6rem;padding:.8rem 0;border-bottom:1px solid var(--line)}
 .steps li:before{content:counter(s,decimal-leading-zero);font-family:'DM Mono',monospace;color:var(--accent);font-size:.8rem;padding-top:.15rem}
 footer{border-top:1px solid var(--line);padding:2rem 4vw;color:var(--muted);font-size:.85rem;text-align:center}
 .gate{max-width:520px;margin:20vh auto;padding:0 6vw;text-align:center}
 .gate h1{font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:3rem}
+
 @media(max-width:860px){
-  .wrap{grid-template-columns:1fr;gap:0;padding-top:2rem}
+  .ob{grid-template-columns:1fr;gap:0}
   .side{display:none}
-  .status{grid-template-columns:1fr}
+  .grid3{grid-template-columns:1fr}
+  .two{grid-template-columns:1fr}
+  .slots{grid-template-columns:1fr}
+  .chart{grid-template-columns:repeat(6,1fr)}
+  .hrow{grid-template-columns:90px auto 1fr auto 1fr;gap:.4rem}
+  .brand b{font-size:1.2rem}
+  section.card{scroll-margin-top:8rem}
+}
+@media(max-width:520px){
+  .hrow{grid-template-columns:1fr 1fr;grid-template-areas:"d c" "o e"}
+  .hrow .dname{grid-area:d}
+  .hrow .check{grid-area:c;justify-self:end;margin:0}
+  .hrow .to{display:none}
+  .hrow input[type=time]:nth-of-type(1){grid-area:o}
+  .hrow input[type=time]:nth-of-type(2){grid-area:e}
 }
 </style>
 </head>
 <body>
 
-<div class="top">
-  <div class="brand">STACKWELL<span>.</span>DIGITAL</div>
-  <div class="mono saved" id="saved">Ready</div>
+<div class="head">
+  <div class="top">
+    <a class="brand" href="" id="brand"><img src="/logo.photo.png" alt="Stackwell Digital"><b>STACKWELL<span>.</span>DIGITAL</b></a>
+    <div class="mono saved" id="saved">Ready</div>
+  </div>
+  <nav class="tabs hide" id="tabs">
+    <button data-tab="home" class="on">Home</button>
+    <button data-tab="onboarding">Onboarding</button>
+    <button data-tab="subscription">Subscription</button>
+  </nav>
+  <div class="bar"><i id="bar"></i></div>
 </div>
-<div class="bar"><i id="bar"></i></div>
 
 <div id="gate" class="gate hide">
   <h1>This link is not quite right</h1>
   <p style="color:#9a9a9a;margin-top:1rem">Your hub link comes from Adam. Open the link from your welcome email, or reply to it and we will send it again.</p>
 </div>
 
-<div id="app" class="wrap hide">
-  <aside class="side">
-    <h3>Your checklist</h3>
-    <div id="nav"></div>
-  </aside>
+<div id="app" class="hide">
 
-  <main>
+  <!-- HOME -->
+  <div id="tab_home">
     <div class="hero">
-      <div class="mono" style="color:var(--accent)" id="planTag"></div>
+      <div class="mono tag" id="planTag"></div>
       <h1 id="hello"></h1>
-      <p>This is your one stop for everything we need to build your site. Fill in what you can, upload your files, and come back any time. Everything saves as you go, so there is no need to finish in one sitting.</p>
+      <p>Your client hub. Everything for your project lives here: your details, your files, and your subscription.</p>
     </div>
 
-    <div class="status">
-      <div><span class="mono" style="color:var(--muted)">Agreement</span><b id="stContract"></b></div>
-      <div><span class="mono" style="color:var(--muted)">Billing</span><b id="stBilling"></b></div>
-      <div><span class="mono" style="color:var(--muted)">Your progress</span><b id="stProgress"></b></div>
+    <div class="grid3">
+      <button class="cell" data-goto="onboarding"><span class="mono" style="color:var(--muted)">Onboarding</span><b id="stProgress"></b><small id="stProgressSub"></small></button>
+      <button class="cell" data-goto="subscription"><span class="mono" style="color:var(--muted)">Agreement</span><b id="stContract"></b><small>View details</small></button>
+      <button class="cell" data-goto="subscription"><span class="mono" style="color:var(--muted)">Billing</span><b id="stBilling"></b><small>View details</small></button>
     </div>
 
-    <div id="sections"></div>
-
-    <section class="card" id="files">
-      <div class="mono idx" id="filesIdx"></div>
-      <h2>Logo and photos</h2>
-      <p class="blurb">Drop files straight in here. They go into a private folder just for your project. Nothing to email, nothing to sign in to.</p>
-
-      <div class="up-group">
-        <h4>Logo</h4>
-        <div class="drop" data-cat="logo"><strong>Drop your logo here, or tap to choose</strong><span>PNG, SVG, PDF, AI or EPS. The original file is best. Up to 95 MB each.</span></div>
-        <ul class="files" id="list_logo"></ul>
-        <label class="check"><input type="checkbox" id="noLogo"> I do not have a logo yet. Please design a simple one for me.</label>
+    <div class="panel">
+      <h2>Hours of operation</h2>
+      <p class="blurb">These go on your site and your Google listing. Set the hours your customers can reach you.</p>
+      <div id="hours"></div>
+      <button class="minibtn" id="copyMon" type="button">Copy Monday to Tuesday through Friday</button>
+      <div class="field" style="margin-top:1.4rem;margin-bottom:0">
+        <label>Holiday or seasonal hours</label>
+        <textarea data-s="basics" data-k="hours_note" placeholder="Closed on statutory holidays. Summer hours run May to September."></textarea>
       </div>
+    </div>
+  </div>
 
-      <div class="up-group">
-        <h4>Photos</h4>
-        <div class="drop" data-cat="photos"><strong>Drop your photos here, or tap to choose</strong><span>Your work, your team, your shop, your vehicles. Full size originals from your phone are perfect.</span></div>
-        <ul class="files" id="list_photos"></ul>
-        <p class="help">Good photos make the biggest difference to how your site feels. Real beats stock every time. If you have none, tell us and we will plan around it.</p>
-      </div>
+  <!-- ONBOARDING -->
+  <div id="tab_onboarding" class="hide">
+    <div class="ob">
+      <aside class="side">
+        <h3>Your checklist</h3>
+        <div id="nav"></div>
+      </aside>
+      <div>
+        <div id="sections"></div>
 
-      <div class="up-group">
-        <h4>Anything else</h4>
-        <div class="drop" data-cat="other"><strong>Menus, price lists, certificates, existing copy</strong><span>PDFs and documents are fine.</span></div>
-        <ul class="files" id="list_other"></ul>
-      </div>
-    </section>
+        <section class="card" id="files">
+          <div class="mono idx" id="filesIdx"></div>
+          <h2>Logo and photos</h2>
+          <p class="blurb">Drop files straight in here. They go into a private folder just for your project. Nothing to email, nothing to sign in to.</p>
 
-    <section class="card final" id="finish">
-      <div class="mono idx" id="finishIdx"></div>
-      <h2>Send it over</h2>
-      <p class="blurb">When you are happy, hit the button and we will get started. You can still come back and add more afterwards.</p>
-      <button class="btn" id="finishBtn">I am done, send it</button>
-      <div class="done-box hide" id="doneBox">
-        <strong style="font-weight:400">Got it. Thank you.</strong>
-        <p style="color:#cfcfcf;margin-top:.4rem">Adam has been notified. Here is what happens next.</p>
-        <ol class="steps">
-          <li>We review everything you sent and follow up if anything is unclear.</li>
-          <li>We build your site and put it on a private preview link.</li>
-          <li>You review it, ask for changes, and we tidy them up.</li>
-          <li>We connect your domain and launch.</li>
-        </ol>
+          <div class="up-group">
+            <h4>Logo</h4>
+            <div class="drop" data-cat="logo"><strong>Drop your logo here, or tap to choose</strong><span>PNG, SVG, PDF, AI or EPS. The original file is best. Up to 95 MB each.</span></div>
+            <ul class="files" id="list_logo"></ul>
+            <label class="check"><input type="checkbox" id="noLogo"> I do not have a logo yet. Please design a simple one for me.</label>
+          </div>
+
+          <div class="up-group">
+            <h4>Photos</h4>
+            <div class="drop" data-cat="photos"><strong>Drop your photos here, or tap to choose</strong><span>Your work, your team, your shop, your vehicles. Full size originals from your phone are perfect.</span></div>
+            <ul class="files" id="list_photos"></ul>
+            <p class="help">Good photos make the biggest difference to how your site feels. Real beats stock every time. If you have none, tell us and we will plan around it.</p>
+          </div>
+
+          <div class="up-group">
+            <h4>Anything else</h4>
+            <div class="drop" data-cat="other"><strong>Menus, price lists, certificates, existing copy</strong><span>PDFs and documents are fine.</span></div>
+            <ul class="files" id="list_other"></ul>
+          </div>
+        </section>
+
+        <section class="card" id="finish">
+          <div class="mono idx" id="finishIdx"></div>
+          <h2>Send it over</h2>
+          <p class="blurb">When you are happy, hit the button and we will get started. You can still come back and add more afterwards.</p>
+          <button class="btn" id="finishBtn">I am done, send it</button>
+          <div class="done-box hide" id="doneBox">
+            <strong style="font-weight:400">Got it. Thank you.</strong>
+            <p style="color:#cfcfcf;margin-top:.4rem">Adam has been notified. Here is what happens next.</p>
+            <ol class="steps">
+              <li>We review everything you sent and follow up if anything is unclear.</li>
+              <li>We build your site and put it on a private preview link.</li>
+              <li>You review it, ask for changes, and we tidy them up.</li>
+              <li>We connect your domain and launch.</li>
+            </ol>
+          </div>
+        </section>
       </div>
-    </section>
-  </main>
+    </div>
+  </div>
+
+  <!-- SUBSCRIPTION -->
+  <div id="tab_subscription" class="hide">
+    <div class="hero" style="margin-bottom:2rem">
+      <div class="mono tag">Subscription</div>
+      <h1>Your plan</h1>
+    </div>
+    <div class="panel" id="planPanel"></div>
+    <div class="two">
+      <div class="panel">
+        <span class="mono" style="color:var(--muted)">Agreement</span>
+        <div class="state" id="agState"></div>
+        <p id="agText" style="color:#cfcfcf"></p>
+      </div>
+      <div class="panel">
+        <span class="mono" style="color:var(--muted)">Billing</span>
+        <div class="state" id="biState"></div>
+        <p id="biText" style="color:#cfcfcf"></p>
+      </div>
+    </div>
+    <p style="color:var(--muted);margin-top:1.5rem;font-size:.9rem">Want to change your plan, add a feature, or ask about a charge? Email <a href="mailto:adam@stackwell.digital">adam@stackwell.digital</a>.</p>
+  </div>
+
 </div>
 
-<footer>Questions? Email <a href="mailto:adam@stackwell.digital">adam@stackwell.digital</a> and a real person will answer.</footer>
+<footer>Questions? Email <a href="mailto:adam@stackwell.digital">adam@stackwell.digital</a></footer>
 
 <script>
 (function(){
@@ -173,29 +302,32 @@ var qs = new URLSearchParams(location.search);
 var TOKEN = qs.get('c') || '';
 var DEMO = qs.get('demo') === '1';
 
-/* ---------- Section config ---------- */
+/* ---------- Config ---------- */
+var DAYS = [['mon','Monday'],['tue','Tuesday'],['wed','Wednesday'],['thu','Thursday'],['fri','Friday'],['sat','Saturday'],['sun','Sunday']];
+
+var PLANS = {
+  Starter:['Your site build','Your domain','2 updates per month','Hosting','Email support'],
+  Growth:['Everything in Starter','6 updates per month','Basic SEO','Monthly analytics','Priority support','Semi annual refresh'],
+  Pro:['Everything in Growth','Unlimited updates','Advanced SEO','Same day response','Google Business Profile build and management','Workspace email','Quarterly check in','Seasonal refreshes']
+};
+var ADDONS = {
+  book:{name:'Stackwell Book', text:'Online booking for multiple services and staff, with notifications.'},
+  shop:{name:'Stackwell Shop', text:'Product catalogue, checkout and Square sync.'}
+};
+
 var SECTIONS = [
-  {id:'basics', title:'Business basics', blurb:'The details that go on your site and in search results.', fields:[
+  {id:'basics', title:'Business basics', blurb:'The details that go on your site and in search results. Your hours live on the Home tab.', fields:[
     {k:'business_name', l:'Business name as customers know it', t:'text', req:1},
     {k:'contact_name', l:'Your name', t:'text'},
     {k:'phone', l:'Phone number for the site', t:'text', req:1, ph:'604 555 1234'},
     {k:'public_email', l:'Email for the site', t:'text', h:'The address customers should see and use.'},
     {k:'address', l:'Address, or the areas you serve', t:'textarea', h:'If you travel to customers, list the cities or neighbourhoods you cover.'},
-    {k:'hours', l:'Hours', t:'textarea', ph:'Mon to Fri 8am to 5pm\nSat 9am to 1pm\nSun closed'},
     {k:'founded', l:'Year you started', t:'text', ph:'2014'}
   ]},
-  {id:'services', title:'What you offer', blurb:'This becomes the heart of your site. Plain language is perfect.', fields:[
-    {k:'services', l:'Your services or products', t:'textarea', req:1, h:'One per line. A short description after each one is a bonus.'},
-    {k:'different', l:'What makes you different from other local options?', t:'textarea'},
-    {k:'customers', l:'Who are your best customers?', t:'textarea', h:'Homeowners, small businesses, families, contractors, and so on.'},
-    {k:'cta', l:'What should a visitor do first?', t:'select', o:['Call me','Request a quote','Book online','Send a message','Something else, I will explain below']},
-    {k:'pricing', l:'How do you want to handle prices?', t:'select', o:['Show prices on the site','Show starting at prices','Do not show prices','Not sure, advise me']}
-  ]},
   {id:'look', title:'Look and feel', blurb:'Help us aim at the right target on the first try.', fields:[
-    {k:'colors', l:'Brand colours', t:'textarea', h:'Hex codes are great, plain words are fine, or say you have none and we will pick for you.'},
-    {k:'likes', l:'Up to three websites you like', t:'textarea', h:'Any industry. Tell us what you like about each one.'},
+    {t:'colours'},
+    {t:'sites'},
     {k:'dislikes', l:'Anything you definitely do not want?', t:'textarea'},
-    {k:'tone', l:'How should the site sound?', t:'select', o:['Friendly and casual','Professional and polished','Bold and direct','Warm and family run','Not sure, you decide']},
     {k:'say', l:'Anything we should say, or avoid saying?', t:'textarea'}
   ]},
   {id:'presence', title:'Online presence', blurb:'What you already have, so we can connect it all up.', fields:[
@@ -214,12 +346,6 @@ var SECTIONS = [
     {k:'email_provider', l:'Where does your business email live?', t:'text', ph:'Google Workspace, Microsoft 365, GoDaddy, not sure'},
     {k:'access', l:'Who can log in to your domain account?', t:'select', o:['I can log in','Someone else manages it','I have lost the login','Not sure']}
   ]},
-  {id:'book', addon:'book', title:'Online booking', blurb:'Since your plan includes Stackwell Book, we need a few extra details.', fields:[
-    {k:'bookable', l:'What can customers book?', t:'textarea', req:1, h:'One per line, with how long it takes and the price.'},
-    {k:'staff', l:'Who can be booked?', t:'textarea', h:'Names, and which services each person does.'},
-    {k:'availability', l:'When are you bookable?', t:'textarea'},
-    {k:'cancel', l:'Cancellation or notice rules', t:'textarea'}
-  ]},
   {id:'shop', addon:'shop', title:'Online shop', blurb:'Since your plan includes Stackwell Shop, we need a few extra details.', fields:[
     {k:'products', l:'What are you selling, and roughly how many items?', t:'textarea', req:1},
     {k:'square', l:'Do you already use Square?', t:'select', o:['Yes','No','Not sure']},
@@ -228,11 +354,17 @@ var SECTIONS = [
   ]}
 ];
 
-/* ---------- State ---------- */
-var state = {client:null, answers:{}, uploads:[], activeSections:[]};
+/* ---------- State & helpers ---------- */
+var state = {client:null, answers:{}, uploads:[], activeSections:[], completed:false};
 var $ = function(s,r){return (r||document).querySelector(s)};
 var $$ = function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
 function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+function pad(n){ return (n<10?'0':'') + n; }
+function ans(section, key){ return ((state.answers[section]||{})[key]) || ''; }
+function fire(el){
+  el.dispatchEvent(new Event('input',{bubbles:true}));
+  el.dispatchEvent(new Event('change',{bubbles:true}));
+}
 
 /* ---------- API layer ---------- */
 var demoStore = {answers:{}, uploads:[]};
@@ -250,7 +382,7 @@ function demoApi(path, opts){
   return new Promise(function(res){
     setTimeout(function(){
       if(path.indexOf('/api/client')===0){
-        res({name:'Demo Plumbing Co', plan:'Growth', addons:['book'], contract_signed:true, billing_active:false, completed:false, answers:demoStore.answers, uploads:demoStore.uploads});
+        res({name:'Demo Plumbing Co', plan:'Growth', addons:['shop'], monthly_price:100, contract_signed:true, billing_active:false, completed:false, answers:demoStore.answers, uploads:demoStore.uploads});
       } else if(path.indexOf('/api/answers')===0){
         var b = JSON.parse(opts.body); demoStore.answers[b.section] = b.data; res({ok:true});
       } else { res({ok:true}); }
@@ -288,20 +420,152 @@ function flag(msg, on){
   if(on) savedTimer = setTimeout(function(){ savedEl.textContent='All changes saved'; }, 1800);
 }
 
-/* ---------- Render ---------- */
+/* ---------- Tabs ---------- */
+function showTab(name){
+  ['home','onboarding','subscription'].forEach(function(t){
+    $('#tab_'+t).classList.toggle('hide', t !== name);
+  });
+  $$('#tabs button').forEach(function(b){ b.classList.toggle('on', b.getAttribute('data-tab') === name); });
+  window.scrollTo(0,0);
+}
+document.addEventListener('click', function(e){
+  var t = e.target.closest && e.target.closest('[data-tab],[data-goto]');
+  if(!t) return;
+  showTab(t.getAttribute('data-tab') || t.getAttribute('data-goto'));
+});
+$('#brand').addEventListener('click', function(e){ e.preventDefault(); showTab('home'); });
+
+/* ---------- Colour tools ---------- */
+function normHex(v){
+  v = String(v||'').trim().replace(/^#/,'');
+  if(/^[0-9a-f]{3}$/i.test(v)) v = v.split('').map(function(c){return c+c}).join('');
+  return /^[0-9a-f]{6}$/i.test(v) ? '#' + v.toUpperCase() : null;
+}
+function hslToHex(h,s,l){
+  s/=100; l/=100;
+  var a = s*Math.min(l,1-l);
+  function f(n){ var k=(n+h/30)%12, c=l-a*Math.max(Math.min(k-3,9-k,1),-1); return Math.round(255*c).toString(16).padStart(2,'0'); }
+  return ('#'+f(0)+f(8)+f(4)).toUpperCase();
+}
+var SLOTS = [['main','Main colour'],['accent','Accent colour'],['support','Support colour']];
+var activeSlot = 'main';
+
+function coloursHtml(){
+  var html = '<div class="field"><label>Brand colours</label>' +
+    '<div class="help" style="margin:0 0 .8rem">Pick a slot, then tap a colour below, or type a hex code. Not sure what a hex code is? Just tap colours.</div><div class="slots">';
+  SLOTS.forEach(function(s){
+    html += '<div class="slot'+(s[0]===activeSlot?' active':'')+'" data-slot="'+s[0]+'">' +
+      '<span class="sw"></span><div><span class="mono">'+s[1]+'</span>' +
+      '<input type="text" data-s="look" data-k="colour_'+s[0]+'" value="'+esc(ans('look','colour_'+s[0]))+'" placeholder="#F97316" maxlength="7" autocomplete="off">' +
+      '<div class="pickrow"><input type="color" value="#f97316" aria-label="Open colour picker"><span>Custom</span></div></div></div>';
+  });
+  html += '</div><div class="chart" id="chart"></div><div class="chart neutral" id="chartN"></div>' +
+    '<label class="check"><input type="checkbox" data-s="look" data-k="no_colours"'+(ans('look','no_colours')==='yes'?' checked':'')+'> I do not have brand colours yet. Choose for me.</label></div>';
+  return html;
+}
+function sitesHtml(){
+  var html = '<div class="field"><label>Up to three websites you like</label><div class="sites">';
+  ['one','two','three'].forEach(function(n){
+    html += '<input type="text" data-s="look" data-k="site_'+n+'" value="'+esc(ans('look','site_'+n))+'" placeholder="example.com" autocomplete="off">';
+  });
+  return html + '</div><div class="help">Any industry. Sites you wish yours looked like.</div></div>';
+}
+function paintSlot(sl){
+  var inp = $('input[type=text]', sl), h = normHex(inp.value);
+  $('.sw', sl).style.background = h || 'transparent';
+  sl.classList.toggle('bad', inp.value.trim() !== '' && !h);
+  if(h) $('input[type=color]', sl).value = h.toLowerCase();
+}
+function setActive(key){
+  activeSlot = key;
+  $$('.slot').forEach(function(s){ s.classList.toggle('active', s.getAttribute('data-slot') === key); });
+}
+function setSlotValue(key, hex){
+  var sl = $('.slot[data-slot="'+key+'"]'), inp = $('input[type=text]', sl);
+  inp.value = hex; paintSlot(sl); fire(inp);
+}
+function initColours(){
+  var chart = $('#chart'), neu = $('#chartN');
+  if(!chart) return;
+  var html = '', l, h, hex;
+  [28,42,56,70,84].forEach(function(light){
+    for(h=0; h<360; h+=30){ hex = hslToHex(h, 75, light); html += '<button type="button" class="cw" data-hex="'+hex+'" style="background:'+hex+'" aria-label="'+hex+'" title="'+hex+'"></button>'; }
+  });
+  chart.innerHTML = html;
+  html = '';
+  ['#000000','#1F1F1F','#4A4A4A','#808080','#B8B8B8','#E6E6E6','#FFFFFF','#8B5A2B'].forEach(function(hx){
+    html += '<button type="button" class="cw" data-hex="'+hx+'" style="background:'+hx+'" aria-label="'+hx+'" title="'+hx+'"></button>';
+  });
+  neu.innerHTML = html;
+  $$('.cw').forEach(function(b){
+    b.addEventListener('click', function(){
+      setSlotValue(activeSlot, b.getAttribute('data-hex'));
+      var next = SLOTS.map(function(s){return s[0]}).filter(function(k){ return !normHex($('.slot[data-slot="'+k+'"] input[type=text]').value); })[0];
+      if(next) setActive(next);
+    });
+  });
+  $$('.slot').forEach(function(sl){
+    var key = sl.getAttribute('data-slot'), inp = $('input[type=text]', sl), pick = $('input[type=color]', sl);
+    sl.addEventListener('click', function(){ setActive(key); });
+    inp.addEventListener('focus', function(){ setActive(key); });
+    inp.addEventListener('input', function(){ paintSlot(sl); });
+    inp.addEventListener('change', function(){ var h = normHex(inp.value); if(h) inp.value = h; paintSlot(sl); });
+    pick.addEventListener('input', function(){ setActive(key); setSlotValue(key, pick.value.toUpperCase()); });
+    paintSlot(sl);
+  });
+}
+
+/* ---------- Hours ---------- */
+function renderHours(){
+  var html = '';
+  DAYS.forEach(function(d){
+    var k = d[0], closed = ans('basics','hours_'+k+'_closed') === 'yes';
+    html += '<div class="hrow'+(closed?' closed':'')+'" data-day="'+k+'">' +
+      '<span class="dname">'+d[1]+'</span>' +
+      '<label class="check" style="margin:0"><input type="checkbox" data-s="basics" data-k="hours_'+k+'_closed"'+(closed?' checked':'')+'> Closed</label>' +
+      '<input type="time" data-s="basics" data-k="hours_'+k+'_open" value="'+esc(ans('basics','hours_'+k+'_open'))+'"'+(closed?' disabled':'')+'>' +
+      '<span class="to">to</span>' +
+      '<input type="time" data-s="basics" data-k="hours_'+k+'_close" value="'+esc(ans('basics','hours_'+k+'_close'))+'"'+(closed?' disabled':'')+'>' +
+      '</div>';
+  });
+  $('#hours').innerHTML = html;
+  $('[data-k="hours_note"]').value = ans('basics','hours_note');
+  $$('.hrow input[type=checkbox]').forEach(function(cb){
+    cb.addEventListener('change', function(){
+      var row = cb.closest('.hrow');
+      row.classList.toggle('closed', cb.checked);
+      $$('input[type=time]', row).forEach(function(t){ t.disabled = cb.checked; });
+    });
+  });
+}
+$('#copyMon').addEventListener('click', function(){
+  var mo = $('[data-k="hours_mon_open"]').value, mc = $('[data-k="hours_mon_close"]').value;
+  var mclosed = $('[data-k="hours_mon_closed"]').checked;
+  ['tue','wed','thu','fri'].forEach(function(d){
+    var cb = $('[data-k="hours_'+d+'_closed"]'), o = $('[data-k="hours_'+d+'_open"]'), c = $('[data-k="hours_'+d+'_close"]');
+    cb.checked = mclosed; o.value = mo; c.value = mc;
+    o.disabled = c.disabled = mclosed;
+    cb.closest('.hrow').classList.toggle('closed', mclosed);
+  });
+  fire($('[data-k="hours_tue_open"]'));
+});
+
+/* ---------- Onboarding render ---------- */
 function planHas(addon){ return state.client.addons.indexOf(addon) > -1; }
 
 function renderSections(){
   state.activeSections = SECTIONS.filter(function(s){ return !s.addon || planHas(s.addon); });
-  var total = state.activeSections.length + 3; /* + files + finish ... counted as N / total */
+  var total = state.activeSections.length + 2;
   var html = '';
   state.activeSections.forEach(function(s, i){
     var saved = state.answers[s.id] || {};
     html += '<section class="card" id="sec_'+s.id+'">' +
-      '<div class="mono idx">'+pad(i+2)+' / '+pad(total)+'</div>' +
+      '<div class="mono idx">'+pad(i+1)+' / '+pad(total)+'</div>' +
       '<h2>'+esc(s.title)+'</h2><p class="blurb">'+esc(s.blurb)+'</p>' +
       (s.note ? '<div class="note">'+esc(s.note)+'</div>' : '');
     s.fields.forEach(function(f){
+      if(f.t === 'colours'){ html += coloursHtml(); return; }
+      if(f.t === 'sites'){ html += sitesHtml(); return; }
       var v = saved[f.k] || '';
       html += '<div class="field"><label>'+esc(f.l)+(f.req?' <span class="req">*</span>':'')+'</label>';
       if(f.t === 'textarea'){
@@ -318,28 +582,27 @@ function renderSections(){
     html += '</section>';
   });
   $('#sections').innerHTML = html;
-  $('#filesIdx').textContent = pad(state.activeSections.length+2) + ' / ' + pad(total);
+  $('#filesIdx').textContent = pad(state.activeSections.length+1) + ' / ' + pad(total);
   $('#finishIdx').textContent = pad(total) + ' / ' + pad(total);
 
-  var nav = state.activeSections.map(function(s){
+  $('#nav').innerHTML = state.activeSections.map(function(s){
     return '<a href="#sec_'+s.id+'" data-nav="'+s.id+'"><span class="dot"></span>'+esc(s.title)+'</a>';
   }).join('') +
   '<a href="#files" data-nav="files"><span class="dot"></span>Logo and photos</a>' +
   '<a href="#finish" data-nav="finish"><span class="dot"></span>Send it over</a>';
-  $('#nav').innerHTML = nav;
+  initColours();
 }
-function pad(n){ return (n<10?'0':'') + n; }
 
 /* ---------- Completion logic ---------- */
 function sectionDone(s){
   var a = state.answers[s.id] || {};
   var reqs = s.fields.filter(function(f){return f.req});
   if(reqs.length) return reqs.every(function(f){ return (a[f.k]||'').trim() !== ''; });
-  return s.fields.some(function(f){ return (a[f.k]||'').trim() !== ''; });
+  return Object.keys(a).some(function(k){ return String(a[k]).trim() !== ''; });
 }
 function filesDone(){
   var hasLogo = state.uploads.some(function(u){return u.category==='logo'});
-  return hasLogo || !!(state.answers.files && state.answers.files.no_logo === 'yes');
+  return hasLogo || ans('files','no_logo') === 'yes';
 }
 function refreshProgress(){
   var done = 0, total = state.activeSections.length + 1;
@@ -349,16 +612,18 @@ function refreshProgress(){
   });
   var fd = filesDone(); if(fd) done++;
   $('[data-nav="files"] .dot').classList.toggle('done', fd);
-  var pct = Math.round(done / total * 100);
-  $('#bar').style.width = pct + '%';
+  $('#bar').style.width = Math.round(done / total * 100) + '%';
   $('#stProgress').textContent = done + ' of ' + total + ' sections';
+  $('#stProgressSub').textContent = state.completed ? 'Sent to Adam' : (done === total ? 'Ready to send' : 'Continue where you left off');
 }
 
 /* ---------- Autosave ---------- */
 var timers = {};
 function collect(sectionId){
   var out = {};
-  $$('[data-s="'+sectionId+'"]').forEach(function(el){ out[el.getAttribute('data-k')] = el.value; });
+  $$('[data-s="'+sectionId+'"]').forEach(function(el){
+    out[el.getAttribute('data-k')] = el.type === 'checkbox' ? (el.checked ? 'yes' : '') : el.value;
+  });
   return out;
 }
 function save(sectionId, data){
@@ -446,8 +711,10 @@ function wireDrops(){
 
 /* ---------- Finish ---------- */
 function showDone(){
+  state.completed = true;
   $('#doneBox').classList.remove('hide');
   $('#finishBtn').textContent = 'Send again with updates';
+  refreshProgress();
 }
 $('#finishBtn').addEventListener('click', function(){
   var btn = this; btn.disabled = true; btn.textContent = 'Sending';
@@ -456,27 +723,66 @@ $('#finishBtn').addEventListener('click', function(){
     .catch(function(){ btn.disabled = false; btn.textContent = 'Something went wrong. Try again'; });
 });
 
-/* ---------- Boot ---------- */
+/* ---------- Subscription tab ---------- */
+function renderSubscription(c){
+  var feats = PLANS[c.plan] || [];
+  var html = '<span class="mono" style="color:var(--muted)">Current plan</span>' +
+    '<div class="state" style="font-size:2.6rem">'+esc(c.plan)+'</div>';
+  if(c.monthly_price != null){
+    html += '<div class="price">$'+esc(c.monthly_price)+' <small>CAD per month. Month to month.</small></div>';
+  }
+  if(feats.length){
+    html += '<ul class="ticks">' + feats.map(function(f){ return '<li>'+esc(f)+'</li>'; }).join('') + '</ul>';
+  }
+  var ad = (c.addons || []).filter(function(a){ return ADDONS[a]; });
+  if(ad.length){
+    html += '<div class="mono" style="color:var(--muted);margin-top:1.6rem">Add ons</div><ul class="ticks">' +
+      ad.map(function(a){ return '<li><strong style="font-weight:400">'+esc(ADDONS[a].name)+'</strong>. '+esc(ADDONS[a].text)+'</li>'; }).join('') + '</ul>';
+  }
+  $('#planPanel').innerHTML = html;
+
+  var ag = $('#agState'), at = $('#agText'), bi = $('#biState'), bt = $('#biText');
+  if(c.contract_signed){
+    ag.textContent = 'Signed'; ag.className = 'state pill-ok';
+    at.textContent = 'Your service agreement is on file. Need a copy? Email Adam and he will send it over.';
+  } else {
+    ag.textContent = 'Waiting on signature'; ag.className = 'state pill-wait';
+    at.textContent = 'Adam sends the agreement from Square. Check your inbox and your spam folder. Once it is signed, billing is set up.';
+  }
+  if(c.billing_active){
+    bi.textContent = 'Active'; bi.className = 'state pill-ok';
+    bt.textContent = 'Your plan is billed monthly through Square. A receipt is emailed to you after every payment.';
+  } else {
+    bi.textContent = 'Not started'; bi.className = 'state pill-wait';
+    bt.textContent = 'Billing is set up after the agreement is signed.';
+  }
+}
 function status(el, ok, yes, no){
   el.textContent = ok ? yes : no;
   el.className = ok ? 'pill-ok' : 'pill-wait';
 }
+
+/* ---------- Boot ---------- */
 function boot(){
   if(!TOKEN && !DEMO){ $('#gate').classList.remove('hide'); return; }
   api('/api/client?c=' + encodeURIComponent(TOKEN)).then(function(c){
     state.client = {name:c.name, plan:c.plan, addons:c.addons || []};
     state.answers = c.answers || {};
     state.uploads = c.uploads || [];
-    $('#hello').innerHTML = 'Welcome, <em>' + esc(c.name) + '</em>';
+    state.completed = !!c.completed;
+    $('#hello').textContent = c.name;
     $('#planTag').textContent = c.plan + ' plan';
     document.title = c.name + ' | Client Hub';
-    status($('#stContract'), c.contract_signed, 'Signed', 'Adam will send this over');
-    status($('#stBilling'), c.billing_active, 'Active', 'Set up after you sign');
-    renderSections(); wireDrops(); listUploaded();
-    if(state.answers.files && state.answers.files.no_logo === 'yes') $('#noLogo').checked = true;
+    status($('#stContract'), c.contract_signed, 'Signed', 'Waiting on signature');
+    status($('#stBilling'), c.billing_active, 'Active', 'Not started');
+    renderHours(); renderSections(); wireDrops(); listUploaded(); renderSubscription(c);
+    if(ans('files','no_logo') === 'yes') $('#noLogo').checked = true;
+    if(c.completed) $('#doneBox').classList.remove('hide');
     refreshProgress();
-    if(c.completed) showDone();
+    $('#tabs').classList.remove('hide');
     $('#app').classList.remove('hide');
+    var want = qs.get('tab');
+    if(want === 'onboarding' || want === 'subscription') showTab(want);
     flag('Ready', false);
   }).catch(function(){ $('#gate').classList.remove('hide'); });
 }
