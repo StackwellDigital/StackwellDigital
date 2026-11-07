@@ -471,7 +471,7 @@ function demoApi(path, opts){
         var b = JSON.parse(opts.body); demoStore.answers[b.section] = b.data; res({ok:true});
       } else if(path.indexOf('/api/actions/done')===0){
         var d = JSON.parse(opts.body);
-        demoStore.items.forEach(function(x){ if(x.id === d.id && x.owner === 'client') x.done = d.done; });
+        demoStore.items.forEach(function(x){ if(x.id === d.id) x.done = d.done; });
         res({ok:true});
       } else if(path.indexOf('/api/actions/add')===0){
         var a = JSON.parse(opts.body), it = {id:Date.now(), owner:'client', label:a.label, due:null, done:false, added_by:'client'};
@@ -737,10 +737,10 @@ function fmtDue(s){
 }
 function buildActions(){
   var c = state.client, mine = [], adam = [];
-  // Items Adam added. Theirs can be ticked by the client, his are read only.
+  // Items from admin. The client can tick both lists.
   state.items.forEach(function(it){
     var row = {id:'i'+it.id, item:it.id, label:it.label, due:it.due, done:!!it.done, own:it.added_by==='client'};
-    if(it.owner === 'adam'){ row.readonly = true; adam.push(row); }
+    if(it.owner === 'adam'){ adam.push(row); }
     else { row.group = row.own ? 'Added by you' : 'From Adam'; mine.push(row); }
   });
   // Items that tick themselves from what the client has filled in.
