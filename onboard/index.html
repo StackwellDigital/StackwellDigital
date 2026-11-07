@@ -89,6 +89,12 @@ button{font:inherit;color:inherit}
 .bar{height:6px;border-radius:3px;background:var(--rule);overflow:hidden;margin-top:.7rem}
 .bar i{display:block;height:100%;width:0;background:var(--accent);transition:width .3s}
 .ahead{color:var(--ink-mid);margin:2.2rem 0 .3rem}
+.agroup+.agroup{margin-top:3.4rem}
+.ghead{display:flex;justify-content:space-between;align-items:baseline;gap:1rem}
+.ghead h2{font-family:var(--display);font-weight:800;text-transform:uppercase;font-size:2rem;line-height:1}
+.ghead .mono{color:var(--ink-mid)}
+.agroup .ahead:first-of-type{margin-top:1.6rem}
+.due.late{color:var(--bad)}
 .acts{list-style:none}
 .act{display:grid;grid-template-columns:auto 1fr auto;gap:.9rem;align-items:center;padding:.85rem 0;border-bottom:1px solid var(--rule)}
 .act .tx b{display:block;font-weight:500;font-size:.98rem}
@@ -100,7 +106,7 @@ button{font:inherit;color:inherit}
 .chk{position:relative;display:inline-block;width:20px;height:20px}
 .chk input{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:pointer}
 .chk input:disabled{cursor:default}
-.chk span{display:block;width:20px;height:20px;border:1.5px solid var(--ink);border-radius:5px;background:var(--field)}
+.chk span{display:block;width:20px;height:20px;border:1.5px solid var(--ink);border-radius:5px;background:var(--field);pointer-events:none}
 .chk input:checked+span{background:var(--accent)}
 .chk input:checked+span:after{content:"";display:block;width:5px;height:10px;border:solid var(--ink);border-width:0 2px 2px 0;transform:translate(5.5px,1px) rotate(45deg)}
 .chk input:focus-visible+span{outline:2px solid var(--ink);outline-offset:2px}
@@ -321,16 +327,23 @@ footer{border-top:1px solid var(--rule);padding:2rem 4vw;color:var(--ink-mid);fo
     <div class="hero" style="margin-bottom:2rem">
       <div class="mono tag">Action items</div>
       <h1>What is left</h1>
-      <p>Everything that still needs doing, in one place. Most items tick themselves as you fill things in. The rest you can check off yourself.</p>
+      <p>Two lists: what we need from you, and what we are working on for you. Anything about your details ticks itself as you fill things in.</p>
     </div>
-    <div class="panel">
-      <div class="mono" id="actProg"></div>
+
+    <section class="agroup">
+      <div class="ghead"><h2>Your action items</h2><span class="mono" id="actProg"></span></div>
       <div class="bar"><i id="actBar"></i></div>
-    </div>
-    <div class="mono ahead">To do</div>
-    <ul class="acts" id="actOpen"></ul>
-    <div class="mono ahead" id="actDoneHead">Done</div>
-    <ul class="acts" id="actDone"></ul>
+      <div class="mono ahead">To do</div>
+      <ul class="acts" id="actOpen"></ul>
+      <div class="mono ahead" id="actDoneHead">Done</div>
+      <ul class="acts" id="actDone"></ul>
+    </section>
+
+    <section class="agroup">
+      <div class="ghead"><h2>Adam's action items</h2><span class="mono" id="adamProg"></span></div>
+      <div class="bar"><i id="adamBar"></i></div>
+      <ul class="acts" id="adamList"></ul>
+    </section>
   </div>
 
   <!-- SUBSCRIPTION -->
@@ -370,6 +383,8 @@ var TOKEN = qs.get('c') || '';
 var DEMO = qs.get('demo') === '1';
 
 /* ---------- Config ---------- */
+/* Messages is parked. Set to true to bring the tab back (needs the Worker messages routes and table). */
+var MESSAGES_ENABLED = false;
 var DAYS = [['mon','Mon','Monday'],['tue','Tue','Tuesday'],['wed','Wed','Wednesday'],['thu','Thu','Thursday'],['fri','Fri','Friday'],['sat','Sat','Saturday'],['sun','Sun','Sunday']];
 
 var PLANS = {
@@ -423,7 +438,7 @@ var SECTIONS = [
 ];
 
 /* ---------- State & helpers ---------- */
-var state = {client:null, answers:{}, uploads:[], activeSections:[], completed:false};
+var state = {client:null, answers:{}, uploads:[], activeSections:[], completed:false, items:[]};
 var $ = function(s,r){return (r||document).querySelector(s)};
 var $$ = function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
 function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
@@ -435,7 +450,12 @@ function fire(el){
 }
 
 /* ---------- API layer ---------- */
-var demoStore = {answers:{}, uploads:[], messages:[
+var demoStore = {answers:{}, uploads:[], items:[
+  {id:1, owner:'client', label:'Send us access to your Google Business Profile', due:'2026-11-12', done:false},
+  {id:2, owner:'client', label:'Confirm who manages your domain', due:'2026-11-01', done:false},
+  {id:3, owner:'adam', label:'Build the first draft of your site', due:'2026-11-20', done:false},
+  {id:4, owner:'adam', label:'Send the service agreement from Square', due:null, done:true}
+], messages:[
   {id:1, sender:'adam', channel:'call', body:'Thanks for the call today. I will send the agreement from Square this afternoon.', created_at:'2026-11-05 22:10:00'}
 ]};
 function api(path, opts){
@@ -452,9 +472,13 @@ function demoApi(path, opts){
   return new Promise(function(res){
     setTimeout(function(){
       if(path.indexOf('/api/client')===0){
-        res({name:'Demo Plumbing Co', plan:'Growth', addons:['shop'], monthly_price:100, contract_signed:true, billing_active:false, completed:false, answers:demoStore.answers, uploads:demoStore.uploads});
+        res({name:'Demo Plumbing Co', plan:'Growth', addons:['shop'], monthly_price:100, contract_signed:true, billing_active:false, completed:false, answers:demoStore.answers, uploads:demoStore.uploads, actions:demoStore.items});
       } else if(path.indexOf('/api/answers')===0){
         var b = JSON.parse(opts.body); demoStore.answers[b.section] = b.data; res({ok:true});
+      } else if(path.indexOf('/api/actions/done')===0){
+        var d = JSON.parse(opts.body);
+        demoStore.items.forEach(function(x){ if(x.id === d.id && x.owner === 'client') x.done = d.done; });
+        res({ok:true});
       } else if(path.indexOf('/api/messages')===0){
         if(opts && opts.method === 'POST'){
           var m = {id:demoStore.messages.length + 1, sender:'client', channel:'hub', body:JSON.parse(opts.body).body, created_at:new Date().toISOString()};
@@ -715,65 +739,79 @@ function refreshProgress(){
 }
 
 /* ---------- Action items ---------- */
-var MANUAL = [
-  {id:'review_preview', label:'Review your site preview', hint:'We send a private link once your site is built.'},
-  {id:'request_changes', label:'Send us your change requests', hint:'Reply to the preview email, or write to Adam.'},
-  {id:'approve_launch', label:'Approve your site for launch', hint:'Once you are happy, we connect your domain.'}
-];
-function manualOn(id){ return ((state.answers.actions || {})[id]) === 'yes'; }
+function todayStr(){ var d = new Date(); return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); }
+function fmtDue(s){
+  var d = new Date(s + 'T00:00:00');
+  return isNaN(d.getTime()) ? '' : d.toLocaleDateString('en-CA', {month:'short', day:'numeric'});
+}
 function buildActions(){
-  var c = state.client, out = [];
-  state.activeSections.forEach(function(s){
-    out.push({id:'sec_'+s.id, label:'Fill in '+s.title.toLowerCase(), group:'Your details', done:sectionDone(s), jump:'#sec_'+s.id});
+  var c = state.client, mine = [], adam = [];
+  // Items Adam added. Theirs can be ticked by the client, his are read only.
+  state.items.forEach(function(it){
+    var row = {id:'i'+it.id, item:it.id, label:it.label, due:it.due, done:!!it.done};
+    if(it.owner === 'adam'){ row.readonly = true; adam.push(row); }
+    else { row.group = 'From Adam'; mine.push(row); }
   });
-  out.push({id:'logo', label:'Upload your logo', hint:'Or tick that you do not have one yet.', group:'Your details', done:filesDone(), jump:'#files'});
-  out.push({id:'send', label:'Send it over', hint:'The button at the bottom of Home.', group:'Your details', done:state.completed, jump:'#finish'});
-  out.push({id:'agreement', label:'Sign the service agreement', hint:'Adam sends it from Square.', group:'Account', done:!!c.contract_signed, tab:'subscription'});
-  out.push({id:'billing', label:'Billing set up', hint:'Starts once the agreement is signed.', group:'Account', done:!!c.billing_active, tab:'subscription'});
-  if(state.completed){
-    MANUAL.forEach(function(m){
-      out.push({id:m.id, label:m.label, hint:m.hint, group:'Next steps', done:manualOn(m.id), manual:true});
-    });
-  }
-  return out;
+  // Items that tick themselves from what the client has filled in.
+  state.activeSections.forEach(function(s){
+    mine.push({id:'sec_'+s.id, label:'Fill in '+s.title.toLowerCase(), group:'Your details', done:sectionDone(s), jump:'#sec_'+s.id});
+  });
+  mine.push({id:'logo', label:'Upload your logo', hint:'Or tick that you do not have one yet.', group:'Your details', done:filesDone(), jump:'#files'});
+  mine.push({id:'send', label:'Send it over', hint:'The button at the bottom of Home.', group:'Your details', done:state.completed, jump:'#finish'});
+  mine.push({id:'agreement', label:'Sign the service agreement', hint:'Adam sends it from Square.', group:'Account', done:!!c.contract_signed, tab:'subscription'});
+  mine.push({id:'billing', label:'Billing set up', hint:'Starts once the agreement is signed.', group:'Account', done:!!c.billing_active, tab:'subscription'});
+  return {mine:mine, adam:adam};
 }
 function actRow(i){
   var link = i.jump ? '<button type="button" class="go" data-jump="'+i.jump+'">Open</button>'
            : i.tab ? '<button type="button" class="go" data-tab="'+i.tab+'">View</button>' : '<span></span>';
-  return '<li class="act'+(i.done?' done':'')+'"><label class="chk"><input type="checkbox" data-act="'+i.id+'"'+(i.done?' checked':'')+(i.manual?'':' disabled')+' aria-label="'+esc(i.label)+'"><span></span></label>' +
-    '<div class="tx"><b>'+esc(i.label)+'</b><small>'+esc(i.group)+(i.hint?' · '+esc(i.hint):'')+'</small></div>'+link+'</li>';
+  var bits = [];
+  if(i.group) bits.push(esc(i.group));
+  if(i.hint) bits.push(esc(i.hint));
+  if(i.due){
+    var late = !i.done && i.due < todayStr();
+    bits.push('<span class="due'+(late?' late':'')+'">'+(late?'Overdue, was due ':'Due ')+esc(fmtDue(i.due))+'</span>');
+  }
+  var live = !!i.item && !i.readonly;
+  return '<li class="act'+(i.done?' done':'')+'"><label class="chk"><input type="checkbox"'+(live?' data-item="'+i.item+'"':' disabled')+(i.done?' checked':'')+' aria-label="'+esc(i.label)+'"><span></span></label>' +
+    '<div class="tx"><b>'+esc(i.label)+'</b><small>'+bits.join(' · ')+'</small></div>'+link+'</li>';
 }
 function renderActions(){
   if(!state.client) return;
-  var items = buildActions();
-  var open = items.filter(function(i){ return !i.done; }), done = items.filter(function(i){ return i.done; });
-  var focusId = document.activeElement && document.activeElement.getAttribute && document.activeElement.getAttribute('data-act');
-  $('#actProg').textContent = done.length + ' of ' + items.length + ' done';
-  $('#actBar').style.width = (items.length ? Math.round(done.length / items.length * 100) : 0) + '%';
+  var b = buildActions(), mine = b.mine, adam = b.adam;
+  var open = mine.filter(function(i){ return !i.done; }), done = mine.filter(function(i){ return i.done; });
+  var focusId = document.activeElement && document.activeElement.getAttribute && document.activeElement.getAttribute('data-item');
+  $('#actProg').textContent = done.length + ' of ' + mine.length + ' done';
+  $('#actBar').style.width = (mine.length ? Math.round(done.length / mine.length * 100) : 0) + '%';
   $('#actOpen').innerHTML = open.length ? open.map(actRow).join('') : '<li class="empty">Nothing outstanding. Nice work.</li>';
   $('#actDone').innerHTML = done.map(actRow).join('');
   $('#actDoneHead').classList.toggle('hide', !done.length);
+
+  var aOpen = adam.filter(function(i){ return !i.done; }), aDone = adam.filter(function(i){ return i.done; });
+  $('#adamProg').textContent = adam.length ? aDone.length + ' of ' + adam.length + ' done' : '';
+  $('#adamBar').parentNode.classList.toggle('hide', !adam.length);
+  $('#adamBar').style.width = (adam.length ? Math.round(aDone.length / adam.length * 100) : 0) + '%';
+  $('#adamList').innerHTML = adam.length ? aOpen.concat(aDone).map(actRow).join('') : '<li class="empty">Nothing queued right now.</li>';
+
   $('#bdgActions').textContent = open.length || '';
   $('#tbdg').textContent = open.length || '';
   var pend = (state.client.contract_signed ? 0 : 1) + (state.client.billing_active ? 0 : 1);
   $('#bdgSub').textContent = pend || '';
-  if(focusId){ var f = $('[data-act="'+focusId+'"]'); if(f) f.focus(); }
+  if(focusId){ var f = $('[data-item="'+focusId+'"]'); if(f) f.focus(); }
 }
 document.addEventListener('change', function(e){
-  var el = e.target, id = el.getAttribute && el.getAttribute('data-act');
+  var el = e.target, id = el.getAttribute && el.getAttribute('data-item');
   if(!id) return;
-  var a = {}, cur = state.answers.actions || {};
-  Object.keys(cur).forEach(function(k){ a[k] = cur[k]; });
-  if(el.checked) a[id] = 'yes'; else delete a[id];
-  state.answers.actions = a;
-  try{ localStorage.setItem('hub_actions_' + TOKEN, JSON.stringify(a)); }catch(_){}
-  flag('Saving', false);
-  api('/api/answers?c=' + encodeURIComponent(TOKEN), {
+  var it = state.items.filter(function(x){ return String(x.id) === id; })[0];
+  if(!it) return;
+  var want = el.checked;
+  it.done = want;
+  renderActions(); flag('Saving', false);
+  api('/api/actions/done?c=' + encodeURIComponent(TOKEN), {
     method:'POST', headers:{'Content-Type':'application/json'},
-    body: JSON.stringify({section:'actions', data:a})
+    body: JSON.stringify({id:it.id, done:want})
   }).then(function(){ flag('Saved', true); })
-    .catch(function(){ flag('Saved on this device only', false); });
-  renderActions();
+    .catch(function(){ it.done = !want; renderActions(); flag('Not saved. Check your connection', false); });
 });
 
 /* ---------- Messages ---------- */
@@ -989,9 +1027,7 @@ function boot(){
   api('/api/client?c=' + encodeURIComponent(TOKEN)).then(function(c){
     state.client = {name:c.name, plan:c.plan, addons:c.addons || [], contract_signed:!!c.contract_signed, billing_active:!!c.billing_active};
     state.answers = c.answers || {};
-    if(!state.answers.actions || !Object.keys(state.answers.actions).length){
-      try{ state.answers.actions = JSON.parse(localStorage.getItem('hub_actions_' + TOKEN) || '{}') || {}; }catch(_){ state.answers.actions = {}; }
-    }
+    state.items = c.actions || [];
     state.uploads = c.uploads || [];
     state.completed = !!c.completed;
     $('#hello').textContent = c.name;
@@ -1008,8 +1044,8 @@ function boot(){
     setHeadH();
     var want = qs.get('tab');
     if(want === 'subscription' || want === 'actions') showTab(want);
-    // Messages only shows once the Worker answers, so an old Worker never leaves a dead tab.
-    loadMessages().then(function(){ if(want === 'messages') showTab('messages'); }).catch(function(){});
+    // Messages is parked behind MESSAGES_ENABLED. When on, it only shows once the Worker answers.
+    if(MESSAGES_ENABLED) loadMessages().then(function(){ if(want === 'messages') showTab('messages'); }).catch(function(){});
     flag('Ready', false);
   }).catch(function(){ $('#gate').classList.remove('hide'); });
 }
