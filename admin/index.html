@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Stackwell client hub admin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Barlow:wght@300;400;500&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--cream:#e8e3d8;--cream-dark:#d8d3c6;--ink:#1a1714;--ink-mid:#5a5550;--accent:#c8b84a;--rule:rgba(26,23,20,.14);--field:rgba(255,255,255,.45);--bad:#a8402f;--display:'Barlow Condensed',sans-serif;--body:'Barlow',sans-serif;--mono:'DM Mono',monospace}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--cream);color:var(--ink);font-family:var(--body);font-weight:300;line-height:1.55;min-height:100vh}
+.mono{font-family:var(--mono);text-transform:uppercase;letter-spacing:.16em;font-size:.62rem;color:var(--ink-mid)}
+.hide{display:none!important}
+header{display:flex;justify-content:space-between;align-items:center;padding:.9rem 4vw;border-bottom:1px solid var(--rule);position:sticky;top:0;background:rgba(232,227,216,.96);z-index:5}
+header h1{font-family:var(--display);font-weight:900;text-transform:uppercase;font-size:1.6rem;line-height:1}
+main{max-width:1050px;margin:0 auto;padding:2rem 4vw 5rem}
+h2{font-family:var(--display);font-weight:800;text-transform:uppercase;font-size:2rem;line-height:1;margin-bottom:1rem}
+h3{font-family:var(--display);font-weight:800;text-transform:uppercase;font-size:1.3rem;margin:1.6rem 0 .7rem}
+input,select,textarea{width:100%;background:var(--field);border:1px solid rgba(26,23,20,.22);border-radius:8px;color:var(--ink);padding:.6rem .8rem;font:inherit;font-weight:300;outline:none}
+input:focus,select:focus,textarea:focus{border-color:var(--ink)}
+textarea{min-height:70px;resize:vertical}
+label.l{display:block;font-size:.85rem;font-weight:500;margin-bottom:.25rem}
+.btn{background:var(--ink);color:var(--cream);border:0;border-radius:8px;padding:.8rem 1.4rem;font-family:var(--mono);text-transform:uppercase;letter-spacing:.14em;font-size:.6rem;cursor:pointer}
+.btn:hover{opacity:.85}.btn:disabled{opacity:.4}
+.btn.ghost{background:none;color:var(--ink);border:1px solid rgba(26,23,20,.3)}
+.btn.sm{padding:.45rem .8rem}
+.card{border:1px solid var(--rule);border-radius:12px;background:rgba(255,255,255,.28);padding:1.2rem 1.3rem}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:.9rem 1.2rem}
+.grid .wide{grid-column:1/-1}
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+th{font-family:var(--mono);font-weight:400;text-transform:uppercase;letter-spacing:.14em;font-size:.58rem;color:var(--ink-mid);text-align:left;padding:.5rem .6rem;border-bottom:1px solid var(--rule)}
+td{padding:.7rem .6rem;border-bottom:1px solid var(--rule);vertical-align:middle}
+tr.row{cursor:pointer}tr.row:hover td{background:rgba(255,255,255,.35)}
+.tag{display:inline-block;font-family:var(--mono);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;border:1px solid rgba(26,23,20,.3);border-radius:20px;padding:.1rem .55rem;margin-right:.3rem}
+.tag.on{background:var(--accent);border-color:var(--ink)}
+.bar{display:flex;gap:.6rem;flex-wrap:wrap;align-items:center;margin-bottom:1.2rem}
+.err{color:var(--bad);margin-top:.6rem;font-size:.9rem}
+.linkbox{display:flex;gap:.5rem;margin:.6rem 0 1rem}.linkbox input{font-family:var(--mono);font-size:.78rem}
+.chk{display:flex;gap:.5rem;align-items:center;font-size:.9rem}.chk input{width:15px;height:15px;accent-color:var(--ink)}
+.toast{position:fixed;bottom:1.2rem;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--cream);padding:.7rem 1.2rem;border-radius:8px;font-size:.9rem;z-index:9}
+@media(max-width:700px){.grid{grid-template-columns:1fr}.hidem{display:none}}
+</style>
+</head>
+<body>
+<header><h1>Client hub admin</h1><button class="btn ghost sm hide" id="out">Lock</button></header>
+<main>
+  <div id="gate" class="card" style="max-width:420px;margin:12vh auto">
+    <h2>Admin key</h2>
+    <p style="color:var(--ink-mid);margin-bottom:1rem">Enter the ADMIN_KEY you set on the Worker.</p>
+    <input type="password" id="key" autocomplete="off" placeholder="Admin key">
+    <div class="err hide" id="gerr"></div>
+    <button class="btn" id="go" style="margin-top:1rem">Unlock</button>
+  </div>
+
+  <div id="listView" class="hide">
+    <div class="bar"><h2 style="margin:0;flex:1">Clients</h2><button class="btn" id="newBtn">New client</button></div>
+    <div class="card" style="padding:.4rem .8rem"><table><thead><tr><th>Client</th><th class="hidem">Plan</th><th>Status</th><th class="hidem">Files</th><th></th></tr></thead><tbody id="rows"></tbody></table></div>
+  </div>
+
+  <div id="editView" class="hide">
+    <div class="bar"><button class="btn ghost sm" id="back">Back</button><h2 style="margin:0;flex:1" id="editTitle">New client</h2></div>
+    <div class="card hide" id="linkCard">
+      <span class="mono">Client link</span>
+      <div class="linkbox"><input type="text" id="link" readonly><button class="btn sm" id="copy">Copy</button><button class="btn ghost sm" id="open">Open</button></div>
+      <div class="bar" style="margin:0"><button class="btn ghost sm" id="rotate">New link</button><button class="btn ghost sm hide" id="reopen">Reopen onboarding</button><a class="btn ghost sm hide" id="drive" target="_blank" style="text-decoration:none">Drive folder</a></div>
+    </div>
+    <h3>Plan and status</h3>
+    <div class="card"><div class="grid">
+      <div class="wide"><label class="l">Business name</label><input type="text" id="f_name"></div>
+      <div><label class="l">Plan</label><select id="f_plan"><option>Starter</option><option>Growth</option><option>Pro</option></select></div>
+      <div><label class="l">Monthly price (CAD, blank to hide)</label><input type="text" id="f_price" placeholder="100"></div>
+      <div><label class="l">Add ons</label><label class="chk"><input type="checkbox" id="a_shop"> Stackwell Shop</label></div>
+      <div><label class="l">Status</label><label class="chk"><input type="checkbox" id="f_contract"> Agreement signed</label><label class="chk" style="margin-top:.3rem"><input type="checkbox" id="f_billing"> Billing active</label></div>
+    </div></div>
+    <p style="color:var(--ink-mid);margin:1.4rem 0 -.6rem">Anything you fill in below shows up already filled in on the client's page. They can change it. Leave blank to ask them.</p>
+    <div id="prefill"></div>
+    <div class="bar" style="margin-top:1.8rem"><button class="btn" id="save">Save</button><span id="saveMsg" class="mono"></span></div>
+    <div class="err hide" id="eerr"></div>
+  </div>
+</main>
+<div class="toast hide" id="toast"></div>
+
+<script>
+var API = 'https://onboard-stackwell.adam-8d6.workers.dev';
+var HUB = 'https://stackwell.digital/onboard/?c=';
+var SECTIONS = [
+  {id:'basics', title:'Business basics', blurb:'The details that go on your site and in search results.', fields:[
+    {k:'business_name', l:'Business name as customers know it', t:'text', req:1},
+    {k:'contact_name', l:'Your name', t:'text'},
+    {k:'phone', l:'Phone number for the site', t:'text', req:1, ph:'604 555 1234'},
+    {k:'public_email', l:'Email for the site', t:'text', h:'The address customers should see and use.'},
+    {k:'address', l:'Address, or the areas you serve', t:'textarea', h:'If you travel to customers, list the cities or neighbourhoods you cover.'},
+    {k:'founded', l:'Year you started', t:'text', ph:'2014'},
+    {t:'skip'}
+  ]},
+  {id:'look', title:'Look and feel', blurb:'Help us aim at the right target on the first try.', fields:[
+    {k:'colour_main', l:'Main colour (hex)', t:'text', ph:'#1B3A5C'},
+    {k:'colour_accent', l:'Accent colour (hex)', t:'text'},
+    {k:'colour_support', l:'Support colour (hex)', t:'text'},
+    {k:'site_one', l:'Website they like 1', t:'text'},
+    {k:'site_two', l:'Website they like 2', t:'text'},
+    {k:'site_three', l:'Website they like 3', t:'text'},
+    {k:'dislikes', l:'Anything you definitely do not want?', t:'textarea'},
+    {k:'say', l:'Anything we should say, or avoid saying?', t:'textarea'}
+  ]},
+  {id:'presence', title:'Online presence', blurb:'What you already have, so we can connect it all up.', fields:[
+    {k:'current_site', l:'Current website, if any', t:'text', ph:'yourbusiness.ca'},
+    {k:'gbp', l:'Google Business Profile link', t:'text', h:'Search your business name on Google and copy the link. No profile yet? Leave this blank.'},
+    {k:'facebook', l:'Facebook page', t:'text'},
+    {k:'instagram', l:'Instagram handle', t:'text'},
+    {k:'other_social', l:'Other profiles', t:'text', h:'YouTube, TikTok, LinkedIn, Yelp, and so on.'},
+    {k:'testimonials', l:'Customer quotes we can use', t:'textarea', h:'Only ones you have permission to share. Names or first names are a nice touch.'}
+  ]},
+  {id:'domain', title:'Domain and email', blurb:'The part people worry about, so we handle it carefully.', note:'We never need your passwords. Depending on your setup, we will either ask you to add us as a delegate on your domain, or walk you through a transfer. We map out your email first so nothing stops working along the way.', fields:[
+    {k:'has_domain', l:'Do you own a domain name?', t:'select', o:['Yes, I own one','No, I need one','Not sure']},
+    {k:'domain_name', l:'Your domain, if you have one', t:'text', ph:'yourbusiness.ca'},
+    {k:'registrar', l:'Where is it registered?', t:'select', o:['GoDaddy','Wix','Squarespace','Namecheap','Shopify','Cloudflare','Somewhere else','Not sure']},
+    {k:'email_status', l:'How do you use email today?', t:'select', o:['Email on my own domain, like name@mybusiness.ca','Gmail, Outlook, or similar','I would like email on my own domain','Not sure']},
+    {k:'email_provider', l:'Where does your business email live?', t:'text', ph:'Google Workspace, Microsoft 365, GoDaddy, not sure'},
+    {k:'access', l:'Who can log in to your domain account?', t:'select', o:['I can log in','Someone else manages it','I have lost the login','Not sure']}
+  ]},
+  {id:'shop', addon:'shop', title:'Online shop', blurb:'Since your plan includes Stackwell Shop, we need a few extra details.', fields:[
+    {k:'products', l:'What are you selling, and roughly how many items?', t:'textarea', req:1},
+    {k:'square', l:'Do you already use Square?', t:'select', o:['Yes','No','Not sure']},
+    {k:'shipping', l:'Shipping or pickup details', t:'textarea'},
+    {k:'pod', l:'Do you use print on demand, like Printful?', t:'select', o:['Yes','No','Maybe later']}
+  ]}
+];
+var PREFILL = SECTIONS.map(function(s){return {id:s.id,title:s.title,fields:s.fields.filter(function(f){return f.k})}}).filter(function(s){return s.fields.length});
+var $=function(s){return document.querySelector(s)};
+var key=''; try{key=sessionStorage.getItem('hubkey')||''}catch(e){}
+var cur=null; // {id, token} when editing existing
+
+function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function toast(m){var t=$('#toast');t.textContent=m;t.classList.remove('hide');setTimeout(function(){t.classList.add('hide')},1800)}
+function api(method,path,body){
+  return fetch(API+path,{method:method,headers:{'Authorization':'Bearer '+key,'Content-Type':'application/json'},body:body?JSON.stringify(body):undefined})
+    .then(function(r){return r.json().catch(function(){return {}}).then(function(j){if(!r.ok){var e=new Error(j.error||('Error '+r.status));e.status=r.status;throw e}return j})});
+}
+function show(v){['gate','listView','editView'].forEach(function(x){$('#'+x).classList.toggle('hide',x!==v)});$('#out').classList.toggle('hide',v==='gate')}
+
+function unlock(){
+  key=$('#key').value.trim()||key;
+  api('GET','/api/admin/clients').then(function(j){
+    try{sessionStorage.setItem('hubkey',key)}catch(e){}
+    renderList(j.clients);show('listView');
+  }).catch(function(e){
+    $('#gerr').textContent=e.status===401?'That key is not right.':e.message;$('#gerr').classList.remove('hide');show('gate');
+  });
+}
+function loadList(){return api('GET','/api/admin/clients').then(function(j){renderList(j.clients);show('listView')})}
+function renderList(cs){
+  $('#rows').innerHTML=cs.length?cs.map(function(c){
+    var st=(c.completed_at?'<span class="tag on">Submitted</span>':'<span class="tag">'+(c.sections?'In progress':'Not started')+'</span>')+(c.contract_signed?'<span class="tag on">Signed</span>':'')+(c.billing_active?'<span class="tag on">Billing</span>':'');
+    return '<tr class="row" data-id="'+c.id+'"><td><b style="font-weight:500">'+esc(c.name)+'</b></td><td class="hidem">'+esc(c.plan)+(c.addons?' + '+esc(c.addons):'')+'</td><td>'+st+'</td><td class="hidem">'+c.files+'</td><td style="text-align:right"><button class="btn ghost sm" data-copy="'+esc(c.token)+'">Copy link</button></td></tr>';
+  }).join(''):'<tr><td colspan="5" style="padding:1.5rem;color:var(--ink-mid)">No clients yet. Hit New client.</td></tr>';
+}
+$('#rows').addEventListener('click',function(e){
+  var cp=e.target.closest('[data-copy]');
+  if(cp){e.stopPropagation();copyText(HUB+cp.dataset.copy);return}
+  var r=e.target.closest('tr.row'); if(r) edit(parseInt(r.dataset.id,10));
+});
+function copyText(t){(navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(function(){toast('Link copied')}).catch(function(){window.prompt('Copy this link',t)})}
+
+function buildPrefill(data){
+  data=data||{};
+  $('#prefill').innerHTML=PREFILL.map(function(s){
+    return '<h3>'+esc(s.title)+(s.id==='shop'?' <span class="mono">(only shown if Shop is on)</span>':'')+'</h3><div class="card"><div class="grid">'+s.fields.map(function(f){
+      var v=(data[s.id]||{})[f.k]||'', wide=f.t==='textarea'?' wide':'';
+      var inp = f.t==='textarea' ? '<textarea data-s="'+s.id+'" data-k="'+f.k+'">'+esc(v)+'</textarea>'
+        : f.t==='select' ? '<select data-s="'+s.id+'" data-k="'+f.k+'"><option value=""></option>'+f.o.map(function(o){return '<option'+(o===v?' selected':'')+'>'+esc(o)+'</option>'}).join('')+'</select>'
+        : '<input type="text" data-s="'+s.id+'" data-k="'+f.k+'" value="'+esc(v)+'" placeholder="'+esc(f.ph||'')+'">';
+      return '<div class="'+wide.trim()+'"><label class="l">'+esc(f.l)+'</label>'+inp+'</div>';
+    }).join('')+'</div></div>';
+  }).join('');
+}
+function setForm(c){
+  $('#f_name').value=c.name||'';$('#f_plan').value=c.plan||'Starter';
+  $('#f_price').value=c.monthly_price==null?'':c.monthly_price;
+  $('#a_shop').checked=(c.addons||[]).indexOf('shop')>-1;
+  $('#f_contract').checked=!!c.contract_signed;$('#f_billing').checked=!!c.billing_active;
+  buildPrefill(c.answers);
+  $('#eerr').classList.add('hide');$('#saveMsg').textContent='';
+}
+function setLink(tok){
+  $('#linkCard').classList.toggle('hide',!tok);
+  if(tok){$('#link').value=HUB+tok;}
+}
+function newClient(){
+  cur=null;$('#editTitle').textContent='New client';
+  setForm({});setLink(null);$('#reopen').classList.add('hide');$('#drive').classList.add('hide');show('editView');
+}
+function edit(id){
+  api('GET','/api/admin/client?id='+id).then(function(c){
+    cur={id:c.id,token:c.token};$('#editTitle').textContent=c.name;
+    setForm(c);setLink(c.token);
+    $('#reopen').classList.toggle('hide',!c.completed_at);
+    $('#drive').classList.toggle('hide',!c.drive);if(c.drive)$('#drive').href=c.drive;
+    show('editView');
+  }).catch(function(e){toast(e.message)});
+}
+function collect(){
+  var answers={};
+  document.querySelectorAll('#prefill [data-k]').forEach(function(el){
+    var s=el.dataset.s;(answers[s]=answers[s]||{})[el.dataset.k]=el.value.trim();
+  });
+  return {
+    name:$('#f_name').value.trim(),plan:$('#f_plan').value,
+    monthly_price:$('#f_price').value.trim()===''?null:$('#f_price').value.trim(),
+    addons:$('#a_shop').checked?['shop']:[],
+    contract_signed:$('#f_contract').checked,billing_active:$('#f_billing').checked,
+    answers:answers
+  };
+}
+function save(){
+  var b=collect(), eb=$('#eerr'); eb.classList.add('hide');
+  if(!b.name){eb.textContent='Business name is required.';eb.classList.remove('hide');return}
+  $('#save').disabled=true;
+  var p=cur?api('POST','/api/admin/client?id='+cur.id,b):api('POST','/api/admin/clients',b);
+  p.then(function(j){
+    $('#save').disabled=false;
+    if(!cur&&j.token){cur={id:j.id,token:j.token};setLink(j.token);$('#editTitle').textContent=b.name;toast('Created. Copy the link below.');window.scrollTo(0,0)}
+    else{$('#editTitle').textContent=b.name;toast('Saved')}
+  }).catch(function(e){$('#save').disabled=false;eb.textContent=e.message;eb.classList.remove('hide')});
+}
+$('#go').addEventListener('click',unlock);
+$('#key').addEventListener('keydown',function(e){if(e.key==='Enter')unlock()});
+$('#out').addEventListener('click',function(){key='';try{sessionStorage.removeItem('hubkey')}catch(e){}$('#key').value='';show('gate')});
+$('#newBtn').addEventListener('click',newClient);
+$('#back').addEventListener('click',loadList);
+$('#save').addEventListener('click',save);
+$('#copy').addEventListener('click',function(){copyText($('#link').value)});
+$('#open').addEventListener('click',function(){window.open($('#link').value,'_blank','noopener')});
+$('#rotate').addEventListener('click',function(){
+  if(!cur||!window.confirm('This kills the old link. The client will need the new one. Continue?'))return;
+  api('POST','/api/admin/rotate?id='+cur.id).then(function(j){cur.token=j.token;setLink(j.token);toast('New link made')}).catch(function(e){toast(e.message)});
+});
+$('#reopen').addEventListener('click',function(){
+  if(!cur)return;api('POST','/api/admin/reopen?id='+cur.id).then(function(){$('#reopen').classList.add('hide');toast('Reopened')}).catch(function(e){toast(e.message)});
+});
+if(key){unlock()}else{show('gate')}
+</script>
+</body>
+</html>
